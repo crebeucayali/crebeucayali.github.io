@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://crebe-ucayali.netlify.app/sitemap.xml
+Sitemap: https://crebeucayali.github.io/inicio/sitemap.xml
