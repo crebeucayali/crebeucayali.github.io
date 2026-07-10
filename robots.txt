@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://crebeucayali.github.io/inicio/sitemap.xml
+Sitemap: https://crebeucayali.github.io/sitemap.xml
