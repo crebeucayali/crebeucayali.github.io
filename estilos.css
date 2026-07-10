@@ -1298,7 +1298,7 @@ a{ color:var(--verde-700); }
       rgba(63,133,136,.86) 52%,
       rgba(83,154,151,.82) 100%
     ),
-    url("https://gabriel-lsp.github.io/accesos-complementarios/patron-shipibo.webp") !important;
+    url("patron-shipibo.webp") !important;
   background-repeat:no-repeat,repeat !important;
   background-size:cover,320px auto !important;
   background-position:center,center !important;
@@ -2334,7 +2334,7 @@ body.alto-contraste .grupo-resultados-busqueda h3{
   pointer-events:none !important;
   background-image:
     linear-gradient(90deg,rgba(8,35,53,.52) 0%,rgba(21,83,95,.34) 56%,rgba(76,143,144,.18) 100%),
-    url("https://gabriel-lsp.github.io/accesos-complementarios/patron-shipibo.webp") !important;
+    url("patron-shipibo.webp") !important;
   background-repeat:no-repeat,repeat !important;
   background-size:cover,320px auto !important;
   background-position:center,center !important;
@@ -2381,7 +2381,7 @@ body.alto-contraste .grupo-resultados-busqueda h3{
       rgba(63,124,128,.76) 48%,
       rgba(85,154,150,.72) 100%
     ),
-    url("https://gabriel-lsp.github.io/accesos-complementarios/patron-shipibo.webp?v=verde-azulado-2") !important;
+    url("patron-shipibo.webp?v=verde-azulado-2") !important;
   background-repeat:no-repeat,repeat !important;
   background-size:cover,320px auto !important;
   background-position:center,center !important;
@@ -2432,7 +2432,7 @@ body.alto-contraste .grupo-resultados-busqueda h3{
   inset:0 !important;
   z-index:0 !important;
   pointer-events:none !important;
-  background-image:url("https://gabriel-lsp.github.io/accesos-complementarios/patron-shipibo.webp?v=footer-institucional") !important;
+  background-image:url("patron-shipibo.webp?v=footer-institucional") !important;
   background-repeat:repeat !important;
   background-size:300px auto !important;
   background-position:center !important;
