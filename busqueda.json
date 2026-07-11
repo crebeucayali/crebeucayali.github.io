@@ -24,12 +24,12 @@
     "etiquetas": "materiales educativos accesibles rutinas visuales pictogramas apoyos fichas generador braille silabas lectura facil alto contraste guias docentes familias plantillas"
   },
   {
-    "titulo": "Juegos Interactivos Accesibles",
-    "modulo": "JIA",
+    "titulo": "Lectura Inclusiva",
+    "modulo": "LI",
     "tipo": "Módulo",
-    "descripcion": "Juegos digitales para atención, memoria, asociación, comprensión, participación y aprendizaje.",
-    "url": "https://gabriel-lsp.github.io/juegos-interactivos-accesibles/",
-    "etiquetas": "juegos interactivos accesibles adivina seña braille memoria visual pareja secuencia actividades ludicas niveles instrucciones"
+    "descripcion": "Artículos breves, orientaciones y contenidos sobre inclusión educativa y atención a la diversidad.",
+    "url": "https://crebeucayali.github.io/lectura-inclusiva/",
+    "etiquetas": "lectura inclusiva articulos orientaciones inclusion educativa diversidad reflexion contenidos accesibles"
   },
   {
     "titulo": "Noti Inclusivos",
@@ -150,13 +150,5 @@
     "descripcion": "Apoyos visuales y pictogramas para comunicación, comprensión y accesibilidad cognitiva.",
     "url": "https://gabriel-lsp.github.io/materiales-educativos-accesibles/",
     "etiquetas": "pictogramas apoyos visuales arasaac comunicacion accesibilidad cognitiva"
-  },
-  {
-    "titulo": "Adivina la seña",
-    "modulo": "JIA",
-    "tipo": "Juego del módulo",
-    "descripcion": "Juego interactivo para reconocer señas y asociarlas con palabras.",
-    "url": "https://gabriel-lsp.github.io/juegos-interactivos-accesibles/",
-    "etiquetas": "adivina seña juego lengua señas niveles reconocimiento"
   }
 ]

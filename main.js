@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       selector: ".campo-busqueda-modulos",
       titulo: "Búsqueda de recursos",
-      texto: "El buscador permite ubicar módulos, recursos o temas específicos. También se pueden usar las sugerencias rápidas para encontrar materiales, juegos, braille, señas, noticias o contacto."
+      texto: "El buscador permite ubicar módulos, recursos o temas específicos. También se pueden usar las sugerencias rápidas para encontrar materiales, lectura, braille, señas, noticias o contacto."
     },
     {
       selector: ".controles-accesibilidad",
@@ -289,7 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       selector: ".tarjetas",
       titulo: "Módulos del ecosistema",
-      texto: "En esta sección se agrupan los módulos principales: capacitaciones, banco digital, materiales, juegos, noticias y repositorio accesible. Cada tarjeta abre un espacio con recursos específicos."
+      texto: "En esta sección se agrupan los módulos principales: capacitaciones, banco digital, materiales, lectura inclusiva, noticias y repositorio accesible. Cada tarjeta abre un espacio con recursos específicos."
     },
     {
       selector: ".accesos-complementarios-weebly",
