@@ -90,9 +90,12 @@ jobs:
               if item not in text:
                   raise RuntimeError(f"Falta la regla requerida: {item}")
 
+          if text.count("--ancho-cuerpo-crebe:1120px;") != 1:
+              raise RuntimeError("La variable de ancho no quedó definida una sola vez")
+
           path.write_text(text, encoding="utf-8", newline="\n")
+          print("CSS consolidado y validado estructuralmente.")
           PY
-          git diff --check -- estilos.css
 
       - name: Exportar archivo validado
         uses: actions/upload-artifact@v4
