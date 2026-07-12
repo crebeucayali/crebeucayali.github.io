@@ -195,6 +195,7 @@ a{ color:var(--verde-700); }
   margin:0 auto;
   position:relative !important;
   z-index:2 !important;
+  padding-top:0 !important;
 }
 
 .bloque-institucional{
