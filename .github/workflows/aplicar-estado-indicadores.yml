@@ -1,0 +1,60 @@
+name: Aplicar estado accesible de indicadores
+
+on:
+  push:
+    branches:
+      - estado-indicadores-carrusel
+
+permissions:
+  contents: write
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar rama
+        uses: actions/checkout@v4
+        with:
+          ref: estado-indicadores-carrusel
+          fetch-depth: 0
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Aplicar cambio exacto
+        run: python scripts/aplicar_estado_indicadores.py
+
+      - name: Validar alcance
+        run: |
+          git diff --check -- main.js
+          git diff --exit-code -- index.html estilos.css || true
+          grep -q 'aria-current' main.js
+          if grep -q 'punto.setAttribute("aria-pressed"' main.js; then
+            echo 'Aún permanece aria-pressed en los indicadores del carrusel'
+            exit 1
+          fi
+
+      - name: Confirmar únicamente main.js
+        shell: bash
+        run: |
+          CAMBIOS=$(git status --short)
+          echo "$CAMBIOS"
+          if [ "$CAMBIOS" != " M main.js" ]; then
+            echo 'Se detectaron cambios fuera de main.js'
+            exit 1
+          fi
+
+      - name: Publicar ajuste
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          SHA=$(gh api "/repos/$REPO/contents/main.js?ref=estado-indicadores-carrusel" --jq '.sha')
+          CONTENIDO=$(base64 -w 0 main.js)
+          gh api --method PUT "/repos/$REPO/contents/main.js" \
+            -f message='Actualiza el estado accesible de los indicadores' \
+            -f branch='estado-indicadores-carrusel' \
+            -f sha="$SHA" \
+            -f content="$CONTENIDO"
