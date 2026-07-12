@@ -1,4 +1,4 @@
-name: Exportar CSS consolidado
+name: Aplicar CSS consolidado
 
 on:
   pull_request:
@@ -11,10 +11,10 @@ on:
       - ready_for_review
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  exportar:
+  aplicar:
     if: github.head_ref == 'consolidacion-ancho-cuadriculas'
     runs-on: ubuntu-latest
 
@@ -30,7 +30,19 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Comprobar si la consolidación ya fue aplicada
+        id: estado
+        shell: bash
+        run: |
+          if grep -q -- '--ancho-cuerpo-crebe:1120px;' estilos.css && ! grep -q 'Ajuste final de ancho del cuerpo' estilos.css; then
+            echo "aplicado=true" >> "$GITHUB_OUTPUT"
+            echo "La consolidación ya está aplicada."
+          else
+            echo "aplicado=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Preparar controles compatibles
+        if: steps.estado.outputs.aplicado != 'true'
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -61,18 +73,10 @@ jobs:
           PY
 
       - name: Generar y validar estilos.css
-        id: generar
-        continue-on-error: true
-        shell: bash
+        if: steps.estado.outputs.aplicado != 'true'
         run: |
-          set +e
-          {
-            python scripts/consolidar_ancho_cuadriculas.py
-            PRIMERO=$?
-            if [ "$PRIMERO" -ne 0 ]; then
-              exit "$PRIMERO"
-            fi
-            python - <<'PY'
+          python scripts/consolidar_ancho_cuadriculas.py
+          python - <<'PY'
           import re
           from pathlib import Path
 
@@ -80,11 +84,11 @@ jobs:
           text = path.read_text(encoding="utf-8")
           redundant = "\n  .cuerpo-operativo{\n    grid-template-columns:1fr;\n  }\n"
           count = text.count(redundant)
-          if count != 2:
+          if count != 1:
               raise RuntimeError(
-                  f"Se esperaban 2 reglas responsivas redundantes y se encontraron {count}"
+                  f"Se esperaba 1 regla responsiva redundante y se encontraron {count}"
               )
-          text = text.replace(redundant, "\n")
+          text = text.replace(redundant, "\n", 1)
           text = re.sub(r"\n@media\s*\([^)]*\)\{\s*\}\n", "\n", text)
 
           if text.count(".cuerpo-operativo{") != 1:
@@ -101,27 +105,55 @@ jobs:
 
           if text.count("--ancho-cuerpo-crebe:1120px;") != 1:
               raise RuntimeError("La variable de ancho no quedó definida una sola vez")
+          if "Ajuste final de ancho del cuerpo" in text:
+              raise RuntimeError("Permaneció el bloque final de sobrescrituras")
+
+          depth = 0
+          quote = None
+          i = 0
+          while i < len(text):
+              char = text[i]
+              if quote:
+                  if char == "\\":
+                      i += 2
+                      continue
+                  if char == quote:
+                      quote = None
+                  i += 1
+                  continue
+              if text.startswith("/*", i):
+                  end = text.find("*/", i + 2)
+                  if end == -1:
+                      raise RuntimeError("Comentario CSS sin cierre")
+                  i = end + 2
+                  continue
+              if char in {'"', "'"}:
+                  quote = char
+              elif char == "{":
+                  depth += 1
+              elif char == "}":
+                  depth -= 1
+                  if depth < 0:
+                      raise RuntimeError("Llave CSS de cierre sin apertura")
+              i += 1
+          if depth != 0:
+              raise RuntimeError(f"Llaves CSS desbalanceadas: {depth}")
 
           path.write_text(text, encoding="utf-8", newline="\n")
           print("CSS consolidado y validado estructuralmente.")
           PY
-          } > diagnostico-css.txt 2>&1
-          ESTADO=$?
-          cat diagnostico-css.txt
-          echo "estado=$ESTADO" >> "$GITHUB_OUTPUT"
-          exit 0
 
-      - name: Exportar archivo y diagnóstico
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: estilos-consolidado
-          path: |
-            estilos.css
-            diagnostico-css.txt
-          if-no-files-found: error
-          retention-days: 1
-
-      - name: Confirmar validación
-        if: steps.generar.outputs.estado != '0'
-        run: exit 1
+      - name: Actualizar únicamente estilos.css en la rama
+        if: steps.estado.outputs.aplicado != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          SHA_ACTUAL=$(gh api "/repos/$REPO/contents/estilos.css?ref=consolidacion-ancho-cuadriculas" --jq '.sha')
+          CONTENIDO=$(base64 -w 0 estilos.css)
+          gh api --method PUT "/repos/$REPO/contents/estilos.css" \
+            -f message='Consolida el ancho general y las cuadrículas' \
+            -f branch='consolidacion-ancho-cuadriculas' \
+            -f sha="$SHA_ACTUAL" \
+            -f content="$CONTENIDO"
