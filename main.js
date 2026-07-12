@@ -608,7 +608,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const indicador = document.createElement("button");
       indicador.type = "button";
       indicador.className = "noticias-indicador";
-      indicador.setAttribute("aria-label", `Ir a la noticia ${indice + 1}`);
+      indicador.setAttribute("aria-label", `Mostrar noticia ${indice + 1} de ${noticias.length}: ${noticia.titulo}`);
       indicador.addEventListener("click", () => irA(indice, true));
       indicadores.appendChild(indicador);
     });
@@ -620,8 +620,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const actualizarIndicadores = () => {
       puntos.forEach((punto, indice) => {
-        punto.classList.toggle("activo", indice === indiceActual);
-        punto.setAttribute("aria-pressed", indice === indiceActual ? "true" : "false");
+        const estaSeleccionado = indice === indiceActual;
+        punto.classList.toggle("activo", estaSeleccionado);
+        if (estaSeleccionado) punto.setAttribute("aria-current", "true");
+        else punto.removeAttribute("aria-current");
+        punto.removeAttribute("aria-pressed");
       });
     };
 
