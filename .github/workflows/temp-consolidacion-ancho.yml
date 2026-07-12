@@ -1,0 +1,56 @@
+name: Validación temporal de ancho y cuadrículas
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions:
+  contents: write
+
+jobs:
+  consolidar:
+    if: github.actor != 'github-actions[bot]' && github.head_ref == 'consolidacion-ancho-cuadriculas'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar rama de trabajo
+        uses: actions/checkout@v4
+        with:
+          ref: consolidacion-ancho-cuadriculas
+          fetch-depth: 0
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Consolidar anchos y cuadrículas
+        run: python scripts/consolidar_ancho_cuadriculas.py
+
+      - name: Comprobar formato y alcance
+        run: |
+          git diff --check
+          CAMBIADOS=$(git diff --name-only)
+          if [ "$CAMBIADOS" != "estilos.css" ]; then
+            echo "Se detectaron archivos inesperados:"
+            echo "$CAMBIADOS"
+            exit 1
+          fi
+
+      - name: Confirmar y publicar el cambio validado
+        run: |
+          if git diff --quiet -- estilos.css; then
+            echo "No se generaron cambios en estilos.css"
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add estilos.css
+          git commit -m "Consolida el ancho general y las cuadrículas"
+          git push origin HEAD:consolidacion-ancho-cuadriculas
