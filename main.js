@@ -314,6 +314,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let panel = null;
   let ultimoFoco = null;
 
+  const regionesFondo = () => [
+    document.querySelector("header"),
+    document.querySelector("main"),
+    document.querySelector("footer")
+  ].filter(Boolean);
+
   const crearElementosGuia = () => {
     overlay = document.createElement("div");
     overlay.className = "guia-overlay";
@@ -328,6 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
     panel.setAttribute("role", "dialog");
     panel.setAttribute("aria-modal", "true");
     panel.setAttribute("aria-labelledby", "guia-titulo");
+    panel.setAttribute("aria-describedby", "guia-texto");
     panel.innerHTML = `
       <span class="guia-contador"></span>
       <h2 id="guia-titulo"></h2>
@@ -415,6 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
     pasoActual = 0;
     if (!overlay) crearElementosGuia();
     document.body.classList.add("guia-activa");
+    regionesFondo().forEach((region) => region.setAttribute("inert", ""));
     overlay.hidden = false;
     resaltado.hidden = false;
     panel.hidden = false;
@@ -438,6 +446,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function cerrarGuia(){
     document.body.classList.remove("guia-activa");
+    regionesFondo().forEach((region) => region.removeAttribute("inert"));
     if (overlay) overlay.hidden = true;
     if (resaltado) resaltado.hidden = true;
     if (panel) panel.hidden = true;
@@ -448,6 +457,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("keydown", (evento) => {
     if (!panel || panel.hidden) return;
+
+    if (evento.key === "Tab") {
+      const controles = Array.from(panel.querySelectorAll('button:not([disabled])'));
+      if (!controles.length) return;
+      const primero = controles[0];
+      const ultimo = controles[controles.length - 1];
+
+      if (evento.shiftKey && document.activeElement === primero) {
+        evento.preventDefault();
+        ultimo.focus();
+      } else if (!evento.shiftKey && document.activeElement === ultimo) {
+        evento.preventDefault();
+        primero.focus();
+      }
+      return;
+    }
+
     if (evento.key === "Escape") cerrarGuia();
     if (evento.key === "ArrowRight") avanzarGuia();
     if (evento.key === "ArrowLeft") retrocederGuia();
