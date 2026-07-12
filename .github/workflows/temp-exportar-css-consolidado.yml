@@ -61,9 +61,18 @@ jobs:
           PY
 
       - name: Generar y validar estilos.css
+        id: generar
+        continue-on-error: true
+        shell: bash
         run: |
-          python scripts/consolidar_ancho_cuadriculas.py
-          python - <<'PY'
+          set +e
+          {
+            python scripts/consolidar_ancho_cuadriculas.py
+            PRIMERO=$?
+            if [ "$PRIMERO" -ne 0 ]; then
+              exit "$PRIMERO"
+            fi
+            python - <<'PY'
           import re
           from pathlib import Path
 
@@ -96,11 +105,23 @@ jobs:
           path.write_text(text, encoding="utf-8", newline="\n")
           print("CSS consolidado y validado estructuralmente.")
           PY
+          } > diagnostico-css.txt 2>&1
+          ESTADO=$?
+          cat diagnostico-css.txt
+          echo "estado=$ESTADO" >> "$GITHUB_OUTPUT"
+          exit 0
 
-      - name: Exportar archivo validado
+      - name: Exportar archivo y diagnóstico
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: estilos-consolidado
-          path: estilos.css
+          path: |
+            estilos.css
+            diagnostico-css.txt
           if-no-files-found: error
           retention-days: 1
+
+      - name: Confirmar validación
+        if: steps.generar.outputs.estado != '0'
+        run: exit 1
