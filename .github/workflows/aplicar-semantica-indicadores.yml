@@ -1,0 +1,46 @@
+name: Aplicar semántica del carrusel de indicadores
+
+on:
+  push:
+    branches:
+      - semantica-carrusel-indicadores
+
+permissions:
+  contents: write
+
+jobs:
+  aplicar:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar rama
+        uses: actions/checkout@v4
+        with:
+          ref: semantica-carrusel-indicadores
+          fetch-depth: 0
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Aplicar ajuste exacto
+        run: python scripts/aplicar_semantica_indicadores.py
+
+      - name: Validar alcance
+        run: |
+          git diff --check
+          CAMBIADOS=$(git diff --name-only)
+          if [ "$CAMBIADOS" != "index.html" ]; then
+            echo "Se detectaron archivos inesperados:"
+            echo "$CAMBIADOS"
+            exit 1
+          fi
+
+      - name: Publicar cambio
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Mejora la semántica del carrusel de indicadores"
+          git push origin HEAD:semantica-carrusel-indicadores
