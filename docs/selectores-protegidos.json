@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "baseline_commit": "ae1564a62d0c9da9cf1964ef1e9ca5ba470919ce",
+  "scope": [
+    "index.html",
+    "main.js",
+    "estilos.css",
+    "busqueda.json",
+    "noticias-destacadas.json"
+  ],
+  "body_states": [
+    "texto-grande",
+    "texto-muy-grande",
+    "alto-contraste",
+    "guia-activa"
+  ],
+  "dynamic_search": [
+    "resultado-busqueda",
+    "grupo-resultados-busqueda",
+    "grupo-resultados-lista"
+  ],
+  "dynamic_guide": [
+    "guia-overlay",
+    "guia-resaltado",
+    "guia-panel",
+    "guia-contador",
+    "guia-acciones",
+    "guia-anterior",
+    "guia-cerrar",
+    "guia-siguiente"
+  ],
+  "guide_targets": [
+    "cabecera-crebe",
+    "campo-busqueda-modulos",
+    "controles-accesibilidad",
+    "tarjetas",
+    "accesos-complementarios-weebly",
+    "firma-visita-acceso",
+    "pie-crebe"
+  ],
+  "dynamic_news": [
+    "noticia-tarjeta",
+    "noticia-media",
+    "noticia-contenido",
+    "noticia-categoria",
+    "noticia-enlace",
+    "noticias-indicador"
+  ],
+  "carousel_states": [
+    "activo",
+    "activa",
+    "vecina",
+    "vecina-izquierda",
+    "vecina-derecha",
+    "lejana"
+  ],
+  "critical_layout": [
+    "cabecera-crebe",
+    "cabecera-interior",
+    "portal-crebe",
+    "hero",
+    "patron-portada",
+    "hero-contenido",
+    "contenido-central",
+    "cuerpo-operativo",
+    "tarjetas",
+    "noticias-destacadas",
+    "noticias-carrusel",
+    "noticias-viewport",
+    "noticias-pista",
+    "accesos-complementarios-weebly",
+    "impacto-crebe",
+    "pie-crebe",
+    "boton-guia",
+    "volver-arriba"
+  ],
+  "protected_patterns": [
+    "@media",
+    ":focus",
+    ":focus-visible",
+    ":hover",
+    ":disabled",
+    "[aria-",
+    "prefers-reduced-motion",
+    "z-index",
+    "position:sticky",
+    "position:fixed",
+    "overflow-x",
+    ":root"
+  ],
+  "rule": "No eliminar ni renombrar estos selectores sin verificación visual, funcional y responsiva específica."
+}
