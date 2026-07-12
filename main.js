@@ -558,9 +558,13 @@ document.addEventListener("DOMContentLoaded", () => {
     pista.innerHTML = "";
     indicadores.innerHTML = "";
 
-    const crearTarjeta = (noticia) => {
+    const crearTarjeta = (noticia, indice, total) => {
       const articulo = document.createElement("article");
       articulo.className = "noticia-tarjeta";
+      articulo.setAttribute("role", "group");
+      articulo.setAttribute("aria-roledescription", "diapositiva");
+      articulo.setAttribute("aria-label", `Noticia ${indice + 1} de ${total}: ${noticia.titulo}`);
+      articulo.setAttribute("aria-hidden", "true");
 
       const figura = document.createElement("figure");
       figura.className = "noticia-media";
@@ -600,7 +604,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     noticias.forEach((noticia, indice) => {
-      pista.appendChild(crearTarjeta(noticia));
+      pista.appendChild(crearTarjeta(noticia, indice, noticias.length));
       const indicador = document.createElement("button");
       indicador.type = "button";
       indicador.className = "noticias-indicador";
@@ -625,12 +629,20 @@ document.addEventListener("DOMContentLoaded", () => {
       diapositivas.forEach((slide, indice) => {
         slide.classList.remove("activa", "vecina", "lejana", "vecina-izquierda", "vecina-derecha");
         const diferencia = indice - indiceActual;
-        if (diferencia === 0) {
+        const estaActiva = diferencia === 0;
+        if (estaActiva) {
           slide.classList.add("activa");
         } else if (Math.abs(diferencia) === 1) {
           slide.classList.add("vecina", diferencia < 0 ? "vecina-izquierda" : "vecina-derecha");
         } else {
           slide.classList.add("lejana");
+        }
+
+        slide.setAttribute("aria-hidden", estaActiva ? "false" : "true");
+        const enlaceNoticia = slide.querySelector("a");
+        if (enlaceNoticia) {
+          if (estaActiva) enlaceNoticia.removeAttribute("tabindex");
+          else enlaceNoticia.setAttribute("tabindex", "-1");
         }
       });
     };

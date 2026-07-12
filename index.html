@@ -132,10 +132,10 @@
           <h2 id="noticias-destacadas-titulo">Noticias destacadas</h2>
           <p>Síntesis informativa de acciones, actividades y avances vinculados al CREBE Ucayali. Cada noticia incorpora un acceso directo para revisar su ampliación.</p>
         </div>
-        <div class="noticias-carrusel" aria-label="Carrusel automático de noticias destacadas" data-news-source="https://crebeucayali.github.io/accesos-complementarios/noticias-destacadas.json" data-fallback-source="noticias-destacadas.json">
-          <button class="noticias-control noticias-anterior" type="button" aria-label="Ver noticia anterior"><span aria-hidden="true">&#10094;</span></button>
+        <div class="noticias-carrusel" role="region" aria-roledescription="carrusel" aria-labelledby="noticias-destacadas-titulo" data-news-source="https://crebeucayali.github.io/accesos-complementarios/noticias-destacadas.json" data-fallback-source="noticias-destacadas.json">
+          <button class="noticias-control noticias-anterior" type="button" aria-label="Ver noticia anterior" aria-controls="noticias-pista"><span aria-hidden="true">&#10094;</span></button>
           <div class="noticias-viewport"><div class="noticias-pista" id="noticias-pista"></div></div>
-          <button class="noticias-control noticias-siguiente" type="button" aria-label="Ver noticia siguiente"><span aria-hidden="true">&#10095;</span></button>
+          <button class="noticias-control noticias-siguiente" type="button" aria-label="Ver noticia siguiente" aria-controls="noticias-pista"><span aria-hidden="true">&#10095;</span></button>
         </div>
         <div class="noticias-indicadores" id="noticias-indicadores" aria-label="Indicadores del carrusel de noticias"></div>
       </section>
