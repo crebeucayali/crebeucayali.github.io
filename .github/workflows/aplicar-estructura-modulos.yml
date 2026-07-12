@@ -1,0 +1,66 @@
+name: Aplicar estructura semántica de módulos
+
+on:
+  push:
+    branches:
+      - estructura-semantica-modulos
+
+permissions:
+  contents: write
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar rama
+        uses: actions/checkout@v4
+        with:
+          ref: estructura-semantica-modulos
+          fetch-depth: 0
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Comprobar si ya está aplicado
+        id: estado
+        shell: bash
+        run: |
+          if grep -q 'id="titulo-modulos-eva"' index.html && grep -q '<div class="tarjetas">' index.html; then
+            echo 'aplicado=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'aplicado=false' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Aplicar ajuste exacto
+        if: steps.estado.outputs.aplicado != 'true'
+        run: python scripts/ajustar_estructura_modulos.py
+
+      - name: Validar alcance
+        if: steps.estado.outputs.aplicado != 'true'
+        shell: bash
+        run: |
+          git diff --check -- index.html
+          grep -q '<section class="modulos-eva" aria-labelledby="titulo-modulos-eva">' index.html
+          grep -q '<h2 id="titulo-modulos-eva"' index.html
+          grep -q '<div class="tarjetas">' index.html
+          if [ "$(git status --short)" != " M index.html" ]; then
+            git status --short
+            exit 1
+          fi
+
+      - name: Publicar únicamente index.html
+        if: steps.estado.outputs.aplicado != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          SHA=$(gh api "/repos/$REPO/contents/index.html?ref=estructura-semantica-modulos" --jq '.sha')
+          CONTENIDO=$(base64 -w 0 index.html)
+          gh api --method PUT "/repos/$REPO/contents/index.html" \
+            -f message='Ajusta la estructura semántica de los módulos' \
+            -f branch='estructura-semantica-modulos' \
+            -f sha="$SHA" \
+            -f content="$CONTENIDO"
