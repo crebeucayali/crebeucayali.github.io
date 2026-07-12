@@ -125,6 +125,7 @@ jobs:
             } > docs/consolidacion-ancho-error.log
             git add docs/consolidacion-ancho-error.log
             git commit -m "Actualiza diagnóstico temporal de la consolidación"
+            git pull --rebase origin consolidacion-ancho-cuadriculas
             git push origin HEAD:consolidacion-ancho-cuadriculas
             exit 1
           fi
@@ -132,9 +133,10 @@ jobs:
           git checkout -- scripts/consolidar_ancho_cuadriculas.py
           git diff --check
           CAMBIADOS=$(git diff --name-only)
+          echo "Archivos modificados:"
+          echo "$CAMBIADOS"
           if [ "$CAMBIADOS" != "estilos.css" ]; then
-            echo "Se detectaron archivos inesperados:"
-            echo "$CAMBIADOS"
+            echo "Se detectaron archivos inesperados"
             exit 1
           fi
           if git diff --quiet -- estilos.css; then
@@ -143,4 +145,5 @@ jobs:
           fi
           git add estilos.css
           git commit -m "Consolida el ancho general y las cuadrículas"
+          git pull --rebase origin consolidacion-ancho-cuadriculas
           git push origin HEAD:consolidacion-ancho-cuadriculas
