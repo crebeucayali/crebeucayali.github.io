@@ -587,8 +587,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const crearTarjeta = (noticia, indice, total) => {
       const articulo = document.createElement("article");
       articulo.className = "noticia-tarjeta";
-      articulo.setAttribute("role", "group");
-      articulo.setAttribute("aria-roledescription", "diapositiva");
       articulo.setAttribute("aria-label", `Noticia ${indice + 1} de ${total}: ${noticia.titulo}`);
       articulo.setAttribute("aria-hidden", "true");
 
