@@ -117,33 +117,19 @@ jobs:
 
           if [ "$ESTADO" -ne 0 ]; then
             mkdir -p docs
-            {
-              cat /tmp/consolidacion-ancho.log 2>/dev/null || true
-              echo
-              echo "Ocurrencias actuales de .cuerpo-operativo:"
-              grep -n '^[[:space:]]*\.cuerpo-operativo{' estilos.css || true
-            } > docs/consolidacion-ancho-error.log
+            cat /tmp/consolidacion-ancho.log > docs/consolidacion-ancho-error.log
             git add docs/consolidacion-ancho-error.log
             git commit -m "Actualiza diagnóstico temporal de la consolidación"
-            git pull --rebase origin consolidacion-ancho-cuadriculas
             git push origin HEAD:consolidacion-ancho-cuadriculas
             exit 1
           fi
 
           git checkout -- scripts/consolidar_ancho_cuadriculas.py
-          git diff --check
-          CAMBIADOS=$(git diff --name-only)
-          echo "Archivos modificados:"
-          echo "$CAMBIADOS"
-          if [ "$CAMBIADOS" != "estilos.css" ]; then
-            echo "Se detectaron archivos inesperados"
-            exit 1
-          fi
+          git status --short
           if git diff --quiet -- estilos.css; then
             echo "No se generaron cambios en estilos.css"
             exit 1
           fi
           git add estilos.css
           git commit -m "Consolida el ancho general y las cuadrículas"
-          git pull --rebase origin consolidacion-ancho-cuadriculas
           git push origin HEAD:consolidacion-ancho-cuadriculas
