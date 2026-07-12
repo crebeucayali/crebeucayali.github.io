@@ -43,17 +43,17 @@ jobs:
           '''
           if old not in text:
               raise SystemExit("No se encontró el control esperado de .cuerpo-operativo")
-          text = text.replace(old, "", 1)
-          path.write_text(text, encoding="utf-8", newline="\n")
+          path.write_text(text.replace(old, "", 1), encoding="utf-8", newline="\n")
           PY
 
-      - name: Ejecutar consolidación con diagnóstico
-        id: consolidacion
+      - name: Ejecutar consolidación y postproceso
+        continue-on-error: true
         shell: bash
         run: |
           set +e
           python scripts/consolidar_ancho_cuadriculas.py > /tmp/consolidacion-ancho.log 2>&1
           ESTADO=$?
+
           if [ "$ESTADO" -eq 0 ]; then
             python - <<'PY' >> /tmp/consolidacion-ancho.log 2>&1
             import re
@@ -79,33 +79,34 @@ jobs:
             PY
             ESTADO=$?
           fi
+
+          echo "$ESTADO" > /tmp/consolidacion-status
           cat /tmp/consolidacion-ancho.log
-          echo "estado=$ESTADO" >> "$GITHUB_OUTPUT"
+          exit "$ESTADO"
+
+      - name: Publicar resultado validado
+        if: always()
+        shell: bash
+        run: |
+          ESTADO=$(cat /tmp/consolidacion-status 2>/dev/null || echo 99)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           if [ "$ESTADO" -ne 0 ]; then
             mkdir -p docs
             {
-              cat /tmp/consolidacion-ancho.log
+              cat /tmp/consolidacion-ancho.log 2>/dev/null || true
               echo
               echo "Ocurrencias actuales de .cuerpo-operativo:"
-              grep -n '^\.cuerpo-operativo{' estilos.css || true
               grep -n '^[[:space:]]*\.cuerpo-operativo{' estilos.css || true
             } > docs/consolidacion-ancho-error.log
+            git add docs/consolidacion-ancho-error.log
+            git commit -m "Actualiza diagnóstico temporal de la consolidación"
+            git push origin HEAD:consolidacion-ancho-cuadriculas
+            exit 1
           fi
-          exit 0
 
-      - name: Publicar diagnóstico si falla
-        if: steps.consolidacion.outputs.estado != '0'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/consolidacion-ancho-error.log
-          git commit -m "Actualiza diagnóstico temporal de la consolidación"
-          git push origin HEAD:consolidacion-ancho-cuadriculas
-          exit 1
-
-      - name: Comprobar formato y alcance
-        if: steps.consolidacion.outputs.estado == '0'
-        run: |
+          git checkout -- scripts/consolidar_ancho-cuadriculas.py 2>/dev/null || true
           git checkout -- scripts/consolidar_ancho_cuadriculas.py
           git diff --check
           CAMBIADOS=$(git diff --name-only)
@@ -114,16 +115,10 @@ jobs:
             echo "$CAMBIADOS"
             exit 1
           fi
-
-      - name: Confirmar y publicar el cambio validado
-        if: steps.consolidacion.outputs.estado == '0'
-        run: |
           if git diff --quiet -- estilos.css; then
             echo "No se generaron cambios en estilos.css"
             exit 1
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add estilos.css
           git commit -m "Consolida el ancho general y las cuadrículas"
           git push origin HEAD:consolidacion-ancho-cuadriculas
