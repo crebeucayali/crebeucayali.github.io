@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/runner/work/crebeucayali.github.io/crebeucayali.github.io/scripts/consolidar_ancho_cuadriculas.py", line 429, in <module>
+    main()
+  File "/home/runner/work/crebeucayali.github.io/crebeucayali.github.io/scripts/consolidar_ancho_cuadriculas.py", line 408, in main
+    raise RuntimeError(
+RuntimeError: Se esperó una sola definición de .cuerpo-operativo y hay 3
