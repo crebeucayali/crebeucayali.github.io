@@ -155,10 +155,7 @@ a{ color:var(--verde-700); }
   min-height:390px;
   display:block;
   margin:0 auto;
-  background:
-    radial-gradient(circle at 86% 66%,rgba(255,255,255,.11) 0 22%,transparent 23%),
-    radial-gradient(circle at 88% 72%,rgba(255,255,255,.08) 0 36%,transparent 37%),
-    linear-gradient(135deg,#0b3550 0%,#0f4f57 48%,#0f766e 100%);
+  background:#4f9494 !important;
   color:var(--blanco);
   padding:42px 48px 116px;
   overflow:hidden;
@@ -168,22 +165,36 @@ a{ color:var(--verde-700); }
 }
 
 .hero::after{
-  content:"";
-  position:absolute;
-  right:-130px;
-  top:-78px;
-  width:470px;
-  height:470px;
-  border-radius:50%;
-  border:78px solid rgba(255,255,255,.08);
+  display:none !important;
 }
 
-.hero-contenido{
+.hero .patron-portada{
+  position:absolute !important;
+  inset:0 !important;
+  z-index:0 !important;
+  pointer-events:none !important;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(42,91,100,.78) 0%,
+      rgba(63,124,128,.76) 48%,
+      rgba(85,154,150,.72) 100%
+    ),
+    url("patron-shipibo.webp?v=verde-azulado-2") !important;
+  background-repeat:no-repeat,repeat !important;
+  background-size:cover,320px auto !important;
+  background-position:center,center !important;
+  background-blend-mode:normal,normal !important;
+  opacity:1 !important;
+  filter:contrast(1.08) saturate(.94) brightness(.82) !important;
+}
+
+.hero .hero-contenido{
   width:100%;
   max-width:var(--ancho-principal);
   margin:0 auto;
-  position:relative;
-  z-index:1;
+  position:relative !important;
+  z-index:2 !important;
 }
 
 .bloque-institucional{
@@ -191,6 +202,10 @@ a{ color:var(--verde-700); }
   align-items:center;
   gap:24px;
   margin-bottom:34px;
+}
+
+.hero .bloque-institucional{
+  display:none !important;
 }
 
 .logo-area{
@@ -256,6 +271,10 @@ a{ color:var(--verde-700); }
   font-weight:900;
   letter-spacing:.18em;
   text-transform:uppercase;
+}
+
+.hero .etiqueta{
+  margin-top:0 !important;
 }
 
 .hero h1{
@@ -599,11 +618,6 @@ a{ color:var(--verde-700); }
     border-radius:24px;
   }
 
-  .hero::after{
-    right:-210px;
-    top:-120px;
-  }
-
   .bloque-institucional{
     align-items:flex-start;
     gap:16px;
@@ -934,44 +948,6 @@ a{ color:var(--verde-700); }
     padding:20px 18px;
   }
 }
-/* Corrección de fondo decorativo Shipibo en portada Weebly */
-.hero{
-  position:relative;
-  overflow:hidden;
-}
-
-.hero .patron-portada{
-  position:absolute !important;
-  inset:0 !important;
-  z-index:0 !important;
-  pointer-events:none !important;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(48,105,111,.88) 0%,
-      rgba(63,133,136,.86) 52%,
-      rgba(83,154,151,.82) 100%
-    ),
-    url("patron-shipibo.webp") !important;
-  background-repeat:no-repeat,repeat !important;
-  background-size:cover,320px auto !important;
-  background-position:center,center !important;
-  background-blend-mode:multiply !important;
-  opacity:1 !important;
-  filter:contrast(1.08) saturate(.95) brightness(.82) !important;
-}
-
-.hero::after{
-  z-index:1;
-  pointer-events:none;
-}
-
-.hero .hero-contenido{
-  position:relative;
-  z-index:2;
-}
-
-
 /* ==========================================================
    Ajuste Netlify: módulos a ancho completo y acceso administrativo compacto
    ========================================================== */
@@ -1516,86 +1492,6 @@ body.alto-contraste .grupo-resultados-busqueda h3{
   }
 }
 
-
-/* ==========================================================
-   Ajuste solicitado: tono y escala del patrón Shipibo según referencia
-   y sin bloque institucional grande dentro del hero
-   ========================================================== */
-.hero{
-  background:linear-gradient(90deg,#10384c 0%,#1f6270 56%,#72aead 100%) !important;
-}
-
-.hero::after{
-  display:none !important;
-}
-
-.hero .patron-portada{
-  position:absolute !important;
-  inset:0 !important;
-  z-index:0 !important;
-  pointer-events:none !important;
-  background-image:
-    linear-gradient(90deg,rgba(8,35,53,.52) 0%,rgba(21,83,95,.34) 56%,rgba(76,143,144,.18) 100%),
-    url("patron-shipibo.webp") !important;
-  background-repeat:no-repeat,repeat !important;
-  background-size:cover,320px auto !important;
-  background-position:center,center !important;
-  background-blend-mode:multiply,normal !important;
-  opacity:.93 !important;
-  filter:contrast(1.12) saturate(.96) brightness(1.02) !important;
-}
-
-.hero .bloque-institucional{
-  display:none !important;
-}
-
-.hero .hero-contenido{
-  position:relative !important;
-  z-index:2 !important;
-  padding-top:0 !important;
-}
-
-.hero .etiqueta{
-  margin-top:0 !important;
-}
-
-/* ==========================================================
-   AJUSTE FINAL: patrón Shipibo con tono verde azulado
-   Este bloque queda al final para evitar que reglas anteriores lo anulen.
-   ========================================================== */
-.hero{
-  background:#4f9494 !important;
-}
-
-.hero::after{
-  display:none !important;
-}
-
-.hero .patron-portada{
-  position:absolute !important;
-  inset:0 !important;
-  z-index:0 !important;
-  pointer-events:none !important;
-  background-image:
-    linear-gradient(
-      90deg,
-      rgba(42,91,100,.78) 0%,
-      rgba(63,124,128,.76) 48%,
-      rgba(85,154,150,.72) 100%
-    ),
-    url("patron-shipibo.webp?v=verde-azulado-2") !important;
-  background-repeat:no-repeat,repeat !important;
-  background-size:cover,320px auto !important;
-  background-position:center,center !important;
-  background-blend-mode:normal,normal !important;
-  opacity:1 !important;
-  filter:contrast(1.08) saturate(.94) brightness(.82) !important;
-}
-
-.hero .hero-contenido{
-  position:relative !important;
-  z-index:2 !important;
-}
 
 /* ==========================================================
    AJUSTES SOLICITADOS: cabecera, tarjetas FV y footer
