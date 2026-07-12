@@ -1,0 +1,69 @@
+name: Aplicar estado accesible de indicadores
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: write
+
+jobs:
+  aplicar:
+    if: github.head_ref == 'estado-indicadores-carrusel'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar rama
+        uses: actions/checkout@v4
+        with:
+          ref: estado-indicadores-carrusel
+          fetch-depth: 0
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Comprobar estado
+        id: estado
+        run: |
+          if grep -q 'Mostrar noticia ${indice + 1} de ${noticias.length}' main.js; then
+            echo 'aplicado=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'aplicado=false' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Aplicar cambio exacto
+        if: steps.estado.outputs.aplicado != 'true'
+        run: python scripts/aplicar_estado_indicadores.py
+
+      - name: Validar alcance
+        if: steps.estado.outputs.aplicado != 'true'
+        run: |
+          git diff --check -- main.js
+          grep -q 'aria-current' main.js
+          if grep -q 'punto.setAttribute("aria-pressed"' main.js; then
+            exit 1
+          fi
+          if [ "$(git status --short)" != " M main.js" ]; then
+            git status --short
+            exit 1
+          fi
+
+      - name: Publicar ajuste
+        if: steps.estado.outputs.aplicado != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          SHA=$(gh api "/repos/$REPO/contents/main.js?ref=estado-indicadores-carrusel" --jq '.sha')
+          CONTENIDO=$(base64 -w 0 main.js)
+          gh api --method PUT "/repos/$REPO/contents/main.js" \
+            -f message='Actualiza el estado accesible de los indicadores' \
+            -f branch='estado-indicadores-carrusel' \
+            -f sha="$SHA" \
+            -f content="$CONTENIDO"
