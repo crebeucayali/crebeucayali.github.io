@@ -33,6 +33,30 @@ body.theme-crebe{
 img{ max-width:100%; height:auto; }
 a{ color:var(--verde-700); }
 
+.enlace-saltar{
+  position:fixed;
+  top:10px;
+  left:10px;
+  z-index:10000;
+  padding:10px 14px;
+  color:#ffffff;
+  background:var(--azul-900);
+  border:2px solid #ffffff;
+  border-radius:8px;
+  box-shadow:0 6px 18px rgba(16,42,67,.24);
+  font-weight:700;
+  text-decoration:none;
+  transform:translateY(-160%);
+  transition:transform .18s ease;
+}
+
+.enlace-saltar:focus,
+.enlace-saltar:focus-visible{
+  transform:translateY(0);
+  outline:3px solid #facc15;
+  outline-offset:3px;
+}
+
 /* Cabecera */
 
 .cabecera-crebe{
