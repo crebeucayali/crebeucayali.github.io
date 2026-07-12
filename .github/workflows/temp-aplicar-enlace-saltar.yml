@@ -1,15 +1,20 @@
 name: Aplicar enlace para saltar al contenido
 
 on:
-  push:
+  pull_request:
     branches:
-      - enlace-saltar-contenido
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 permissions:
   contents: write
 
 jobs:
   aplicar:
+    if: github.head_ref == 'enlace-saltar-contenido'
     runs-on: ubuntu-latest
     steps:
       - name: Descargar rama
