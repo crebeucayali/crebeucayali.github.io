@@ -1,0 +1,1 @@
+Aplicar únicamente el ajuste semántico de la estructura de módulos.
