@@ -1,6 +1,13 @@
 Traceback (most recent call last):
-  File "/home/runner/work/crebeucayali.github.io/crebeucayali.github.io/scripts/consolidar_ancho_cuadriculas.py", line 429, in <module>
+  File "/home/runner/work/crebeucayali.github.io/crebeucayali.github.io/scripts/consolidar_ancho_cuadriculas.py", line 425, in <module>
     main()
   File "/home/runner/work/crebeucayali.github.io/crebeucayali.github.io/scripts/consolidar_ancho_cuadriculas.py", line 408, in main
-    raise RuntimeError(
-RuntimeError: Se esperó una sola definición de .cuerpo-operativo y hay 3
+    raise RuntimeError("La cuadrícula de tres columnas no quedó consolidada")
+RuntimeError: La cuadrícula de tres columnas no quedó consolidada
+
+Ocurrencias actuales de .cuerpo-operativo:
+362:.cuerpo-operativo{
+565:  .cuerpo-operativo{
+694:.cuerpo-operativo{
+711:  .cuerpo-operativo{
+955:.cuerpo-operativo{
