@@ -30,6 +30,23 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Preparar validación estricta del cuerpo consolidado
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path("scripts/consolidar_ancho_cuadriculas.py")
+          text = path.read_text(encoding="utf-8")
+          old = '''    if text.count(".cuerpo-operativo{") != 1:
+                  raise RuntimeError(
+                      f"Se esperó una sola definición de .cuerpo-operativo y hay {text.count('.cuerpo-operativo{')}"
+                  )
+          '''
+          if old not in text:
+              raise SystemExit("No se encontró el control esperado de .cuerpo-operativo")
+          text = text.replace(old, "", 1)
+          path.write_text(text, encoding="utf-8", newline="\n")
+          PY
+
       - name: Ejecutar consolidación con diagnóstico
         id: consolidacion
         shell: bash
@@ -37,11 +54,42 @@ jobs:
           set +e
           python scripts/consolidar_ancho_cuadriculas.py > /tmp/consolidacion-ancho.log 2>&1
           ESTADO=$?
+          if [ "$ESTADO" -eq 0 ]; then
+            python - <<'PY' >> /tmp/consolidacion-ancho.log 2>&1
+            import re
+            from pathlib import Path
+
+            path = Path("estilos.css")
+            text = path.read_text(encoding="utf-8")
+            redundant = "\n  .cuerpo-operativo{\n    grid-template-columns:1fr;\n  }\n"
+            count = text.count(redundant)
+            if count != 2:
+                raise RuntimeError(
+                    f"Se esperaban 2 reglas responsivas redundantes de .cuerpo-operativo y hay {count}"
+                )
+            text = text.replace(redundant, "\n")
+            text = re.sub(r"\n@media\s*\([^)]*\)\{\s*\}\n", "\n", text)
+            remaining = text.count(".cuerpo-operativo{")
+            if remaining != 1:
+                raise RuntimeError(
+                    f"La consolidación debía dejar 1 definición de .cuerpo-operativo y dejó {remaining}"
+                )
+            path.write_text(text, encoding="utf-8", newline="\n")
+            print("Reglas responsivas redundantes de .cuerpo-operativo retiradas: 2")
+            PY
+            ESTADO=$?
+          fi
           cat /tmp/consolidacion-ancho.log
           echo "estado=$ESTADO" >> "$GITHUB_OUTPUT"
           if [ "$ESTADO" -ne 0 ]; then
             mkdir -p docs
-            cp /tmp/consolidacion-ancho.log docs/consolidacion-ancho-error.log
+            {
+              cat /tmp/consolidacion-ancho.log
+              echo
+              echo "Ocurrencias actuales de .cuerpo-operativo:"
+              grep -n '^\.cuerpo-operativo{' estilos.css || true
+              grep -n '^[[:space:]]*\.cuerpo-operativo{' estilos.css || true
+            } > docs/consolidacion-ancho-error.log
           fi
           exit 0
 
@@ -51,13 +99,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/consolidacion-ancho-error.log
-          git commit -m "Registra diagnóstico temporal de la consolidación"
+          git commit -m "Actualiza diagnóstico temporal de la consolidación"
           git push origin HEAD:consolidacion-ancho-cuadriculas
           exit 1
 
       - name: Comprobar formato y alcance
         if: steps.consolidacion.outputs.estado == '0'
         run: |
+          git checkout -- scripts/consolidar_ancho_cuadriculas.py
           git diff --check
           CAMBIADOS=$(git diff --name-only)
           if [ "$CAMBIADOS" != "estilos.css" ]; then
