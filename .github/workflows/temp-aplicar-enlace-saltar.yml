@@ -1,0 +1,83 @@
+name: Aplicar enlace para saltar al contenido
+
+on:
+  push:
+    branches:
+      - enlace-saltar-contenido
+
+permissions:
+  contents: write
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar rama
+        uses: actions/checkout@v4
+        with:
+          ref: enlace-saltar-contenido
+          fetch-depth: 0
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Comprobar si el cambio ya está aplicado
+        id: estado
+        shell: bash
+        run: |
+          if grep -q 'href="#contenido-principal"' index.html && grep -q '.enlace-saltar{' estilos.css; then
+            echo 'aplicado=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'aplicado=false' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Aplicar cambio exacto
+        if: steps.estado.outputs.aplicado != 'true'
+        run: python scripts/anadir_enlace_saltar.py
+
+      - name: Validar alcance
+        if: steps.estado.outputs.aplicado != 'true'
+        shell: bash
+        run: |
+          git diff --check -- index.html estilos.css
+          grep -q '<a class="enlace-saltar" href="#contenido-principal">Saltar al contenido principal</a>' index.html
+          grep -q '<main id="contenido-principal" class="portal-crebe" tabindex="-1">' index.html
+          grep -q '.enlace-saltar:focus-visible' estilos.css
+          CAMBIOS=$(git status --short)
+          echo "$CAMBIOS"
+          if [ "$CAMBIOS" != $' M estilos.css\n M index.html' ] && [ "$CAMBIOS" != $' M index.html\n M estilos.css' ]; then
+            echo 'Se detectaron cambios fuera de index.html y estilos.css'
+            exit 1
+          fi
+
+      - name: Publicar index.html
+        if: steps.estado.outputs.aplicado != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          SHA=$(gh api "/repos/$REPO/contents/index.html?ref=enlace-saltar-contenido" --jq '.sha')
+          CONTENIDO=$(base64 -w 0 index.html)
+          gh api --method PUT "/repos/$REPO/contents/index.html" \
+            -f message='Añade enlace para saltar al contenido principal' \
+            -f branch='enlace-saltar-contenido' \
+            -f sha="$SHA" \
+            -f content="$CONTENIDO"
+
+      - name: Publicar estilos.css
+        if: steps.estado.outputs.aplicado != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          SHA=$(gh api "/repos/$REPO/contents/estilos.css?ref=enlace-saltar-contenido" --jq '.sha')
+          CONTENIDO=$(base64 -w 0 estilos.css)
+          gh api --method PUT "/repos/$REPO/contents/estilos.css" \
+            -f message='Estiliza el enlace para saltar al contenido' \
+            -f branch='enlace-saltar-contenido' \
+            -f sha="$SHA" \
+            -f content="$CONTENIDO"
