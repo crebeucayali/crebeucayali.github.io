@@ -1,15 +1,20 @@
 name: Aplicar mejora del diálogo guiado
 
 on:
-  push:
+  pull_request:
     branches:
-      - mejora-dialogo-recorrido-guiado
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 permissions:
   contents: write
 
 jobs:
   aplicar:
+    if: github.head_ref == 'mejora-dialogo-recorrido-guiado'
     runs-on: ubuntu-latest
     steps:
       - name: Descargar rama
