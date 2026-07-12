@@ -2,6 +2,7 @@
 
 :root{
   --ancho-principal:1360px;
+  --ancho-cuerpo-crebe:1120px;
   --azul-900:#082f49;
   --azul-800:#0b3550;
   --verde-900:#064e3b;
@@ -26,7 +27,7 @@ body.theme-crebe{
     var(--arena-50);
   font-family:Arial, Helvetica, sans-serif;
   line-height:1.6;
-  overflow-x:hidden;
+  overflow-x:hidden !important;
 }
 
 img{ max-width:100%; height:auto; }
@@ -150,11 +151,13 @@ a{ color:var(--verde-700); }
 }
 
 .hero{
-  width:calc(100% - 36px);
-  max-width:var(--ancho-principal);
+  width:min(var(--ancho-cuerpo-crebe), calc(100% - 36px)) !important;
+  max-width:var(--ancho-cuerpo-crebe) !important;
   min-height:390px;
   display:block;
   margin:0 auto;
+  margin-left:auto !important;
+  margin-right:auto !important;
   background:#4f9494 !important;
   color:var(--blanco);
   padding:42px 48px 116px;
@@ -312,7 +315,10 @@ a{ color:var(--verde-700); }
 }
 
 .bloque-presentacion{
-  width:100%;
+  width:min(var(--ancho-cuerpo-crebe), calc(100% - 36px)) !important;
+  max-width:var(--ancho-cuerpo-crebe) !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
   display:grid;
   grid-template-columns:minmax(0,1.35fr) minmax(0,.95fr);
   gap:24px;
@@ -360,19 +366,50 @@ a{ color:var(--verde-700); }
 /* Cuerpo: tarjetas + lateral */
 
 .cuerpo-operativo{
-  width:100%;
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 300px;
-  gap:24px;
-  align-items:start;
+  width:min(var(--ancho-cuerpo-crebe), calc(100% - 36px)) !important;
+  max-width:var(--ancho-cuerpo-crebe) !important;
+  min-width:0 !important;
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:28px !important;
+  align-items:start !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
 }
 
 .tarjetas{
-  width:100%;
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:22px;
-  align-items:stretch;
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  gap:22px !important;
+  align-items:stretch !important;
+}
+
+.tarjeta-acceso,
+.linea-item,
+.noticia-tarjeta,
+.impacto-tarjeta{
+  min-width:0 !important;
+}
+
+@media (max-width:980px){
+  .tarjetas{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+
+@media (max-width:680px){
+  .hero,
+  .bloque-presentacion,
+  .cuerpo-operativo{
+    width:min(100% - 24px, var(--ancho-cuerpo-crebe)) !important;
+  }
+
+  .tarjetas{
+    grid-template-columns:1fr !important;
+  }
 }
 
 .tarjeta{
@@ -562,9 +599,6 @@ a{ color:var(--verde-700); }
 @media (max-width:1180px){
   :root{ --ancho-principal:1120px; }
 
-  .cuerpo-operativo{
-    grid-template-columns:1fr;
-  }
 
   .pie-interior{
     grid-template-columns:repeat(2,minmax(0,1fr));
@@ -582,9 +616,6 @@ a{ color:var(--verde-700); }
     justify-content:flex-start;
   }
 
-  .tarjetas{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
 }
 
 @media (max-width:760px){
@@ -613,7 +644,6 @@ a{ color:var(--verde-700); }
   }
 
   .hero{
-    width:calc(100% - 12px);
     min-height:auto;
     padding:28px 18px 100px;
     border-radius:24px;
@@ -666,9 +696,6 @@ a{ color:var(--verde-700); }
     grid-template-columns:1fr;
   }
 
-  .tarjetas{
-    grid-template-columns:1fr;
-  }
 
   .panel,
   .tarjeta,
@@ -688,43 +715,6 @@ a{ color:var(--verde-700); }
   }
 }
 
-
-/* Corrección visible del panel lateral: acceso administrativo y firma tu visita */
-
-.cuerpo-operativo{
-  width:100%;
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 300px;
-  gap:18px;
-  align-items:start;
-}
-
-.tarjetas{
-  width:100%;
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:22px;
-  align-items:stretch;
-}
-
-@media (max-width:1180px){
-  .cuerpo-operativo{
-    grid-template-columns:1fr;
-  }
-}
-
-@media (max-width:900px){
-  .tarjetas{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-}
-
-@media (max-width:760px){
-  .tarjetas,
-  .panel-lateral.acceso-modulos{
-    grid-template-columns:1fr;
-  }
-}
 
 /* Ajustes finales solicitados: RA azul y panel administrativo compacto */
 .tarjeta.repositorio{
@@ -752,9 +742,12 @@ a{ color:var(--verde-700); }
   --borde:#d9e2ec;
   --fondo:#ffffff;
   --fondo-suave:#faf9f6;
-  width:100%;
-  max-width:1280px;
+  width:min(var(--ancho-cuerpo-crebe), calc(100% - 36px)) !important;
+  max-width:var(--ancho-cuerpo-crebe) !important;
+  min-width:0 !important;
   margin:24px auto;
+  margin-left:auto !important;
+  margin-right:auto !important;
   padding:0 14px;
   font-family:Arial, Helvetica, sans-serif;
 }
@@ -928,6 +921,12 @@ a{ color:var(--verde-700); }
   }
 }
 
+@media(max-width:680px){
+  .accesos-complementarios-weebly{
+    width:min(100% - 24px, var(--ancho-cuerpo-crebe)) !important;
+  }
+}
+
 @media(max-width:640px){
   .accesos-complementarios-weebly{
     margin:22px auto;
@@ -949,47 +948,6 @@ a{ color:var(--verde-700); }
     padding:20px 18px;
   }
 }
-/* ==========================================================
-   Ajuste Netlify: módulos a ancho completo y acceso administrativo compacto
-   ========================================================== */
-.cuerpo-operativo{
-  width:100% !important;
-  display:grid !important;
-  grid-template-columns:1fr !important;
-  gap:28px !important;
-  align-items:start !important;
-}
-
-.tarjetas{
-  width:100% !important;
-  display:grid !important;
-  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
-  gap:22px !important;
-  align-items:stretch !important;
-}
-
-@media(max-width:920px){
-  .tarjetas{
-    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-  }
-}
-
-@media(max-width:640px){
-  .tarjetas{
-    grid-template-columns:1fr !important;
-  }
-}
-
-@media(max-width:920px){
-}
-
-@media(max-width:640px){
-}
-
-@media(max-width:920px){
-}
-
-
 /* ==========================================================
    Complementos UX/UI EVA: búsqueda, accesibilidad y guía rápida
    ========================================================== */
@@ -1331,8 +1289,6 @@ body.alto-contraste .resultado-busqueda:focus-visible{
   background:#ffffff !important;
 }
 
-@media(max-width:640px){
-}
 
 /* ==========================================================
    Ajuste UX final: accesos complementarios en fila, buscador
@@ -2033,9 +1989,12 @@ body.alto-contraste .pestanas-crebe a.activo::after{
    Carrusel institucional de indicadores CREBE/EVA
    ========================================================== */
 .impacto-crebe{
-  width:calc(100% - 36px);
-  max-width:var(--ancho-principal);
+  width:min(var(--ancho-cuerpo-crebe), calc(100% - 36px)) !important;
+  max-width:var(--ancho-cuerpo-crebe) !important;
+  min-width:0 !important;
   margin:18px auto 0;
+  margin-left:auto !important;
+  margin-right:auto !important;
   padding:18px 0 4px;
   overflow:hidden;
   color:var(--tinta);
@@ -2153,7 +2112,6 @@ body.alto-contraste .pestanas-crebe a.activo::after{
 
 @media(max-width:720px){
   .impacto-crebe{
-    width:calc(100% - 24px);
     margin-top:12px;
     padding-top:14px;
   }
@@ -2166,6 +2124,12 @@ body.alto-contraste .pestanas-crebe a.activo::after{
   .impacto-tarjeta{
     width:245px;
     min-height:165px;
+  }
+}
+
+@media(max-width:680px){
+  .impacto-crebe{
+    width:min(100% - 24px, var(--ancho-cuerpo-crebe)) !important;
   }
 }
 
@@ -2949,8 +2913,12 @@ body.alto-contraste .noticias-indicador.activo{background:#fff;color:#000;}
 
 /* Corrección de tamaño del carrusel de noticias para navegador PC al 100% */
 .noticias-destacadas{
-  width:min(1120px,calc(100% - 32px));
+  width:min(var(--ancho-cuerpo-crebe), calc(100% - 36px)) !important;
+  max-width:var(--ancho-cuerpo-crebe) !important;
+  min-width:0 !important;
   margin:18px auto 14px;
+  margin-left:auto !important;
+  margin-right:auto !important;
   padding:4px 0 2px;
   background:transparent !important;
   border:0 !important;
@@ -2988,13 +2956,15 @@ body.alto-contraste .noticias-indicador.activo{background:#fff;color:#000;}
 }
 
 .noticias-carrusel{
-  width:min(1120px,100%);
+  width:100% !important;
+  max-width:100% !important;
   margin:0 auto;
   position:relative;
 }
 
 .noticias-viewport{
-  width:min(1040px,calc(100% - 88px));
+  width:min(100%, 900px) !important;
+  max-width:calc(100% - 88px) !important;
   margin:0 auto;
   overflow:hidden;
   padding:8px 0 10px;
@@ -3009,7 +2979,7 @@ body.alto-contraste .noticias-indicador.activo{background:#fff;color:#000;}
 }
 
 .noticia-tarjeta{
-  flex:0 0 280px !important;
+  flex:0 0 260px !important;
   display:flex !important;
   flex-direction:column !important;
   min-height:0 !important;
@@ -3025,7 +2995,7 @@ body.alto-contraste .noticias-indicador.activo{background:#fff;color:#000;}
 }
 
 .noticia-tarjeta.activa{
-  flex-basis:350px !important;
+  flex-basis:330px !important;
   transform:scale(1) !important;
   opacity:1 !important;
   filter:none !important;
@@ -3126,91 +3096,6 @@ body.alto-contraste .noticias-indicador.activo{background:#fff;color:#000;}
 }
 
 @media (max-width:980px){
-  .noticias-viewport{width:min(100%,calc(100% - 72px));}
-  .noticia-tarjeta{flex-basis:250px !important;}
-  .noticia-tarjeta.activa{flex-basis:320px !important;}
-}
-
-@media (max-width:760px){
-  .noticias-destacadas{width:min(100% - 16px,1120px);margin:16px auto 12px;}
-  .noticias-viewport{width:min(100%,calc(100% - 58px));}
-  .noticias-pista{gap:16px;}
-  .noticia-tarjeta,
-  .noticia-tarjeta.activa{
-    flex-basis:min(330px,calc(100vw - 96px)) !important;
-    transform:scale(1) !important;
-  }
-  .noticia-tarjeta.vecina{transform:scale(.94) !important;}
-  .noticias-control{width:38px !important;height:38px !important;}
-}
-
-
-/* Ajuste final de ancho del cuerpo: alineado con header y footer */
-:root{
-  --ancho-cuerpo-crebe:1120px;
-}
-
-body.theme-crebe{
-  overflow-x:hidden !important;
-}
-
-.hero,
-.bloque-presentacion,
-.cuerpo-operativo,
-.noticias-destacadas,
-.accesos-complementarios-weebly,
-.impacto-crebe{
-  width:min(var(--ancho-cuerpo-crebe), calc(100% - 36px)) !important;
-  max-width:var(--ancho-cuerpo-crebe) !important;
-  margin-left:auto !important;
-  margin-right:auto !important;
-}
-
-.cuerpo-operativo,
-.tarjetas,
-.accesos-complementarios-weebly,
-.noticias-destacadas,
-.impacto-crebe{
-  min-width:0 !important;
-}
-
-.tarjetas{
-  width:100% !important;
-  max-width:100% !important;
-  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
-}
-
-.tarjeta,
-.tarjeta-acceso,
-.linea-item,
-.noticia-tarjeta,
-.impacto-tarjeta{
-  min-width:0 !important;
-}
-
-.noticias-carrusel{
-  width:100% !important;
-  max-width:100% !important;
-}
-
-.noticias-viewport{
-  width:min(100%, 900px) !important;
-  max-width:calc(100% - 88px) !important;
-}
-
-.noticia-tarjeta{
-  flex-basis:260px !important;
-}
-
-.noticia-tarjeta.activa{
-  flex-basis:330px !important;
-}
-
-@media (max-width:980px){
-  .tarjetas{
-    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-  }
-
   .noticias-viewport{
     max-width:calc(100% - 72px) !important;
   }
@@ -3221,18 +3106,20 @@ body.theme-crebe{
   }
 }
 
-@media (max-width:680px){
-  .hero,
-  .bloque-presentacion,
-  .cuerpo-operativo,
-  .noticias-destacadas,
-  .accesos-complementarios-weebly,
-  .impacto-crebe{
-    width:min(100% - 24px, var(--ancho-cuerpo-crebe)) !important;
+@media (max-width:760px){
+  .noticias-destacadas{margin:16px auto 12px;}
+  .noticias-pista{gap:16px;}
+  .noticia-tarjeta,
+  .noticia-tarjeta.activa{
+    transform:scale(1) !important;
   }
+  .noticia-tarjeta.vecina{transform:scale(.94) !important;}
+  .noticias-control{width:38px !important;height:38px !important;}
+}
 
-  .tarjetas{
-    grid-template-columns:1fr !important;
+@media (max-width:680px){
+  .noticias-destacadas{
+    width:min(100% - 24px, var(--ancho-cuerpo-crebe)) !important;
   }
 
   .noticias-viewport{
