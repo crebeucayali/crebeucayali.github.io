@@ -30,10 +30,33 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Consolidar anchos y cuadrículas
-        run: python scripts/consolidar_ancho_cuadriculas.py
+      - name: Ejecutar consolidación con diagnóstico
+        id: consolidacion
+        shell: bash
+        run: |
+          set +e
+          python scripts/consolidar_ancho_cuadriculas.py > /tmp/consolidacion-ancho.log 2>&1
+          ESTADO=$?
+          cat /tmp/consolidacion-ancho.log
+          echo "estado=$ESTADO" >> "$GITHUB_OUTPUT"
+          if [ "$ESTADO" -ne 0 ]; then
+            mkdir -p docs
+            cp /tmp/consolidacion-ancho.log docs/consolidacion-ancho-error.log
+          fi
+          exit 0
+
+      - name: Publicar diagnóstico si falla
+        if: steps.consolidacion.outputs.estado != '0'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/consolidacion-ancho-error.log
+          git commit -m "Registra diagnóstico temporal de la consolidación"
+          git push origin HEAD:consolidacion-ancho-cuadriculas
+          exit 1
 
       - name: Comprobar formato y alcance
+        if: steps.consolidacion.outputs.estado == '0'
         run: |
           git diff --check
           CAMBIADOS=$(git diff --name-only)
@@ -44,6 +67,7 @@ jobs:
           fi
 
       - name: Confirmar y publicar el cambio validado
+        if: steps.consolidacion.outputs.estado == '0'
         run: |
           if git diff --quiet -- estilos.css; then
             echo "No se generaron cambios en estilos.css"
