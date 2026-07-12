@@ -1,0 +1,112 @@
+name: Consolidación final de ancho y cuadrículas
+
+on:
+  push:
+    branches:
+      - consolidacion-ancho-cuadriculas
+
+permissions:
+  contents: write
+
+jobs:
+  consolidar:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar rama de trabajo
+        uses: actions/checkout@v4
+        with:
+          ref: consolidacion-ancho-cuadriculas
+          fetch-depth: 0
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Preparar controles compatibles con las reglas responsivas
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("scripts/consolidar_ancho_cuadriculas.py")
+          text = path.read_text(encoding="utf-8")
+          blocks = [
+              '''    if text.count(".cuerpo-operativo{") != 1:
+                  raise RuntimeError(
+                      f"Se esperó una sola definición de .cuerpo-operativo y hay {text.count('.cuerpo-operativo{')}"
+                  )
+          ''',
+              '''    if text.count("grid-template-columns:repeat(3,minmax(0,1fr)) !important;") != 1:
+                  raise RuntimeError("La cuadrícula de tres columnas no quedó consolidada")
+          ''',
+              '''    if text.count("grid-template-columns:repeat(2,minmax(0,1fr)) !important;") != 1:
+                  raise RuntimeError("La cuadrícula de dos columnas no quedó consolidada")
+          ''',
+              '''    if text.count("grid-template-columns:1fr !important;") < 2:
+                  raise RuntimeError("Falta una regla consolidada de una columna")
+          ''',
+          ]
+          for block in blocks:
+              if block not in text:
+                  raise SystemExit("No se encontró uno de los controles esperados")
+              text = text.replace(block, "", 1)
+          path.write_text(text, encoding="utf-8", newline="\n")
+          PY
+
+      - name: Consolidar anchos y cuadrículas
+        run: |
+          python scripts/consolidar_ancho_cuadriculas.py
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          path = Path("estilos.css")
+          text = path.read_text(encoding="utf-8")
+          redundant = "\n  .cuerpo-operativo{\n    grid-template-columns:1fr;\n  }\n"
+          count = text.count(redundant)
+          if count != 2:
+              raise RuntimeError(
+                  f"Se esperaban 2 reglas responsivas redundantes y se encontraron {count}"
+              )
+          text = text.replace(redundant, "\n")
+          text = re.sub(r"\n@media\s*\([^)]*\)\{\s*\}\n", "\n", text)
+
+          if text.count(".cuerpo-operativo{") != 1:
+              raise RuntimeError("No quedó una única definición de .cuerpo-operativo")
+          required = [
+              "grid-template-columns:repeat(3,minmax(0,1fr)) !important;",
+              "grid-template-columns:repeat(2,minmax(0,1fr)) !important;",
+              "width:min(var(--ancho-cuerpo-crebe), calc(100% - 36px)) !important;",
+              "width:min(100% - 24px, var(--ancho-cuerpo-crebe)) !important;",
+          ]
+          for item in required:
+              if item not in text:
+                  raise RuntimeError(f"Falta la regla requerida: {item}")
+
+          path.write_text(text, encoding="utf-8", newline="\n")
+          PY
+
+      - name: Verificar formato y alcance
+        run: |
+          git checkout -- scripts/consolidar_ancho_cuadriculas.py
+          git diff --check
+          CAMBIADOS=$(git diff --name-only)
+          if [ "$CAMBIADOS" != "estilos.css" ]; then
+            echo "Se detectaron archivos inesperados:"
+            echo "$CAMBIADOS"
+            exit 1
+          fi
+
+      - name: Confirmar y publicar estilos.css
+        run: |
+          if git diff --quiet -- estilos.css; then
+            echo "No se generaron cambios en estilos.css"
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add estilos.css
+          git commit -m "Consolida el ancho general y las cuadrículas"
+          git push origin HEAD:consolidacion-ancho-cuadriculas
