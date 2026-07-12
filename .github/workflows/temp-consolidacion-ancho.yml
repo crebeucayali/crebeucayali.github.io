@@ -34,16 +34,30 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+
           path = Path("scripts/consolidar_ancho_cuadriculas.py")
           text = path.read_text(encoding="utf-8")
-          old = '''    if text.count(".cuerpo-operativo{") != 1:
+          blocks = [
+              '''    if text.count(".cuerpo-operativo{") != 1:
                   raise RuntimeError(
                       f"Se esperó una sola definición de .cuerpo-operativo y hay {text.count('.cuerpo-operativo{')}"
                   )
-          '''
-          if old not in text:
-              raise SystemExit("No se encontró el control esperado de .cuerpo-operativo")
-          path.write_text(text.replace(old, "", 1), encoding="utf-8", newline="\n")
+          ''',
+              '''    if text.count("grid-template-columns:repeat(3,minmax(0,1fr)) !important;") != 1:
+                  raise RuntimeError("La cuadrícula de tres columnas no quedó consolidada")
+          ''',
+              '''    if text.count("grid-template-columns:repeat(2,minmax(0,1fr)) !important;") != 1:
+                  raise RuntimeError("La cuadrícula de dos columnas no quedó consolidada")
+          ''',
+              '''    if text.count("grid-template-columns:1fr !important;") < 2:
+                  raise RuntimeError("Falta una regla consolidada de una columna")
+          ''',
+          ]
+          for block in blocks:
+              if block not in text:
+                  raise SystemExit("No se encontró uno de los controles esperados del script")
+              text = text.replace(block, "", 1)
+          path.write_text(text, encoding="utf-8", newline="\n")
           PY
 
       - name: Ejecutar consolidación y postproceso
@@ -69,13 +83,22 @@ jobs:
                 )
             text = text.replace(redundant, "\n")
             text = re.sub(r"\n@media\s*\([^)]*\)\{\s*\}\n", "\n", text)
-            remaining = text.count(".cuerpo-operativo{")
-            if remaining != 1:
-                raise RuntimeError(
-                    f"La consolidación debía dejar 1 definición de .cuerpo-operativo y dejó {remaining}"
-                )
+
+            if text.count(".cuerpo-operativo{") != 1:
+                raise RuntimeError("No quedó una única definición de .cuerpo-operativo")
+            required = [
+                "grid-template-columns:repeat(3,minmax(0,1fr)) !important;",
+                "grid-template-columns:repeat(2,minmax(0,1fr)) !important;",
+                "width:min(var(--ancho-cuerpo-crebe), calc(100% - 36px)) !important;",
+                "width:min(100% - 24px, var(--ancho-cuerpo-crebe)) !important;",
+            ]
+            for item in required:
+                if item not in text:
+                    raise RuntimeError(f"Falta la regla consolidada requerida: {item}")
+
             path.write_text(text, encoding="utf-8", newline="\n")
             print("Reglas responsivas redundantes de .cuerpo-operativo retiradas: 2")
+            print("Validación estructural de anchos y cuadrículas completada.")
             PY
             ESTADO=$?
           fi
@@ -106,7 +129,6 @@ jobs:
             exit 1
           fi
 
-          git checkout -- scripts/consolidar_ancho-cuadriculas.py 2>/dev/null || true
           git checkout -- scripts/consolidar_ancho_cuadriculas.py
           git diff --check
           CAMBIADOS=$(git diff --name-only)
