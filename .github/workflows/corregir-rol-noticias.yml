@@ -1,0 +1,67 @@
+name: Corregir rol accesible de noticias
+
+on:
+  push:
+    branches:
+      - corrige-rol-noticias-carrusel
+
+permissions:
+  contents: write
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar rama
+        uses: actions/checkout@v4
+        with:
+          ref: corrige-rol-noticias-carrusel
+          fetch-depth: 0
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Comprobar si el cambio ya está aplicado
+        id: estado
+        shell: bash
+        run: |
+          if grep -q 'articulo.setAttribute("role", "group")' main.js; then
+            echo 'aplicado=false' >> "$GITHUB_OUTPUT"
+          else
+            echo 'aplicado=true' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Aplicar cambio exacto
+        if: steps.estado.outputs.aplicado != 'true'
+        run: python scripts/corregir_rol_noticias.py
+
+      - name: Validar alcance
+        if: steps.estado.outputs.aplicado != 'true'
+        shell: bash
+        run: |
+          git diff --check -- main.js
+          grep -q 'articulo.setAttribute("aria-label"' main.js
+          grep -q 'articulo.setAttribute("aria-hidden"' main.js
+          if grep -q 'articulo.setAttribute("role", "group")' main.js; then exit 1; fi
+          if grep -q 'articulo.setAttribute("aria-roledescription", "diapositiva")' main.js; then exit 1; fi
+          if [ "$(git status --short)" != " M main.js" ]; then
+            git status --short
+            exit 1
+          fi
+
+      - name: Publicar únicamente main.js
+        if: steps.estado.outputs.aplicado != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          SHA=$(gh api "/repos/$REPO/contents/main.js?ref=corrige-rol-noticias-carrusel" --jq '.sha')
+          CONTENIDO=$(base64 -w 0 main.js)
+          gh api --method PUT "/repos/$REPO/contents/main.js" \
+            -f message='Corrige el rol accesible de las noticias' \
+            -f branch='corrige-rol-noticias-carrusel' \
+            -f sha="$SHA" \
+            -f content="$CONTENIDO"
