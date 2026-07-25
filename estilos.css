@@ -1,4 +1,4 @@
-@import url("estilos-original.css?v=9");
+@import url("estilos-original.css?v=10");
 @import url("accesibilidad.css?v=4");
 
 /* Centrado equilibrado de NI y RA sin alterar dimensiones ni colores */
@@ -59,16 +59,13 @@
   background:#ffffff;
 }
 
-/*
-  Patrón Shipibo priorizado como capa visual independiente.
-  Se evita usar el shorthand background del hero para impedir que otra regla
-  posterior elimine la imagen al redefinir el fondo.
-*/
+/* Fondo base del hero. */
 .hero{
   isolation:isolate;
   background:linear-gradient(135deg,#0b3550 0%,#0f4f57 48%,#0f766e 100%) !important;
 }
 
+/* Patrón Shipibo como única imagen de la capa decorativa. */
 .patron-portada{
   display:block !important;
   position:absolute !important;
@@ -76,13 +73,11 @@
   z-index:0 !important;
   pointer-events:none !important;
   background-color:transparent !important;
-  background-image:
-    linear-gradient(rgba(11,53,80,.34),rgba(15,118,110,.34)),
-    url("patron-shipibo.webp?v=9") !important;
-  background-repeat:repeat,repeat !important;
-  background-size:auto,320px auto !important;
-  background-position:center,center !important;
-  opacity:1 !important;
+  background-image:url("patron-shipibo.webp?v=10") !important;
+  background-repeat:repeat !important;
+  background-size:320px auto !important;
+  background-position:center !important;
+  opacity:.50 !important;
   filter:none !important;
 }
 
