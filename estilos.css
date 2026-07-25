@@ -1,4 +1,4 @@
-@import url("estilos-original.css");
+@import url("estilos-original.css?v=7");
 @import url("accesibilidad.css?v=4");
 
 /* Centrado equilibrado de NI y RA sin alterar dimensiones ni colores */
@@ -44,17 +44,38 @@
   overflow-wrap:break-word;
 }
 
-/* El logo anterior apuntaba a una ruta inexistente. */
+/* Logo institucional en formato WebP desde la ruta vigente. */
 .marca-logo{
   background-color:#ffffff;
-  background-image:url("https://crebe-ucayali.github.io/banco-digital-accesible/logo-crebe.png");
-  background-repeat:no-repeat;
-  background-position:center;
-  background-size:contain;
+  background-image:none;
 }
 
 .marca-logo-img{
-  display:none;
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:11px;
+  background:#ffffff;
+}
+
+/* Patrón shipibo en formato WebP sin alterar la estructura del hero. */
+.patron-portada{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:url("patron-shipibo.webp?v=7");
+  background-repeat:repeat;
+  background-size:cover;
+  background-position:center;
+  opacity:.30;
+  filter:saturate(1.15) contrast(1.08);
+}
+
+.hero-contenido{
+  position:relative;
+  z-index:1;
 }
 
 .pestanas-crebe{
