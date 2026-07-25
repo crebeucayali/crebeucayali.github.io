@@ -59,26 +59,21 @@
   background:#ffffff;
 }
 
-/* Fondo base del hero. */
+/* Fondo base del hero con el patrón Shipibo incorporado directamente. */
 .hero{
   isolation:isolate;
-  background:linear-gradient(135deg,#0b3550 0%,#0f4f57 48%,#0f766e 100%) !important;
+  background-color:#0b3550 !important;
+  background-image:
+    linear-gradient(135deg,rgba(11,53,80,.78) 0%,rgba(15,79,87,.72) 48%,rgba(15,118,110,.72) 100%),
+    url("./patron-shipibo.webp?v=11") !important;
+  background-repeat:no-repeat,repeat !important;
+  background-size:cover,320px auto !important;
+  background-position:center,center !important;
 }
 
-/* Patrón Shipibo como única imagen de la capa decorativa. */
+/* Se conserva la capa del HTML, pero se evita duplicar u ocultar el patrón. */
 .patron-portada{
-  display:block !important;
-  position:absolute !important;
-  inset:0 !important;
-  z-index:0 !important;
-  pointer-events:none !important;
-  background-color:transparent !important;
-  background-image:url("patron-shipibo.webp?v=10") !important;
-  background-repeat:repeat !important;
-  background-size:320px auto !important;
-  background-position:center !important;
-  opacity:.50 !important;
-  filter:none !important;
+  display:none !important;
 }
 
 .hero::after{
