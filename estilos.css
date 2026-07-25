@@ -1,4 +1,4 @@
-@import url("estilos-original.css?v=8");
+@import url("estilos-original.css?v=9");
 @import url("accesibilidad.css?v=4");
 
 /* Centrado equilibrado de NI y RA sin alterar dimensiones ni colores */
@@ -59,21 +59,41 @@
   background:#ffffff;
 }
 
-/* El patrón Shipibo queda integrado directamente en el fondo del hero. */
+/*
+  Patrón Shipibo priorizado como capa visual independiente.
+  Se evita usar el shorthand background del hero para impedir que otra regla
+  posterior elimine la imagen al redefinir el fondo.
+*/
 .hero{
-  background:
-    linear-gradient(rgba(11,53,80,.62),rgba(15,118,110,.62)),
-    url("patron-shipibo.webp?v=8") center/cover repeat !important;
+  isolation:isolate;
+  background:linear-gradient(135deg,#0b3550 0%,#0f4f57 48%,#0f766e 100%) !important;
 }
 
-/* Se depura el contenedor anterior para evitar superposiciones o desapariciones. */
 .patron-portada{
-  display:none !important;
+  display:block !important;
+  position:absolute !important;
+  inset:0 !important;
+  z-index:0 !important;
+  pointer-events:none !important;
+  background-color:transparent !important;
+  background-image:
+    linear-gradient(rgba(11,53,80,.34),rgba(15,118,110,.34)),
+    url("patron-shipibo.webp?v=9") !important;
+  background-repeat:repeat,repeat !important;
+  background-size:auto,320px auto !important;
+  background-position:center,center !important;
+  opacity:1 !important;
+  filter:none !important;
+}
+
+.hero::after{
+  z-index:1 !important;
+  pointer-events:none;
 }
 
 .hero-contenido{
   position:relative;
-  z-index:1;
+  z-index:2 !important;
 }
 
 .pestanas-crebe{
