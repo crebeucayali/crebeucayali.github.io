@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img" aria-labelledby="titulo descripcion">
+  <title id="titulo">Código QR del Ecosistema Virtual Accesible</title>
+  <desc id="descripcion">Código QR que dirige a https://crebeucayali.github.io/</desc>
+  <rect width="1200" height="1200" fill="#ffffff"/>
+  <image href="https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&amp;data=https%3A%2F%2Fcrebeucayali.github.io%2F" x="100" y="100" width="1000" height="1000" preserveAspectRatio="xMidYMid meet"/>
+</svg>
