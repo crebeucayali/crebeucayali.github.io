@@ -92,6 +92,95 @@
   flex:0 1 auto;
 }
 
+/* Footer institucional completo, basado en Accesos Complementarios. */
+.pie-crebe-completo{
+  margin-top:42px;
+  color:#ffffff;
+  background:linear-gradient(135deg,#082f49 0%,#0b4f4a 58%,#0f766e 100%);
+}
+
+.pie-crebe-contenido{
+  width:min(100% - 36px,var(--ancho-principal));
+  margin:0 auto;
+  padding:40px 0 30px;
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(220px,.8fr) minmax(240px,.9fr);
+  gap:30px;
+  align-items:start;
+}
+
+.pie-crebe-bloque h2{
+  margin:0 0 12px;
+  color:#ffffff;
+  font-size:1.08rem;
+  line-height:1.25;
+}
+
+.pie-crebe-bloque p{
+  margin:0;
+  color:rgba(255,255,255,.9);
+  line-height:1.7;
+}
+
+.pie-crebe-bloque a{
+  color:#d6fff7;
+  text-decoration:none;
+}
+
+.pie-crebe-bloque a:hover,
+.pie-crebe-bloque a:focus-visible,
+.pie-crebe-secundario a:hover,
+.pie-crebe-secundario a:focus-visible{
+  color:#ffffff;
+  text-decoration:underline;
+}
+
+.pie-crebe-identidad{
+  display:flex;
+  align-items:flex-start;
+  gap:16px;
+}
+
+.pie-crebe-logo{
+  width:72px;
+  height:72px;
+  flex:0 0 72px;
+  display:block;
+  object-fit:contain;
+  padding:6px;
+  background:#ffffff;
+  border-radius:18px;
+}
+
+.pie-crebe-secundario{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px 22px;
+  padding:16px 18px;
+  border-top:1px solid rgba(255,255,255,.18);
+  border-bottom:1px solid rgba(255,255,255,.18);
+}
+
+.pie-crebe-secundario a{
+  color:#d6fff7;
+  font-weight:700;
+  text-decoration:none;
+}
+
+.pie-crebe-final{
+  padding:18px;
+  text-align:center;
+  background:rgba(0,0,0,.16);
+}
+
+.pie-crebe-final p{
+  margin:0;
+  color:rgba(255,255,255,.92);
+  font-size:.92rem;
+  line-height:1.55;
+}
+
 /* En pantallas intermedias el menú pasa debajo de la identidad institucional. */
 @media (max-width:1180px){
   .cabecera-interior{
@@ -110,6 +199,16 @@
   }
 }
 
+@media (max-width:900px){
+  .pie-crebe-contenido{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .pie-crebe-identidad{
+    grid-column:1/-1;
+  }
+}
+
 @media (max-width:760px){
   .cabecera-interior{
     max-width:calc(100vw - 16px);
@@ -121,5 +220,20 @@
 
   .marca-crebe > span:last-child small{
     font-size:.72rem;
+  }
+
+  .pie-crebe-contenido{
+    width:min(100% - 28px,var(--ancho-principal));
+    grid-template-columns:1fr;
+    padding:32px 0 24px;
+  }
+
+  .pie-crebe-identidad{
+    grid-column:auto;
+  }
+
+  .pie-crebe-secundario{
+    align-items:center;
+    flex-direction:column;
   }
 }
