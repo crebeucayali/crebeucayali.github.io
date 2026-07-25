@@ -1,0 +1,18 @@
+/* Compatibilidad local mínima para INICIO.
+   El panel y las preferencias se administran desde la herramienta central EVA. */
+
+:where(a,button,input,select,textarea,[tabindex]):focus-visible{
+  outline:4px solid #f59e0b !important;
+  outline-offset:3px !important;
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+}

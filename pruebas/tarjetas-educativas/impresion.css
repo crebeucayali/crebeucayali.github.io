@@ -1,0 +1,122 @@
+@page{
+  size:A4;
+  margin:10mm;
+}
+
+html,body{
+  background:#fff !important;
+}
+
+body>*:not(#zona-impresion){
+  display:none !important;
+}
+
+#zona-impresion[hidden],
+#zona-impresion{
+  display:grid !important;
+  width:100%;
+  gap:8mm;
+  color:#000;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+#zona-impresion[data-por-hoja="1"]{
+  grid-template-columns:1fr;
+}
+
+#zona-impresion[data-por-hoja="2"],
+#zona-impresion[data-por-hoja="4"]{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.tarjeta-impresion{
+  break-inside:avoid;
+  page-break-inside:avoid;
+  border:2px solid #000;
+  border-radius:5mm;
+  padding:7mm;
+  min-height:120mm;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  text-align:center;
+  background:#fff;
+  color:#000;
+}
+
+#zona-impresion[data-por-hoja="1"] .tarjeta-impresion{
+  min-height:255mm;
+}
+
+#zona-impresion[data-por-hoja="2"] .tarjeta-impresion{
+  min-height:125mm;
+}
+
+#zona-impresion[data-por-hoja="4"] .tarjeta-impresion{
+  min-height:122mm;
+  padding:5mm;
+}
+
+.tarjeta-impresion h2{
+  margin:3mm 0;
+  font-size:18pt;
+  line-height:1.2;
+}
+
+#zona-impresion[data-por-hoja="4"] .tarjeta-impresion h2{
+  font-size:14pt;
+}
+
+.tarjeta-impresion .meta-impresion{
+  margin:0;
+  font-size:9pt;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+
+.tarjeta-impresion img{
+  display:block;
+  width:100%;
+  max-height:85mm;
+  margin:4mm auto;
+  object-fit:contain;
+}
+
+#zona-impresion[data-por-hoja="4"] .tarjeta-impresion img{
+  max-height:48mm;
+}
+
+.tarjeta-impresion .respuesta-impresion{
+  margin-top:4mm;
+  padding:4mm;
+  border:1.5px solid #000;
+  border-radius:3mm;
+  text-align:left;
+  font-size:11pt;
+}
+
+.tarjeta-impresion .respuesta-impresion strong{
+  display:block;
+  margin-bottom:2mm;
+}
+
+.tarjeta-impresion .descripcion-imagen{
+  margin:2mm 0 0;
+  font-size:8pt;
+  font-style:italic;
+  text-align:left;
+}
+
+.titulo-coleccion-impresion{
+  grid-column:1/-1;
+  margin:0 0 2mm;
+  font-size:16pt;
+  text-align:center;
+}
+
+@media print{
+  .tarjeta-impresion:nth-of-type(4n+1){
+    break-before:auto;
+  }
+}

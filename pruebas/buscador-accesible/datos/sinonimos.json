@@ -1,0 +1,20 @@
+{
+  "braille": ["braile", "sistema braille", "lectoescritura braille", "discapacidad visual"],
+  "lengua de señas": ["lengua de señas peruana", "lsp", "señas", "seña"],
+  "capacitación": ["capacitacion", "formación", "formacion", "taller", "curso"],
+  "pictogramas": ["pictograma", "apoyos visuales", "comunicación visual"],
+  "rutinas": ["rutina", "secuencia", "anticipación", "pasos"],
+  "autismo": ["tea", "trastorno del espectro autista"],
+  "discapacidad auditiva": ["sordera", "persona sorda", "hipoacusia"],
+  "discapacidad visual": ["ceguera", "baja visión", "baja vision"],
+  "inclusión educativa": ["inclusion", "educación inclusiva", "diversidad"],
+  "materiales": ["recursos", "fichas", "apoyos", "material educativo"],
+  "familias": ["padres", "madres", "cuidadores", "hogar"],
+  "docentes": ["profesores", "maestros", "educadores"],
+  "emociones": ["emoción", "sentimientos", "estado emocional"],
+  "accesibilidad": ["accesible", "acceso universal", "ajustes razonables"],
+  "noticias": ["novedades", "actualidad", "comunicados"],
+  "directorio": ["contactos", "instituciones", "entidades", "servicios"],
+  "calendario": ["cronograma", "fechas", "actividades programadas"],
+  "tarjetas": ["fichas educativas", "flashcards", "tarjeta educativa"]
+}

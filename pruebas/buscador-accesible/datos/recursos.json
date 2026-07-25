@@ -1,0 +1,606 @@
+[
+  {
+    "id": "eva-inicio",
+    "titulo": "Ecosistema Virtual Accesible",
+    "modulo": "EVA",
+    "categoria": "Portal institucional",
+    "tipo": "Página principal",
+    "descripcion": "Página de inicio del CREBE Ucayali con acceso a módulos, servicios complementarios y recursos educativos accesibles.",
+    "etiquetas": [
+      "eva",
+      "inicio",
+      "crebe",
+      "ecosistema",
+      "portal",
+      "recursos accesibles"
+    ],
+    "url": "https://crebe-ucayali.github.io/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "cap-modulo",
+    "titulo": "Capacitaciones CREBE",
+    "modulo": "CAP",
+    "categoria": "Capacitación",
+    "tipo": "Módulo",
+    "descripcion": "Capacitaciones, talleres, materiales formativos y recursos de acompañamiento pedagógico.",
+    "etiquetas": [
+      "capacitacion",
+      "talleres",
+      "sesiones",
+      "docentes",
+      "familias",
+      "formacion",
+      "cronograma",
+      "constancias"
+    ],
+    "url": "https://crebe-ucayali.github.io/capacitaciones/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "cap-docentes",
+    "titulo": "Capacitaciones para docentes",
+    "modulo": "CAP",
+    "categoria": "Capacitación",
+    "tipo": "Contenido formativo",
+    "descripcion": "Acceso a talleres, sesiones y materiales orientados al fortalecimiento de capacidades docentes.",
+    "etiquetas": [
+      "docentes",
+      "formacion docente",
+      "taller",
+      "curso",
+      "acompañamiento pedagógico"
+    ],
+    "url": "https://crebe-ucayali.github.io/capacitaciones/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "cap-familias",
+    "titulo": "Orientaciones y actividades para familias",
+    "modulo": "CAP",
+    "categoria": "Familias",
+    "tipo": "Contenido formativo",
+    "descripcion": "Recursos de capacitación y acompañamiento dirigidos a madres, padres y cuidadores.",
+    "etiquetas": [
+      "familias",
+      "padres",
+      "cuidadores",
+      "orientaciones",
+      "talleres"
+    ],
+    "url": "https://crebe-ucayali.github.io/capacitaciones/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "cap-materiales",
+    "titulo": "Materiales de capacitación",
+    "modulo": "CAP",
+    "categoria": "Capacitación",
+    "tipo": "Material descargable",
+    "descripcion": "Presentaciones, documentos y otros recursos utilizados en las actividades formativas del CREBE.",
+    "etiquetas": [
+      "diapositivas",
+      "documentos",
+      "materiales",
+      "descargas",
+      "sesiones"
+    ],
+    "url": "https://crebe-ucayali.github.io/capacitaciones/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "bda-modulo",
+    "titulo": "Banco Digital Accesible",
+    "modulo": "BDA",
+    "categoria": "Recursos accesibles",
+    "tipo": "Módulo",
+    "descripcion": "Banco de recursos digitales accesibles de Lengua de Señas Peruana, sistema Braille y apoyos de comunicación.",
+    "etiquetas": [
+      "banco digital",
+      "accesible",
+      "lsp",
+      "lengua de señas",
+      "braille",
+      "comunicacion"
+    ],
+    "url": "https://crebe-ucayali.github.io/banco-digital-accesible/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "bda-lsp",
+    "titulo": "Lengua de Señas Peruana",
+    "modulo": "BDA",
+    "categoria": "Lengua de señas",
+    "tipo": "Recurso del módulo",
+    "descripcion": "Consulta de vocabulario visual y recursos educativos vinculados a la Lengua de Señas Peruana.",
+    "etiquetas": [
+      "lsp",
+      "lengua de señas peruana",
+      "señas",
+      "vocabulario",
+      "comunicacion visual"
+    ],
+    "url": "https://crebe-ucayali.github.io/banco-digital-accesible/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "bda-braille",
+    "titulo": "Sistema Braille",
+    "modulo": "BDA",
+    "categoria": "Braille",
+    "tipo": "Recurso del módulo",
+    "descripcion": "Recursos para conocer la celda Braille, letras, números, signos y actividades prácticas.",
+    "etiquetas": [
+      "braille",
+      "celda braille",
+      "letras",
+      "numeros",
+      "signos",
+      "discapacidad visual"
+    ],
+    "url": "https://crebe-ucayali.github.io/banco-digital-accesible/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "bda-braille-teoria",
+    "titulo": "Parte teórica del sistema Braille",
+    "modulo": "BDA",
+    "categoria": "Braille",
+    "tipo": "Contenido educativo",
+    "descripcion": "Información introductoria sobre la celda Braille, la numeración de puntos y los fundamentos del sistema.",
+    "etiquetas": [
+      "braille",
+      "teoria",
+      "celda",
+      "seis puntos",
+      "numeracion",
+      "fundamentos"
+    ],
+    "url": "https://crebe-ucayali.github.io/banco-digital-accesible/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "bda-braille-practica",
+    "titulo": "Práctica del sistema Braille",
+    "modulo": "BDA",
+    "categoria": "Braille",
+    "tipo": "Actividad interactiva",
+    "descripcion": "Actividades para reconocer y practicar letras, números y signos del sistema Braille.",
+    "etiquetas": [
+      "braille",
+      "practica",
+      "actividad",
+      "letras",
+      "numeros",
+      "ejercicios"
+    ],
+    "url": "https://crebe-ucayali.github.io/banco-digital-accesible/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "mea-modulo",
+    "titulo": "Materiales Educativos Accesibles",
+    "modulo": "MEA",
+    "categoria": "Materiales educativos",
+    "tipo": "Módulo",
+    "descripcion": "Materiales adaptados, pictogramas, rutinas visuales, fichas y recursos descargables.",
+    "etiquetas": [
+      "materiales educativos",
+      "accesibles",
+      "rutinas",
+      "pictogramas",
+      "fichas",
+      "descargas"
+    ],
+    "url": "https://crebe-ucayali.github.io/materiales-educativos-accesibles/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "mea-rutinas",
+    "titulo": "Rutinas visuales",
+    "modulo": "MEA",
+    "categoria": "Pictogramas",
+    "tipo": "Material educativo",
+    "descripcion": "Apoyos visuales para anticipar actividades, organizar secuencias y facilitar la comprensión cotidiana.",
+    "etiquetas": [
+      "rutinas visuales",
+      "secuencias",
+      "pictogramas",
+      "anticipacion",
+      "actividades"
+    ],
+    "url": "https://crebe-ucayali.github.io/materiales-educativos-accesibles/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "mea-pictogramas",
+    "titulo": "Pictogramas y apoyos visuales",
+    "modulo": "MEA",
+    "categoria": "Pictogramas",
+    "tipo": "Material educativo",
+    "descripcion": "Pictogramas para apoyar la comunicación, la comprensión y la accesibilidad cognitiva.",
+    "etiquetas": [
+      "pictogramas",
+      "apoyos visuales",
+      "arasaac",
+      "comunicacion",
+      "accesibilidad cognitiva"
+    ],
+    "url": "https://crebe-ucayali.github.io/materiales-educativos-accesibles/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "mea-emociones",
+    "titulo": "Tarjetas de emociones",
+    "modulo": "MEA",
+    "categoria": "Emociones",
+    "tipo": "Material educativo",
+    "descripcion": "Recursos visuales para reconocer, expresar y conversar sobre diferentes estados emocionales.",
+    "etiquetas": [
+      "emociones",
+      "alegria",
+      "tristeza",
+      "miedo",
+      "enojo",
+      "autorregulacion"
+    ],
+    "url": "https://crebe-ucayali.github.io/materiales-educativos-accesibles/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "mea-lectura-facil",
+    "titulo": "Materiales de lectura fácil",
+    "modulo": "MEA",
+    "categoria": "Lectura accesible",
+    "tipo": "Material educativo",
+    "descripcion": "Recursos con lenguaje claro, organización visual y apoyos para facilitar la comprensión lectora.",
+    "etiquetas": [
+      "lectura facil",
+      "comprension",
+      "lenguaje claro",
+      "accesibilidad cognitiva"
+    ],
+    "url": "https://crebe-ucayali.github.io/materiales-educativos-accesibles/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "mea-alto-contraste",
+    "titulo": "Materiales de alto contraste",
+    "modulo": "MEA",
+    "categoria": "Discapacidad visual",
+    "tipo": "Material educativo",
+    "descripcion": "Materiales con contraste reforzado para favorecer la percepción y el acceso visual.",
+    "etiquetas": [
+      "alto contraste",
+      "baja vision",
+      "discapacidad visual",
+      "material adaptado"
+    ],
+    "url": "https://crebe-ucayali.github.io/materiales-educativos-accesibles/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ni-modulo",
+    "titulo": "Noti Inclusivos",
+    "modulo": "NI",
+    "categoria": "Noticias",
+    "tipo": "Módulo",
+    "descripcion": "Noticias, comunicados, orientaciones y novedades sobre inclusión educativa y atención a la diversidad.",
+    "etiquetas": [
+      "noticias",
+      "inclusion educativa",
+      "comunicados",
+      "normativa",
+      "actualidad"
+    ],
+    "url": "https://crebe-ucayali.github.io/noti-inclusivos/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ni-noticias-inclusion",
+    "titulo": "Noticias sobre inclusión educativa",
+    "modulo": "NI",
+    "categoria": "Inclusión educativa",
+    "tipo": "Noticia",
+    "descripcion": "Actualidad y novedades relacionadas con educación inclusiva, accesibilidad y atención a la diversidad.",
+    "etiquetas": [
+      "noticias inclusivas",
+      "educacion inclusiva",
+      "discapacidad",
+      "actualidad"
+    ],
+    "url": "https://crebe-ucayali.github.io/noti-inclusivos/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ni-orientaciones",
+    "titulo": "Orientaciones breves para la comunidad educativa",
+    "modulo": "NI",
+    "categoria": "Orientaciones",
+    "tipo": "Artículo",
+    "descripcion": "Publicaciones breves con información y recomendaciones para docentes, familias y comunidad educativa.",
+    "etiquetas": [
+      "orientaciones",
+      "docentes",
+      "familias",
+      "recomendaciones",
+      "articulos"
+    ],
+    "url": "https://crebe-ucayali.github.io/noti-inclusivos/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ra-modulo",
+    "titulo": "Repositorio Accesible",
+    "modulo": "RA",
+    "categoria": "Documentos",
+    "tipo": "Módulo",
+    "descripcion": "Recursos accesibles, materiales adaptados, textos en Braille, orientaciones y apoyos complementarios.",
+    "etiquetas": [
+      "repositorio",
+      "documentos",
+      "recursos accesibles",
+      "guias",
+      "materiales adaptados"
+    ],
+    "url": "https://crebe-ucayali.github.io/repositorio-accesible/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ra-textos-braille",
+    "titulo": "Textos y materiales en Braille",
+    "modulo": "RA",
+    "categoria": "Braille",
+    "tipo": "Material descargable",
+    "descripcion": "Acceso a textos, producciones y materiales vinculados con el sistema Braille.",
+    "etiquetas": [
+      "braille",
+      "textos",
+      "materiales",
+      "descargas",
+      "discapacidad visual"
+    ],
+    "url": "https://crebe-ucayali.github.io/repositorio-accesible/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ra-orientaciones",
+    "titulo": "Orientaciones para la inclusión educativa",
+    "modulo": "RA",
+    "categoria": "Inclusión educativa",
+    "tipo": "Documento",
+    "descripcion": "Documentos y guías de apoyo para fortalecer prácticas educativas inclusivas.",
+    "etiquetas": [
+      "orientaciones",
+      "guias",
+      "inclusion educativa",
+      "ajustes razonables",
+      "apoyos"
+    ],
+    "url": "https://crebe-ucayali.github.io/repositorio-accesible/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ra-tecnologia",
+    "titulo": "Equipos y tecnología de apoyo",
+    "modulo": "RA",
+    "categoria": "Tecnología de apoyo",
+    "tipo": "Recurso informativo",
+    "descripcion": "Información sobre equipos, herramientas y tecnologías que favorecen la accesibilidad.",
+    "etiquetas": [
+      "tecnologia de apoyo",
+      "equipos",
+      "accesibilidad",
+      "perkins",
+      "ayudas tecnicas"
+    ],
+    "url": "https://crebe-ucayali.github.io/repositorio-accesible/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ac-firma",
+    "titulo": "Firma tu visita",
+    "modulo": "AC",
+    "categoria": "Participación",
+    "tipo": "Servicio complementario",
+    "descripcion": "Registro de participación para visitantes, docentes, familias y comunidad educativa.",
+    "etiquetas": [
+      "firma",
+      "visita",
+      "registro",
+      "participacion",
+      "visitantes"
+    ],
+    "url": "https://crebe-ucayali.github.io/accesos-complementarios/firma-tu-visita/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ac-lineas",
+    "titulo": "Líneas de acción del CREBE",
+    "modulo": "AC",
+    "categoria": "Información institucional",
+    "tipo": "Subpágina",
+    "descripcion": "Marco de acción para información, capacitación, sensibilización y producción de materiales.",
+    "etiquetas": [
+      "lineas de accion",
+      "informacion",
+      "investigacion",
+      "capacitacion",
+      "sensibilizacion"
+    ],
+    "url": "https://crebe-ucayali.github.io/accesos-complementarios/paginas/lineas-de-accion.html",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ac-calendario",
+    "titulo": "Calendario institucional",
+    "modulo": "AC",
+    "categoria": "Actividades",
+    "tipo": "Recurso",
+    "descripcion": "Organización de actividades, fechas institucionales, capacitaciones y acciones programadas.",
+    "etiquetas": [
+      "calendario",
+      "fechas",
+      "actividades",
+      "programacion",
+      "cronograma"
+    ],
+    "url": "https://crebe-ucayali.github.io/accesos-complementarios/recursos/calendario.html",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ac-galeria",
+    "titulo": "Galería institucional",
+    "modulo": "AC",
+    "categoria": "Actividades",
+    "tipo": "Recurso",
+    "descripcion": "Fotografías y evidencias visuales de actividades desarrolladas por el CREBE Ucayali.",
+    "etiquetas": [
+      "galeria",
+      "fotografias",
+      "evidencias",
+      "actividades",
+      "imagenes"
+    ],
+    "url": "https://crebe-ucayali.github.io/accesos-complementarios/recursos/galeria.html",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ac-nosotros",
+    "titulo": "Nosotros",
+    "modulo": "AC",
+    "categoria": "Información institucional",
+    "tipo": "Subpágina",
+    "descripcion": "Información general sobre el CREBE Ucayali y el propósito del Ecosistema Virtual Accesible.",
+    "etiquetas": [
+      "nosotros",
+      "crebe",
+      "identidad institucional",
+      "presentacion"
+    ],
+    "url": "https://crebe-ucayali.github.io/accesos-complementarios/paginas/nosotros.html",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ac-que-hacemos",
+    "titulo": "Qué hacemos",
+    "modulo": "AC",
+    "categoria": "Información institucional",
+    "tipo": "Subpágina",
+    "descripcion": "Acciones de apoyo, orientación y fortalecimiento de la inclusión educativa.",
+    "etiquetas": [
+      "que hacemos",
+      "acciones",
+      "apoyo",
+      "orientacion",
+      "inclusion educativa"
+    ],
+    "url": "https://crebe-ucayali.github.io/accesos-complementarios/paginas/que-hacemos.html",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ac-directorio-institucional",
+    "titulo": "Directorio institucional",
+    "modulo": "AC",
+    "categoria": "Directorio",
+    "tipo": "Directorio",
+    "descripcion": "Entidades, servicios y contactos vinculados a educación, inclusión y discapacidad.",
+    "etiquetas": [
+      "directorio",
+      "instituciones",
+      "servicios",
+      "contactos",
+      "discapacidad"
+    ],
+    "url": "https://crebe-ucayali.github.io/accesos-complementarios/directorios/directorio-institucional.html",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ac-directorio-ciudadano",
+    "titulo": "Directorio ciudadano",
+    "modulo": "AC",
+    "categoria": "Directorio",
+    "tipo": "Directorio",
+    "descripcion": "Entidades y servicios de interés para la comunidad educativa y la ciudadanía.",
+    "etiquetas": [
+      "entidades",
+      "servicios",
+      "ciudadania",
+      "comunidad",
+      "apoyo"
+    ],
+    "url": "https://crebe-ucayali.github.io/accesos-complementarios/directorios/directorio-ciudadano.html",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "ac-contacto",
+    "titulo": "Contacto institucional",
+    "modulo": "AC",
+    "categoria": "Información institucional",
+    "tipo": "Subpágina",
+    "descripcion": "Canales de comunicación, horario y enlaces de contacto del CREBE Ucayali.",
+    "etiquetas": [
+      "contacto",
+      "correo",
+      "horario",
+      "facebook",
+      "tiktok",
+      "comunicacion"
+    ],
+    "url": "https://crebe-ucayali.github.io/accesos-complementarios/paginas/contacto.html",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "prueba-tarjetas",
+    "titulo": "Tarjetas educativas accesibles",
+    "modulo": "PRUEBAS",
+    "categoria": "Herramientas educativas",
+    "tipo": "Herramienta interactiva",
+    "descripcion": "Cree, organice, escuche, practique, comparta e imprima tarjetas educativas accesibles.",
+    "etiquetas": [
+      "tarjetas educativas",
+      "flashcards",
+      "imagenes",
+      "voz",
+      "secuencias",
+      "impresion"
+    ],
+    "url": "https://crebe-ucayali.github.io/pruebas/tarjetas-educativas/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "prueba-generador",
+    "titulo": "Generador accesible por pasos",
+    "modulo": "PRUEBAS",
+    "categoria": "Herramientas educativas",
+    "tipo": "Herramienta interactiva",
+    "descripcion": "Asistente por pasos para crear y revisar una tarjeta educativa antes de finalizar.",
+    "etiquetas": [
+      "generador",
+      "asistente",
+      "wizard",
+      "formulario",
+      "tarjeta",
+      "pasos"
+    ],
+    "url": "https://crebe-ucayali.github.io/pruebas/generador-por-pasos/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "prueba-buscador",
+    "titulo": "Buscador accesible de recursos",
+    "modulo": "PRUEBAS",
+    "categoria": "Navegación",
+    "tipo": "Herramienta interactiva",
+    "descripcion": "Buscador experimental con catálogo, autocompletado, filtros y resultados de recursos de EVA.",
+    "etiquetas": [
+      "buscador",
+      "autocompletado",
+      "filtros",
+      "recursos",
+      "eva"
+    ],
+    "url": "https://crebe-ucayali.github.io/pruebas/buscador-accesible/",
+    "fechaActualizacion": "2026-07-23"
+  }
+]

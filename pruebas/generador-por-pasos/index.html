@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generador accesible por pasos | EVA</title>
+  <meta name="description" content="Demostración de un generador accesible por pasos para crear materiales educativos en EVA.">
+  <link rel="stylesheet" href="estilos.css?v=1">
+</head>
+<body>
+  <a class="saltar" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <header class="cabecera">
+    <div class="cabecera-interior">
+      <a class="marca" href="../../">
+        <strong>EVA</strong>
+        <span>Ecosistema Virtual Accesible</span>
+      </a>
+      <a class="volver" href="../../">Volver a INICIO</a>
+    </div>
+  </header>
+
+  <main id="contenido-principal" class="contenedor">
+    <section class="presentacion" aria-labelledby="titulo-pagina">
+      <p class="etiqueta">Ruta experimental</p>
+      <h1 id="titulo-pagina">Generador accesible por pasos</h1>
+      <p>
+        Esta demostración guía al usuario para crear una tarjeta educativa mediante pasos breves.
+        Puede utilizarse con teclado, lector de pantalla, celular o computadora.
+      </p>
+    </section>
+
+    <section class="asistente" aria-labelledby="titulo-asistente">
+      <div class="asistente-encabezado">
+        <div>
+          <p id="progreso-texto" class="progreso-texto" aria-live="polite">Paso 1 de 4</p>
+          <h2 id="titulo-asistente">Crear tarjeta educativa</h2>
+        </div>
+        <progress id="progreso" max="4" value="1">1 de 4</progress>
+      </div>
+
+      <ol class="pasos" aria-label="Progreso del generador">
+        <li class="activo" aria-current="step">Tipo</li>
+        <li>Contenido</li>
+        <li>Diseño</li>
+        <li>Vista previa</li>
+      </ol>
+
+      <form id="formulario-generador" novalidate>
+        <fieldset class="paso-panel" data-paso="1">
+          <legend>Paso 1. Seleccione el tipo de material</legend>
+          <p class="ayuda">Elija la finalidad principal de la tarjeta.</p>
+
+          <div class="opciones-tipo">
+            <label>
+              <input type="radio" name="tipo" value="Concepto" required>
+              <span><strong>Concepto</strong><small>Presenta una definición o explicación breve.</small></span>
+            </label>
+            <label>
+              <input type="radio" name="tipo" value="Rutina">
+              <span><strong>Rutina</strong><small>Representa una acción o secuencia cotidiana.</small></span>
+            </label>
+            <label>
+              <input type="radio" name="tipo" value="Emoción">
+              <span><strong>Emoción</strong><small>Apoya el reconocimiento y expresión emocional.</small></span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="paso-panel" data-paso="2" hidden>
+          <legend>Paso 2. Ingrese el contenido</legend>
+
+          <label for="titulo-tarjeta">Título de la tarjeta</label>
+          <input id="titulo-tarjeta" name="titulo" type="text" maxlength="60" required placeholder="Ejemplo: Lavarse las manos">
+
+          <label for="descripcion-tarjeta">Descripción o instrucción</label>
+          <textarea id="descripcion-tarjeta" name="descripcion" rows="5" maxlength="220" required placeholder="Escriba una explicación breve y clara."></textarea>
+
+          <label for="texto-alternativo">Descripción accesible de la imagen</label>
+          <input id="texto-alternativo" name="alternativo" type="text" maxlength="140" placeholder="Ejemplo: Niño lavándose las manos con agua y jabón">
+          <p class="ayuda">Este texto podría utilizarse como texto alternativo cuando la tarjeta incluya una imagen.</p>
+        </fieldset>
+
+        <fieldset class="paso-panel" data-paso="3" hidden>
+          <legend>Paso 3. Configure el diseño</legend>
+
+          <label for="tamano-texto">Tamaño del texto</label>
+          <select id="tamano-texto" name="tamano">
+            <option value="normal">Normal</option>
+            <option value="grande">Grande</option>
+            <option value="muy-grande">Muy grande</option>
+          </select>
+
+          <label for="alineacion">Alineación</label>
+          <select id="alineacion" name="alineacion">
+            <option value="izquierda">Izquierda</option>
+            <option value="centro">Centro</option>
+          </select>
+
+          <label class="casilla">
+            <input id="borde-destacado" name="borde" type="checkbox">
+            <span>Usar borde destacado</span>
+          </label>
+        </fieldset>
+
+        <fieldset class="paso-panel" data-paso="4" hidden>
+          <legend>Paso 4. Revise la vista previa</legend>
+          <p class="ayuda">Compruebe el contenido antes de finalizar.</p>
+
+          <article id="vista-previa" class="vista-previa" tabindex="-1" aria-live="polite">
+            <p class="vista-tipo">Tipo de material</p>
+            <h3>La vista previa aparecerá aquí</h3>
+            <p>Complete los pasos anteriores para generar la tarjeta.</p>
+            <p class="vista-alternativo"></p>
+          </article>
+        </fieldset>
+
+        <p id="estado-formulario" class="estado" role="status" aria-live="polite">Seleccione una opción para comenzar.</p>
+
+        <div class="acciones">
+          <button id="anterior" type="button" hidden>Anterior</button>
+          <button id="siguiente" type="button" class="principal">Siguiente</button>
+          <button id="finalizar" type="submit" class="principal" hidden>Finalizar prueba</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="explicacion" aria-labelledby="titulo-aplicacion">
+      <h2 id="titulo-aplicacion">¿Cómo podría aplicarse en EVA?</h2>
+      <div class="usos">
+        <article>
+          <h3>MEA</h3>
+          <p>Crear tarjetas de emociones, normas, rutinas, secuencias y apoyos visuales.</p>
+        </article>
+        <article>
+          <h3>BDA</h3>
+          <p>Generar fichas de letras Braille, conceptos teóricos o vocabulario de Lengua de Señas Peruana.</p>
+        </article>
+        <article>
+          <h3>CAP</h3>
+          <p>Guiar el registro de sesiones, materiales, evaluaciones o constancias mediante formularios breves.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Demostración experimental de EVA. No forma parte todavía de los módulos oficiales.</p>
+  </footer>
+
+  <script src="app.js?v=1"></script>
+  <script src="https://crebe-ucayali.github.io/accesos-complementarios/accesibilidad/accesibilidad.js?v=10"></script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 Repositorio: Inicio  
 Proyecto: Ecosistema Virtual Accesible (EVA)  
 Autor del desarrollo original: Psicólogo Gabriel Berrospi  
-Fecha de referencia documental: 08 de julio de 2026
+Fecha de referencia documental: 08 de abril de 2026
 
 ## Descripción
 

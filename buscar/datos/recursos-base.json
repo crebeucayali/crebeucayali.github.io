@@ -1,0 +1,46 @@
+[
+  {
+    "id": "eva-inicio",
+    "titulo": "Ecosistema Virtual Accesible",
+    "modulo": "EVA",
+    "categoria": "Portal institucional",
+    "tipo": "Página principal",
+    "descripcion": "Página principal del CREBE Ucayali con acceso a módulos, servicios y recursos educativos accesibles.",
+    "etiquetas": ["eva", "inicio", "crebe", "portal", "recursos accesibles"],
+    "url": "https://crebe-ucayali.github.io/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "eva-buscar",
+    "titulo": "Buscador unificado de EVA",
+    "modulo": "EVA",
+    "categoria": "Herramientas",
+    "tipo": "Buscador",
+    "descripcion": "Busca simultáneamente en los catálogos distribuidos de los módulos de EVA.",
+    "etiquetas": ["buscar", "buscador", "catalogo", "recursos"],
+    "url": "https://crebe-ucayali.github.io/buscar/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "eva-tarjetas",
+    "titulo": "Tarjetas educativas accesibles",
+    "modulo": "EVA",
+    "categoria": "Herramientas educativas",
+    "tipo": "Herramienta interactiva",
+    "descripcion": "Crea, guarda, escucha, imprime y organiza tarjetas educativas accesibles.",
+    "etiquetas": ["tarjetas", "flashcards", "imprimir", "secuencias", "accesibilidad"],
+    "url": "https://crebe-ucayali.github.io/pruebas/tarjetas-educativas/",
+    "fechaActualizacion": "2026-07-23"
+  },
+  {
+    "id": "eva-generador-pasos",
+    "titulo": "Generador accesible por pasos",
+    "modulo": "EVA",
+    "categoria": "Herramientas educativas",
+    "tipo": "Prototipo",
+    "descripcion": "Prototipo de creación guiada de materiales mediante una secuencia de pasos accesibles.",
+    "etiquetas": ["generador", "pasos", "wizard", "materiales"],
+    "url": "https://crebe-ucayali.github.io/pruebas/generador-por-pasos/",
+    "fechaActualizacion": "2026-07-23"
+  }
+]

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buscador trasladado | EVA</title>
+  <meta name="robots" content="noindex">
+  <style>
+    body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;font-family:Arial,Helvetica,sans-serif;color:#102a43;background:#eef7f5;line-height:1.6}
+    main{max-width:680px;padding:32px;border:2px solid #0f766e;border-radius:20px;background:#fff;text-align:center;box-shadow:0 18px 48px rgba(16,42,67,.12)}
+    a{display:inline-block;margin-top:12px;padding:11px 18px;border-radius:12px;background:#0f766e;color:#fff;font-weight:800}
+  </style>
+  <script>
+    (() => {
+      const destino = new URL("/buscar/", window.location.origin);
+      destino.search = window.location.search;
+      destino.hash = window.location.hash;
+      window.location.replace(destino.href);
+    })();
+  </script>
+</head>
+<body>
+  <main>
+    <h1>El buscador tiene una nueva ruta</h1>
+    <p>La herramienta fue trasladada a su ubicación definitiva. La búsqueda y los filtros del enlace se conservarán.</p>
+    <a id="enlace-destino" href="../../buscar/">Ir al buscador de EVA</a>
+  </main>
+  <script>
+    const enlace = document.querySelector("#enlace-destino");
+    const destino = new URL("/buscar/", window.location.origin);
+    destino.search = window.location.search;
+    destino.hash = window.location.hash;
+    enlace.href = destino.href;
+  </script>
+</body>
+</html>

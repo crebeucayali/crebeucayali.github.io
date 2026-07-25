@@ -1,0 +1,37 @@
+[
+  {
+    "id": "base",
+    "nombre": "EVA y herramientas",
+    "url": "datos/recursos-base.json"
+  },
+  {
+    "id": "cap",
+    "nombre": "Capacitaciones CREBE",
+    "url": "https://crebe-ucayali.github.io/capacitaciones/datos/buscador.json"
+  },
+  {
+    "id": "bda",
+    "nombre": "Banco Digital Accesible",
+    "url": "https://crebe-ucayali.github.io/banco-digital-accesible/datos/buscador.json"
+  },
+  {
+    "id": "mea",
+    "nombre": "Materiales Educativos Accesibles",
+    "url": "https://crebe-ucayali.github.io/materiales-educativos-accesibles/datos/buscador.json"
+  },
+  {
+    "id": "ni",
+    "nombre": "Notiinclusivo",
+    "url": "https://crebe-ucayali.github.io/noti-inclusivos/datos/buscador.json"
+  },
+  {
+    "id": "ra",
+    "nombre": "Repositorio Accesible",
+    "url": "https://crebe-ucayali.github.io/repositorio-accesible/datos/buscador.json"
+  },
+  {
+    "id": "ac",
+    "nombre": "Accesos Complementarios",
+    "url": "https://crebe-ucayali.github.io/accesos-complementarios/datos/buscador.json"
+  }
+]

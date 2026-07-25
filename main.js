@@ -9,6 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const botonRestablecer = document.querySelector("#boton-restablecer");
   const botonArriba = document.querySelector("#volver-arriba");
 
+  if (listaResultados) {
+    listaResultados.setAttribute("role", "region");
+    listaResultados.setAttribute("aria-live", "polite");
+  }
+
   let indiceBusqueda = [];
 
   const normalizarTexto = (texto) => {
@@ -279,7 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       selector: ".campo-busqueda-modulos",
       titulo: "Búsqueda de recursos",
-      texto: "El buscador permite ubicar módulos, recursos o temas específicos. También se pueden usar las sugerencias rápidas para encontrar materiales, lectura, braille, señas, noticias o contacto."
+      texto: "El buscador permite ubicar módulos, recursos o temas específicos. También se pueden usar las sugerencias rápidas para encontrar materiales, braille, señas, noticias o contacto."
     },
     {
       selector: ".controles-accesibilidad",
@@ -289,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       selector: ".tarjetas",
       titulo: "Módulos del ecosistema",
-      texto: "En esta sección se agrupan los módulos principales: capacitaciones, banco digital, materiales, lectura inclusiva, noticias y repositorio accesible. Cada tarjeta abre un espacio con recursos específicos."
+      texto: "En esta sección se agrupan los módulos principales: capacitaciones, banco digital, materiales, noticias y repositorio accesible. Cada tarjeta abre un espacio con recursos específicos."
     },
     {
       selector: ".accesos-complementarios-weebly",
@@ -314,12 +319,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let panel = null;
   let ultimoFoco = null;
 
-  const regionesFondo = () => [
-    document.querySelector("header"),
-    document.querySelector("main"),
-    document.querySelector("footer")
-  ].filter(Boolean);
-
   const crearElementosGuia = () => {
     overlay = document.createElement("div");
     overlay.className = "guia-overlay";
@@ -334,7 +333,6 @@ document.addEventListener("DOMContentLoaded", () => {
     panel.setAttribute("role", "dialog");
     panel.setAttribute("aria-modal", "true");
     panel.setAttribute("aria-labelledby", "guia-titulo");
-    panel.setAttribute("aria-describedby", "guia-texto");
     panel.innerHTML = `
       <span class="guia-contador"></span>
       <h2 id="guia-titulo"></h2>
@@ -422,7 +420,6 @@ document.addEventListener("DOMContentLoaded", () => {
     pasoActual = 0;
     if (!overlay) crearElementosGuia();
     document.body.classList.add("guia-activa");
-    regionesFondo().forEach((region) => region.setAttribute("inert", ""));
     overlay.hidden = false;
     resaltado.hidden = false;
     panel.hidden = false;
@@ -446,7 +443,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function cerrarGuia(){
     document.body.classList.remove("guia-activa");
-    regionesFondo().forEach((region) => region.removeAttribute("inert"));
     if (overlay) overlay.hidden = true;
     if (resaltado) resaltado.hidden = true;
     if (panel) panel.hidden = true;
@@ -457,23 +453,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("keydown", (evento) => {
     if (!panel || panel.hidden) return;
-
-    if (evento.key === "Tab") {
-      const controles = Array.from(panel.querySelectorAll('button:not([disabled])'));
-      if (!controles.length) return;
-      const primero = controles[0];
-      const ultimo = controles[controles.length - 1];
-
-      if (evento.shiftKey && document.activeElement === primero) {
-        evento.preventDefault();
-        ultimo.focus();
-      } else if (!evento.shiftKey && document.activeElement === ultimo) {
-        evento.preventDefault();
-        primero.focus();
-      }
-      return;
-    }
-
     if (evento.key === "Escape") cerrarGuia();
     if (evento.key === "ArrowRight") avanzarGuia();
     if (evento.key === "ArrowLeft") retrocederGuia();
@@ -512,47 +491,47 @@ document.addEventListener("DOMContentLoaded", () => {
     const prefiereReducirMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const noticiasBase = [
       {
-        titulo: "Síndrome de Down, ciencia y bioética",
-        descripcion: "Notiinclusivas CREBE presenta una reflexión sobre un avance genético relacionado con el cromosoma 21 y los desafíos bioéticos vinculados con la dignidad, la diversidad y la inclusión.",
-        imagen: "https://crebeucayali.github.io/noti-inclusivos/assets/img/sindrome-down-ciencia-bioetica.jpeg",
-        enlace: "https://crebeucayali.github.io/lectura-inclusiva/articulos/sindrome-down-y-bioetica/"
+        titulo: "Jornada de sensibilización sobre inclusión educativa",
+        descripcion: "Actividad orientada a fortalecer el respeto por la diversidad y promover prácticas de inclusión en la comunidad educativa.",
+        imagen: "imagenes/noticias/noticia-1.svg",
+        enlace: "https://crebe-ucayali.github.io/noti-inclusivos/"
       },
       {
-        titulo: "CREBE desarrolla el Ciclo de Capacitación Virtual 2026",
-        descripcion: "El ciclo comenzó el 12 de junio con la jornada “Adaptaciones curriculares pedagógicas en atención a la diversidad”, organizada por el CREBE “Señor de los Milagros” - Ucayali mediante Google Meet.",
-        imagen: "https://crebeucayali.github.io/capacitaciones/imagenes/capacitacion-01/flyer.jpg",
-        enlace: "https://crebeucayali.github.io/capacitaciones/"
+        titulo: "Capacitación docente en adaptaciones curriculares",
+        descripcion: "Espacio formativo dirigido a docentes y equipos de apoyo para reforzar estrategias pedagógicas accesibles.",
+        imagen: "imagenes/noticias/noticia-2.svg",
+        enlace: "https://crebe-ucayali.github.io/capacitaciones/"
       },
       {
         titulo: "Recursos accesibles disponibles en el ecosistema EVA",
         descripcion: "Difusión de materiales educativos accesibles, apoyos visuales y herramientas para la atención a la diversidad.",
         imagen: "imagenes/noticias/noticia-3.svg",
-        enlace: "https://crebeucayali.github.io/materiales-educativos-accesibles/"
+        enlace: "https://crebe-ucayali.github.io/materiales-educativos-accesibles/"
       },
       {
         titulo: "Acompañamiento a instituciones educativas de la región",
         descripcion: "Acciones de orientación y soporte técnico vinculadas al fortalecimiento de prácticas inclusivas en instituciones educativas.",
         imagen: "imagenes/noticias/noticia-4.svg",
-        enlace: "https://crebeucayali.github.io/accesos-complementarios/institucional/lineas-de-accion.html"
+        enlace: "https://crebe-ucayali.github.io/accesos-complementarios/paginas/lineas-de-accion.html"
       },
       {
         titulo: "Estudiantes de educación superior participan en acciones formativas",
         descripcion: "Participación de estudiantes en jornadas de sensibilización y procesos de formación vinculados a inclusión y accesibilidad.",
         imagen: "imagenes/noticias/noticia-5.svg",
-        enlace: "https://crebeucayali.github.io/noti-inclusivos/"
+        enlace: "https://crebe-ucayali.github.io/noti-inclusivos/"
       }
     ];
 
     const normalizarNoticias = (datos) => {
       if (!Array.isArray(datos)) return [];
       return datos
-        .filter((item) => item && item.titulo && item.descripcion)
+        .filter((item) => item && item.titulo && item.descripcion && item.enlace)
         .slice(0, 5)
         .map((item, indice) => ({
           titulo: String(item.titulo).trim(),
           descripcion: String(item.descripcion).trim(),
           imagen: String(item.imagen || noticiasBase[indice]?.imagen || noticiasBase[0].imagen).trim(),
-          enlace: String(item.enlace || "").trim(),
+          enlace: String(item.enlace).trim(),
           categoria: String(item.categoria || "Noticia destacada").trim()
         }));
     };
@@ -584,11 +563,9 @@ document.addEventListener("DOMContentLoaded", () => {
     pista.innerHTML = "";
     indicadores.innerHTML = "";
 
-    const crearTarjeta = (noticia, indice, total) => {
+    const crearTarjeta = (noticia) => {
       const articulo = document.createElement("article");
       articulo.className = "noticia-tarjeta";
-      articulo.setAttribute("aria-label", `Noticia ${indice + 1} de ${total}: ${noticia.titulo}`);
-      articulo.setAttribute("aria-hidden", "true");
 
       const figura = document.createElement("figure");
       figura.className = "noticia-media";
@@ -612,27 +589,24 @@ document.addEventListener("DOMContentLoaded", () => {
       const descripcion = document.createElement("p");
       descripcion.textContent = noticia.descripcion;
 
-      contenido.append(categoria, titulo, descripcion);
+      const enlace = document.createElement("a");
+      enlace.className = "noticia-enlace";
+      enlace.href = noticia.enlace;
+      enlace.target = "_blank";
+      enlace.rel = "noopener noreferrer";
+      enlace.textContent = "Ampliar noticia →";
 
-      if (noticia.enlace) {
-        const enlace = document.createElement("a");
-        enlace.className = "noticia-enlace";
-        enlace.href = noticia.enlace;
-        enlace.target = "_blank";
-        enlace.rel = "noopener noreferrer";
-        enlace.textContent = "Ampliar noticia →";
-        contenido.appendChild(enlace);
-      }
+      contenido.append(categoria, titulo, descripcion, enlace);
       articulo.append(figura, contenido);
       return articulo;
     };
 
     noticias.forEach((noticia, indice) => {
-      pista.appendChild(crearTarjeta(noticia, indice, noticias.length));
+      pista.appendChild(crearTarjeta(noticia));
       const indicador = document.createElement("button");
       indicador.type = "button";
       indicador.className = "noticias-indicador";
-      indicador.setAttribute("aria-label", `Mostrar noticia ${indice + 1} de ${noticias.length}: ${noticia.titulo}`);
+      indicador.setAttribute("aria-label", `Ir a la noticia ${indice + 1}`);
       indicador.addEventListener("click", () => irA(indice, true));
       indicadores.appendChild(indicador);
     });
@@ -644,11 +618,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const actualizarIndicadores = () => {
       puntos.forEach((punto, indice) => {
-        const estaSeleccionado = indice === indiceActual;
-        punto.classList.toggle("activo", estaSeleccionado);
-        if (estaSeleccionado) punto.setAttribute("aria-current", "true");
-        else punto.removeAttribute("aria-current");
-        punto.removeAttribute("aria-pressed");
+        punto.classList.toggle("activo", indice === indiceActual);
+        punto.setAttribute("aria-pressed", indice === indiceActual ? "true" : "false");
       });
     };
 
@@ -656,20 +627,12 @@ document.addEventListener("DOMContentLoaded", () => {
       diapositivas.forEach((slide, indice) => {
         slide.classList.remove("activa", "vecina", "lejana", "vecina-izquierda", "vecina-derecha");
         const diferencia = indice - indiceActual;
-        const estaActiva = diferencia === 0;
-        if (estaActiva) {
+        if (diferencia === 0) {
           slide.classList.add("activa");
         } else if (Math.abs(diferencia) === 1) {
           slide.classList.add("vecina", diferencia < 0 ? "vecina-izquierda" : "vecina-derecha");
         } else {
           slide.classList.add("lejana");
-        }
-
-        slide.setAttribute("aria-hidden", estaActiva ? "false" : "true");
-        const enlaceNoticia = slide.querySelector("a");
-        if (enlaceNoticia) {
-          if (estaActiva) enlaceNoticia.removeAttribute("tabindex");
-          else enlaceNoticia.setAttribute("tabindex", "-1");
         }
       });
     };
