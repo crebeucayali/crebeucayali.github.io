@@ -1,4 +1,4 @@
-@import url("estilos-original.css?v=7");
+@import url("estilos-original.css?v=8");
 @import url("accesibilidad.css?v=4");
 
 /* Centrado equilibrado de NI y RA sin alterar dimensiones ni colores */
@@ -59,18 +59,16 @@
   background:#ffffff;
 }
 
-/* Patrón shipibo en formato WebP sin alterar la estructura del hero. */
+/* El patrón Shipibo queda integrado directamente en el fondo del hero. */
+.hero{
+  background:
+    linear-gradient(rgba(11,53,80,.62),rgba(15,118,110,.62)),
+    url("patron-shipibo.webp?v=8") center/cover repeat !important;
+}
+
+/* Se depura el contenedor anterior para evitar superposiciones o desapariciones. */
 .patron-portada{
-  position:absolute;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  background-image:url("patron-shipibo.webp?v=7");
-  background-repeat:repeat;
-  background-size:cover;
-  background-position:center;
-  opacity:.30;
-  filter:saturate(1.15) contrast(1.08);
+  display:none !important;
 }
 
 .hero-contenido{
