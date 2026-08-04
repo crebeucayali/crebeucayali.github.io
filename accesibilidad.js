@@ -2,7 +2,7 @@
   "use strict";
 
   const STORAGE_KEY = "eva_accesibilidad_preferencias";
-  const CENTRAL_URL = "https://crebe-ucayali.github.io/accesos-complementarios/accesibilidad/accesibilidad.js?v=10";
+  const CENTRAL_URL = "https://crebeucayali.github.io/accesos-complementarios/accesibilidad/accesibilidad.js?v=10";
   const CLASES = [
     "eva-alto-contraste",
     "eva-texto-grande",
