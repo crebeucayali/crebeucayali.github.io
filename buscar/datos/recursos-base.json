@@ -7,7 +7,7 @@
     "tipo": "Página principal",
     "descripcion": "Página principal del CREBE Ucayali con acceso a módulos, servicios y recursos educativos accesibles.",
     "etiquetas": ["eva", "inicio", "crebe", "portal", "recursos accesibles"],
-    "url": "https://crebe-ucayali.github.io/",
+    "url": "https://crebeucayali.github.io/",
     "fechaActualizacion": "2026-07-23"
   },
   {
@@ -18,7 +18,7 @@
     "tipo": "Buscador",
     "descripcion": "Busca simultáneamente en los catálogos distribuidos de los módulos de EVA.",
     "etiquetas": ["buscar", "buscador", "catalogo", "recursos"],
-    "url": "https://crebe-ucayali.github.io/buscar/",
+    "url": "https://crebeucayali.github.io/buscar/",
     "fechaActualizacion": "2026-07-23"
   },
   {
@@ -29,7 +29,7 @@
     "tipo": "Herramienta interactiva",
     "descripcion": "Crea, guarda, escucha, imprime y organiza tarjetas educativas accesibles.",
     "etiquetas": ["tarjetas", "flashcards", "imprimir", "secuencias", "accesibilidad"],
-    "url": "https://crebe-ucayali.github.io/pruebas/tarjetas-educativas/",
+    "url": "https://crebeucayali.github.io/pruebas/tarjetas-educativas/",
     "fechaActualizacion": "2026-07-23"
   },
   {
@@ -40,7 +40,7 @@
     "tipo": "Prototipo",
     "descripcion": "Prototipo de creación guiada de materiales mediante una secuencia de pasos accesibles.",
     "etiquetas": ["generador", "pasos", "wizard", "materiales"],
-    "url": "https://crebe-ucayali.github.io/pruebas/generador-por-pasos/",
+    "url": "https://crebeucayali.github.io/pruebas/generador-por-pasos/",
     "fechaActualizacion": "2026-07-23"
   }
 ]
