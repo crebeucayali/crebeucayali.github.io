@@ -22,6 +22,29 @@
 }
 </script>
 <link rel="stylesheet" href="estilos.css?v=15"/>
+<style>
+.impacto-crebe{width:min(1120px,calc(100% - 36px));margin:18px auto 0;padding:18px 0 4px;overflow:hidden;color:#102a43}
+.impacto-encabezado{max-width:840px;margin:0 auto 14px;text-align:center}
+.impacto-etiqueta{margin:0 0 6px;color:#0b3550;font-size:.78rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+.impacto-encabezado h2{margin:0;color:#102a43;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.7rem,3.3vw,2.7rem);line-height:1.08}
+.impacto-encabezado p{margin:8px auto 0;color:#486581;font-size:1rem;line-height:1.55}
+.impacto-carrusel{position:relative;overflow:hidden;padding:0 0 8px}
+.impacto-carrusel::before,.impacto-carrusel::after{content:"";position:absolute;top:0;bottom:0;width:54px;z-index:2;pointer-events:none}
+.impacto-carrusel::before{left:0;background:linear-gradient(90deg,#faf9f6,rgba(250,249,246,0))}
+.impacto-carrusel::after{right:0;background:linear-gradient(270deg,#faf9f6,rgba(250,249,246,0))}
+.impacto-pista{display:flex;gap:22px;width:max-content;animation:impacto-desplazar 38s linear infinite}
+.impacto-carrusel:hover .impacto-pista,.impacto-carrusel:focus-within .impacto-pista{animation-play-state:paused}
+.impacto-tarjeta{width:285px;min-height:150px;padding:12px 10px;color:#102a43;background:transparent;border:0;text-align:center}
+.impacto-tarjeta strong{display:block;margin-bottom:8px;color:#0b3550;font-family:Georgia,"Times New Roman",serif;font-size:2.45rem;line-height:1}
+.impacto-tarjeta h3{margin:0 auto 7px;color:#102a43;font-size:1rem;line-height:1.25;font-weight:900}
+.impacto-tarjeta p{margin:0 auto;color:#486581;font-size:.92rem;line-height:1.5}
+@keyframes impacto-desplazar{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 11px))}}
+@media(max-width:720px){.impacto-carrusel::before,.impacto-carrusel::after{width:30px}.impacto-tarjeta{width:245px;min-height:165px}}
+@media(max-width:680px){.impacto-crebe{width:calc(100% - 24px)}}
+@media(prefers-reduced-motion:reduce){.impacto-pista{animation:none;flex-wrap:wrap;width:100%;justify-content:center}.impacto-tarjeta[aria-hidden="true"]{display:none}}
+body.alto-contraste .impacto-crebe,body.alto-contraste .impacto-encabezado h2,body.alto-contraste .impacto-encabezado p,body.alto-contraste .impacto-etiqueta,body.alto-contraste .impacto-tarjeta strong,body.alto-contraste .impacto-tarjeta h3,body.alto-contraste .impacto-tarjeta p{color:#fff!important;background:#000!important}
+body.alto-contraste .impacto-carrusel::before,body.alto-contraste .impacto-carrusel::after{display:none!important}
+</style>
 </head>
 <body class="theme-crebe wsite-theme-light">
 <header class="cabecera-crebe">
@@ -48,193 +71,23 @@
 <div class="hero-contenido">
 <p class="etiqueta">Plataforma educativa digital</p>
 <h1>Recursos digitales accesibles para la comunidad educativa inclusiva</h1>
-<p class="subtitulo">
-          Espacio institucional que reúne plataformas, materiales, orientaciones y herramientas accesibles para apoyar el trabajo de docentes, familias y comunidad educativa.
-        </p>
+<p class="subtitulo">Espacio institucional que reúne plataformas, materiales, orientaciones y herramientas accesibles para apoyar el trabajo de docentes, familias y comunidad educativa.</p>
 </div>
 </section>
 <section class="contenido-central">
 <section class="herramientas-eva" aria-labelledby="titulo-herramientas-eva">
-  <div class="herramientas-intro">
-    <p class="etiqueta-herramientas">Explorar EVA</p>
-    <h2 id="titulo-herramientas-eva">Buscar recursos accesibles</h2>
-    <p>Use el buscador para ubicar un módulo o active apoyos visuales básicos según su necesidad.</p>
-  </div>
-
-  <div class="herramientas-panel">
-    <div class="campo-busqueda-modulos">
-      <label for="buscador-modulos">Buscar módulo, recurso o tema</label>
-      <div class="busqueda-linea">
-        <input id="buscador-modulos" type="search" autocomplete="off" placeholder="Ejemplo: materiales, braille, noticias, contacto" aria-describedby="resultado-busqueda-modulos">
-        <button id="boton-limpiar-busqueda" type="button" class="boton-limpiar-busqueda" hidden>Limpiar</button>
-      </div>
-      <div class="sugerencias-busqueda" aria-label="Sugerencias de búsqueda">
-        <button type="button" class="sugerencia-busqueda" data-consulta="materiales">materiales</button>
-        <button type="button" class="sugerencia-busqueda" data-consulta="braille">braille</button>
-        <button type="button" class="sugerencia-busqueda" data-consulta="señas">señas</button>
-        <button type="button" class="sugerencia-busqueda" data-consulta="noticias">noticias</button>
-        <button type="button" class="sugerencia-busqueda" data-consulta="contacto">contacto</button>
-      </div>
-      <p id="resultado-busqueda-modulos" class="mensaje-busqueda" aria-live="polite">Se muestran todos los módulos principales.</p>
-      <div id="lista-resultados-busqueda" class="lista-resultados-busqueda" aria-label="Resultados de búsqueda"></div>
-    </div>
-
-    <div class="controles-accesibilidad" aria-label="Controles de accesibilidad visual">
-      <button id="boton-texto" type="button" class="control-accesibilidad" aria-pressed="false">Texto grande</button>
-      <button id="boton-contraste" type="button" class="control-accesibilidad" aria-pressed="false">Alto contraste</button>
-      <button id="boton-restablecer" type="button" class="control-accesibilidad control-secundario">Restablecer</button>
-    </div>
-  </div>
+<div class="herramientas-intro"><p class="etiqueta-herramientas">Explorar EVA</p><h2 id="titulo-herramientas-eva">Buscar recursos accesibles</h2><p>Use el buscador para ubicar un módulo o active apoyos visuales básicos según su necesidad.</p></div>
+<div class="herramientas-panel"><div class="campo-busqueda-modulos"><label for="buscador-modulos">Buscar módulo, recurso o tema</label><div class="busqueda-linea"><input id="buscador-modulos" type="search" autocomplete="off" placeholder="Ejemplo: materiales, braille, noticias, contacto" aria-describedby="resultado-busqueda-modulos"><button id="boton-limpiar-busqueda" type="button" class="boton-limpiar-busqueda" hidden>Limpiar</button></div><div class="sugerencias-busqueda" aria-label="Sugerencias de búsqueda"><button type="button" class="sugerencia-busqueda" data-consulta="materiales">materiales</button><button type="button" class="sugerencia-busqueda" data-consulta="braille">braille</button><button type="button" class="sugerencia-busqueda" data-consulta="señas">señas</button><button type="button" class="sugerencia-busqueda" data-consulta="noticias">noticias</button><button type="button" class="sugerencia-busqueda" data-consulta="contacto">contacto</button></div><p id="resultado-busqueda-modulos" class="mensaje-busqueda" aria-live="polite">Se muestran todos los módulos principales.</p><div id="lista-resultados-busqueda" class="lista-resultados-busqueda" aria-label="Resultados de búsqueda"></div></div><div class="controles-accesibilidad" aria-label="Controles de accesibilidad visual"><button id="boton-texto" type="button" class="control-accesibilidad" aria-pressed="false">Texto grande</button><button id="boton-contraste" type="button" class="control-accesibilidad" aria-pressed="false">Alto contraste</button><button id="boton-restablecer" type="button" class="control-accesibilidad control-secundario">Restablecer</button></div></div>
 </section>
-
 <div class="cuerpo-operativo">
-<section aria-label="Plataformas digitales CREBE" class="tarjetas">
-<h2 style="grid-column:1/-1;margin:0 0 4px;">Módulos del Ecosistema Virtual Accesible</h2>
-<a class="tarjeta capacitaciones destacada" href="https://crebeucayali.github.io/capacitaciones/" rel="noopener" target="_blank">
-<div class="numero">CAP</div>
-<h3>Capacitaciones CREBE</h3>
-<p>Espacio institucional destinado a la difusión de capacitaciones, talleres, materiales formativos y recursos de acompañamiento pedagógico.</p>
-<span class="boton">Ingresar a capacitaciones</span>
-</a>
-<a class="tarjeta banco destacada" href="https://crebeucayali.github.io/banco-digital-accesible/" rel="noopener" target="_blank">
-<div class="numero">BDA</div>
-<h3>Banco Digital Accesible</h3>
-<p>Plataforma que integra recursos digitales accesibles, como el Banco Digital de Lengua de Señas Peruana y el Banco Digital del Sistema Braille.</p>
-<span class="boton">Ingresar al banco digital</span>
-</a>
-<a class="tarjeta materiales destacada" href="https://crebeucayali.github.io/materiales-educativos-accesibles/" rel="noopener" target="_blank">
-<div class="numero">MEA</div>
-<h3>Materiales Educativos Accesibles</h3>
-<p>Espacio destinado a reunir fichas, orientaciones, pictogramas, rutinas visuales, recursos descargables y materiales de apoyo para la atención a la diversidad.</p>
-<span class="boton">Ingresar a materiales</span>
-</a>
-<a class="tarjeta noti" href="https://crebeucayali.github.io/noti-inclusivos/" rel="noopener" target="_blank">
-<div class="numero">NI</div>
-<h3>Noti Inclusivos</h3>
-<p>Noticias, comunicados, experiencias, orientaciones breves y novedades vinculadas a la inclusión educativa y la atención a la diversidad.</p>
-<span class="boton">Ingresar a Noti Inclusivos</span>
-</a>
-<a class="tarjeta repositorio destacada" href="https://crebeucayali.github.io/repositorio-accesible/" rel="noopener" target="_blank"><div class="numero">RA</div><h3>Repositorio Accesible</h3><p>Espacio destinado a organizar y compartir recursos accesibles, materiales adaptados, textos en braille, orientaciones y apoyos complementarios para la comunidad educativa inclusiva.</p><span class="boton">Ingresar al repositorio</span></a>
-</section>
-
-<section class="noticias-destacadas" aria-labelledby="noticias-destacadas-titulo">
-  <div class="noticias-encabezado">
-    <p class="noticias-etiqueta">Actualidad institucional</p>
-    <h2 id="noticias-destacadas-titulo">Noticias destacadas</h2>
-    <p>
-      Síntesis informativa de acciones, actividades y avances vinculados al CREBE Ucayali.
-      Cada noticia incorpora un acceso directo para revisar su ampliación.
-    </p>
-  </div>
-
-  <div class="noticias-carrusel" aria-label="Carrusel automático de noticias destacadas" data-news-source="noticias-destacadas.json" data-fallback-source="noticias-destacadas.json">
-    <button class="noticias-control noticias-anterior" type="button" aria-label="Ver noticia anterior">
-      <span aria-hidden="true">&#10094;</span>
-    </button>
-
-    <div class="noticias-viewport">
-      <div class="noticias-pista" id="noticias-pista"></div>
-    </div>
-
-    <button class="noticias-control noticias-siguiente" type="button" aria-label="Ver noticia siguiente">
-      <span aria-hidden="true">&#10095;</span>
-    </button>
-  </div>
-
-  <div class="noticias-indicadores" id="noticias-indicadores" aria-label="Indicadores del carrusel de noticias"></div>
-</section>
-
-<section class="accesos-complementarios-weebly" aria-label="Accesos complementarios CREBE Ucayali">
-<div class="bloque-lineas" aria-label="Líneas de acción CREBE Ucayali">
-    <p class="etiqueta-lineas">Marco de acción del CREBE</p>
-    <h2>Líneas de acción del CREBE</h2>
-    <p class="descripcion-lineas">
-      Las líneas de acción orientan el trabajo del CREBE para organizar el soporte educativo, la información, la capacitación, la sensibilización y la producción de materiales que favorecen la atención a la diversidad.
-    </p>
-
-    <ul class="lista-lineas">
-      <li class="linea-item">
-        <strong>Información e investigación</strong>
-        <span>Difusión de información actualizada y recursos sobre atención a la diversidad.</span>
-      </li>
-
-      <li class="linea-item">
-        <strong>Capacitación</strong>
-        <span>Fortalecimiento de capacidades de docentes, familias y comunidad educativa.</span>
-      </li>
-
-      <li class="linea-item">
-        <strong>Sensibilización y concienciación</strong>
-        <span>Promoción del respeto, la valoración de la diversidad y la inclusión educativa.</span>
-      </li>
-
-      <li class="linea-item">
-        <strong>Producción y adaptación</strong>
-        <span>Elaboración y adecuación de materiales y recursos educativos accesibles.</span>
-      </li>
-    </ul>
-
-    <a class="boton-lineas" href="https://crebeucayali.github.io/accesos-complementarios/paginas/lineas-de-accion.html" target="_blank" rel="noopener noreferrer">
-      Ver líneas de acción
-    </a>
-  </div>
-
-  <div class="grid-accesos accesos-participacion">
-    <h2 style="grid-column:1/-1;margin:0 0 4px;">Servicios complementarios</h2>
-    <a class="tarjeta-acceso firma-visita-acceso" href="https://crebeucayali.github.io/accesos-complementarios/firma-tu-visita/" target="_blank" rel="noopener noreferrer" aria-label="Ir a Firma tu visita">
-      <h3>Firma tu visita</h3>
-      <p>Registro de participación para visitantes, docentes, familias y comunidad educativa que acceden a la plataforma.</p>
-      <span class="enlace-acceso">Registrar visita →</span>
-    </a>
-
-    <a class="tarjeta-acceso" href="https://crebeucayali.github.io/accesos-complementarios/recursos/calendario.html" aria-label="Ir a Calendario">
-      <h3>Calendario</h3>
-      <p>Organización de actividades, fechas institucionales, capacitaciones y acciones programadas durante el año.</p>
-      <span class="enlace-acceso">Ver calendario →</span>
-    </a>
-
-    <a class="tarjeta-acceso" href="https://crebeucayali.github.io/accesos-complementarios/recursos/galeria.html" aria-label="Ir a Galería">
-      <h3>Galería</h3>
-      <p>Espacio para presentar fotografías y evidencias visuales de las actividades realizadas por el CREBE.</p>
-      <span class="enlace-acceso">Ver galería →</span>
-    </a>
-  </div>
-</section>
+<section aria-label="Plataformas digitales CREBE" class="tarjetas"><h2 style="grid-column:1/-1;margin:0 0 4px;">Módulos del Ecosistema Virtual Accesible</h2><a class="tarjeta capacitaciones destacada" href="https://crebeucayali.github.io/capacitaciones/" rel="noopener" target="_blank"><div class="numero">CAP</div><h3>Capacitaciones CREBE</h3><p>Espacio institucional destinado a la difusión de capacitaciones, talleres, materiales formativos y recursos de acompañamiento pedagógico.</p><span class="boton">Ingresar a capacitaciones</span></a><a class="tarjeta banco destacada" href="https://crebeucayali.github.io/banco-digital-accesible/" rel="noopener" target="_blank"><div class="numero">BDA</div><h3>Banco Digital Accesible</h3><p>Plataforma que integra recursos digitales accesibles, como el Banco Digital de Lengua de Señas Peruana y el Banco Digital del Sistema Braille.</p><span class="boton">Ingresar al banco digital</span></a><a class="tarjeta materiales destacada" href="https://crebeucayali.github.io/materiales-educativos-accesibles/" rel="noopener" target="_blank"><div class="numero">MEA</div><h3>Materiales Educativos Accesibles</h3><p>Espacio destinado a reunir fichas, orientaciones, pictogramas, rutinas visuales, recursos descargables y materiales de apoyo para la atención a la diversidad.</p><span class="boton">Ingresar a materiales</span></a><a class="tarjeta noti" href="https://crebeucayali.github.io/noti-inclusivos/" rel="noopener" target="_blank"><div class="numero">NI</div><h3>Noti Inclusivos</h3><p>Noticias, comunicados, experiencias, orientaciones breves y novedades vinculadas a la inclusión educativa y la atención a la diversidad.</p><span class="boton">Ingresar a Noti Inclusivos</span></a><a class="tarjeta repositorio destacada" href="https://crebeucayali.github.io/repositorio-accesible/" rel="noopener" target="_blank"><div class="numero">RA</div><h3>Repositorio Accesible</h3><p>Espacio destinado a organizar y compartir recursos accesibles, materiales adaptados, textos en braille, orientaciones y apoyos complementarios para la comunidad educativa inclusiva.</p><span class="boton">Ingresar al repositorio</span></a></section>
+<section class="noticias-destacadas" aria-labelledby="noticias-destacadas-titulo"><div class="noticias-encabezado"><p class="noticias-etiqueta">Actualidad institucional</p><h2 id="noticias-destacadas-titulo">Noticias destacadas</h2><p>Síntesis informativa de acciones, actividades y avances vinculados al CREBE Ucayali. Cada noticia incorpora un acceso directo para revisar su ampliación.</p></div><div class="noticias-carrusel" aria-label="Carrusel automático de noticias destacadas" data-news-source="noticias-destacadas.json" data-fallback-source="noticias-destacadas.json"><button class="noticias-control noticias-anterior" type="button" aria-label="Ver noticia anterior"><span aria-hidden="true">&#10094;</span></button><div class="noticias-viewport"><div class="noticias-pista" id="noticias-pista"></div></div><button class="noticias-control noticias-siguiente" type="button" aria-label="Ver noticia siguiente"><span aria-hidden="true">&#10095;</span></button></div><div class="noticias-indicadores" id="noticias-indicadores" aria-label="Indicadores del carrusel de noticias"></div></section>
+<section class="accesos-complementarios-weebly" aria-label="Accesos complementarios CREBE Ucayali"><div class="bloque-lineas" aria-label="Líneas de acción CREBE Ucayali"><p class="etiqueta-lineas">Marco de acción del CREBE</p><h2>Líneas de acción del CREBE</h2><p class="descripcion-lineas">Las líneas de acción orientan el trabajo del CREBE para organizar el soporte educativo, la información, la capacitación, la sensibilización y la producción de materiales que favorecen la atención a la diversidad.</p><ul class="lista-lineas"><li class="linea-item"><strong>Información e investigación</strong><span>Difusión de información actualizada y recursos sobre atención a la diversidad.</span></li><li class="linea-item"><strong>Capacitación</strong><span>Fortalecimiento de capacidades de docentes, familias y comunidad educativa.</span></li><li class="linea-item"><strong>Sensibilización y concienciación</strong><span>Promoción del respeto, la valoración de la diversidad y la inclusión educativa.</span></li><li class="linea-item"><strong>Producción y adaptación</strong><span>Elaboración y adecuación de materiales y recursos educativos accesibles.</span></li></ul><a class="boton-lineas" href="https://crebeucayali.github.io/accesos-complementarios/paginas/lineas-de-accion.html" target="_blank" rel="noopener noreferrer">Ver líneas de acción</a></div><div class="grid-accesos accesos-participacion"><h2 style="grid-column:1/-1;margin:0 0 4px;">Servicios complementarios</h2><a class="tarjeta-acceso firma-visita-acceso" href="https://crebeucayali.github.io/accesos-complementarios/firma-tu-visita/" target="_blank" rel="noopener noreferrer" aria-label="Ir a Firma tu visita"><h3>Firma tu visita</h3><p>Registro de participación para visitantes, docentes, familias y comunidad educativa que acceden a la plataforma.</p><span class="enlace-acceso">Registrar visita →</span></a><a class="tarjeta-acceso" href="https://crebeucayali.github.io/accesos-complementarios/recursos/calendario.html" aria-label="Ir a Calendario"><h3>Calendario</h3><p>Organización de actividades, fechas institucionales, capacitaciones y acciones programadas durante el año.</p><span class="enlace-acceso">Ver calendario →</span></a><a class="tarjeta-acceso" href="https://crebeucayali.github.io/accesos-complementarios/recursos/galeria.html" aria-label="Ir a Galería"><h3>Galería</h3><p>Espacio para presentar fotografías y evidencias visuales de las actividades realizadas por el CREBE.</p><span class="enlace-acceso">Ver galería →</span></a></div></section>
 </div>
 </section>
+<section class="impacto-crebe" aria-labelledby="impacto-crebe-titulo"><div class="impacto-encabezado"><p class="impacto-etiqueta">Alcance institucional</p><h2 id="impacto-crebe-titulo">Indicadores de atención y fortalecimiento</h2><p>Datos referenciales que resumen el trabajo de acompañamiento, capacitación y sensibilización desarrollado desde el CREBE Ucayali.</p></div><div class="impacto-carrusel" role="region" aria-roledescription="carrusel" aria-labelledby="impacto-crebe-titulo"><div class="impacto-pista"><article class="impacto-tarjeta"><strong>15</strong><h3>Instituciones educativas atendidas</h3><p>Acompañamiento y soporte educativo para fortalecer la atención a la diversidad.</p></article><article class="impacto-tarjeta"><strong>150+</strong><h3>Docentes orientados</h3><p>Fortalecimiento de capacidades docentes en inclusión, accesibilidad y recursos educativos.</p></article><article class="impacto-tarjeta"><strong>200+</strong><h3>Estudiantes de educación superior sensibilizados</h3><p>Acciones formativas dirigidas a futuros profesionales vinculados al ámbito educativo.</p></article><article class="impacto-tarjeta"><strong>3</strong><h3>Distritos con presencia institucional</h3><p>Intervenciones y articulación educativa en diferentes espacios de la región Ucayali.</p></article><article class="impacto-tarjeta"><strong>150+</strong><h3>Participantes actualmente en capacitación</h3><p>Docentes, directivos y estudiantes de educación superior vinculados a procesos formativos.</p></article><article class="impacto-tarjeta"><strong>6</strong><h3>Módulos digitales articulados en EVA</h3><p>CAP, BDA, MEA, LI, NI y RA integrados como rutas de acceso al ecosistema educativo accesible.</p></article><article class="impacto-tarjeta" aria-hidden="true" role="presentation"><strong>15</strong><h3>Instituciones educativas atendidas</h3><p>Acompañamiento y soporte educativo para fortalecer la atención a la diversidad.</p></article><article class="impacto-tarjeta" aria-hidden="true" role="presentation"><strong>150+</strong><h3>Docentes orientados</h3><p>Fortalecimiento de capacidades docentes en inclusión, accesibilidad y recursos educativos.</p></article><article class="impacto-tarjeta" aria-hidden="true" role="presentation"><strong>200+</strong><h3>Estudiantes de educación superior sensibilizados</h3><p>Acciones formativas dirigidas a futuros profesionales vinculados al ámbito educativo.</p></article><article class="impacto-tarjeta" aria-hidden="true" role="presentation"><strong>3</strong><h3>Distritos con presencia institucional</h3><p>Intervenciones y articulación educativa en diferentes espacios de la región Ucayali.</p></article><article class="impacto-tarjeta" aria-hidden="true" role="presentation"><strong>150+</strong><h3>Participantes actualmente en capacitación</h3><p>Docentes, directivos y estudiantes de educación superior vinculados a procesos formativos.</p></article><article class="impacto-tarjeta" aria-hidden="true" role="presentation"><strong>6</strong><h3>Módulos digitales articulados en EVA</h3><p>CAP, BDA, MEA, LI, NI y RA integrados como rutas de acceso al ecosistema educativo accesible.</p></article></div></div></section>
 </main>
-<footer class="pie-crebe pie-crebe-completo" aria-label="Pie de página institucional">
-  <div class="pie-crebe-contenido">
-    <section class="pie-crebe-bloque pie-crebe-identidad">
-      <img class="pie-crebe-logo" src="https://crebeucayali.github.io/accesos-complementarios/logo-crebe.webp?v=3" alt="Logo del CREBE Señor de los Milagros - Ucayali">
-      <div>
-        <h2>Ecosistema Virtual Accesible</h2>
-        <p>Plataforma digital del CREBE "Señor de los Milagros" - Ucayali que reúne recursos, materiales y servicios accesibles para la comunidad educativa.</p>
-      </div>
-    </section>
-    <section class="pie-crebe-bloque">
-      <h2>Enlaces</h2>
-      <p>
-        <a href="https://crebeucayali.github.io/">Inicio principal</a><br>
-        <a href="https://crebeucayali.github.io/banco-digital-accesible/">Banco Digital Accesible</a><br>
-        <a href="https://crebeucayali.github.io/materiales-educativos-accesibles/">Materiales Educativos Accesibles</a><br>
-        <a href="https://crebeucayali.github.io/capacitaciones/">Capacitaciones CREBE</a><br>
-        <a href="https://crebeucayali.github.io/noti-inclusivos/">Noti Inclusivos</a><br>
-        <a href="https://crebeucayali.github.io/repositorio-accesible/">Repositorio Accesible</a>
-      </p>
-    </section>
-    <section class="pie-crebe-bloque">
-      <h2>Contacto CREBE</h2>
-      <p>CREBE "Señor de los Milagros" - Ucayali<br>Correo: senordelosmilagroscrebe@gmail.com<br>Horario: lunes a viernes, 8:00 a. m. - 12:00 p. m.<br><a href="https://crebeucayali.github.io/accesos-complementarios/paginas/contacto.html">Ver página de contacto</a></p>
-    </section>
-  </div>
-  <nav class="pie-crebe-secundario" aria-label="Enlaces legales y de organización web">
-    <a href="https://crebeucayali.github.io/accesos-complementarios/paginas/aviso-legal.html">Aviso legal</a>
-    <a href="https://crebeucayali.github.io/accesos-complementarios/paginas/politica-privacidad.html">Política de privacidad</a>
-    <a href="https://crebeucayali.github.io/accesos-complementarios/mapa-web.html">Mapa web</a>
-  </nav>
-  <div class="pie-crebe-final"><p>© 2026 Gabriel Berrospi. Desarrollo original. Uso institucional autorizado al CREBE "Señor de los Milagros" - Ucayali.</p></div>
-</footer>
+<footer class="pie-crebe pie-crebe-completo" aria-label="Pie de página institucional"><div class="pie-crebe-contenido"><section class="pie-crebe-bloque pie-crebe-identidad"><img class="pie-crebe-logo" src="https://crebeucayali.github.io/accesos-complementarios/logo-crebe.webp?v=3" alt="Logo del CREBE Señor de los Milagros - Ucayali"><div><h2>Ecosistema Virtual Accesible</h2><p>Plataforma digital del CREBE "Señor de los Milagros" - Ucayali que reúne recursos, materiales y servicios accesibles para la comunidad educativa.</p></div></section><section class="pie-crebe-bloque"><h2>Enlaces</h2><p><a href="https://crebeucayali.github.io/">Inicio principal</a><br><a href="https://crebeucayali.github.io/banco-digital-accesible/">Banco Digital Accesible</a><br><a href="https://crebeucayali.github.io/materiales-educativos-accesibles/">Materiales Educativos Accesibles</a><br><a href="https://crebeucayali.github.io/capacitaciones/">Capacitaciones CREBE</a><br><a href="https://crebeucayali.github.io/noti-inclusivos/">Noti Inclusivos</a><br><a href="https://crebeucayali.github.io/repositorio-accesible/">Repositorio Accesible</a></p></section><section class="pie-crebe-bloque"><h2>Contacto CREBE</h2><p>CREBE "Señor de los Milagros" - Ucayali<br>Correo: senordelosmilagroscrebe@gmail.com<br>Horario: lunes a viernes, 8:00 a. m. - 12:00 p. m.<br><a href="https://crebeucayali.github.io/accesos-complementarios/paginas/contacto.html">Ver página de contacto</a></p></section></div><nav class="pie-crebe-secundario" aria-label="Enlaces legales y de organización web"><a href="https://crebeucayali.github.io/accesos-complementarios/paginas/aviso-legal.html">Aviso legal</a><a href="https://crebeucayali.github.io/accesos-complementarios/paginas/politica-privacidad.html">Política de privacidad</a><a href="https://crebeucayali.github.io/accesos-complementarios/mapa-web.html">Mapa web</a></nav><div class="pie-crebe-final"><p>© 2026 Gabriel Berrospi. Desarrollo original. Uso institucional autorizado al CREBE "Señor de los Milagros" - Ucayali.</p></div></footer>
 <button id="volver-arriba" class="volver-arriba" type="button" aria-label="Volver al inicio" hidden>↑</button>
 <script src="main.js?v=6"></script>
 <script src="accesibilidad.js?v=1"></script>
