@@ -7,31 +7,31 @@
   {
     "id": "cap",
     "nombre": "Capacitaciones CREBE",
-    "url": "https://crebe-ucayali.github.io/capacitaciones/datos/buscador.json"
+    "url": "https://crebeucayali.github.io/capacitaciones/datos/buscador.json"
   },
   {
     "id": "bda",
     "nombre": "Banco Digital Accesible",
-    "url": "https://crebe-ucayali.github.io/banco-digital-accesible/datos/buscador.json"
+    "url": "https://crebeucayali.github.io/banco-digital-accesible/datos/buscador.json"
   },
   {
     "id": "mea",
     "nombre": "Materiales Educativos Accesibles",
-    "url": "https://crebe-ucayali.github.io/materiales-educativos-accesibles/datos/buscador.json"
+    "url": "https://crebeucayali.github.io/materiales-educativos-accesibles/datos/buscador.json"
   },
   {
     "id": "ni",
     "nombre": "Notiinclusivo",
-    "url": "https://crebe-ucayali.github.io/noti-inclusivos/datos/buscador.json"
+    "url": "https://crebeucayali.github.io/noti-inclusivos/datos/buscador.json"
   },
   {
     "id": "ra",
     "nombre": "Repositorio Accesible",
-    "url": "https://crebe-ucayali.github.io/repositorio-accesible/datos/buscador.json"
+    "url": "https://crebeucayali.github.io/repositorio-accesible/datos/buscador.json"
   },
   {
     "id": "ac",
     "nombre": "Accesos Complementarios",
-    "url": "https://crebe-ucayali.github.io/accesos-complementarios/datos/buscador.json"
+    "url": "https://crebeucayali.github.io/accesos-complementarios/datos/buscador.json"
   }
 ]
