@@ -35,3 +35,5 @@ Este repositorio incluye documentos de respaldo en formato Markdown para dejar c
 ## Observación
 
 Los documentos incluidos tienen finalidad de respaldo interno, trazabilidad y reconocimiento de autoría. No reemplazan una licencia legal formal, acta de entrega, convenio, registro de obra u otro documento jurídico.
+
+Actualización de despliegue de GitHub Pages.
