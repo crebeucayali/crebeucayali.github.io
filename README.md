@@ -9,6 +9,7 @@ Fecha de referencia documental: 08 de abril de 2026
 
 Este repositorio funciona como entrada principal del Ecosistema Virtual Accesible (EVA), una propuesta personal de innovación tecnológica aplicada a la educación inclusiva, la accesibilidad y el acompañamiento educativo.
 
+
 Desde este espacio se organiza el acceso a los módulos, repositorios y recursos digitales que integran el ecosistema, manteniendo una lógica de navegación clara, una identidad visual común y criterios básicos de accesibilidad.
 
 ## Naturaleza del proyecto
