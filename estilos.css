@@ -263,3 +263,18 @@
     flex-direction:column;
   }
 }
+
+/* Tarjeta DUA 3.0: identidad propia dentro de los módulos existentes. */
+.tarjetas > .dua-3{
+  background:linear-gradient(180deg,#ffffff 0%,#e9f5f1 100%);
+  border-color:rgba(15,118,110,.32);
+}
+.tarjetas > .dua-3 .numero{color:#0b6257;background:#d8f0e9}
+.tarjetas > .dua-3 h3{color:#0b6257}
+.tarjetas > .dua-3 .boton{background:#0b6257}
+/* Seis tarjetas: dos filas de tres, sin el centrado especial usado para cinco. */
+@media (min-width:981px){
+  .tarjetas > .noti,
+  .tarjetas > .repositorio,
+  .tarjetas > .dua-3{grid-column:span 2}
+}
