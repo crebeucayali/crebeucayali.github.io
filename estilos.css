@@ -1,4 +1,4 @@
-@import url("estilos-original.css?v=10");
+@import url("estilos-original.css?v=11");
 /* Distribución estable de cinco módulos en pantallas amplias.
    Se evita desplazar tarjetas con left, porque provocaba recortes al ampliar el texto. */
 @media (min-width:981px){
