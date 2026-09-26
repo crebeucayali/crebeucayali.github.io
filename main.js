@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const limpiarResultados = () => {
-    if (listaResultados) listaResultados.innerHTML = "";
+    if (listaResultados) listaResultados.replaceChildren();
   };
 
   const construirTextoBusqueda = (item) => {
@@ -594,8 +594,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const noticias = await obtenerNoticias();
     if (!noticias.length) return;
 
-    pista.innerHTML = "";
-    indicadores.innerHTML = "";
+    pista.replaceChildren();
+    indicadores.replaceChildren();
 
     const crearTarjeta = (noticia) => {
       const articulo = document.createElement("article");
