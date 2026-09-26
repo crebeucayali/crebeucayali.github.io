@@ -27,9 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const listaResultados = document.querySelector("#lista-resultados-busqueda");
   const botonLimpiar = document.querySelector("#boton-limpiar-busqueda");
   const sugerencias = document.querySelectorAll(".sugerencia-busqueda");
-  const botonTexto = document.querySelector("#boton-texto");
-  const botonContraste = document.querySelector("#boton-contraste");
-  const botonRestablecer = document.querySelector("#boton-restablecer");
   const botonArriba = document.querySelector("#volver-arriba");
 
   if (listaResultados) {
@@ -202,30 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
     mostrarResultados(resultados, consulta);
   };
 
-  const aplicarPreferencias = () => {
-    const nivelTexto = localStorage.getItem("evaTextoNivel") || "normal";
-    const contrasteActivo = localStorage.getItem("evaContraste") === "activo";
-
-    document.body.classList.remove("texto-grande", "texto-muy-grande");
-    if (nivelTexto === "grande") document.body.classList.add("texto-grande");
-    if (nivelTexto === "muy-grande") document.body.classList.add("texto-muy-grande");
-
-    document.body.classList.toggle("alto-contraste", contrasteActivo);
-
-    if (botonTexto) {
-      const etiqueta = nivelTexto === "normal" ? "Texto grande" : nivelTexto === "grande" ? "Texto muy grande" : "Texto normal";
-      botonTexto.textContent = etiqueta;
-      botonTexto.setAttribute("aria-pressed", nivelTexto !== "normal" ? "true" : "false");
-    }
-
-    if (botonContraste) {
-      botonContraste.setAttribute("aria-pressed", contrasteActivo ? "true" : "false");
-    }
-
-  };
-
-  aplicarPreferencias();
-
   cargarIndiceBusqueda().then(() => {
     if (buscador) {
       buscador.addEventListener("input", actualizarBusqueda);
@@ -249,38 +222,6 @@ document.addEventListener("DOMContentLoaded", () => {
       buscador.focus();
     });
   });
-
-  if (botonTexto) {
-    botonTexto.addEventListener("click", () => {
-      const nivelActual = localStorage.getItem("evaTextoNivel") || "normal";
-      const nuevoNivel = nivelActual === "normal" ? "grande" : nivelActual === "grande" ? "muy-grande" : "normal";
-      localStorage.setItem("evaTextoNivel", nuevoNivel);
-      aplicarPreferencias();
-    });
-  }
-
-  if (botonContraste) {
-    botonContraste.addEventListener("click", () => {
-      const activo = !document.body.classList.contains("alto-contraste");
-      localStorage.setItem("evaContraste", activo ? "activo" : "inactivo");
-      aplicarPreferencias();
-    });
-  }
-
-
-  if (botonRestablecer) {
-    botonRestablecer.addEventListener("click", () => {
-      localStorage.removeItem("evaTextoNivel");
-      localStorage.removeItem("evaTextoGrande");
-      localStorage.removeItem("evaContraste");
-      aplicarPreferencias();
-      if (buscador) {
-        buscador.value = "";
-        actualizarBusqueda();
-        buscador.focus();
-      }
-    });
-  }
 
   if (botonArriba) {
     const controlarBotonArriba = () => {
@@ -311,11 +252,6 @@ document.addEventListener("DOMContentLoaded", () => {
       selector: ".campo-busqueda-modulos",
       titulo: "Búsqueda de recursos",
       texto: "El buscador permite ubicar módulos, recursos o temas específicos. También se pueden usar las sugerencias rápidas para encontrar materiales, braille, señas, noticias o contacto."
-    },
-    {
-      selector: ".controles-accesibilidad",
-      titulo: "Controles de accesibilidad",
-      texto: "Estos botones permiten ampliar el texto, activar alto contraste y restablecer la vista. Sirven como apoyos básicos para mejorar la lectura y navegación."
     },
     {
       selector: ".tarjetas",
