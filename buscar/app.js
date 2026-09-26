@@ -39,15 +39,52 @@
   }
   function palabras(texto) { return normalizar(texto).split(" ").filter((p) => p.length >= 2); }
   function etiquetasTexto(recurso) { return Array.isArray(recurso.etiquetas) ? recurso.etiquetas.join(" ") : String(recurso.etiquetas || ""); }
+
+  const DOMINIOS_EVA_PERMITIDOS = new Set(["crebeucayali.github.io"]);
+
+  function resolverUrlEva(valor) {
+    const texto = String(valor || "").trim();
+    if (!texto) return null;
+
+    try {
+      const url = new URL(texto, window.location.href);
+
+      if (url.origin === window.location.origin) {
+        return url.href;
+      }
+
+      if (url.protocol !== "https:") {
+        return null;
+      }
+
+      return DOMINIOS_EVA_PERMITIDOS.has(url.hostname.toLowerCase()) ? url.href : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
   function esRecursoValido(r) {
-    return Boolean(r && typeof r.id === "string" && typeof r.titulo === "string" && typeof r.modulo === "string" && typeof r.categoria === "string" && typeof r.tipo === "string" && typeof r.descripcion === "string" && typeof r.url === "string");
+    return Boolean(
+      r &&
+      typeof r.id === "string" &&
+      typeof r.titulo === "string" &&
+      typeof r.modulo === "string" &&
+      typeof r.categoria === "string" &&
+      typeof r.tipo === "string" &&
+      typeof r.descripcion === "string" &&
+      typeof r.url === "string" &&
+      resolverUrlEva(r.url)
+    );
   }
 
   async function obtenerJson(url, timeout = 8000) {
+    const urlSegura = resolverUrlEva(url);
+    if (!urlSegura) throw new Error("URL de fuente no permitida");
+
     const controlador = new AbortController();
     const temporizador = setTimeout(() => controlador.abort(), timeout);
     try {
-      const respuesta = await fetch(url, { cache: "no-store", signal: controlador.signal });
+      const respuesta = await fetch(urlSegura, { cache: "no-store", signal: controlador.signal, credentials: "omit" });
       if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
       return await respuesta.json();
     } finally { clearTimeout(temporizador); }
@@ -242,7 +279,18 @@
     const c = document.createElement("p"); c.className = "resultado-categoria"; c.textContent = r.categoria;
     const d = document.createElement("p"); d.textContent = r.descripcion;
     const acciones = document.createElement("div"); acciones.className = "resultado-acciones";
-    const enlace = document.createElement("a"); enlace.className = "resultado-enlace"; enlace.href = r.url; enlace.textContent = "Abrir recurso"; enlace.setAttribute("aria-label", `Abrir ${r.titulo}`); if (/^https?:/.test(r.url)) { enlace.target = "_blank"; enlace.rel = "noopener noreferrer"; }
+    const urlSegura = resolverUrlEva(r.url);
+    const enlace = document.createElement(urlSegura ? "a" : "span");
+    enlace.className = urlSegura ? "resultado-enlace" : "resultado-enlace deshabilitado";
+    enlace.textContent = urlSegura ? "Abrir recurso" : "Enlace no permitido";
+    if (urlSegura) {
+      enlace.href = urlSegura;
+      enlace.setAttribute("aria-label", `Abrir ${r.titulo}`);
+      if (new URL(urlSegura).origin !== window.location.origin) {
+        enlace.target = "_blank";
+        enlace.rel = "noopener noreferrer";
+      }
+    }
     const fav = document.createElement("button"); fav.type = "button"; fav.className = "favorito"; fav.dataset.id = r.id; fav.setAttribute("aria-pressed", favoritos.has(r.id) ? "true" : "false"); fav.textContent = favoritos.has(r.id) ? "★ Favorito" : "☆ Guardar"; fav.setAttribute("aria-label", favoritos.has(r.id) ? `Quitar ${r.titulo} de favoritos` : `Guardar ${r.titulo} como favorito`);
     fav.addEventListener("click", () => alternarFavorito(r.id)); acciones.append(enlace, fav); a.append(meta, h, c, d, acciones); return a;
   }
