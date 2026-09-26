@@ -329,7 +329,7 @@
   }
   function alternarFavorito(id) { if (favoritos.has(id)) favoritos.delete(id); else favoritos.add(id); guardarLocal(FAVORITOS_KEY, [...favoritos]); actualizarFavoritos(); aplicarBusqueda(false); }
 
-  async function copiar(texto) { if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(texto); const t = document.createElement("textarea"); t.value = texto; t.style.position = "fixed"; t.style.opacity = "0"; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
+  async function copiar(texto) { if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(texto); const t = document.createElement("textarea"); t.value = texto; t.className = "copiar-fallback"; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
   function habilitar() { [elementos.entrada, elementos.modulo, elementos.categoria, elementos.tipo, elementos.soloFavoritos, elementos.restablecer, elementos.compartir].forEach((e) => { e.disabled = false; }); }
 
   function configurarEventos() {
