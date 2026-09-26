@@ -1,3 +1,26 @@
+const DOMINIOS_EVA_PERMITIDOS = new Set(["crebeucayali.github.io"]);
+
+function resolverUrlEvaSegura(valor) {
+  const texto = String(valor || "").trim();
+  if (!texto) return null;
+
+  try {
+    const url = new URL(texto, window.location.href);
+
+    if (url.origin === window.location.origin) {
+      return url.href;
+    }
+
+    if (url.protocol !== "https:") {
+      return null;
+    }
+
+    return DOMINIOS_EVA_PERMITIDOS.has(url.hostname.toLowerCase()) ? url.href : null;
+  } catch (error) {
+    return null;
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const buscador = document.querySelector("#buscador-modulos");
   const mensajeBusqueda = document.querySelector("#resultado-busqueda-modulos");
@@ -76,13 +99,16 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const crearResultado = (item) => {
-    const enlace = document.createElement("a");
-    enlace.className = "resultado-busqueda";
-    enlace.href = item.url || "#";
+    const urlSegura = resolverUrlEvaSegura(item.url);
+    const enlace = document.createElement(urlSegura ? "a" : "span");
+    enlace.className = urlSegura ? "resultado-busqueda" : "resultado-busqueda enlace-bloqueado";
 
-    if (enlace.href.startsWith("http")) {
-      enlace.target = "_blank";
-      enlace.rel = "noopener noreferrer";
+    if (urlSegura) {
+      enlace.href = urlSegura;
+      if (new URL(urlSegura).origin !== window.location.origin) {
+        enlace.target = "_blank";
+        enlace.rel = "noopener noreferrer";
+      }
     }
 
     const titulo = document.createElement("strong");
@@ -527,19 +553,27 @@ document.addEventListener("DOMContentLoaded", () => {
       return datos
         .filter((item) => item && item.titulo && item.descripcion && item.enlace)
         .slice(0, 5)
-        .map((item, indice) => ({
-          titulo: String(item.titulo).trim(),
-          descripcion: String(item.descripcion).trim(),
-          imagen: String(item.imagen || noticiasBase[indice]?.imagen || noticiasBase[0].imagen).trim(),
-          enlace: String(item.enlace).trim(),
-          categoria: String(item.categoria || "Noticia destacada").trim()
-        }));
+        .map((item, indice) => {
+          const imagen = resolverUrlEvaSegura(item.imagen || noticiasBase[indice]?.imagen || noticiasBase[0].imagen);
+          const enlace = resolverUrlEvaSegura(item.enlace);
+          if (!imagen || !enlace) return null;
+
+          return {
+            titulo: String(item.titulo).trim(),
+            descripcion: String(item.descripcion).trim(),
+            imagen,
+            enlace,
+            categoria: String(item.categoria || "Noticia destacada").trim()
+          };
+        })
+        .filter(Boolean);
     };
 
     const obtenerNoticias = async () => {
       const intentar = async (url) => {
-        if (!url) return [];
-        const respuesta = await fetch(url, { cache: "no-store" });
+        const urlSegura = resolverUrlEvaSegura(url);
+        if (!urlSegura) return [];
+        const respuesta = await fetch(urlSegura, { cache: "no-store", credentials: "omit" });
         if (!respuesta.ok) return [];
         return normalizarNoticias(await respuesta.json());
       };
@@ -571,7 +605,8 @@ document.addEventListener("DOMContentLoaded", () => {
       figura.className = "noticia-media";
 
       const imagen = document.createElement("img");
-      imagen.src = noticia.imagen;
+      const imagenSegura = resolverUrlEvaSegura(noticia.imagen);
+      if (imagenSegura) imagen.src = imagenSegura;
       imagen.alt = noticia.titulo;
       imagen.loading = "lazy";
       figura.appendChild(imagen);
@@ -589,12 +624,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const descripcion = document.createElement("p");
       descripcion.textContent = noticia.descripcion;
 
-      const enlace = document.createElement("a");
-      enlace.className = "noticia-enlace";
-      enlace.href = noticia.enlace;
-      enlace.target = "_blank";
-      enlace.rel = "noopener noreferrer";
-      enlace.textContent = "Ampliar noticia →";
+      const urlNoticia = resolverUrlEvaSegura(noticia.enlace);
+      const enlace = document.createElement(urlNoticia ? "a" : "span");
+      enlace.className = urlNoticia ? "noticia-enlace" : "noticia-enlace enlace-bloqueado";
+      if (urlNoticia) {
+        enlace.href = urlNoticia;
+        enlace.target = "_blank";
+        enlace.rel = "noopener noreferrer";
+      }
+      enlace.textContent = urlNoticia ? "Ampliar noticia →" : "Enlace no permitido";
 
       contenido.append(categoria, titulo, descripcion, enlace);
       articulo.append(figura, contenido);
