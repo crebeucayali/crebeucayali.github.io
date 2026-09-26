@@ -2,7 +2,8 @@
   "use strict";
 
   const STORAGE_KEY = "eva_accesibilidad_preferencias";
-  const CENTRAL_URL = "https://crebeucayali.github.io/accesos-complementarios/accesibilidad/accesibilidad.js?v=10";
+  const CENTRAL_VERSION = "10";
+  const CENTRAL_URL = `https://crebeucayali.github.io/accesos-complementarios/accesibilidad/accesibilidad.js?v=${CENTRAL_VERSION}`;
   const CLASES = [
     "eva-alto-contraste",
     "eva-texto-grande",
@@ -47,12 +48,6 @@
     });
   };
 
-  const sincronizarPanelCentral = (preferencias = leerPreferencias()) => {
-    document.querySelectorAll(".eva-accesibilidad-panel [data-eva-clase]").forEach((boton) => {
-      boton.setAttribute("aria-pressed", preferencias[boton.dataset.evaClase] ? "true" : "false");
-    });
-  };
-
   const migrarPreferenciasAnteriores = () => {
     const preferencias = leerPreferencias();
     let modificadas = false;
@@ -86,6 +81,7 @@
 
     if (modificadas) guardarPreferencias(preferencias);
     CLAVES_ANTERIORES.forEach((clave) => localStorage.removeItem(clave));
+
     document.body?.classList.remove(
       "texto-grande",
       "texto-muy-grande",
@@ -96,115 +92,22 @@
       "enlaces-resaltados",
       "movimiento-reducido"
     );
+
     aplicarPreferencias(preferencias);
-    sincronizarPanelCentral(preferencias);
-  };
-
-  const actualizarAtajos = () => {
-    const preferencias = leerPreferencias();
-    const botonTexto = document.querySelector("#boton-texto");
-    const botonContraste = document.querySelector("#boton-contraste");
-
-    if (botonTexto) {
-      const grande = Boolean(preferencias["eva-texto-grande"]);
-      const muyGrande = Boolean(preferencias["eva-texto-muy-grande"]);
-      botonTexto.textContent = muyGrande ? "Texto normal" : grande ? "Texto muy grande" : "Texto grande";
-      botonTexto.setAttribute("aria-pressed", grande || muyGrande ? "true" : "false");
-    }
-
-    if (botonContraste) {
-      botonContraste.setAttribute("aria-pressed", preferencias["eva-alto-contraste"] ? "true" : "false");
-    }
-
-    sincronizarPanelCentral(preferencias);
-  };
-
-  const anunciar = (mensaje) => {
-    let estado = document.querySelector("#estado-accesibilidad-inicio");
-    if (!estado) {
-      estado = document.createElement("p");
-      estado.id = "estado-accesibilidad-inicio";
-      estado.className = "eva-solo-lectores";
-      estado.setAttribute("role", "status");
-      estado.setAttribute("aria-live", "polite");
-      document.body.appendChild(estado);
-    }
-    estado.textContent = "";
-    window.setTimeout(() => {
-      estado.textContent = mensaje;
-    }, 30);
-  };
-
-  const configurarAtajos = () => {
-    const botonTexto = document.querySelector("#boton-texto");
-    const botonContraste = document.querySelector("#boton-contraste");
-    const botonRestablecer = document.querySelector("#boton-restablecer");
-
-    botonTexto?.addEventListener("click", (evento) => {
-      evento.preventDefault();
-      evento.stopImmediatePropagation();
-      const preferencias = leerPreferencias();
-      const grande = Boolean(preferencias["eva-texto-grande"]);
-      const muyGrande = Boolean(preferencias["eva-texto-muy-grande"]);
-
-      preferencias["eva-texto-grande"] = !grande && !muyGrande;
-      preferencias["eva-texto-muy-grande"] = grande && !muyGrande;
-      if (muyGrande) {
-        preferencias["eva-texto-grande"] = false;
-        preferencias["eva-texto-muy-grande"] = false;
-      }
-
-      guardarPreferencias(preferencias);
-      aplicarPreferencias(preferencias);
-      actualizarAtajos();
-      anunciar("Tamaño del texto actualizado.");
-    }, true);
-
-    botonContraste?.addEventListener("click", (evento) => {
-      evento.preventDefault();
-      evento.stopImmediatePropagation();
-      const preferencias = leerPreferencias();
-      preferencias["eva-alto-contraste"] = !preferencias["eva-alto-contraste"];
-      guardarPreferencias(preferencias);
-      aplicarPreferencias(preferencias);
-      actualizarAtajos();
-      anunciar(`Alto contraste: ${preferencias["eva-alto-contraste"] ? "activado" : "desactivado"}.`);
-    }, true);
-
-    botonRestablecer?.addEventListener("click", (evento) => {
-      evento.preventDefault();
-      evento.stopImmediatePropagation();
-      guardarPreferencias({});
-      aplicarPreferencias({});
-      actualizarAtajos();
-      anunciar("Se restablecieron las opciones de accesibilidad.");
-    }, true);
   };
 
   const cargarHerramientaCentral = () => {
-    if (document.querySelector('script[data-eva-accesibilidad-central="10"]')) return;
+    if (document.querySelector(`script[data-eva-accesibilidad-central="${CENTRAL_VERSION}"]`)) return;
+
     const script = document.createElement("script");
     script.src = CENTRAL_URL;
     script.async = false;
-    script.dataset.evaAccesibilidadCentral = "10";
-    script.addEventListener("load", () => actualizarAtajos());
+    script.dataset.evaAccesibilidadCentral = CENTRAL_VERSION;
     document.head.appendChild(script);
   };
 
   migrarPreferenciasAnteriores();
   cargarHerramientaCentral();
 
-  document.addEventListener("DOMContentLoaded", () => {
-    migrarPreferenciasAnteriores();
-    configurarAtajos();
-    actualizarAtajos();
-
-    const observador = new MutationObserver(() => {
-      if (document.querySelector(".eva-accesibilidad-panel")) {
-        actualizarAtajos();
-        observador.disconnect();
-      }
-    });
-    observador.observe(document.body, { childList: true, subtree: true });
-  });
+  document.addEventListener("DOMContentLoaded", migrarPreferenciasAnteriores, { once: true });
 })();
