@@ -358,7 +358,15 @@
       sinonimos = sinonimosCargados && typeof sinonimosCargados === "object" ? sinonimosCargados : {};
       prepararFiltros(); construirVocabulario(); habilitar(); actualizarFavoritos(); aplicarEstado(leerURL()); aplicarBusqueda(false); configurarEventos();
     } catch (error) {
-      console.error(error); elementos.catalogo.textContent = "No se pudo cargar el buscador"; elementos.catalogo.classList.add("error"); elementos.estado.textContent = "Recargue la página o inténtelo más tarde."; elementos.contador.textContent = "Error"; elementos.resultados.innerHTML = '<p class="vacio">No se pudo cargar ninguna fuente del catálogo.</p>';
+      console.error(error);
+      elementos.catalogo.textContent = "No se pudo cargar el buscador";
+      elementos.catalogo.classList.add("error");
+      elementos.estado.textContent = "Recargue la página o inténtelo más tarde.";
+      elementos.contador.textContent = "Error";
+      const mensajeError = document.createElement("p");
+      mensajeError.className = "vacio";
+      mensajeError.textContent = "No se pudo cargar ninguna fuente del catálogo.";
+      elementos.resultados.replaceChildren(mensajeError);
     }
   }
 
