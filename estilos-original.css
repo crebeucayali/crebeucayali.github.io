@@ -2554,8 +2554,8 @@ body.alto-contraste .accesos-complementarios-weebly button:focus-visible{
   color:#000000 !important;
   background:transparent !important;
   border:0 !important;
-  font-size:.88rem !important;
-  font-weight:900 !important;
+  font-size:.9375rem !important;
+  font-weight:600 !important;
   letter-spacing:.01em !important;
   text-transform:none !important;
 }
@@ -2637,7 +2637,7 @@ body.alto-contraste .accesos-complementarios-weebly button:focus-visible{
   .pestanas-crebe a{
     min-height:38px !important;
     padding:7px 10px !important;
-    font-size:.80rem !important;
+    font-size:.875rem !important;
   }
 }
 
