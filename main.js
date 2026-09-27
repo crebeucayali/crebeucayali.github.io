@@ -342,9 +342,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const endpoint = new URL(SUPABASE_URL_NOTICIAS + "/rest/v1/noticias_destacadas");
         endpoint.searchParams.set(
           "select",
-          "id,orden,categoria,titulo,descripcion,imagen_url,enlace_url,updated_at"
+          "id,orden,categoria,titulo,descripcion,imagen_url,enlace_url,estado_publicacion,updated_at"
         );
         endpoint.searchParams.set("visible", "eq.true");
+        endpoint.searchParams.set("estado_publicacion", "eq.publicado");
         endpoint.searchParams.set("order", "orden.asc,id.asc");
 
         const respuesta = await fetch(endpoint.href, {
