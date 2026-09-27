@@ -1,4 +1,4 @@
-/* Tema CREBE Ucayali para Weebly - versión final con estilo visual de repos */
+/* Tema base de EVA CREBE Ucayali. */
 
 :root{
   --ancho-principal:1360px;
@@ -543,7 +543,7 @@ a{ color:var(--verde-700); }
 .boton-lateral.secundario{ background:#4338ca; }
 .boton-lateral.secundario:hover{ background:#3730a3; }
 
-/* Área editable de Weebly reducida */
+/* Área de contenido heredada. */
 
 .contenido-weebly{
   max-width:var(--ancho-principal);
@@ -961,7 +961,7 @@ a{ color:var(--verde-700); }
   }
 }
 
-/* Ajustes finales solicitados: RA azul y panel administrativo compacto */
+/* Identidad visual de RA y panel administrativo compacto. */
 .tarjeta.repositorio{
   background:linear-gradient(180deg,#ffffff 0%,#eef6ff 100%) !important;
   border-color:rgba(14,80,140,.28) !important;
@@ -1280,7 +1280,7 @@ a{ color:var(--verde-700); }
   border-color:#0f766e !important;
   box-shadow:0 0 0 3px rgba(15,118,110,.12) !important;
 }
-/* Corrección de fondo decorativo Shipibo en portada Weebly */
+/* Fondo decorativo Shipibo de la portada. */
 .hero{
   position:relative;
   overflow:hidden;
@@ -1667,8 +1667,8 @@ a{ color:var(--verde-700); }
 }
 
 /* ==========================================================
-   Ajuste final: acceso administrativo del mismo espesor visual
-   que Firma tu visita
+   Alineación visual del acceso administrativo
+   con Firma tu visita
    ========================================================== */
 .panel-lateral.acceso-modulos,
 .panel-lateral.acceso-modulos.accesos-secundarios{
@@ -1951,8 +1951,8 @@ body.alto-contraste input{
 
 
 /* ==========================================================
-   Ajuste final solicitado: firma centrada, sin guía rápida
-   y buscador con resultados desde busqueda.json
+   Firma centrada y buscador con resultados
+   desde busqueda.json
    ========================================================== */
 .panel-lateral.acceso-modulos,
 .panel-lateral.acceso-modulos.accesos-secundarios{
@@ -2139,7 +2139,7 @@ body.alto-contraste .resultado-busqueda:focus-visible{
 }
 
 
-/* El antiguo bloque lateral de Firma tu visita queda anulado si alguna versión lo conserva. */
+/* Compatibilidad: el bloque lateral heredado de Firma tu visita permanece anulado. */
 .panel-lateral.acceso-modulos.accesos-secundarios{
   display:none !important;
 }
@@ -2217,7 +2217,7 @@ body.alto-contraste .grupo-resultados-busqueda h3{
 
 
 /* ==========================================================
-   Ajuste solicitado: tono y escala del patrón Shipibo según referencia
+   Tono y escala del patrón Shipibo
    y sin bloque institucional grande dentro del hero
    ========================================================== */
 .hero{
@@ -2259,7 +2259,7 @@ body.alto-contraste .grupo-resultados-busqueda h3{
 }
 
 /* ==========================================================
-   AJUSTE FINAL: patrón Shipibo con tono verde azulado
+   Patrón Shipibo con tono verde azulado
    Este bloque queda al final para evitar que reglas anteriores lo anulen.
    ========================================================== */
 .hero{
@@ -2297,7 +2297,7 @@ body.alto-contraste .grupo-resultados-busqueda h3{
 }
 
 /* ==========================================================
-   AJUSTES SOLICITADOS: cabecera, tarjetas FV y footer
+   Cabecera, tarjetas de Firma tu visita y footer
    ========================================================== */
 .marca-texto{
   gap:2px !important;
@@ -3351,7 +3351,7 @@ body.alto-contraste .noticia-tarjeta{
 }
 
 
-/* Ajuste final: carrusel de noticias tipo portada, sin contenedor general */
+/* Carrusel de noticias tipo portada, sin contenedor general. */
 .noticias-destacadas{
   width:min(1280px,calc(100% - 24px));
   margin:22px auto 18px;
@@ -3807,7 +3807,7 @@ body.alto-contraste .noticias-indicador.activo{background:#fff;color:#000;}
 }
 
 
-/* Ajuste final de ancho del cuerpo: alineado con header y footer */
+/* Ancho del cuerpo alineado con cabecera y footer. */
 :root{
   --ancho-cuerpo-crebe:1120px;
 }
