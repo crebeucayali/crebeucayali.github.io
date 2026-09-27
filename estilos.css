@@ -509,3 +509,59 @@ body.alto-contraste .admin-abrir-panel{
     width:min(286px,calc(100vw - 20px));
   }
 }
+
+
+.admin-sesion-activa{
+  display:grid;
+  gap:10px;
+}
+
+.admin-sesion-estado{
+  margin:0;
+  color:#0b3550;
+  font-size:.84rem;
+  line-height:1.4;
+}
+
+.admin-sesion-acciones{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.admin-cerrar-sesion{
+  width:100%;
+  min-height:40px;
+  padding:9px 12px;
+  color:#334e68;
+  background:#eef3f7;
+  border:1px solid #cbd5df;
+  border-radius:10px;
+  font:inherit;
+  font-size:.84rem;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.admin-cerrar-sesion:hover,
+.admin-cerrar-sesion:focus-visible{
+  color:#0b3550;
+  background:#e1e9f0;
+  border-color:#9fb3c8;
+}
+
+body.alto-contraste .admin-sesion-estado{
+  color:#ffffff !important;
+}
+
+body.alto-contraste .admin-cerrar-sesion{
+  color:#ffffff !important;
+  background:#000000 !important;
+  border-color:#ffffff !important;
+}
+
+@media(max-width:420px){
+  .admin-sesion-acciones{
+    grid-template-columns:1fr;
+  }
+}
