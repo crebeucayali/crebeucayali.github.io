@@ -2867,6 +2867,7 @@ body.alto-contraste .impacto-tarjeta strong,
 body.alto-contraste .impacto-tarjeta h3,
 body.alto-contraste .impacto-tarjeta p{
   color:#ffffff !important;
+  background:#000000 !important;
 }
 
 
