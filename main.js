@@ -315,7 +315,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const urlSegura = resolverUrlEvaSegura(url);
         if (!urlSegura) return [];
         const respuesta = await fetch(urlSegura, { cache: "no-store", credentials: "omit" });
-        if (!respuesta.ok) return [];
+        if (!respuesta.ok) {
+          throw new Error("Supabase respondió con estado " + respuesta.status + ".");
+        }
         return normalizarNoticias(await respuesta.json());
       };
 
@@ -345,10 +347,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         const remotas = await consultarSupabase();
-        if (remotas.length) {
-          document.documentElement.dataset.noticiasFuente = "supabase";
-          return remotas;
-        }
+        document.documentElement.dataset.noticiasFuente = "supabase";
+        return remotas;
       } catch (error) {}
 
       try {
@@ -372,7 +372,11 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const noticias = await obtenerNoticias();
-    if (!noticias.length) return;
+    if (!noticias.length) {
+      const seccionNoticias = carrusel.closest(".noticias-destacadas");
+      if (seccionNoticias) seccionNoticias.hidden = true;
+      return;
+    }
 
     pista.replaceChildren();
     indicadores.replaceChildren();
