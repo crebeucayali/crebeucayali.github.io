@@ -84,6 +84,10 @@
       panel.hidden = !visible;
       boton.setAttribute("aria-expanded", visible ? "true" : "false");
       contenedor.classList.toggle("abierto", visible);
+      if (!visible) {
+        clave.value = "";
+      }
+
       if (visible) {
         if (leerSesion()) {
           abrir.hidden = false;
