@@ -2484,9 +2484,9 @@ body.alto-contraste .accesos-complementarios-weebly button:focus-visible{
 .cabecera-interior{
   width:100% !important;
   max-width:var(--ancho-principal) !important;
-  min-height:86px !important;
+  min-height:78px !important;
   margin:0 auto !important;
-  padding:12px 26px !important;
+  padding:8px 26px !important;
   gap:26px !important;
   background:transparent !important;
   border:0 !important;
