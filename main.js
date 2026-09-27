@@ -252,6 +252,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const sourceUrl = carrusel.dataset.newsSource;
     const fallbackUrl = carrusel.dataset.fallbackSource || "noticias-destacadas.json";
     const prefiereReducirMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const SUPABASE_URL_NOTICIAS = "https://dteimbhwtzghhsijeeld.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY_NOTICIAS = "sb_publishable_tHbo1jTeW_dC90hdA5DvyQ_a6LrfKpq";
     const noticiasBase = [
       {
         titulo: "Jornada de sensibilización sobre inclusión educativa",
@@ -288,18 +290,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const normalizarNoticias = (datos) => {
       if (!Array.isArray(datos)) return [];
       return datos
-        .filter((item) => item && item.titulo && item.descripcion && item.enlace)
-        .slice(0, 5)
+        .filter((item) => item && item.titulo && item.descripcion)
         .map((item, indice) => {
-          const imagen = resolverUrlEvaSegura(item.imagen || noticiasBase[indice]?.imagen || noticiasBase[0].imagen);
-          const enlace = resolverUrlEvaSegura(item.enlace);
-          if (!imagen || !enlace) return null;
+          const imagen = resolverUrlEvaSegura(
+            item.imagen || item.imagen_url || noticiasBase[indice % noticiasBase.length]?.imagen || noticiasBase[0].imagen
+          );
+          const enlaceOriginal = item.enlace || item.enlace_url || "";
+          const enlace = enlaceOriginal ? resolverUrlEvaSegura(enlaceOriginal) : null;
+          if (!imagen) return null;
 
           return {
             titulo: String(item.titulo).trim(),
             descripcion: String(item.descripcion).trim(),
             imagen,
-            enlace,
+            enlace: enlace || "",
             categoria: String(item.categoria || "Noticia destacada").trim()
           };
         })
@@ -315,16 +319,55 @@ document.addEventListener("DOMContentLoaded", () => {
         return normalizarNoticias(await respuesta.json());
       };
 
+      const consultarSupabase = async () => {
+        const endpoint = new URL(SUPABASE_URL_NOTICIAS + "/rest/v1/noticias_destacadas");
+        endpoint.searchParams.set(
+          "select",
+          "id,orden,categoria,titulo,descripcion,imagen_url,enlace_url,updated_at"
+        );
+        endpoint.searchParams.set("visible", "eq.true");
+        endpoint.searchParams.set("order", "orden.asc,id.asc");
+
+        const respuesta = await fetch(endpoint.href, {
+          method: "GET",
+          headers: {
+            apikey: SUPABASE_PUBLISHABLE_KEY_NOTICIAS,
+            Accept: "application/json"
+          },
+          credentials: "omit",
+          cache: "no-store",
+          referrerPolicy: "strict-origin-when-cross-origin"
+        });
+
+        if (!respuesta.ok) return [];
+        return normalizarNoticias(await respuesta.json());
+      };
+
+      try {
+        const remotas = await consultarSupabase();
+        if (remotas.length) {
+          document.documentElement.dataset.noticiasFuente = "supabase";
+          return remotas;
+        }
+      } catch (error) {}
+
       try {
         const externas = await intentar(sourceUrl);
-        if (externas.length) return externas;
+        if (externas.length) {
+          document.documentElement.dataset.noticiasFuente = "respaldo-json";
+          return externas;
+        }
       } catch (error) {}
 
       try {
         const locales = await intentar(fallbackUrl);
-        if (locales.length) return locales;
+        if (locales.length) {
+          document.documentElement.dataset.noticiasFuente = "respaldo-json";
+          return locales;
+        }
       } catch (error) {}
 
+      document.documentElement.dataset.noticiasFuente = "respaldo-integrado";
       return noticiasBase.map((item) => ({ ...item, categoria: "Noticia destacada" }));
     };
 
@@ -361,17 +404,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const descripcion = document.createElement("p");
       descripcion.textContent = noticia.descripcion;
 
-      const urlNoticia = resolverUrlEvaSegura(noticia.enlace);
-      const enlace = document.createElement(urlNoticia ? "a" : "span");
-      enlace.className = urlNoticia ? "noticia-enlace" : "noticia-enlace enlace-bloqueado";
+      const urlNoticia = noticia.enlace ? resolverUrlEvaSegura(noticia.enlace) : null;
+
+      contenido.append(categoria, titulo, descripcion);
+
       if (urlNoticia) {
+        const enlace = document.createElement("a");
+        enlace.className = "noticia-enlace";
         enlace.href = urlNoticia;
         enlace.target = "_blank";
         enlace.rel = "noopener noreferrer";
+        enlace.textContent = "Ampliar noticia →";
+        contenido.appendChild(enlace);
       }
-      enlace.textContent = urlNoticia ? "Ampliar noticia →" : "Enlace no permitido";
-
-      contenido.append(categoria, titulo, descripcion, enlace);
       articulo.append(figura, contenido);
       return articulo;
     };
