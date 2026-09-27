@@ -136,18 +136,20 @@
 .pie-crebe-bloque h2{
   margin:0 0 12px;
   color:#ffffff;
-  font-size:1.08rem;
+  font-size:.9375rem;
   line-height:1.25;
 }
 
 .pie-crebe-bloque p{
   margin:0;
   color:rgba(255,255,255,.9);
+  font-size:.875rem;
   line-height:1.7;
 }
 
 .pie-crebe-bloque a{
   color:#d6fff7;
+  font-size:.875rem;
   text-decoration:none;
 }
 
@@ -188,6 +190,7 @@
 
 .pie-crebe-secundario a{
   color:#d6fff7;
+  font-size:.8125rem;
   font-weight:700;
   text-decoration:none;
 }
@@ -201,7 +204,7 @@
 .pie-crebe-final p{
   margin:0;
   color:rgba(255,255,255,.92);
-  font-size:.92rem;
+  font-size:.8125rem;
   line-height:1.55;
 }
 
