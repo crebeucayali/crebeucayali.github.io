@@ -11,10 +11,29 @@
 
   const $ = (selector) => document.querySelector(selector);
   const elementos = {
-    entrada: $("#buscador"), sugerencias: $("#lista-sugerencias"), estado: $("#estado-buscador"), correccion: $("#estado-correccion"), catalogo: $("#estado-catalogo"), limpiar: $("#limpiar"),
-    modulo: $("#filtro-modulo"), categoria: $("#filtro-categoria"), tipo: $("#filtro-tipo"), soloFavoritos: $("#solo-favoritos"), restablecer: $("#restablecer-filtros"), compartir: $("#compartir-busqueda"), estadoCompartir: $("#estado-compartir"),
-    contador: $("#contador-resultados"), resumen: $("#resumen-filtros"), resultados: $("#lista-resultados"), historial: $("#historial-busquedas"), borrarHistorial: $("#borrar-historial"), contadorFavoritos: $("#contador-favoritos"), verFavoritos: $("#ver-favoritos"),
-    listaFuentes: $("#lista-fuentes"), fechaIndice: $("#fecha-indice"), botonesRapidos: document.querySelectorAll("[data-consulta]")
+    entrada: $("#buscador"),
+    sugerencias: $("#lista-sugerencias"),
+    estado: $("#estado-buscador"),
+    correccion: $("#estado-correccion"),
+    catalogo: $("#estado-catalogo"),
+    limpiar: $("#limpiar"),
+    modulo: $("#filtro-modulo"),
+    categoria: $("#filtro-categoria"),
+    tipo: $("#filtro-tipo"),
+    soloFavoritos: $("#solo-favoritos"),
+    restablecer: $("#restablecer-filtros"),
+    compartir: $("#compartir-busqueda"),
+    estadoCompartir: $("#estado-compartir"),
+    contador: $("#contador-resultados"),
+    resumen: $("#resumen-filtros"),
+    resultados: $("#lista-resultados"),
+    historial: $("#historial-busquedas"),
+    borrarHistorial: $("#borrar-historial"),
+    contadorFavoritos: $("#contador-favoritos"),
+    verFavoritos: $("#ver-favoritos"),
+    listaFuentes: $("#lista-fuentes"),
+    fechaIndice: $("#fecha-indice"),
+    botonesRapidos: document.querySelectorAll("[data-consulta]")
   };
 
   let recursos = [];
@@ -27,18 +46,31 @@
   let favoritos = new Set(leerLocal(FAVORITOS_KEY, []));
 
   function leerLocal(clave, respaldo) {
-    try { return JSON.parse(localStorage.getItem(clave) || "null") ?? respaldo; }
-    catch { return respaldo; }
+    try {
+      return JSON.parse(localStorage.getItem(clave) || "null") ?? respaldo;
+    } catch {
+      return respaldo;
+    }
   }
+
   function guardarLocal(clave, datos) {
-    try { localStorage.setItem(clave, JSON.stringify(datos)); return true; }
-    catch { return false; }
+    try {
+      localStorage.setItem(clave, JSON.stringify(datos));
+      return true;
+    } catch {
+      return false;
+    }
   }
   function normalizar(texto = "") {
     return String(texto).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9ñ\s]/g, " ").replace(/\s+/g, " ").trim();
   }
-  function palabras(texto) { return normalizar(texto).split(" ").filter((p) => p.length >= 2); }
-  function etiquetasTexto(recurso) { return Array.isArray(recurso.etiquetas) ? recurso.etiquetas.join(" ") : String(recurso.etiquetas || ""); }
+  function palabras(texto) {
+    return normalizar(texto).split(" ").filter((p) => p.length >= 2);
+  }
+
+  function etiquetasTexto(recurso) {
+    return Array.isArray(recurso.etiquetas) ? recurso.etiquetas.join(" ") : String(recurso.etiquetas || "");
+  }
 
   const DOMINIOS_EVA_PERMITIDOS = new Set(["crebeucayali.github.io"]);
 
@@ -94,9 +126,17 @@
     const datos = leerLocal(TARJETAS_KEY, []);
     if (!Array.isArray(datos)) return [];
     return datos.filter((t) => t && t.id && t.frente && t.reverso).map((t) => ({
-      id: `local-${t.id}`, titulo: t.frente, modulo: "LOCAL", categoria: t.categoria || "Tarjetas personales", tipo: "Tarjeta educativa personal",
-      descripcion: t.reverso, etiquetas: [t.tipo || "tarjeta", "tarjetas educativas", t.textoAlternativo || ""].filter(Boolean),
-      url: "/pruebas/tarjetas-educativas/#mis-tarjetas", fechaActualizacion: t.fechaActualizacion || t.fechaCreacion || "", fuente: "Tarjetas de este navegador", local: true
+      id: `local-${t.id}`,
+      titulo: t.frente,
+      modulo: "LOCAL",
+      categoria: t.categoria || "Tarjetas personales",
+      tipo: "Tarjeta educativa personal",
+      descripcion: t.reverso,
+      etiquetas: [t.tipo || "tarjeta", "tarjetas educativas", t.textoAlternativo || ""].filter(Boolean),
+      url: "/pruebas/tarjetas-educativas/#mis-tarjetas",
+      fechaActualizacion: t.fechaActualizacion || t.fechaCreacion || "",
+      fuente: "Tarjetas de este navegador",
+      local: true
     }));
   }
 
@@ -116,7 +156,10 @@
     const resultados = await Promise.allSettled(configuracion.map(async (fuente) => {
       const datos = await obtenerJson(fuente.url);
       if (!Array.isArray(datos)) throw new Error("Catálogo inválido");
-      return { fuente, datos: datos.filter(esRecursoValido).map((r) => ({ ...r, fuente: fuente.nombre })) };
+      return {
+        fuente,
+        datos: datos.filter(esRecursoValido).map((r) => ({ ...r, fuente: fuente.nombre }))
+      };
     }));
 
     const estados = [];
@@ -156,7 +199,8 @@
       for (let j = 1; j <= b.length; j += 1) {
         const costo = a[i - 1] === b[j - 1] ? 0 : 1;
         const valor = Math.min(actual[j - 1] + 1, anterior[j] + 1, anterior[j - 1] + costo);
-        actual.push(valor); minimo = Math.min(minimo, valor);
+        actual.push(valor);
+        minimo = Math.min(minimo, valor);
       }
       if (minimo > limite) return limite + 1;
       anterior = actual;
@@ -173,11 +217,15 @@
   function corregir(palabra) {
     if (palabra.length < 4 || vocabulario.has(palabra)) return "";
     const limite = palabra.length <= 5 ? 1 : 2;
-    let mejor = ""; let valorMejor = limite + 1;
+    let mejor = "";
+    let valorMejor = limite + 1;
     vocabulario.forEach((candidata) => {
       if (Math.abs(candidata.length - palabra.length) > limite) return;
       const valor = distancia(palabra, candidata, limite);
-      if (valor < valorMejor) { mejor = candidata; valorMejor = valor; }
+      if (valor < valorMejor) {
+        mejor = candidata;
+        valorMejor = valor;
+      }
     });
     return valorMejor <= limite ? mejor : "";
   }
@@ -197,7 +245,10 @@
     });
     tokens.forEach((token) => {
       const c = corregir(token);
-      if (c && c !== token) { ampliados.add(c); correcciones.push({ original: token, correccion: c }); }
+      if (c && c !== token) {
+        ampliados.add(c);
+        correcciones.push({ original: token, correccion: c });
+      }
     });
     return { original, ampliados: [...ampliados], equivalencias: [...new Set(equivalencias)], correcciones };
   }
@@ -205,14 +256,29 @@
   function puntuar(recurso, analisis) {
     if (!analisis.original) return 1;
     const campos = {
-      titulo: normalizar(recurso.titulo), modulo: normalizar(recurso.modulo), categoria: normalizar(recurso.categoria), tipo: normalizar(recurso.tipo),
-      descripcion: normalizar(recurso.descripcion), etiquetas: normalizar(etiquetasTexto(recurso))
+      titulo: normalizar(recurso.titulo),
+      modulo: normalizar(recurso.modulo),
+      categoria: normalizar(recurso.categoria),
+      tipo: normalizar(recurso.tipo),
+      descripcion: normalizar(recurso.descripcion),
+      etiquetas: normalizar(etiquetasTexto(recurso))
     };
     let total = 0;
     analisis.ampliados.forEach((t) => {
       if (!t) return;
-      if (campos.titulo === t) total += 18; else if (campos.titulo.startsWith(t)) total += 12; else if (campos.titulo.includes(t)) total += 8;
-      if (campos.modulo === t) total += 7; else if (campos.modulo.includes(t)) total += 3;
+      if (campos.titulo === t) {
+        total += 18;
+      } else if (campos.titulo.startsWith(t)) {
+        total += 12;
+      } else if (campos.titulo.includes(t)) {
+        total += 8;
+      }
+
+      if (campos.modulo === t) {
+        total += 7;
+      } else if (campos.modulo.includes(t)) {
+        total += 3;
+      }
       if (campos.categoria.includes(t)) total += 5;
       if (campos.tipo.includes(t)) total += 3;
       if (campos.etiquetas.includes(t)) total += 5;
@@ -224,8 +290,17 @@
   function poblarFiltro(select, valores) {
     const etiqueta = select.options[0]?.textContent || "Todos";
     select.replaceChildren();
-    const inicial = document.createElement("option"); inicial.value = ""; inicial.textContent = etiqueta; select.appendChild(inicial);
-    valores.forEach((v) => { const o = document.createElement("option"); o.value = v; o.textContent = v; select.appendChild(o); });
+    const inicial = document.createElement("option");
+    inicial.value = "";
+    inicial.textContent = etiqueta;
+    select.appendChild(inicial);
+
+    valores.forEach((v) => {
+      const o = document.createElement("option");
+      o.value = v;
+      o.textContent = v;
+      select.appendChild(o);
+    });
   }
   function prepararFiltros() {
     poblarFiltro(elementos.modulo, [...new Set(recursos.map((r) => r.modulo))].sort((a, b) => a.localeCompare(b, "es")));
@@ -233,27 +308,71 @@
     poblarFiltro(elementos.tipo, [...new Set(recursos.map((r) => r.tipo))].sort((a, b) => a.localeCompare(b, "es")));
   }
 
-  function estadoActual() { return { q: elementos.entrada.value.trim(), modulo: elementos.modulo.value, categoria: elementos.categoria.value, tipo: elementos.tipo.value, favoritos: elementos.soloFavoritos.checked }; }
+  function estadoActual() {
+    return {
+      q: elementos.entrada.value.trim(),
+      modulo: elementos.modulo.value,
+      categoria: elementos.categoria.value,
+      tipo: elementos.tipo.value,
+      favoritos: elementos.soloFavoritos.checked
+    };
+  }
   function aplicarEstado(e) {
     elementos.entrada.value = e.q || "";
-    [ [elementos.modulo, e.modulo], [elementos.categoria, e.categoria], [elementos.tipo, e.tipo] ].forEach(([s, v]) => { s.value = [...s.options].some((o) => o.value === v) ? v : ""; });
+    [
+      [elementos.modulo, e.modulo],
+      [elementos.categoria, e.categoria],
+      [elementos.tipo, e.tipo]
+    ].forEach(([s, v]) => {
+      s.value = [...s.options].some((o) => o.value === v) ? v : "";
+    });
     elementos.soloFavoritos.checked = Boolean(e.favoritos);
   }
   function actualizarURL() {
-    const e = estadoActual(); const p = new URLSearchParams();
-    if (e.q) p.set("q", e.q); if (e.modulo) p.set("modulo", e.modulo); if (e.categoria) p.set("categoria", e.categoria); if (e.tipo) p.set("tipo", e.tipo); if (e.favoritos) p.set("favoritos", "1");
+    const e = estadoActual();
+    const p = new URLSearchParams();
+
+    if (e.q) p.set("q", e.q);
+    if (e.modulo) p.set("modulo", e.modulo);
+    if (e.categoria) p.set("categoria", e.categoria);
+    if (e.tipo) p.set("tipo", e.tipo);
+    if (e.favoritos) p.set("favoritos", "1");
     history.replaceState(null, "", `${location.pathname}${p.toString() ? `?${p}` : ""}${location.hash}`);
   }
-  function leerURL() { const p = new URLSearchParams(location.search); return { q: p.get("q") || "", modulo: p.get("modulo") || "", categoria: p.get("categoria") || "", tipo: p.get("tipo") || "", favoritos: p.get("favoritos") === "1" }; }
+  function leerURL() {
+    const p = new URLSearchParams(location.search);
+    return {
+      q: p.get("q") || "",
+      modulo: p.get("modulo") || "",
+      categoria: p.get("categoria") || "",
+      tipo: p.get("tipo") || "",
+      favoritos: p.get("favoritos") === "1"
+    };
+  }
 
-  function cerrarSugerencias() { elementos.sugerencias.hidden = true; elementos.entrada.setAttribute("aria-expanded", "false"); elementos.entrada.setAttribute("aria-activedescendant", ""); indiceActivo = -1; }
+  function cerrarSugerencias() {
+    elementos.sugerencias.hidden = true;
+    elementos.entrada.setAttribute("aria-expanded", "false");
+    elementos.entrada.setAttribute("aria-activedescendant", "");
+    indiceActivo = -1;
+  }
   function actualizarActivo() {
     [...elementos.sugerencias.querySelectorAll('[role="option"]')].forEach((o, i) => { const activo = i === indiceActivo; o.classList.toggle("activo", activo); o.setAttribute("aria-selected", activo ? "true" : "false"); if (activo) { elementos.entrada.setAttribute("aria-activedescendant", o.id); o.scrollIntoView({ block: "nearest" }); } });
   }
-  function seleccionarSugerencia(r) { elementos.entrada.value = r.titulo; cerrarSugerencias(); aplicarBusqueda(true); registrarHistorial(); elementos.resultados.querySelector("a")?.focus(); }
+  function seleccionarSugerencia(r) {
+    elementos.entrada.value = r.titulo;
+    cerrarSugerencias();
+    aplicarBusqueda(true);
+    registrarHistorial();
+    elementos.resultados.querySelector("a")?.focus();
+  }
   function actualizarSugerencias() {
     const analisis = analizarConsulta(elementos.entrada.value);
-    if (!analisis.original) { sugerenciasActuales = []; cerrarSugerencias(); return; }
+    if (!analisis.original) {
+      sugerenciasActuales = [];
+      cerrarSugerencias();
+      return;
+    }
     sugerenciasActuales = recursos.map((r) => ({ r, p: puntuar(r, analisis) })).filter((x) => x.p > 0).sort((a, b) => b.p - a.p || a.r.titulo.localeCompare(b.r.titulo, "es")).slice(0, MAX_SUGERENCIAS).map((x) => x.r);
     elementos.sugerencias.replaceChildren();
     sugerenciasActuales.forEach((r, i) => {
@@ -262,14 +381,17 @@
       const t = document.createElement("span"); t.className = "texto-sugerencia"; const s = document.createElement("strong"); s.textContent = r.titulo; const d = document.createElement("span"); d.textContent = `${r.categoria} · ${r.tipo}`; t.append(s, d); b.append(m, t);
       b.addEventListener("mousedown", (e) => e.preventDefault()); b.addEventListener("click", () => seleccionarSugerencia(r)); li.appendChild(b); elementos.sugerencias.appendChild(li);
     });
-    elementos.sugerencias.hidden = sugerenciasActuales.length === 0; elementos.entrada.setAttribute("aria-expanded", sugerenciasActuales.length ? "true" : "false"); indiceActivo = -1;
+    elementos.sugerencias.hidden = sugerenciasActuales.length === 0;
+    elementos.entrada.setAttribute("aria-expanded", sugerenciasActuales.length ? "true" : "false");
+    indiceActivo = -1;
   }
 
   function actualizarCorreccion(analisis) {
     const mensajes = [];
     if (analisis.equivalencias.length) mensajes.push(`También se buscaron términos relacionados con: ${analisis.equivalencias.join(", ")}.`);
     if (analisis.correcciones.length) mensajes.push(`Se consideraron posibles correcciones: ${analisis.correcciones.map((x) => `${x.original} → ${x.correccion}`).join(", ")}.`);
-    elementos.correccion.hidden = mensajes.length === 0; elementos.correccion.textContent = mensajes.join(" ");
+    elementos.correccion.hidden = mensajes.length === 0;
+    elementos.correccion.textContent = mensajes.join(" ");
   }
 
   function crearResultado(r) {
@@ -296,21 +418,31 @@
   }
 
   function descripcionFiltros() {
-    const e = estadoActual(); const partes = [];
-    if (e.q) partes.push(`búsqueda “${e.q}”`); if (e.modulo) partes.push(`módulo ${e.modulo}`); if (e.categoria) partes.push(`categoría ${e.categoria}`); if (e.tipo) partes.push(`tipo ${e.tipo}`); if (e.favoritos) partes.push("solo favoritos");
+    const e = estadoActual();
+    const partes = [];
+    if (e.q) partes.push(`búsqueda “${e.q}”`);
+    if (e.modulo) partes.push(`módulo ${e.modulo}`);
+    if (e.categoria) partes.push(`categoría ${e.categoria}`);
+    if (e.tipo) partes.push(`tipo ${e.tipo}`);
+    if (e.favoritos) partes.push("solo favoritos");
     return partes.length ? `Filtros activos: ${partes.join("; ")}.` : "Se muestran todos los recursos disponibles.";
   }
 
   function renderizarResultados() {
-    elementos.resultados.replaceChildren(); elementos.contador.textContent = `${resultadosActuales.length} ${resultadosActuales.length === 1 ? "resultado" : "resultados"}`; elementos.resumen.textContent = descripcionFiltros();
+    elementos.resultados.replaceChildren();
+    elementos.contador.textContent = `${resultadosActuales.length} ${resultadosActuales.length === 1 ? "resultado" : "resultados"}`;
+    elementos.resumen.textContent = descripcionFiltros();
     if (!resultadosActuales.length) { const p = document.createElement("p"); p.className = "vacio"; p.textContent = "No se encontraron recursos con la búsqueda y los filtros seleccionados."; elementos.resultados.appendChild(p); return; }
     resultadosActuales.forEach((r) => elementos.resultados.appendChild(crearResultado(r)));
   }
 
   function aplicarBusqueda(actualizarDireccion = false) {
-    const analisis = analizarConsulta(elementos.entrada.value); actualizarCorreccion(analisis);
+    const analisis = analizarConsulta(elementos.entrada.value);
+    actualizarCorreccion(analisis);
     resultadosActuales = recursos.filter((r) => !elementos.modulo.value || r.modulo === elementos.modulo.value).filter((r) => !elementos.categoria.value || r.categoria === elementos.categoria.value).filter((r) => !elementos.tipo.value || r.tipo === elementos.tipo.value).filter((r) => !elementos.soloFavoritos.checked || favoritos.has(r.id)).map((r) => ({ r, p: puntuar(r, analisis) })).filter((x) => !analisis.original || x.p > 0).sort((a, b) => analisis.original && b.p !== a.p ? b.p - a.p : a.r.titulo.localeCompare(b.r.titulo, "es")).map((x) => x.r);
-    elementos.limpiar.hidden = !analisis.original; renderizarResultados(); if (actualizarDireccion) actualizarURL();
+    elementos.limpiar.hidden = !analisis.original;
+    renderizarResultados();
+    if (actualizarDireccion) actualizarURL();
     elementos.estado.textContent = analisis.original ? `${resultadosActuales.length} resultados para la consulta.` : "Puede escribir una palabra o utilizar los filtros.";
   }
 
@@ -327,7 +459,16 @@
   function actualizarFavoritos() {
     [...favoritos].forEach((id) => { if (!recursos.some((r) => r.id === id)) favoritos.delete(id); }); guardarLocal(FAVORITOS_KEY, [...favoritos]); elementos.contadorFavoritos.textContent = `${favoritos.size} ${favoritos.size === 1 ? "favorito" : "favoritos"}`; elementos.verFavoritos.disabled = favoritos.size === 0;
   }
-  function alternarFavorito(id) { if (favoritos.has(id)) favoritos.delete(id); else favoritos.add(id); guardarLocal(FAVORITOS_KEY, [...favoritos]); actualizarFavoritos(); aplicarBusqueda(false); }
+  function alternarFavorito(id) {
+    if (favoritos.has(id)) {
+      favoritos.delete(id);
+    } else {
+      favoritos.add(id);
+    }
+    guardarLocal(FAVORITOS_KEY, [...favoritos]);
+    actualizarFavoritos();
+    aplicarBusqueda(false);
+  }
 
   async function copiar(texto) { if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(texto); const t = document.createElement("textarea"); t.value = texto; t.className = "copiar-fallback"; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
   function habilitar() { [elementos.entrada, elementos.modulo, elementos.categoria, elementos.tipo, elementos.soloFavoritos, elementos.restablecer, elementos.compartir].forEach((e) => { e.disabled = false; }); }
@@ -356,7 +497,13 @@
     try {
       const [_, sinonimosCargados] = await Promise.all([cargarFuentes(), obtenerJson(SINONIMOS_URL).catch(() => ({}))]);
       sinonimos = sinonimosCargados && typeof sinonimosCargados === "object" ? sinonimosCargados : {};
-      prepararFiltros(); construirVocabulario(); habilitar(); actualizarFavoritos(); aplicarEstado(leerURL()); aplicarBusqueda(false); configurarEventos();
+      prepararFiltros();
+      construirVocabulario();
+      habilitar();
+      actualizarFavoritos();
+      aplicarEstado(leerURL());
+      aplicarBusqueda(false);
+      configurarEventos();
     } catch (error) {
       console.error(error);
       elementos.catalogo.textContent = "No se pudo cargar el buscador";
