@@ -22,7 +22,7 @@
   "url": "https://crebeucayali.github.io/"
 }
 </script>
-<link rel="stylesheet" href="estilos.css?v=22"/>
+<link rel="stylesheet" href="estilos.css?v=23"/>
 <link rel="stylesheet" href="https://crebeucayali.github.io/accesos-complementarios/accesibilidad/accesibilidad.css?v=10"/>
 </head>
 <body class="theme-crebe wsite-theme-light">
@@ -313,14 +313,20 @@
 </label>
 <button id="admin-mini-submit" class="admin-mini-submit" type="submit">Ingresar</button>
 </form>
-<button id="admin-abrir-panel" class="admin-abrir-panel" type="button" hidden>Abrir panel</button>
+<div id="admin-sesion-activa" class="admin-sesion-activa" hidden>
+<p class="admin-sesion-estado"><strong>Sesión administrativa activa</strong></p>
+<div class="admin-sesion-acciones">
+<button id="admin-abrir-panel" class="admin-abrir-panel" type="button">Abrir panel</button>
+<button id="admin-cerrar-sesion" class="admin-cerrar-sesion" type="button">Cerrar sesión</button>
+</div>
+</div>
 <p id="admin-mini-mensaje" class="admin-mini-mensaje" aria-live="polite"></p>
 </section>
 </div>
 
 <button id="volver-arriba" class="volver-arriba" type="button" aria-label="Volver al inicio" hidden>↑</button>
 <script src="main.js?v=10"></script>
-<script src="admin-acceso.js?v=2"></script>
+<script src="admin-acceso.js?v=3"></script>
 <script src="migracion-accesibilidad.js?v=1"></script>
 <script src="https://crebeucayali.github.io/accesos-complementarios/accesibilidad/accesibilidad.js?v=10"></script>
 </body>
