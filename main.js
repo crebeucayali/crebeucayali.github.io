@@ -21,6 +21,23 @@ function resolverUrlEvaSegura(valor) {
   }
 }
 
+function resolverUrlImagenEvaSegura(valor) {
+  const eva = resolverUrlEvaSegura(valor);
+  if (eva) return eva;
+
+  try {
+    const url = new URL(String(valor || "").trim());
+    const storageNoticias =
+      url.protocol === "https:" &&
+      url.hostname.toLowerCase() === "dteimbhwtzghhsijeeld.supabase.co" &&
+      /^\/storage\/v1\/object\/public\/eva-publico\/noticias\/[a-z0-9._/-]+$/i.test(url.pathname);
+
+    return storageNoticias ? url.href : null;
+  } catch (error) {
+    return null;
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const buscador = document.querySelector("#buscador-modulos");
   const mensajeBusqueda = document.querySelector("#resultado-busqueda-modulos");
@@ -292,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return datos
         .filter((item) => item && item.titulo && item.descripcion)
         .map((item, indice) => {
-          const imagen = resolverUrlEvaSegura(
+          const imagen = resolverUrlImagenEvaSegura(
             item.imagen || item.imagen_url || noticiasBase[indice % noticiasBase.length]?.imagen || noticiasBase[0].imagen
           );
           const enlaceOriginal = item.enlace || item.enlace_url || "";
@@ -389,7 +406,7 @@ document.addEventListener("DOMContentLoaded", () => {
       figura.className = "noticia-media";
 
       const imagen = document.createElement("img");
-      const imagenSegura = resolverUrlEvaSegura(noticia.imagen);
+      const imagenSegura = resolverUrlImagenEvaSegura(noticia.imagen);
       if (imagenSegura) imagen.src = imagenSegura;
       imagen.alt = noticia.titulo;
       imagen.loading = "lazy";
