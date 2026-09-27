@@ -267,19 +267,33 @@
   background:linear-gradient(180deg,#ffffff 0%,#e9f5f1 100%);
   border-color:rgba(15,118,110,.32);
 }
-.tarjetas > .dua-3 .numero{color:#0b6257;background:#d8f0e9}
-.tarjetas > .dua-3 h3{color:#0b6257}
-.tarjetas > .dua-3 .boton{background:#0b6257}
+.tarjetas > .dua-3 .numero{
+  color:#0b6257;
+  background:#d8f0e9;
+}
+
+.tarjetas > .dua-3 h3{
+  color:#0b6257;
+}
+
+.tarjetas > .dua-3 .boton{
+  background:#0b6257;
+}
 /* Seis tarjetas: dos filas de tres, sin el centrado especial usado para cinco. */
 @media (min-width:981px){
   .tarjetas > .noti,
   .tarjetas > .repositorio,
-  .tarjetas > .dua-3{grid-column:span 2}
+  .tarjetas > .dua-3{
+    grid-column:span 2;
+  }
 }
 
 
 /* Títulos que ocupan todo el ancho de sus rejillas. */
-.titulo-seccion-grid{grid-column:1/-1;margin:0 0 4px}
+.titulo-seccion-grid{
+  grid-column:1/-1;
+  margin:0 0 4px;
+}
 
 /* Ajuste tipográfico EVA: solo encabezados principales sobredimensionados.
    Se preservan H3 de tarjetas, títulos laterales y demás componentes pequeños. */
