@@ -565,3 +565,49 @@ body.alto-contraste .admin-cerrar-sesion{
     grid-template-columns:1fr;
   }
 }
+
+
+/* Acceso administrativo reubicado en el NAV principal */
+.pestanas-crebe .admin-toggle-nav{
+  position:relative;
+  min-width:0;
+  min-height:44px;
+  padding:8px 12px;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  color:#000000;
+  background:transparent;
+  font:inherit;
+  font-size:.9375rem;
+  font-weight:600;
+  line-height:1.2;
+  letter-spacing:.01em;
+  cursor:pointer;
+}
+.pestanas-crebe .admin-toggle-nav:hover,
+.pestanas-crebe .admin-toggle-nav:focus-visible{
+  color:#ffffff;
+  background:#0b3550;
+  outline:2px solid transparent;
+}
+.acceso-admin-eva{
+  left:auto;
+  right:16px;
+  top:82px;
+  bottom:auto;
+  align-items:flex-end;
+}
+@media(max-width:640px){
+  .pestanas-crebe .admin-toggle-nav{
+    min-height:38px;
+    padding:7px 10px;
+    font-size:.875rem;
+  }
+  .acceso-admin-eva{
+    left:auto;
+    right:10px;
+    top:124px;
+    bottom:auto;
+  }
+}
