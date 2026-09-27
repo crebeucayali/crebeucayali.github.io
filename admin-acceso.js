@@ -169,7 +169,7 @@
     });
 
     document.addEventListener("click", (evento) => {
-      if (panel.hidden || contenedor.contains(evento.target)) return;
+      if (panel.hidden || contenedor.contains(evento.target) || boton.contains(evento.target)) return;
       mostrarPanel(false);
     });
   });
