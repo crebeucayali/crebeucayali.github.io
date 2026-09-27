@@ -278,30 +278,6 @@
 }
 
 
-/* Bloque de impacto migrado desde index.html para CSP. */
-.impacto-crebe{width:min(1120px,calc(100% - 36px));margin:18px auto 0;padding:18px 0 4px;overflow:hidden;color:#102a43}
-.impacto-encabezado{max-width:840px;margin:0 auto 14px;text-align:center}
-.impacto-etiqueta{margin:0 0 6px;color:#0b3550;font-size:.78rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
-.impacto-encabezado h2{margin:0;color:#102a43;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.7rem,3.3vw,2.7rem);line-height:1.08}
-.impacto-encabezado p{margin:8px auto 0;color:#486581;font-size:1rem;line-height:1.55}
-.impacto-carrusel{position:relative;overflow:hidden;padding:0 0 8px}
-.impacto-carrusel::before,.impacto-carrusel::after{content:"";position:absolute;top:0;bottom:0;width:54px;z-index:2;pointer-events:none}
-.impacto-carrusel::before{left:0;background:linear-gradient(90deg,#faf9f6,rgba(250,249,246,0))}
-.impacto-carrusel::after{right:0;background:linear-gradient(270deg,#faf9f6,rgba(250,249,246,0))}
-.impacto-pista{display:flex;gap:22px;width:max-content;animation:impacto-desplazar 38s linear infinite}
-.impacto-carrusel:hover .impacto-pista,.impacto-carrusel:focus-within .impacto-pista{animation-play-state:paused}
-.impacto-tarjeta{width:285px;min-height:150px;padding:12px 10px;color:#102a43;background:transparent;border:0;text-align:center}
-.impacto-tarjeta strong{display:block;margin-bottom:8px;color:#0b3550;font-family:Georgia,"Times New Roman",serif;font-size:2.45rem;line-height:1}
-.impacto-tarjeta h3{margin:0 auto 7px;color:#102a43;font-size:1rem;line-height:1.25;font-weight:900}
-.impacto-tarjeta p{margin:0 auto;color:#486581;font-size:.92rem;line-height:1.5}
-@keyframes impacto-desplazar{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 11px))}}
-@media(max-width:720px){.impacto-carrusel::before,.impacto-carrusel::after{width:30px}.impacto-tarjeta{width:245px;min-height:165px}}
-@media(max-width:680px){.impacto-crebe{width:calc(100% - 24px)}}
-@media(prefers-reduced-motion:reduce){.impacto-pista{animation:none;flex-wrap:wrap;width:100%;justify-content:center}.impacto-tarjeta[aria-hidden="true"]{display:none}}
-body.alto-contraste .impacto-crebe,body.alto-contraste .impacto-encabezado h2,body.alto-contraste .impacto-encabezado p,body.alto-contraste .impacto-etiqueta,body.alto-contraste .impacto-tarjeta strong,body.alto-contraste .impacto-tarjeta h3,body.alto-contraste .impacto-tarjeta p{color:#fff!important;background:#000!important}
-body.alto-contraste .impacto-carrusel::before,body.alto-contraste .impacto-carrusel::after{display:none!important}
-
-
 /* Títulos que ocupan todo el ancho de sus rejillas. */
 .titulo-seccion-grid{grid-column:1/-1;margin:0 0 4px}
 
