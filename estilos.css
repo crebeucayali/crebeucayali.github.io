@@ -570,26 +570,53 @@ body.alto-contraste .admin-cerrar-sesion{
 /* Acceso administrativo reubicado en el NAV principal */
 .pestanas-crebe .admin-toggle-nav{
   position:relative;
-  min-width:0;
-  min-height:44px;
-  padding:8px 12px;
-  border:0;
-  border-radius:0;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:132px;
+  min-height:38px;
+  padding:6px 14px;
+  border:1px solid rgba(11,53,80,.22);
+  border-radius:999px;
   box-shadow:none;
-  color:#000000;
-  background:transparent;
+  color:#0b3550;
+  background:rgba(11,53,80,.06);
   font:inherit;
-  font-size:.9375rem;
+  font-size:.88rem;
   font-weight:600;
-  line-height:1.2;
+  line-height:1.1;
   letter-spacing:.01em;
   cursor:pointer;
+  overflow:hidden;
+  transition:background .2s ease,color .2s ease,border-color .2s ease;
 }
 .pestanas-crebe .admin-toggle-nav:hover,
 .pestanas-crebe .admin-toggle-nav:focus-visible{
   color:#ffffff;
   background:#0b3550;
+  border-color:#0b3550;
   outline:2px solid transparent;
+}
+.pestanas-crebe .admin-toggle-nav .admin-text-default,
+.pestanas-crebe .admin-toggle-nav .admin-text-hover{
+  display:inline-block;
+  white-space:nowrap;
+  transition:opacity .18s ease,transform .18s ease;
+}
+.pestanas-crebe .admin-toggle-nav .admin-text-hover{
+  position:absolute;
+  opacity:0;
+  transform:translateY(4px);
+}
+.pestanas-crebe .admin-toggle-nav:hover .admin-text-default,
+.pestanas-crebe .admin-toggle-nav:focus-visible .admin-text-default{
+  opacity:0;
+  transform:translateY(-4px);
+}
+.pestanas-crebe .admin-toggle-nav:hover .admin-text-hover,
+.pestanas-crebe .admin-toggle-nav:focus-visible .admin-text-hover{
+  opacity:1;
+  transform:translateY(0);
 }
 .acceso-admin-eva{
   left:auto;
@@ -600,9 +627,10 @@ body.alto-contraste .admin-cerrar-sesion{
 }
 @media(max-width:640px){
   .pestanas-crebe .admin-toggle-nav{
-    min-height:38px;
-    padding:7px 10px;
-    font-size:.875rem;
+    min-width:118px;
+    min-height:36px;
+    padding:6px 12px;
+    font-size:.82rem;
   }
   .acceso-admin-eva{
     left:auto;
