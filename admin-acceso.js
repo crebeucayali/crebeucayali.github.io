@@ -76,9 +76,11 @@
     const clave = $("admin-clave");
     const mensaje = $("admin-mini-mensaje");
     const submit = $("admin-mini-submit");
+    const sesionActiva = $("admin-sesion-activa");
     const abrir = $("admin-abrir-panel");
+    const cerrarSesion = $("admin-cerrar-sesion");
 
-    if (!contenedor || !boton || !panel || !form || !correo || !clave || !mensaje || !submit || !abrir) return;
+    if (!contenedor || !boton || !panel || !form || !correo || !clave || !mensaje || !submit || !sesionActiva || !abrir || !cerrarSesion) return;
 
     const mostrarPanel = (visible) => {
       panel.hidden = !visible;
@@ -90,12 +92,13 @@
 
       if (visible) {
         if (leerSesion()) {
-          abrir.hidden = false;
+          sesionActiva.hidden = false;
           form.hidden = true;
-          mensaje.textContent = "Hay una sesión administrativa disponible.";
+          mensaje.textContent = "";
         } else {
-          abrir.hidden = true;
+          sesionActiva.hidden = true;
           form.hidden = false;
+          mensaje.textContent = "";
           window.setTimeout(() => correo.focus(), 0);
         }
       }
@@ -112,6 +115,32 @@
 
     abrir.addEventListener("click", abrirPanel);
 
+    cerrarSesion.addEventListener("click", async () => {
+      const sesion = leerSesion();
+      sessionStorage.removeItem(SESSION_KEY);
+      clave.value = "";
+      sesionActiva.hidden = true;
+      form.hidden = false;
+      mensaje.textContent = "Sesión administrativa cerrada.";
+
+      if (sesion?.access_token) {
+        try {
+          await fetch(SUPABASE_URL + "/auth/v1/logout", {
+            method: "POST",
+            headers: {
+              apikey: SUPABASE_PUBLISHABLE_KEY,
+              Authorization: "Bearer " + sesion.access_token
+            },
+            credentials: "omit",
+            cache: "no-store",
+            referrerPolicy: "strict-origin-when-cross-origin"
+          });
+        } catch (_) {}
+      }
+
+      correo.focus();
+    });
+
     form.addEventListener("submit", async (evento) => {
       evento.preventDefault();
       mensaje.textContent = "";
@@ -121,7 +150,7 @@
       try {
         await iniciarSesion(correo.value.trim(), clave.value);
         clave.value = "";
-        mensaje.textContent = "Acceso validado. Abriendo panel…";
+        mensaje.textContent = "";
         abrirPanel();
       } catch (error) {
         mensaje.textContent = error?.message || "No se pudo iniciar sesión.";
