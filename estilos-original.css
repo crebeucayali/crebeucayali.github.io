@@ -2541,7 +2541,7 @@ body.alto-contraste .accesos-complementarios-weebly button:focus-visible{
 }
 
 .pestanas-crebe{
-  gap:4px !important;
+  gap:2px !important;
   flex-wrap:nowrap !important;
   justify-content:flex-end !important;
 }
@@ -2549,7 +2549,7 @@ body.alto-contraste .accesos-complementarios-weebly button:focus-visible{
 .pestanas-crebe a{
   position:relative !important;
   min-height:44px !important;
-  padding:8px 12px !important;
+  padding:8px 10px !important;
   border-radius:0 !important;
   color:#000000 !important;
   background:transparent !important;
