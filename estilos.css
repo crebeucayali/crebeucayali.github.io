@@ -128,7 +128,7 @@
   margin:0 auto;
   padding:40px 0 30px;
   display:grid;
-  grid-template-columns:minmax(0,1.35fr) minmax(220px,.8fr) minmax(240px,.9fr);
+  grid-template-columns:minmax(0,1.35fr) minmax(190px,.72fr) minmax(225px,.88fr) minmax(215px,.82fr);
   gap:30px;
   align-items:start;
 }
@@ -644,14 +644,171 @@ body.alto-contraste .admin-cerrar-sesion{
 }
 
 
-/* Contador público de visitas EVA */
-.eva-contador-visitas{
-  margin:.55rem 0 0;
-  color:rgba(255,255,255,.9);
-  font-size:.9rem;
-  font-weight:700;
+
+
+/* Indicador institucional de visitas EVA */
+.pie-crebe-indicador{
+  position:relative;
+  min-height:178px;
+  padding:18px 18px 17px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.13) 0%,rgba(255,255,255,.055) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    0 12px 28px rgba(2,26,39,.14);
+  isolation:isolate;
 }
-.eva-contador-visitas strong{
-  color:#fff;
+
+.pie-crebe-indicador::before{
+  content:"";
+  position:absolute;
+  right:-38px;
+  top:-48px;
+  width:128px;
+  height:128px;
+  border:22px solid rgba(214,255,247,.075);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:-1;
+}
+
+.pie-crebe-indicador::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:3px;
+  background:linear-gradient(90deg,#9ee8d9 0%,#ffffff 48%,rgba(255,255,255,.22) 100%);
+  opacity:.82;
+}
+
+.eva-indicador-cabecera{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.eva-indicador-etiqueta{
+  margin:0;
+  color:#bff5e9 !important;
+  font-size:.68rem !important;
+  font-weight:900;
+  letter-spacing:.12em;
+  line-height:1.2 !important;
+  text-transform:uppercase;
+}
+
+.eva-indicador-icono{
+  width:34px;
+  height:34px;
+  display:inline-flex;
+  align-items:flex-end;
+  justify-content:center;
+  gap:3px;
+  flex:0 0 34px;
+  padding:8px 7px;
+  border:1px solid rgba(255,255,255,.24);
+  border-radius:11px;
+  background:rgba(255,255,255,.11);
+}
+
+.eva-indicador-icono span{
+  width:4px;
+  display:block;
+  border-radius:999px 999px 2px 2px;
+  background:#d6fff7;
+}
+
+.eva-indicador-icono span:nth-child(1){height:7px}
+.eva-indicador-icono span:nth-child(2){height:12px}
+.eva-indicador-icono span:nth-child(3){height:17px}
+
+.pie-crebe-indicador h2{
+  margin:0 0 6px;
+  color:#ffffff;
+  font-size:.9rem;
+  font-weight:800;
+  line-height:1.25;
+}
+
+.eva-contador-numero{
+  display:block;
+  margin:0 0 8px;
+  color:#ffffff;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(1.85rem,2.4vw,2.45rem);
+  font-weight:700;
+  line-height:1;
+  letter-spacing:-.025em;
   font-variant-numeric:tabular-nums;
+}
+
+.pie-crebe-indicador .eva-indicador-nota{
+  margin:0;
+  max-width:220px;
+  color:rgba(255,255,255,.78);
+  font-size:.72rem;
+  line-height:1.45;
+}
+
+body.alto-contraste .pie-crebe-indicador{
+  color:#ffffff !important;
+  background:#000000 !important;
+  border:2px solid #ffffff !important;
+  box-shadow:none !important;
+}
+
+body.alto-contraste .eva-indicador-etiqueta,
+body.alto-contraste .eva-contador-numero,
+body.alto-contraste .eva-indicador-nota{
+  color:#ffffff !important;
+}
+
+body.alto-contraste .eva-indicador-icono{
+  background:#000000 !important;
+  border-color:#ffffff !important;
+}
+
+body.alto-contraste .eva-indicador-icono span{
+  background:#ffffff !important;
+}
+
+@media (max-width:1100px){
+  .pie-crebe-contenido{
+    grid-template-columns:minmax(0,1.25fr) minmax(200px,.8fr) minmax(220px,.9fr);
+  }
+
+  .pie-crebe-identidad{
+    grid-column:1/-1;
+  }
+}
+
+@media (max-width:900px){
+  .pie-crebe-contenido{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .pie-crebe-identidad{
+    grid-column:1/-1;
+  }
+
+  .pie-crebe-indicador{
+    min-height:160px;
+  }
+}
+
+@media (max-width:760px){
+  .pie-crebe-indicador{
+    min-height:0;
+  }
+
+  .pie-crebe-indicador .eva-indicador-nota{
+    max-width:none;
+  }
 }
