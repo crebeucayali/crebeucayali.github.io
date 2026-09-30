@@ -266,8 +266,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!carrusel || !pista || !indicadores || !botonAnterior || !botonSiguiente) return;
 
     const viewport = carrusel.querySelector(".noticias-viewport");
-    const sourceUrl = carrusel.dataset.newsSource;
-    const fallbackUrl = carrusel.dataset.fallbackSource || "noticias-destacadas.json";
     const prefiereReducirMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const SUPABASE_URL_NOTICIAS = "https://dteimbhwtzghhsijeeld.supabase.co";
     const SUPABASE_PUBLISHABLE_KEY_NOTICIAS = "sb_publishable_tHbo1jTeW_dC90hdA5DvyQ_a6LrfKpq";
@@ -328,16 +326,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const obtenerNoticias = async () => {
-      const intentar = async (url) => {
-        const urlSegura = resolverUrlEvaSegura(url);
-        if (!urlSegura) return [];
-        const respuesta = await fetch(urlSegura, { cache: "no-store", credentials: "omit" });
-        if (!respuesta.ok) {
-          throw new Error("Supabase respondió con estado " + respuesta.status + ".");
-        }
-        return normalizarNoticias(await respuesta.json());
-      };
-
       const consultarSupabase = async () => {
         const endpoint = new URL(SUPABASE_URL_NOTICIAS + "/rest/v1/noticias_destacadas");
         endpoint.searchParams.set(
@@ -367,26 +355,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const remotas = await consultarSupabase();
         document.documentElement.dataset.noticiasFuente = "supabase";
         return remotas;
-      } catch (error) {}
-
-      try {
-        const externas = await intentar(sourceUrl);
-        if (externas.length) {
-          document.documentElement.dataset.noticiasFuente = "respaldo-json";
-          return externas;
-        }
-      } catch (error) {}
-
-      try {
-        const locales = await intentar(fallbackUrl);
-        if (locales.length) {
-          document.documentElement.dataset.noticiasFuente = "respaldo-json";
-          return locales;
-        }
-      } catch (error) {}
-
-      document.documentElement.dataset.noticiasFuente = "respaldo-integrado";
-      return noticiasBase.map((item) => ({ ...item, categoria: "Noticia destacada" }));
+      } catch (error) {
+        document.documentElement.dataset.noticiasFuente = "no-disponible";
+        return [];
+      }
     };
 
     const noticias = await obtenerNoticias();
@@ -538,3 +510,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   inicializarCarruselNoticias();
 });
+
