@@ -19,7 +19,7 @@ No hubo migraciones SQL ni cambios de RLS, permisos, usuarios, cuenta administra
 | crebeucayali/crebeucayali.github.io | docs/autenticacion-etapa-2-sesion.md | Este informe. |
 | crebeucayali/accesos-complementarios | admin/admin.js | Integración de sesión, recuperación de acceso, limpieza de campos sensibles y tratamiento separado de fallos de carga. |
 | crebeucayali/accesos-complementarios | admin/index.html | Carga del gestor común y botón "Reintentar acceso". |
-| crebeucayali/accesos-complementarios | admin/tests/auth-session.test.cjs | 11 pruebas automatizadas del acceso al panel. |
+| crebeucayali/accesos-complementarios | admin/tests/auth-session.test.cjs | 12 pruebas automatizadas del acceso al panel. |
 | crebeucayali/accesos-complementarios | docs/panel-administrativo-auth.md | Actualización de las secciones que describen la sesión y el flujo de acceso. |
 
 La lectura de otros archivos para verificar estilos no dio lugar a modificaciones.
@@ -47,7 +47,7 @@ Las escrituras de contenido no se reenvían automáticamente después de un fall
 
 ## Pruebas ejecutadas
 
-Resultado: 42 pruebas automatizadas conformes, con tokens sintéticos, respuestas HTTP simuladas y controles DOM simulados. No se usaron credenciales de personas ni se realizaron escrituras en Supabase.
+Resultado: 43 pruebas automatizadas conformes, con tokens sintéticos, respuestas HTTP simuladas y controles DOM simulados. No se usaron credenciales de personas ni se realizaron escrituras en Supabase.
 
 En la portada:
 
@@ -63,7 +63,7 @@ node admin/tests/auth-session.test.cjs
 
 Las 31 pruebas del gestor cubren recuperación entre aperturas, migración, una sola renovación ante seis solicitudes y entre dos pestañas, rotación del token, fallos de red/HTTP 429/503, recuperación de conectividad, revocación explícita, MFA correcto/incorrecto, login incorrecto, logout, prevención de recuperación tras cierre, almacenamiento restringido, respuestas inválidas, renovación proactiva y coordinación del RPC de autorización.
 
-Las 11 pruebas del panel cubren recuperación AAL2 sin MFA repetido, bloqueo en AAL1, reintento después de fallo de red o contenido, cierre local y desde otra pestaña, usuario no autorizado, ausencia de sesión, recurso común no disponible, limpieza de contraseña incorrecta y bloqueo si Supabase devuelve AAL1 tras renovar.
+Las 12 pruebas del panel cubren recuperación AAL2 sin MFA repetido, bloqueo en AAL1, reintento después de fallo de red o contenido, cierre local y desde otra pestaña, usuario no autorizado, ausencia de sesión, recurso común no disponible, limpieza de contraseña incorrecta y bloqueo si Supabase devuelve AAL1 tras renovar.
 
 También pasaron la comprobación de sintaxis de los tres scripts y la revisión estática de IDs únicos, orden de carga y compatibilidad con la CSP actual. Se compararon las funciones de contenido, imágenes, formularios y estadísticas con la versión anterior: permanecen idénticas. Header y footer permanecen idénticos en ambos HTML.
 
@@ -76,6 +76,8 @@ El gestor común se publicó primero en la portada: commit [180dfe1](https://git
 Antes de integrarlo en el panel se comprobó el despliegue de GitHub Pages y se descargó el recurso público. Su SHA-256 coincidió con el archivo probado, incluida la URL exacta `admin-sesion.js?v=1`.
 
 La integración del panel se publicó en el commit [53f400a](https://github.com/crebeucayali/accesos-complementarios/commit/53f400a5a2368d9bd794ad972e11cf2696d18036).
+
+Una comprobación adicional protege el cierre frente a respuestas tardías de un desafío MFA: commit [4709820](https://github.com/crebeucayali/accesos-complementarios/commit/470982004b6ae7aecba7606ab2654d7a7046a0e8). Se incorporó su prueba y se actualizó la versión del script del panel.
 
 La integración de la portada y este informe completan la publicación de la etapa. Los hashes de los archivos publicados se verifican contra los archivos probados.
 
