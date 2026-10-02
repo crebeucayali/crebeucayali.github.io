@@ -47,7 +47,6 @@
       app_id: APP_ID,
       display: "popup",
       href: url,
-      redirect_uri: url,
     });
 
     if (texto) parametros.set("quote", texto);
@@ -116,9 +115,9 @@
       // Un doble clic no abre dos flujos simultáneos. El registro no se reintenta.
       if (enlace.dataset.compartiendo === "si") { evento.preventDefault(); return; }
       enlace.href = crearDialogo(actividad.url.href, actividad.texto);
+      enlace.dataset.compartiendo = "si";
       if (typeof navigator.share === "function") {
         evento.preventDefault();
-        enlace.dataset.compartiendo = "si";
         registrarAccionCompartir(actividad);
         try {
           Promise.resolve(navigator.share({title: actividad.titulo, text: actividad.texto,
@@ -134,6 +133,8 @@
         }
         return;
       }
+      // El fallback también bloquea el doble clic, sin reintentar ni registrar otra acción.
+      window.setTimeout(() => { delete enlace.dataset.compartiendo; }, 1500);
     }
     registrarAccionCompartir(actividad);
   });
