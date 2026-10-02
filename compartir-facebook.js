@@ -42,15 +42,9 @@
     return coincidencia?.[1] || "principal";
   };
 
-  const crearDialogo = (url, texto = "") => {
-    const parametros = new URLSearchParams({
-      app_id: APP_ID,
-      display: "popup",
-      href: url,
-    });
-
-    if (texto) parametros.set("quote", texto);
-    return "https://www.facebook.com/dialog/share?" + parametros.toString();
+  const crearDialogo = (url) => {
+    const parametros = new URLSearchParams({ u: url });
+    return "https://www.facebook.com/sharer/sharer.php?" + parametros.toString();
   };
 
   const registrarAccionCompartir = (actividad) => {
@@ -114,7 +108,7 @@
       } catch { return; }
       // Un doble clic no abre dos flujos simultáneos. El registro no se reintenta.
       if (enlace.dataset.compartiendo === "si") { evento.preventDefault(); return; }
-      enlace.href = crearDialogo(actividad.url.href, actividad.texto);
+      enlace.href = crearDialogo(actividad.url.href);
       enlace.dataset.compartiendo = "si";
       if (typeof navigator.share === "function") {
         evento.preventDefault();
