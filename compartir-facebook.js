@@ -1,7 +1,6 @@
 (() => {
   "use strict";
 
-  const APP_ID = "1743067010248486";
   const SUPABASE_URL = "https://dteimbhwtzghhsijeeld.supabase.co";
   const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_tHbo1jTeW_dC90hdA5DvyQ_a6LrfKpq";
   // Un solo listener delegado cubre también tarjetas creadas después de cargar el script.
@@ -42,11 +41,6 @@
     return coincidencia?.[1] || "principal";
   };
 
-  const crearDialogo = (url) => {
-    const parametros = new URLSearchParams({ u: url });
-    return "https://www.facebook.com/sharer/sharer.php?" + parametros.toString();
-  };
-
   const registrarAccionCompartir = (actividad) => {
     const ahora = Date.now();
     if (!actividad && ahora - ultimoRegistro < 1500) return;
@@ -76,28 +70,96 @@
     });
   };
 
+  const mensajes = new WeakMap();
+
+  const feedback = (enlace) => {
+    let bloque = mensajes.get(enlace);
+    if (!bloque || !bloque.isConnected) {
+      bloque = document.createElement("div");
+      bloque.className = "eva-compartir-feedback";
+      const estado = document.createElement("p");
+      estado.setAttribute("role", "status");
+      estado.setAttribute("aria-live", "polite");
+      bloque.append(estado);
+      enlace.insertAdjacentElement("afterend", bloque);
+      mensajes.set(enlace, bloque);
+    }
+    return bloque;
+  };
+
+  const informar = (enlace, texto) => {
+    const bloque = feedback(enlace);
+    bloque.firstElementChild.textContent = texto;
+    while (bloque.children.length > 1) bloque.lastElementChild.remove();
+  };
+
+  const copiar = async (url) => {
+    if (window.isSecureContext && navigator.clipboard?.writeText) {
+      try { await navigator.clipboard.writeText(url); return true; } catch { /* Probar compatibilidad. */ }
+    }
+    const anterior = document.activeElement;
+    const temporal = document.createElement("textarea");
+    temporal.value = url;
+    temporal.readOnly = true;
+    temporal.setAttribute("aria-label", "Enlace para compartir");
+    document.body.append(temporal);
+    try {
+      temporal.focus({ preventScroll: true });
+      temporal.select();
+      return typeof document.execCommand === "function" && document.execCommand("copy");
+    } catch { return false; }
+    finally {
+      temporal.remove();
+      anterior?.focus?.({ preventScroll: true });
+    }
+  };
+
+  const copiarOMostrar = async (enlace, url, actividad) => {
+    const mensaje = actividad ? "Enlace de la actividad copiado." : "Enlace copiado.";
+    if (await copiar(url)) {
+      informar(enlace, mensaje + " Puedes pegarlo en Facebook, WhatsApp, Messenger, correo u otra aplicación.");
+      return;
+    }
+    informar(enlace, "Enlace para compartir: selecciona y copia el enlace si tu navegador no permite copiarlo automáticamente.");
+    const bloque = feedback(enlace);
+    const etiqueta = document.createElement("label");
+    etiqueta.textContent = "Enlace para compartir:";
+    const campo = document.createElement("textarea");
+    campo.value = url;
+    campo.readOnly = true;
+    campo.rows = 3;
+    etiqueta.append(campo);
+    const boton = document.createElement("button");
+    boton.type = "button";
+    boton.textContent = "Copiar enlace";
+    boton.addEventListener("click", async () => {
+      if (boton.disabled) return;
+      boton.disabled = true;
+      if (await copiar(url)) informar(enlace, mensaje);
+      else { boton.disabled = false; campo.focus(); campo.select(); }
+      // Este botón continúa el mismo intento; no registra otro evento.
+    });
+    bloque.append(etiqueta, boton);
+    campo.focus();
+    campo.select();
+  };
+
   enlaces.forEach((enlace) => {
-    enlace.href = crearDialogo(urlActual());
-    enlace.target = "_blank";
-    enlace.rel = "noopener noreferrer";
+    enlace.href = urlActual();
+    enlace.removeAttribute("target");
     enlace.textContent = "Compartir";
     enlace.setAttribute("aria-label", "Compartir este contenido");
-
-    const contenedor = enlace.closest(".compartir-eva");
-    const descripcion = contenedor?.querySelector("p");
-    if (descripcion?.textContent?.includes("Facebook")) {
-      descripcion.textContent = "Comparte este contenido.";
-    }
-
-
+    const descripcion = enlace.closest(".compartir-eva")?.querySelector("p");
+    if (descripcion?.textContent?.includes("Facebook")) descripcion.textContent = "Comparte este contenido.";
   });
 
-  document.addEventListener("click", (evento) => {
+  document.addEventListener("click", async (evento) => {
     const enlace = evento.target.closest?.(selector);
     if (!enlace) return;
-    const esActividad = enlace.dataset.evaModulo === "galeria";
+    evento.preventDefault();
+    if (enlace.dataset.compartiendo === "si") return;
     let actividad = null;
-    if (esActividad) {
+    if (enlace.dataset.evaModulo === "galeria") {
       try {
         const url = new URL(enlace.dataset.compartirUrl);
         if (url.origin !== "https://crebeucayali.github.io" ||
@@ -106,30 +168,32 @@
         actividad = { url, titulo: enlace.dataset.compartirTitulo || "Actividad de Galería",
           texto: enlace.dataset.compartirTexto || "" };
       } catch { return; }
-      // Un doble clic no abre dos flujos simultáneos. El registro no se reintenta.
-      if (enlace.dataset.compartiendo === "si") { evento.preventDefault(); return; }
-      enlace.href = crearDialogo(actividad.url.href);
-      enlace.dataset.compartiendo = "si";
-      if (typeof navigator.share === "function") {
-        evento.preventDefault();
-        registrarAccionCompartir(actividad);
-        try {
-          Promise.resolve(navigator.share({title: actividad.titulo, text: actividad.texto,
-            url: actividad.url.href})).catch((error) => {
-            // Cancelar no inicia otro canal ni registra una segunda acción.
-            if (error.name !== "AbortError") {
-              enlace.dispatchEvent(new CustomEvent("eva-compartir-error", {bubbles: true}));
-            }
-          }).finally(() => { delete enlace.dataset.compartiendo; });
-        } catch {
-          delete enlace.dataset.compartiendo;
-          enlace.dispatchEvent(new CustomEvent("eva-compartir-error", {bubbles: true}));
-        }
-        return;
-      }
-      // El fallback también bloquea el doble clic, sin reintentar ni registrar otra acción.
-      window.setTimeout(() => { delete enlace.dataset.compartiendo; }, 1500);
     }
-    registrarAccionCompartir(actividad);
+    const url = actividad ? actividad.url.href : urlActual();
+    enlace.href = url;
+    enlace.removeAttribute("target");
+    enlace.dataset.compartiendo = "si";
+    const inicio = Date.now();
+    informar(enlace, "");
+    try {
+      if (typeof navigator.share === "function") {
+        try {
+          await navigator.share({ title: actividad ? actividad.titulo : document.title,
+            text: actividad ? actividad.texto : "", url });
+          registrarAccionCompartir(actividad);
+          return;
+        } catch (error) {
+          if (error?.name === "AbortError") {
+            registrarAccionCompartir(actividad);
+            return;
+          }
+          // Un error real continúa por copia; la cancelación no cambia de canal.
+        }
+      }
+      await copiarOMostrar(enlace, url, actividad);
+      registrarAccionCompartir(actividad);
+    } finally {
+      window.setTimeout(() => { delete enlace.dataset.compartiendo; }, Math.max(0, 1500 - (Date.now() - inicio)));
+    }
   });
 })();
