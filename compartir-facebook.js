@@ -70,6 +70,14 @@
     });
   };
 
+  // El tacto por sí solo no identifica un móvil: los portátiles táctiles suelen
+  // conservar un puntero fino y hover. Exigir las tres señales evita ese caso.
+  const esEntornoMovilTactil = () =>
+    navigator.maxTouchPoints > 0 &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(pointer: coarse)").matches &&
+    window.matchMedia("(hover: none)").matches;
+
   const mensajes = new WeakMap();
 
   const feedback = (enlace) => {
@@ -117,7 +125,7 @@
   const copiarOMostrar = async (enlace, url, actividad) => {
     const mensaje = actividad ? "Enlace de la actividad copiado." : "Enlace copiado.";
     if (await copiar(url)) {
-      informar(enlace, mensaje + " Puedes pegarlo en Facebook, WhatsApp, Messenger, correo u otra aplicación.");
+      informar(enlace, mensaje);
       return;
     }
     informar(enlace, "Enlace para compartir: selecciona y copia el enlace si tu navegador no permite copiarlo automáticamente.");
@@ -176,17 +184,14 @@
     const inicio = Date.now();
     informar(enlace, "");
     try {
-      if (typeof navigator.share === "function") {
+      if (esEntornoMovilTactil() && typeof navigator.share === "function") {
         try {
           await navigator.share({ title: actividad ? actividad.titulo : document.title,
             text: actividad ? actividad.texto : "", url });
           registrarAccionCompartir(actividad);
           return;
         } catch (error) {
-          if (error?.name === "AbortError") {
-            registrarAccionCompartir(actividad);
-            return;
-          }
+          if (error?.name === "AbortError") return;
           // Un error real continúa por copia; la cancelación no cambia de canal.
         }
       }
