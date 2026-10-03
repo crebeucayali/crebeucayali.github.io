@@ -122,8 +122,8 @@
     }
   };
 
-  const copiarOMostrar = async (enlace, url, actividad) => {
-    const mensaje = actividad ? "Enlace de la actividad copiado." : "Enlace copiado.";
+  const copiarOMostrar = async (enlace, url, actividad, mensajeCanal) => {
+    const mensaje = mensajeCanal || (actividad ? "Enlace de la actividad copiado." : "Enlace copiado.");
     if (await copiar(url)) {
       informar(enlace, mensaje);
       return;
@@ -152,7 +152,133 @@
     campo.select();
   };
 
+  const css = document.createElement("link");
+  css.rel = "stylesheet";
+  css.href = new URL("compartir-eva.css?v=1", document.currentScript?.src || "https://crebeucayali.github.io/compartir-facebook.js").href;
+  document.head.append(css);
+
+  let menu = null;
+  let intentoMenu = null;
+  const liberar = (enlace, inicio) => window.setTimeout(() => {
+    delete enlace.dataset.compartiendo;
+  }, Math.max(0, 1500 - (Date.now() - inicio)));
+
+  const cerrarMenu = (conservarBloqueo = false, devolverFoco = true) => {
+    if (!intentoMenu) return;
+    const anterior = intentoMenu;
+    intentoMenu = null;
+    menu.hidden = true;
+    anterior.enlace.setAttribute("aria-expanded", "false");
+    if (!conservarBloqueo) liberar(anterior.enlace, anterior.inicio);
+    if (devolverFoco && anterior.enlace.isConnected) anterior.enlace.focus({ preventScroll: true });
+  };
+
+  const prepararBoton = (enlace) => {
+    enlace.setAttribute("role", "button");
+    enlace.setAttribute("aria-controls", "eva-compartir-menu");
+    enlace.setAttribute("aria-haspopup", "dialog");
+    if (!enlace.hasAttribute("aria-expanded")) enlace.setAttribute("aria-expanded", "false");
+  };
+
+  const crearMenu = () => {
+    if (menu) return menu;
+    menu = document.createElement("div");
+    menu.id = "eva-compartir-menu";
+    menu.className = "eva-compartir-menu";
+    menu.hidden = true;
+    menu.setAttribute("role", "dialog");
+    menu.setAttribute("aria-labelledby", "eva-compartir-menu-titulo");
+    const titulo = document.createElement("h2");
+    titulo.id = "eva-compartir-menu-titulo";
+    titulo.textContent = "Compartir";
+    menu.append(titulo);
+    for (const [canal, nombre] of [["copiar", "Copiar enlace"], ["facebook", "Facebook"],
+      ["whatsapp", "WhatsApp"], ["messenger", "Messenger"], ["correo", "Correo"]]) {
+      const boton = document.createElement("button");
+      boton.type = "button";
+      boton.dataset.evaCanal = canal;
+      boton.textContent = nombre;
+      menu.append(boton);
+    }
+    menu.addEventListener("click", async (evento) => {
+      const boton = evento.target.closest("[data-eva-canal]");
+      if (!boton || !intentoMenu) return;
+      const intento = intentoMenu;
+      cerrarMenu(true);
+      const { enlace, url, actividad, inicio, titulo, texto } = intento;
+      try {
+        const canal = boton.dataset.evaCanal;
+        if (canal === "whatsapp" || canal === "correo") {
+          const cuerpo = [titulo, texto, url].filter(Boolean).join("\n");
+          const destino = canal === "whatsapp" ? "https://wa.me/?text=" + encodeURIComponent(cuerpo) :
+            "mailto:?subject=" + encodeURIComponent(titulo) + "&body=" + encodeURIComponent(cuerpo);
+          if (canal === "whatsapp") {
+            const ventana = window.open(destino, "_blank");
+            if (ventana) ventana.opener = null;
+            else await copiarOMostrar(enlace, url, actividad);
+          } else {
+            window.location.href = destino;
+          }
+        } else {
+          // Facebook ya falló en las pruebas reales; Messenger no requiere una integración no verificada.
+          const mensaje = canal === "facebook" ? "Enlace copiado. Pégalo en una publicación de Facebook." :
+            canal === "messenger" ? "Enlace copiado. Pégalo en Messenger." : undefined;
+          await copiarOMostrar(enlace, url, actividad, mensaje);
+        }
+        registrarAccionCompartir(actividad);
+      } finally { liberar(enlace, inicio); }
+    });
+    document.body.append(menu);
+    return menu;
+  };
+
+  const abrirMenu = (intento) => {
+    cerrarMenu(false, false);
+    const panel = crearMenu();
+    intentoMenu = intento;
+    prepararBoton(intento.enlace);
+    intento.enlace.setAttribute("aria-expanded", "true");
+    panel.hidden = false;
+    const rect = intento.enlace.getBoundingClientRect();
+    const ancho = panel.offsetWidth;
+    const alto = panel.offsetHeight;
+    panel.style.left = Math.max(12, Math.min(rect.left, window.innerWidth - ancho - 12)) + "px";
+    panel.style.top = Math.max(12, Math.min(rect.bottom + 8, window.innerHeight - alto - 12)) + "px";
+    panel.querySelector("button").focus({ preventScroll: true });
+  };
+
+  document.addEventListener("click", (evento) => {
+    if (intentoMenu && !menu.contains(evento.target) &&
+        !intentoMenu.enlace.contains(evento.target)) cerrarMenu(false, false);
+  }, true);
+  document.addEventListener("keydown", (evento) => {
+    if (intentoMenu && evento.key === "Escape") {
+      evento.preventDefault(); cerrarMenu(); return;
+    }
+    if (intentoMenu && menu.contains(evento.target) && ["ArrowDown", "ArrowUp", "Home", "End"].includes(evento.key)) {
+      evento.preventDefault();
+      const opciones = Array.from(menu.querySelectorAll("button"));
+      const actual = opciones.indexOf(document.activeElement);
+      const siguiente = evento.key === "Home" ? 0 : evento.key === "End" ? opciones.length - 1 :
+        (actual + (evento.key === "ArrowDown" ? 1 : -1) + opciones.length) % opciones.length;
+      opciones[siguiente].focus();
+    }
+    if (evento.key === " " && evento.target.closest?.(selector)) {
+      evento.preventDefault(); evento.target.closest(selector).click();
+    }
+  });
+  document.addEventListener("focusin", (evento) => {
+    const enlace = evento.target.closest?.(selector);
+    if (enlace) prepararBoton(enlace);
+    if (intentoMenu && !menu.contains(evento.target) && !intentoMenu.enlace.contains(evento.target)) cerrarMenu(false, false);
+  });
+  window.addEventListener("resize", () => cerrarMenu(false, false));
+  window.addEventListener("scroll", (evento) => {
+    if (intentoMenu && !menu.contains(evento.target)) cerrarMenu(false, false);
+  }, true);
+
   enlaces.forEach((enlace) => {
+    prepararBoton(enlace);
     enlace.href = urlActual();
     enlace.removeAttribute("target");
     enlace.textContent = "Compartir";
@@ -165,7 +291,10 @@
     const enlace = evento.target.closest?.(selector);
     if (!enlace) return;
     evento.preventDefault();
-    if (enlace.dataset.compartiendo === "si") return;
+    if (enlace.dataset.compartiendo === "si") {
+      if (intentoMenu?.enlace === enlace) menu.querySelector("button").focus({ preventScroll: true });
+      return;
+    }
     let actividad = null;
     if (enlace.dataset.evaModulo === "galeria") {
       try {
@@ -182,23 +311,25 @@
     enlace.removeAttribute("target");
     enlace.dataset.compartiendo = "si";
     const inicio = Date.now();
+    const titulo = actividad ? actividad.titulo : document.title;
+    const texto = actividad ? actividad.texto : "";
+    let abierto = false;
     informar(enlace, "");
     try {
       if (esEntornoMovilTactil() && typeof navigator.share === "function") {
         try {
-          await navigator.share({ title: actividad ? actividad.titulo : document.title,
-            text: actividad ? actividad.texto : "", url });
+          await navigator.share({ title: titulo, text: texto, url });
           registrarAccionCompartir(actividad);
           return;
         } catch (error) {
           if (error?.name === "AbortError") return;
-          // Un error real continúa por copia; la cancelación no cambia de canal.
+          // Un error real ofrece el menú; la cancelación no cambia de canal.
         }
       }
-      await copiarOMostrar(enlace, url, actividad);
-      registrarAccionCompartir(actividad);
+      abrirMenu({ enlace, url, actividad, inicio, titulo, texto });
+      abierto = true;
     } finally {
-      window.setTimeout(() => { delete enlace.dataset.compartiendo; }, Math.max(0, 1500 - (Date.now() - inicio)));
+      if (!abierto) liberar(enlace, inicio);
     }
   });
 })();
