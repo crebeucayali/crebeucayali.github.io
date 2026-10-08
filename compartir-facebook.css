@@ -17,11 +17,14 @@
 .compartir-facebook{
   display:inline-flex;align-items:center;justify-content:center;
   min-height:44px;padding:10px 18px;border-radius:999px;
-  color:#fff;background:#1877f2;text-decoration:none;font-weight:850;
+  color:#fff;background:#1666d3;text-decoration:none;font-weight:850;
   box-sizing:border-box;
 }
 .compartir-facebook:hover,.compartir-facebook:focus-visible{color:#fff;background:#145dbf}
 .compartir-facebook:focus-visible{outline:3px solid currentColor;outline-offset:3px}
+/* Fase 8 · Etapa 7: ajuste puntual de contraste del enlace de noticia. */
+.noticia-enlace{color:#fff;background:#26776f}
+.noticia-enlace:hover,.noticia-enlace:focus-visible{color:#fff;background:#1f6a5a}
 body.alto-contraste .compartir-eva{color:#fff!important;background:#000!important;border-color:#fff!important}
 body.alto-contraste .compartir-eva p{color:#fff!important}
 body.alto-contraste .compartir-facebook{color:#000!important;background:#fff!important;border:1px solid #fff!important}
