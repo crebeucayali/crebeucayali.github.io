@@ -1,0 +1,59 @@
+name: Fase 9 Etapa 3 - Aplicacion temporal metadata
+
+on:
+  push:
+    branches:
+      - 'seo/fase-9-etapa-3-metadata'
+    paths:
+      - '.github/workflows/fase-9-etapa-3-temporal.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Obtener rama
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: seo/fase-9-etapa-3-metadata
+          fetch-depth: 0
+
+      - name: Aplicar metadata delimitada
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path, needle, replacement):
+              p = Path(path)
+              text = p.read_text(encoding='utf-8')
+              if replacement in text:
+                  return
+              if needle not in text:
+                  raise SystemExit(f'No se encontró ancla esperada en {path}')
+              text = text.replace(needle, replacement, 1)
+              p.write_text(text, encoding='utf-8')
+
+          replace_once(
+              'index.html',
+              '<title>CREBE Señor de los Milagros Región Ucayali | Ecosistema Virtual Accesible</title>',
+              '<title>CREBE Señor de los Milagros Región Ucayali | Ecosistema Virtual Accesible</title>\n<meta name="description" content="Ecosistema Virtual Accesible del CREBE Señor de los Milagros - Ucayali con recursos, materiales y herramientas para una educación inclusiva y accesible.">'
+          )
+          replace_once(
+              'buscar/index.html',
+              '  <meta name="description" content="Buscador unificado y accesible de módulos, materiales, noticias, capacitaciones y recursos del Ecosistema Virtual Accesible.">',
+              '  <meta name="description" content="Buscador unificado y accesible de módulos, materiales, noticias, capacitaciones y recursos del Ecosistema Virtual Accesible.">\n  <link rel="canonical" href="https://crebeucayali.github.io/buscar/">'
+          )
+          PY
+
+          git diff --check
+          test "$(git diff --name-only | sort)" = $'buscar/index.html\nindex.html'
+
+          git config user.name 'CREBE SEÑOR DE LOS MILAGROS'
+          git config user.email 'senordelosmilagroscrebe@gmail.com'
+          git add index.html buscar/index.html
+          git commit -m 'Fase 9 Etapa 3: completar metadata del portal principal'
+          git push origin HEAD:seo/fase-9-etapa-3-metadata
