@@ -812,3 +812,21 @@ body.alto-contraste .eva-indicador-icono span{
     max-width:none;
   }
 }
+
+
+/* Aplicaciones gratuitas de apoyo: bloque independiente de módulos EVA. */
+.aplicaciones-apoyo{max-width:1120px;margin:44px auto;padding:clamp(22px,3vw,34px);background:#f7faf9;border:1px solid #d7e4df;border-radius:18px}
+.aplicaciones-apoyo-encabezado h2{margin:6px 0 12px;color:#17324d;font-size:clamp(1.45rem,2.4vw,2rem);line-height:1.25}
+.aplicaciones-apoyo-encabezado>p:last-child{max-width:850px;margin:0 0 22px;line-height:1.6}
+.aplicaciones-apoyo-etiqueta{margin:0;color:#1f6a5a;font-size:.82rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.aplicaciones-apoyo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.aplicacion-apoyo{min-width:0;padding:24px;background:#fff;border:1px solid #d7e4df;border-radius:15px;box-shadow:0 7px 20px rgba(23,50,77,.05)}
+.aplicacion-apoyo h3{margin:14px 0 10px;color:#17324d;font-size:1.4rem}
+.aplicacion-apoyo>p{margin:0 0 12px;line-height:1.6}
+.aplicacion-apoyo-estado{display:inline-block;padding:5px 12px;border:1px solid #d8caa8;border-radius:999px;background:#f8f2e4;color:#624a1f;font-size:.8rem;font-weight:800}
+.aplicacion-apoyo .aplicacion-apoyo-autor{margin-bottom:0;color:#50636e;font-size:.87rem}
+.aplicaciones-apoyo-nota{margin:18px 0 0;color:#50636e;font-size:.88rem;line-height:1.6}
+@media(max-width:650px){.aplicaciones-apoyo{margin:28px 0;padding:19px}.aplicaciones-apoyo-grid{grid-template-columns:1fr}.aplicacion-apoyo{padding:19px}}
+body.alto-contraste .aplicaciones-apoyo,body.alto-contraste .aplicacion-apoyo{background:#000!important;color:#fff!important;border-color:#fff!important}
+body.alto-contraste .aplicaciones-apoyo h2,body.alto-contraste .aplicacion-apoyo h3,body.alto-contraste .aplicaciones-apoyo p,body.alto-contraste .aplicacion-apoyo-estado{color:#fff!important}
+body.alto-contraste .aplicacion-apoyo-estado{background:#000!important;border-color:#fff!important}
