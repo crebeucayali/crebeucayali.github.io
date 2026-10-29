@@ -150,5 +150,21 @@
     "descripcion": "Apoyos visuales y pictogramas para comunicación, comprensión y accesibilidad cognitiva.",
     "url": "https://crebeucayali.github.io/materiales-educativos-accesibles/pictogramas/pictogramas.html",
     "etiquetas": "pictogramas apoyos visuales arasaac comunicacion accesibilidad cognitiva"
+  },
+  {
+    "titulo": "RutinaGo",
+    "modulo": "Aplicaciones de apoyo",
+    "tipo": "En desarrollo",
+    "descripcion": "Aplicación gratuita de apoyo a rutinas y secuencias visuales. En desarrollo.",
+    "url": "https://crebeucayali.github.io/#rutinago",
+    "etiquetas": "rutinago rutinas visuales anticipacion secuencias app gratuita en desarrollo neuronova"
+  },
+  {
+    "titulo": "ComunicaGo",
+    "modulo": "Aplicaciones de apoyo",
+    "tipo": "En desarrollo",
+    "descripcion": "Aplicación gratuita de apoyo a la comunicación aumentativa y alternativa. En desarrollo.",
+    "url": "https://crebeucayali.github.io/#comunicago",
+    "etiquetas": "comunicago comunicacion aumentativa alternativa pictogramas app gratuita en desarrollo neuronova"
   }
 ]
