@@ -124,7 +124,7 @@
     "modulo": "BDA",
     "tipo": "Recurso del módulo",
     "descripcion": "Consulta de recursos vinculados a Lengua de Señas Peruana dentro del Banco Digital Accesible.",
-    "url": "https://crebeucayali.github.io/banco-digital-accesible/",
+    "url": "https://crebeucayali.github.io/banco-digital-accesible/lsp/",
     "etiquetas": "lsp lengua señas peruana seña comunicacion accesible banco visual"
   },
   {
@@ -132,7 +132,7 @@
     "modulo": "BDA",
     "tipo": "Recurso del módulo",
     "descripcion": "Consulta de recursos vinculados al Sistema Braille dentro del Banco Digital Accesible.",
-    "url": "https://crebeucayali.github.io/banco-digital-accesible/",
+    "url": "https://crebeucayali.github.io/banco-digital-accesible/braille/",
     "etiquetas": "braille sistema braille letras numeros signos accesibilidad visual"
   },
   {
@@ -140,7 +140,7 @@
     "modulo": "MEA",
     "tipo": "Recurso del módulo",
     "descripcion": "Materiales y apoyos visuales para organizar secuencias de actividades.",
-    "url": "https://crebeucayali.github.io/materiales-educativos-accesibles/",
+    "url": "https://crebeucayali.github.io/materiales-educativos-accesibles/rutinas/rutinas.html",
     "etiquetas": "rutinas visuales secuencias pictogramas anticipacion actividades"
   },
   {
@@ -148,7 +148,7 @@
     "modulo": "MEA",
     "tipo": "Recurso del módulo",
     "descripcion": "Apoyos visuales y pictogramas para comunicación, comprensión y accesibilidad cognitiva.",
-    "url": "https://crebeucayali.github.io/materiales-educativos-accesibles/",
+    "url": "https://crebeucayali.github.io/materiales-educativos-accesibles/pictogramas/pictogramas.html",
     "etiquetas": "pictogramas apoyos visuales arasaac comunicacion accesibilidad cognitiva"
   }
 ]
