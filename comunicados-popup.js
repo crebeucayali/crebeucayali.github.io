@@ -1,6 +1,7 @@
 (() => {
  "use strict";
- if (location.pathname !== "/" && location.pathname !== "/index.html") return;
+ const destino = document.currentScript?.dataset?.evaPopupDestino || "principal";
+ if (destino === "principal" && location.pathname !== "/" && location.pathname !== "/index.html") return;
  const API="https://dteimbhwtzghhsijeeld.supabase.co/rest/v1/eva_comunicados_emergentes";
  const KEY="sb_publishable_tHbo1jTeW_dC90hdA5DvyQ_a6LrfKpq";
  const fecha=new Date().toISOString();
@@ -35,7 +36,7 @@
      const resp=await fetch(consulta,{headers:{apikey:KEY,Accept:"application/json"},cache:"no-store"});
      if(!resp.ok)return;
      const lista=await resp.json();if(!Array.isArray(lista))return;
-     const anuncio=lista.find(x=>Array.isArray(x.destinos) && x.destinos.includes("principal") && (x.frecuencia==="cada_ingreso" || (x.frecuencia==="por_sesion" && !visto(x))));
+     const anuncio=lista.find(x=>Array.isArray(x.destinos) && x.destinos.includes(destino) && (x.frecuencia==="cada_ingreso" || (x.frecuencia==="por_sesion" && !visto(x))));
      if(anuncio)mostrar(anuncio);
    }catch{}
  }
