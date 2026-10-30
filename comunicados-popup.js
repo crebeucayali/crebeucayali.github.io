@@ -4,7 +4,7 @@
  const API="https://dteimbhwtzghhsijeeld.supabase.co/rest/v1/eva_comunicados_emergentes";
  const KEY="sb_publishable_tHbo1jTeW_dC90hdA5DvyQ_a6LrfKpq";
  const fecha=new Date().toISOString();
- const query="?select=id,titulo,contenido,tipo,imagen_url,enlace_url,enlace_texto,frecuencia,version,destinos,prioridad,creado_en&estado=eq.publicado&or=(inicio.is.null,inicio.lte."+encodeURIComponent(fecha)+")&order=prioridad.desc,creado_en.desc&limit=20";
+ const query="?select=id,titulo,contenido,tipo,imagen_url,enlace_url,enlace_texto,frecuencia,version,destinos,prioridad,creado_en&estado=eq.publicado&or=(inicio.is.null,inicio.lte."+encodeURIComponent(fecha)+")&or=(fin.is.null,fin.gt."+encodeURIComponent(fecha)+")&order=prioridad.desc,creado_en.desc&limit=100";
  const consulta=API+query;
  function seguraImagen(valor) {
    try {const u=new URL(valor);return u.protocol==="https:"&&u.hostname==="dteimbhwtzghhsijeeld.supabase.co"&&u.pathname.startsWith("/storage/v1/object/public/eva-comunicados/")?u.href:null;}catch{return null;}
@@ -35,7 +35,7 @@
      const resp=await fetch(consulta,{headers:{apikey:KEY,Accept:"application/json"},cache:"no-store"});
      if(!resp.ok)return;
      const lista=await resp.json();if(!Array.isArray(lista))return;
-     const anuncio=lista.find(x=>Array.isArray(x.destinos)&&x.destinos.includes("principal")&&x.frecuencia!=="por_sesion"||Array.isArray(x.destinos)&&x.destinos.includes("principal")&&x.frecuencia==="por_sesion"&&!visto(x));
+     const anuncio=lista.find(x=>Array.isArray(x.destinos) && x.destinos.includes("principal") && (x.frecuencia==="cada_ingreso" || (x.frecuencia==="por_sesion" && !visto(x))));
      if(anuncio)mostrar(anuncio);
    }catch{}
  }
