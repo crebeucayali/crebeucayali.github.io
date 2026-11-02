@@ -1,0 +1,22 @@
+/* Recorrido inicial EVA-CREBE. Componente independiente. */
+.eva-tour-panel{position:fixed;right:18px;bottom:18px;z-index:9000;width:min(380px,calc(100vw - 36px));max-height:min(75vh,680px);overflow:auto;box-sizing:border-box;background:#fff;color:#183448;border:2px solid #d68a2b;border-radius:16px;box-shadow:0 14px 38px rgba(0,0,0,.25);padding:20px;font:inherit}
+.eva-tour-panel[hidden],.eva-tour-launch[hidden]{display:none!important}
+.eva-tour-panel h2{font-size:1.24rem;line-height:1.35;margin:0 0 10px;color:#143e58}
+.eva-tour-panel p{margin:0 0 14px;line-height:1.55}
+.eva-tour-kicker{display:block;font-size:.83rem;font-weight:700;color:#855012;margin-bottom:6px}
+.eva-tour-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.eva-tour-btn,.eva-tour-launch{cursor:pointer;font:inherit;line-height:1.3;font-weight:700;border-radius:9px;border:1px solid #0b4261;background:#0b4261;color:#fff;padding:10px 13px}
+.eva-tour-btn.secondary{background:#fff;color:#0b4261}
+.eva-tour-btn.tertiary{background:transparent;color:#444;border-color:transparent;text-decoration:underline}
+.eva-tour-btn:focus-visible,.eva-tour-launch:focus-visible{outline:3px solid #ff8a00;outline-offset:3px}
+.eva-tour-progress{height:5px;background:#e4e8ec;border-radius:9px;overflow:hidden;margin-bottom:14px}
+.eva-tour-progress span{display:block;background:#db821b;height:100%;transition:width .15s}
+.eva-tour-audio{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0}
+.eva-tour-audio button{background:#f3f6f8;border:1px solid #9aaeba;color:#113b54;border-radius:7px;padding:7px 10px;cursor:pointer}
+.eva-tour-audio label{font-size:.88rem}
+.eva-tour-audio select{max-width:96px}
+.eva-tour-highlight{position:relative!important;z-index:8998!important;outline:4px solid #ef9b24!important;outline-offset:4px!important;scroll-margin-top:90px}
+.eva-tour-launch{position:fixed;right:18px;bottom:18px;z-index:8990;box-shadow:0 5px 18px rgba(0,0,0,.2)}
+.eva-tour-confirm{background:#fff5e8;border-radius:9px;padding:12px;margin:10px 0}
+@media(max-width:640px){.eva-tour-panel{left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:auto;max-height:min(58dvh,520px);padding:15px}.eva-tour-launch{right:12px;bottom:calc(78px + env(safe-area-inset-bottom,0px));font-size:.86rem}.eva-tour-panel h2{font-size:1.08rem}}
+@media(prefers-reduced-motion:reduce){.eva-tour-progress span{transition:none}}
