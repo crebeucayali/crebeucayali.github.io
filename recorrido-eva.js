@@ -23,40 +23,9 @@ document.body.append(dimmer,panel,launcher);
 let index=0,active=false,lastFocus=null,highlight=null,mode='welcome',audio=false;
 const synth=window.speechSynthesis;
 
-// Ajuste dinámico: evita colisiones incluso en móvil con "Sitio de escritorio".
-function accessibilityControl(){
- const candidates=[...document.querySelectorAll('button,[role="button"],a')];
- return candidates.find(el=>el!==launcher&&!panel.contains(el)&&!el.closest('.eva-tour-panel')&&
-   /accesibilidad/i.test([el.getAttribute('aria-label'),el.getAttribute('title'),el.textContent?.trim()].filter(Boolean).join(' '))&&
-   el.getBoundingClientRect().width>0&&el.getBoundingClientRect().height>0&&
-   getComputedStyle(el).position==='fixed')||
-   candidates.find(el=>el!==launcher&&!panel.contains(el)&&/accesibilidad/i.test(el.textContent?.trim()||'')&&getComputedStyle(el).position==='fixed')||null;
-}
-function arrangeFloating(){
- const obstacle=accessibilityControl();
- for(const element of [launcher,panel]){
-  element.style.removeProperty('bottom');
-  element.style.removeProperty('top');
-  element.style.removeProperty('left');
-  element.style.removeProperty('right');
-  if(element.hidden||!obstacle)continue;
-  const a=obstacle.getBoundingClientRect(), b=element.getBoundingClientRect();
-  if(b.left>=a.right+12||b.right<=a.left-12||b.bottom<=a.top-12||b.top>=a.bottom+12)continue;
-  const verticalRoom=a.top-12;
-  const wantedBottom=Math.ceil(window.innerHeight-verticalRoom);
-  if(verticalRoom>=Math.min(b.height+12,180)){
-   element.style.bottom=wantedBottom+'px';
-  }else{
-   // Si no hay altura suficiente, ubicar en el borde contrario.
-   element.style.right='auto';
-   element.style.left='12px';
-  }
- }
-}
-
 function stop(){if(synth)try{synth.cancel()}catch{}}
 function clearHighlight(){dimmer.hidden=true;if(highlight){highlight.classList.remove('eva-tour-highlight');highlight=null}}
-function close(){stop();clearHighlight();active=false;panel.hidden=true;launcher.hidden=false;arrangeFloating();lastFocus?.focus?.()}
+function close(){stop();clearHighlight();active=false;panel.hidden=true;launcher.hidden=false;lastFocus?.focus?.()}
 function setState(value){save(KEY,value,localStorage)}
 function btn(label,cls,fn){const b=document.createElement('button');b.type='button';b.className='eva-tour-btn '+(cls||'');b.textContent=label;b.addEventListener('click',fn);return b}
 function addHeading(title,kicker){const k=document.createElement('span');k.className='eva-tour-kicker';k.textContent=kicker;panel.append(k);const h=document.createElement('h2');h.textContent=title;panel.append(h)}
@@ -75,10 +44,10 @@ const audioRow=document.createElement('div');audioRow.className='eva-tour-audio'
 audioRow.append(label,speed,btn('Escuchar','secondary',speak),btn('Detener','secondary',stop));if(!synth){audioRow.querySelectorAll('button,select').forEach(x=>x.disabled=true)}panel.append(audioRow);
 actions(btn('Anterior','secondary',()=>{index=Math.max(0,index-1);render()}),btn(index===entries.length-1?'Finalizar':'Siguiente','',()=>{if(index===entries.length-1){setState('completado');close()}else{index++;render()}}));
 actions(btn('Omitir por ahora','tertiary',()=>{save(SESSION,'1',sessionStorage);setState('pospuesto');close()}),btn('No volver a mostrar','tertiary',confirmDiscard));
-positionTarget();arrangeFloating();
+positionTarget();
 }
 function confirmDiscard(){stop();clearHighlight();mode='confirm';panel.replaceChildren();addHeading('¿No volver a mostrar?','Confirmar descarte');const info=document.createElement('div');info.className='eva-tour-confirm';info.textContent='La ventana no volverá a aparecer automáticamente en este navegador. Podrás iniciar el recorrido manualmente. Esta preferencia puede perderse si borras los datos del sitio o usas otro navegador.';panel.append(info);actions(btn('Cancelar','secondary',()=>{if(active)render();else welcome()}),btn('Sí, descartar','',()=>{setState('descartado');close()}))}
-function welcome(){active=false;mode='welcome';clearHighlight();panel.replaceChildren();panel.hidden=false;launcher.hidden=true;addHeading('Bienvenido a EVA-CREBE','Ecosistema Virtual Accesible');p('¿Te gustaría conocer los recursos y servicios de nuestra plataforma mediante un recorrido guiado con texto y audio opcional?');actions(btn('Iniciar recorrido','',()=>{active=true;index=0;render()}),btn('Omitir por ahora','secondary',()=>{save(SESSION,'1',sessionStorage);setState('pospuesto');close()}));actions(btn('No volver a mostrar','tertiary',confirmDiscard));arrangeFloating();}
+function welcome(){active=false;mode='welcome';clearHighlight();panel.replaceChildren();panel.hidden=false;launcher.hidden=true;addHeading('Bienvenido a EVA-CREBE','Ecosistema Virtual Accesible');p('¿Te gustaría conocer los recursos y servicios de nuestra plataforma mediante un recorrido guiado con texto y audio opcional?');actions(btn('Iniciar recorrido','',()=>{active=true;index=0;render()}),btn('Omitir por ahora','secondary',()=>{save(SESSION,'1',sessionStorage);setState('pospuesto');close()}));actions(btn('No volver a mostrar','tertiary',confirmDiscard));}
 function show(force=false){if(document.querySelector('.eva-popup-fondo,.eva-popup-abierto'))return false;if(!force&&(read(KEY,localStorage)==='descartado'||read(KEY,localStorage)==='completado'||read(SESSION,sessionStorage)==='1'))return false;lastFocus=document.activeElement;welcome();return true}
 launcher.addEventListener('click',()=>{active=true;index=0;render()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden){if(mode==='tour'){save(SESSION,'1',sessionStorage);setState('pospuesto')}close()}});
@@ -93,7 +62,5 @@ const observer=new MutationObserver(()=>{
 observer.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
 window.addEventListener('load',()=>setTimeout(start,950),{once:true});if(document.readyState==='complete')setTimeout(start,950);
 if(read(KEY,localStorage)==='completado'||read(KEY,localStorage)==='descartado'||read(SESSION,sessionStorage)==='1')launcher.hidden=false;
-window.addEventListener('resize',arrangeFloating,{passive:true});
-window.addEventListener('orientationchange',arrangeFloating,{passive:true});
-setTimeout(arrangeFloating,1300);
+
 })();
