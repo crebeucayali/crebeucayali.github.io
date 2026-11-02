@@ -25,3 +25,6 @@
 .eva-tour-dimmer{position:fixed;inset:0;z-index:8996;background:rgba(5,21,34,.62);pointer-events:none}
 .eva-tour-dimmer[hidden]{display:none!important}
 .eva-tour-highlight{isolation:isolate;box-shadow:0 0 0 6px rgba(255,255,255,.85),0 4px 20px rgba(0,0,0,.12)!important;border-radius:8px}
+
+/* Separación de controles flotantes y alternativa al modo escritorio móvil. */
+.eva-tour-panel,.eva-tour-launch{max-width:calc(100vw - 24px)}
