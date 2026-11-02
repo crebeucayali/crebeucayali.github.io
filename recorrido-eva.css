@@ -28,3 +28,8 @@
 
 /* Separación de controles flotantes y alternativa al modo escritorio móvil. */
 .eva-tour-panel,.eva-tour-launch{max-width:calc(100vw - 24px)}
+
+/* Posición estable y separada del control Accesibilidad: lado izquierdo. */
+.eva-tour-launch{left:18px;right:auto;bottom:18px}
+.eva-tour-panel{left:18px;right:auto;bottom:18px}
+@media(max-width:640px){.eva-tour-launch{left:12px;right:auto;bottom:calc(18px + env(safe-area-inset-bottom,0px))}.eva-tour-panel{left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
