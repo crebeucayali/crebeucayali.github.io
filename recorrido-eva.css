@@ -20,3 +20,8 @@
 .eva-tour-confirm{background:#fff5e8;border-radius:9px;padding:12px;margin:10px 0}
 @media(max-width:640px){.eva-tour-panel{left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:auto;max-height:min(58dvh,520px);padding:15px}.eva-tour-launch{right:12px;bottom:calc(78px + env(safe-area-inset-bottom,0px));font-size:.86rem}.eva-tour-panel h2{font-size:1.08rem}}
 @media(prefers-reduced-motion:reduce){.eva-tour-progress span{transition:none}}
+
+/* Atenuación del fondo: solo durante pasos con elemento identificado. */
+.eva-tour-dimmer{position:fixed;inset:0;z-index:8996;background:rgba(5,21,34,.62);pointer-events:none}
+.eva-tour-dimmer[hidden]{display:none!important}
+.eva-tour-highlight{isolation:isolate;box-shadow:0 0 0 6px rgba(255,255,255,.85),0 4px 20px rgba(0,0,0,.12)!important;border-radius:8px}
