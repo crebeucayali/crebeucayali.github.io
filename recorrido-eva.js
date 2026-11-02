@@ -11,7 +11,7 @@ const entries=[
 ['NI: Noti Inclusivos','Conoce noticias y contenidos sobre inclusión educativa, discapacidad y accesibilidad.','.tarjeta.noti'],
 ['RA: Repositorio Accesible','Consulta los materiales y recursos físicos que ofrece el centro de recursos del CREBE.','.tarjeta.repositorio'],
 ['DUA 3.0','Conoce el Diseño Universal para el Aprendizaje, sus directrices y ejemplos de aplicación en la práctica docente.','.tarjeta.dua-3'],
-['AC: Firma tu visita','Puedes registrar voluntariamente tu visita a EVA-CREBE desde el acceso institucional Firma tu visita.',null],
+['AC: Firma tu visita','Puedes registrar voluntariamente tu visita a EVA-CREBE desde el acceso institucional Firma tu visita.','.firma-visita-acceso'],
 ['Ya puedes explorar EVA','Has conocido los principales espacios de EVA-CREBE. Puedes volver a iniciar este recorrido cuando lo necesites.',null]
 ];
 const read=(k,storage)=>{try{return storage.getItem(k)}catch{return null}};
@@ -49,8 +49,14 @@ function welcome(){active=false;mode='welcome';clearHighlight();panel.replaceChi
 function show(force=false){if(document.querySelector('.eva-popup-fondo,.eva-popup-abierto'))return false;if(!force&&(read(KEY,localStorage)==='descartado'||read(KEY,localStorage)==='completado'||read(SESSION,sessionStorage)==='1'))return false;lastFocus=document.activeElement;welcome();return true}
 launcher.addEventListener('click',()=>{active=true;index=0;render()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden){if(mode==='tour'){save(SESSION,'1',sessionStorage);setState('pospuesto')}close()}});
-let tried=false;function start(){if(tried)return;if(document.querySelector('.eva-popup-fondo,.eva-popup-abierto'))return;tried=true;show()}
-const observer=new MutationObserver(()=>{if(!tried)start();if(document.querySelector('.eva-popup-fondo,.eva-popup-abierto')&&!panel.hidden){stop();clearHighlight();panel.hidden=true;launcher.hidden=false}});
+let tried=false,pausedByPopup=false;
+function hasPopup(){return Boolean(document.querySelector('.eva-popup-fondo')||document.body.classList.contains('eva-popup-abierto'))}
+function start(){if(tried||hasPopup())return;tried=true;show()}
+const observer=new MutationObserver(()=>{
+ if(hasPopup()){if(!panel.hidden){stop();clearHighlight();panel.hidden=true;launcher.hidden=true;pausedByPopup=true}return}
+ if(pausedByPopup){pausedByPopup=false;if(mode==='tour'&&active)render();else if(mode==='confirm')confirmDiscard();else welcome();return}
+ if(!tried)start();
+});
 observer.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
 window.addEventListener('load',()=>setTimeout(start,950),{once:true});if(document.readyState==='complete')setTimeout(start,950);
 if(read(KEY,localStorage)==='completado'||read(KEY,localStorage)==='descartado'||read(SESSION,sessionStorage)==='1')launcher.hidden=false;
