@@ -18,11 +18,12 @@ const read=(k,storage)=>{try{return storage.getItem(k)}catch{return null}};
 const save=(k,v,storage)=>{try{storage.setItem(k,v)}catch{}};
 const panel=document.createElement('section');panel.className='eva-tour-panel';panel.setAttribute('role','dialog');panel.setAttribute('aria-label','Recorrido guiado de EVA-CREBE');panel.hidden=true;
 const launcher=document.createElement('button');launcher.className='eva-tour-launch';launcher.type='button';launcher.textContent='Iniciar recorrido';launcher.setAttribute('aria-label','Iniciar nuevamente el recorrido de EVA');launcher.hidden=true;
-document.body.append(panel,launcher);
+const dimmer=document.createElement('div');dimmer.className='eva-tour-dimmer';dimmer.setAttribute('aria-hidden','true');dimmer.hidden=true;
+document.body.append(dimmer,panel,launcher);
 let index=0,active=false,lastFocus=null,highlight=null,mode='welcome',audio=false;
 const synth=window.speechSynthesis;
 function stop(){if(synth)try{synth.cancel()}catch{}}
-function clearHighlight(){if(highlight){highlight.classList.remove('eva-tour-highlight');highlight=null}}
+function clearHighlight(){dimmer.hidden=true;if(highlight){highlight.classList.remove('eva-tour-highlight');highlight=null}}
 function close(){stop();clearHighlight();active=false;panel.hidden=true;launcher.hidden=false;lastFocus?.focus?.()}
 function setState(value){save(KEY,value,localStorage)}
 function btn(label,cls,fn){const b=document.createElement('button');b.type='button';b.className='eva-tour-btn '+(cls||'');b.textContent=label;b.addEventListener('click',fn);return b}
@@ -32,7 +33,7 @@ function actions(...buttons){const row=document.createElement('div');row.classNa
 function positionTarget(){clearHighlight();if(mode!=='tour')return;const selector=entries[index][2];let el=selector?document.querySelector(selector):null;
 if(index===2){el=document.querySelector('[aria-label*="Accesibilidad"],#boton-accesibilidad,.boton-accesibilidad,[data-accesibilidad]')||null}
 if(index===9){el=[...document.querySelectorAll('a,button')].find(n=>/firma tu visita/i.test(n.textContent||n.getAttribute('aria-label')||''))||null}
-if(el){highlight=el;el.classList.add('eva-tour-highlight');const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;el.scrollIntoView({block:'center',behavior:reduce?'instant':'smooth'});}
+if(el){dimmer.hidden=false;highlight=el;el.classList.add('eva-tour-highlight');const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;el.scrollIntoView({block:'center',behavior:reduce?'instant':'smooth'});}
 }
 function speak(){if(!synth||!('SpeechSynthesisUtterance' in window))return;stop();const utter=new SpeechSynthesisUtterance(entries[index][0]+'. '+entries[index][1]);utter.lang='es-PE';utter.rate=Number(panel.querySelector('#eva-tour-speed')?.value||1);synth.speak(utter)}
 function render(){stop();panel.replaceChildren();mode='tour';panel.hidden=false;launcher.hidden=true;
