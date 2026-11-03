@@ -18,29 +18,24 @@ const read=(k,storage)=>{try{return storage.getItem(k)}catch{return null}};
 const save=(k,v,storage)=>{try{storage.setItem(k,v)}catch{}};
 const panel=document.createElement('section');panel.className='eva-tour-panel';panel.setAttribute('role','dialog');panel.setAttribute('aria-label','Recorrido guiado de EVA-CREBE');panel.hidden=true;
 const launcher=document.createElement('button');launcher.className='eva-tour-launch';launcher.type='button';launcher.textContent='Iniciar recorrido';launcher.setAttribute('aria-label','Iniciar nuevamente el recorrido de EVA');launcher.hidden=true;
-// Cuatro áreas oscurecidas dejan una abertura real sobre el objetivo.
-const shades=Array.from({length:4},(_,i)=>{
- const node=document.createElement('div');node.className='eva-tour-dimmer';
- node.setAttribute('aria-hidden','true');node.hidden=true;node.dataset.side=['top','right','bottom','left'][i];
- return node;
-});
-document.body.append(...shades,panel,launcher);
-function hideShades(){shades.forEach(node=>node.hidden=true)}
+// Fondo SVG con una abertura real (evenodd), estable ante el desplazamiento.
+const NS='http://www.w3.org/2000/svg';
+const shade=document.createElementNS(NS,'svg');shade.classList.add('eva-tour-spotlight');shade.setAttribute('aria-hidden','true');shade.hidden=true;
+const shadePath=document.createElementNS(NS,'path');shadePath.setAttribute('fill-rule','evenodd');shadePath.setAttribute('fill','rgba(5,21,34,.62)');shade.append(shadePath);
+document.body.append(shade,panel,launcher);
+function hideShades(){shade.hidden=true}
 function updateSpotlight(){
  if(!highlight||mode!=='tour'||panel.hidden)return hideShades();
- const rect=highlight.getBoundingClientRect(),w=window.innerWidth,h=window.innerHeight,pad=7;
+ const rect=highlight.getBoundingClientRect();
+ const w=document.documentElement.clientWidth,h=window.innerHeight,pad=9;
  const x=Math.max(0,Math.min(w,rect.left-pad)),y=Math.max(0,Math.min(h,rect.top-pad));
  const right=Math.max(x,Math.min(w,rect.right+pad)),bottom=Math.max(y,Math.min(h,rect.bottom+pad));
  if(right<=x||bottom<=y)return hideShades();
- const boxes=[
-  [0,0,w,y],
-  [right,y,w-right,bottom-y],
-  [0,bottom,w,h-bottom],
-  [0,y,x,bottom-y]
- ];
- shades.forEach((node,i)=>{const [left,top,width,height]=boxes[i];node.style.left=left+'px';node.style.top=top+'px';node.style.width=Math.max(0,width)+'px';node.style.height=Math.max(0,height)+'px';node.hidden=width<=0||height<=0;});
+ shade.setAttribute('viewBox',`0 0 ${w} ${h}`);
+ // Polígono externo + hueco interior, sin pintar encima del objetivo.
+ shadePath.setAttribute('d',`M0 0H${w}V${h}H0Z M${x} ${y}V${bottom}H${right}V${y}Z`);
+ shade.hidden=false;
 }
-
 let index=0,active=false,lastFocus=null,highlight=null,mode='welcome',audio=false;
 const synth=window.speechSynthesis;
 
