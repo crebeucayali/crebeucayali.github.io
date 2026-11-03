@@ -2,8 +2,7 @@
 (()=>{'use strict';
 const KEY='eva_crebe_recorrido_general_v1', SESSION='eva_crebe_recorrido_omitido_sesion_v1';
 const entries=[
-['Bienvenido a EVA-CREBE','Conoce los recursos y servicios del Ecosistema Virtual Accesible del CREBE Señor de los Milagros de Ucayali.','.herramientas-eva'],
-['Buscador de EVA','Busca recursos escribiendo palabras como materiales, braille, señas o noticias. También puedes utilizar las sugerencias que aparecen debajo del buscador.','.campo-busqueda-modulos'],
+['Bienvenido a EVA-CREBE: buscador','EVA reúne recursos y servicios educativos accesibles. Utiliza este buscador para encontrar módulos y contenidos escribiendo palabras como materiales, braille, señas o noticias. También puedes seleccionar las sugerencias disponibles.','.herramientas-eva'],
 ['Herramientas de accesibilidad','Utiliza el botón de Accesibilidad para adaptar la lectura y la visualización de la plataforma a tus necesidades.',null],
 ['Módulos oficiales de EVA','En estos seis módulos encontrarás: CAP, capacitaciones del CREBE; BDA, lengua de señas y Braille; MEA, materiales educativos accesibles; NI, noticias sobre inclusión; RA, recursos físicos del CREBE; y DUA 3.0, orientaciones y ejemplos para una enseñanza inclusiva. Selecciona el módulo que necesites para explorar sus contenidos.','.tarjetas'],
 ['AC: Firma tu visita','Puedes registrar voluntariamente tu visita a EVA-CREBE desde el acceso institucional Firma tu visita.','.firma-visita-acceso'],
@@ -71,8 +70,8 @@ function addHeading(title,kicker){const k=document.createElement('span');k.class
 function p(text){const el=document.createElement('p');el.textContent=text;panel.append(el)}
 function actions(...buttons){const row=document.createElement('div');row.className='eva-tour-actions';row.append(...buttons);panel.append(row)}
 function positionTarget(){clearHighlight();if(mode!=='tour')return;const selector=entries[index][2];let el=selector?document.querySelector(selector):null;
-if(index===2){el=document.querySelector('#boton-accesibilidad,.boton-accesibilidad,[data-accesibilidad],[aria-label*="Accesibilidad"]')||null}
-if(index===4){el=[...document.querySelectorAll('a,button')].find(n=>/firma tu visita/i.test(n.textContent||n.getAttribute('aria-label')||''))||null}
+if(index===1){el=document.querySelector('#boton-accesibilidad,.boton-accesibilidad,[data-accesibilidad],[aria-label*="Accesibilidad"]')||null}
+if(index===3){el=[...document.querySelectorAll('a,button')].find(n=>/firma tu visita/i.test(n.textContent||n.getAttribute('aria-label')||''))||null}
 if(el){highlight=el;el.classList.add('eva-tour-highlight');const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;el.scrollIntoView({block:'center',behavior:reduce?'instant':'smooth'});updateSpotlight();requestAnimationFrame(updateSpotlight);setTimeout(updateSpotlight,350);setTimeout(updateSpotlight,700);}
 }
 function speak(){if(!synth||!('SpeechSynthesisUtterance' in window))return;stop();const utter=new SpeechSynthesisUtterance(entries[index][0]+'. '+entries[index][1]);utter.lang='es-PE';utter.rate=Number(panel.querySelector('#eva-tour-speed')?.value||1);synth.speak(utter)}
