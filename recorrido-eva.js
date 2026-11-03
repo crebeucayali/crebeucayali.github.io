@@ -18,13 +18,34 @@ const read=(k,storage)=>{try{return storage.getItem(k)}catch{return null}};
 const save=(k,v,storage)=>{try{storage.setItem(k,v)}catch{}};
 const panel=document.createElement('section');panel.className='eva-tour-panel';panel.setAttribute('role','dialog');panel.setAttribute('aria-label','Recorrido guiado de EVA-CREBE');panel.hidden=true;
 const launcher=document.createElement('button');launcher.className='eva-tour-launch';launcher.type='button';launcher.textContent='Iniciar recorrido';launcher.setAttribute('aria-label','Iniciar nuevamente el recorrido de EVA');launcher.hidden=true;
-const dimmer=document.createElement('div');dimmer.className='eva-tour-dimmer';dimmer.setAttribute('aria-hidden','true');dimmer.hidden=true;
-document.body.append(dimmer,panel,launcher);
+// Cuatro áreas oscurecidas dejan una abertura real sobre el objetivo.
+const shades=Array.from({length:4},(_,i)=>{
+ const node=document.createElement('div');node.className='eva-tour-dimmer';
+ node.setAttribute('aria-hidden','true');node.hidden=true;node.dataset.side=['top','right','bottom','left'][i];
+ return node;
+});
+document.body.append(...shades,panel,launcher);
+function hideShades(){shades.forEach(node=>node.hidden=true)}
+function updateSpotlight(){
+ if(!highlight||mode!=='tour'||panel.hidden)return hideShades();
+ const rect=highlight.getBoundingClientRect(),w=window.innerWidth,h=window.innerHeight,pad=7;
+ const x=Math.max(0,Math.min(w,rect.left-pad)),y=Math.max(0,Math.min(h,rect.top-pad));
+ const right=Math.max(x,Math.min(w,rect.right+pad)),bottom=Math.max(y,Math.min(h,rect.bottom+pad));
+ if(right<=x||bottom<=y)return hideShades();
+ const boxes=[
+  [0,0,w,y],
+  [right,y,w-right,bottom-y],
+  [0,bottom,w,h-bottom],
+  [0,y,x,bottom-y]
+ ];
+ shades.forEach((node,i)=>{const [left,top,width,height]=boxes[i];node.style.left=left+'px';node.style.top=top+'px';node.style.width=Math.max(0,width)+'px';node.style.height=Math.max(0,height)+'px';node.hidden=width<=0||height<=0;});
+}
+
 let index=0,active=false,lastFocus=null,highlight=null,mode='welcome',audio=false;
 const synth=window.speechSynthesis;
 
 function stop(){if(synth)try{synth.cancel()}catch{}}
-function clearHighlight(){dimmer.hidden=true;if(highlight){highlight.classList.remove('eva-tour-highlight');highlight=null}}
+function clearHighlight(){hideShades();if(highlight){highlight.classList.remove('eva-tour-highlight');highlight=null}}
 function close(){stop();clearHighlight();active=false;panel.hidden=true;launcher.hidden=false;lastFocus?.focus?.()}
 function setState(value){save(KEY,value,localStorage)}
 function btn(label,cls,fn){const b=document.createElement('button');b.type='button';b.className='eva-tour-btn '+(cls||'');b.textContent=label;b.addEventListener('click',fn);return b}
@@ -34,7 +55,7 @@ function actions(...buttons){const row=document.createElement('div');row.classNa
 function positionTarget(){clearHighlight();if(mode!=='tour')return;const selector=entries[index][2];let el=selector?document.querySelector(selector):null;
 if(index===2){el=document.querySelector('[aria-label*="Accesibilidad"],#boton-accesibilidad,.boton-accesibilidad,[data-accesibilidad]')||null}
 if(index===9){el=[...document.querySelectorAll('a,button')].find(n=>/firma tu visita/i.test(n.textContent||n.getAttribute('aria-label')||''))||null}
-if(el){dimmer.hidden=false;highlight=el;el.classList.add('eva-tour-highlight');const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;el.scrollIntoView({block:'center',behavior:reduce?'instant':'smooth'});}
+if(el){highlight=el;el.classList.add('eva-tour-highlight');const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;el.scrollIntoView({block:'center',behavior:reduce?'instant':'smooth'});updateSpotlight();requestAnimationFrame(updateSpotlight);setTimeout(updateSpotlight,350);}
 }
 function speak(){if(!synth||!('SpeechSynthesisUtterance' in window))return;stop();const utter=new SpeechSynthesisUtterance(entries[index][0]+'. '+entries[index][1]);utter.lang='es-PE';utter.rate=Number(panel.querySelector('#eva-tour-speed')?.value||1);synth.speak(utter)}
 function render(){stop();panel.replaceChildren();mode='tour';panel.hidden=false;launcher.hidden=true;
@@ -60,6 +81,8 @@ const observer=new MutationObserver(()=>{
  if(!tried)start();
 });
 observer.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+window.addEventListener('scroll',()=>{if(highlight)updateSpotlight()},{passive:true});
+window.addEventListener('resize',updateSpotlight,{passive:true});
 window.addEventListener('load',()=>setTimeout(start,950),{once:true});if(document.readyState==='complete')setTimeout(start,950);
 if(read(KEY,localStorage)==='completado'||read(KEY,localStorage)==='descartado'||read(SESSION,sessionStorage)==='1')launcher.hidden=false;
 
