@@ -46,3 +46,6 @@
 /* El panel puede desplazarse al borde superior cuando cubre el objetivo. */
 .eva-tour-panel.eva-tour-panel-top{top:18px;bottom:auto}
 @media(max-width:640px){.eva-tour-panel.eva-tour-panel-top{top:12px;bottom:auto}}
+
+/* Blanco visible y negro transparente dentro de la máscara SVG. */
+.eva-tour-spotlight mask{mask-type:luminance}
