@@ -33,7 +33,7 @@ tinted.setAttribute('mask','url(#'+maskId+')');
 const focusRing=svgEl('rect');focusRing.setAttribute('fill','none');focusRing.setAttribute('stroke','#ef9b24');focusRing.setAttribute('stroke-width','4');focusRing.setAttribute('rx','10');focusRing.setAttribute('pointer-events','none');
 spotlight.append(defs,tinted,focusRing);
 document.body.append(spotlight,panel,launcher);
-function hideShades(){spotlight.hidden=true}
+function hideShades(){spotlight.hidden=true;spotlight.style.display='none';spotlight.style.visibility='hidden';focusRing.setAttribute('width','0');focusRing.setAttribute('height','0')}
 function updateSpotlight(){
  if(!highlight||mode!=='tour'||panel.hidden)return hideShades();
  const r=highlight.getBoundingClientRect(),w=window.innerWidth,h=window.innerHeight,pad=9;
@@ -45,7 +45,7 @@ function updateSpotlight(){
  hole.setAttribute('x',String(x));hole.setAttribute('y',String(y));
  hole.setAttribute('width',String(xr-x));hole.setAttribute('height',String(yb-y));
  for(const key of ['x','y','width','height'])focusRing.setAttribute(key,hole.getAttribute(key));
- spotlight.hidden=false;
+ spotlight.style.removeProperty('display');spotlight.style.removeProperty('visibility');spotlight.hidden=false;
  placePanel();
 }
 function placePanel(){
@@ -60,11 +60,13 @@ function placePanel(){
  }
 }
 let index=0,active=false,lastFocus=null,highlight=null,mode='welcome',audio=false;
+let spotlightTimers=[];
+function cancelSpotlightTimers(){spotlightTimers.forEach(t=>clearTimeout(t));spotlightTimers=[]}
 const synth=window.speechSynthesis;
 
 function stop(){if(synth)try{synth.cancel()}catch{}}
-function clearHighlight(){hideShades();panel.classList.remove('eva-tour-panel-top');if(highlight){highlight.classList.remove('eva-tour-highlight');highlight=null}}
-function close(){stop();clearHighlight();active=false;panel.hidden=true;launcher.hidden=false;lastFocus?.focus?.()}
+function clearHighlight(){cancelSpotlightTimers();highlight=null;hideShades();panel.classList.remove('eva-tour-panel-top');document.querySelectorAll('.eva-tour-highlight').forEach(el=>el.classList.remove('eva-tour-highlight'))}
+function close(){mode='closed';active=false;stop();clearHighlight();panel.hidden=true;panel.style.display='none';launcher.hidden=false;lastFocus?.focus?.()}
 function setState(value){save(KEY,value,localStorage)}
 function btn(label,cls,fn){const b=document.createElement('button');b.type='button';b.className='eva-tour-btn '+(cls||'');b.textContent=label;b.addEventListener('click',fn);return b}
 function addHeading(title,kicker){const k=document.createElement('span');k.className='eva-tour-kicker';k.textContent=kicker;panel.append(k);const h=document.createElement('h2');h.textContent=title;panel.append(h)}
@@ -73,10 +75,10 @@ function actions(...buttons){const row=document.createElement('div');row.classNa
 function positionTarget(){clearHighlight();if(mode!=='tour')return;const selector=entries[index][2];let el=selector?document.querySelector(selector):null;
 if(index===1){el=document.querySelector('.eva-accesibilidad-panel .eva-accesibilidad-boton')||document.querySelector('.eva-accesibilidad-boton')||null}
 
-if(el){highlight=el;el.classList.add('eva-tour-highlight');const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;if(index!==1)el.scrollIntoView({block:index===3?'end':'center',behavior:reduce?'instant':'smooth'});updateSpotlight();requestAnimationFrame(updateSpotlight);setTimeout(updateSpotlight,350);setTimeout(updateSpotlight,700);}
+if(el){highlight=el;el.classList.add('eva-tour-highlight');const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;if(index!==1)el.scrollIntoView({block:index===3?'end':'center',behavior:reduce?'instant':'smooth'});updateSpotlight();requestAnimationFrame(()=>{if(mode==='tour'&&highlight===el)updateSpotlight()});for(const delay of [350,700]){spotlightTimers.push(setTimeout(()=>{if(mode==='tour'&&highlight===el)updateSpotlight()},delay))}}
 }
 function speak(){if(!synth||!('SpeechSynthesisUtterance' in window))return;stop();const utter=new SpeechSynthesisUtterance(entries[index][0]+'. '+entries[index][1]);utter.lang='es-PE';utter.rate=Number(panel.querySelector('#eva-tour-speed')?.value||1);synth.speak(utter)}
-function render(){stop();panel.replaceChildren();mode='tour';panel.hidden=false;launcher.hidden=true;
+function render(){stop();panel.replaceChildren();mode='tour';panel.style.removeProperty('display');panel.hidden=false;launcher.hidden=true;
 const progress=document.createElement('div');progress.className='eva-tour-progress';const bar=document.createElement('span');bar.style.width=((index+1)/entries.length*100)+'%';progress.append(bar);panel.append(progress);
 addHeading(entries[index][0],'Paso '+(index+1)+' de '+entries.length);p(entries[index][1]);
 const audioRow=document.createElement('div');audioRow.className='eva-tour-audio';const label=document.createElement('label');label.textContent='Audio opcional';label.htmlFor='eva-tour-speed';const speed=document.createElement('select');speed.id='eva-tour-speed';for(const [value,name] of [['0.8','0.8×'],['1','1×'],['1.2','1.2×']]){const option=document.createElement('option');option.value=value;option.textContent=name;if(value==='1')option.selected=true;speed.append(option)}
@@ -86,7 +88,7 @@ actions(btn('Omitir por ahora','tertiary',()=>{save(SESSION,'1',sessionStorage);
 positionTarget();
 }
 function confirmDiscard(){stop();clearHighlight();mode='confirm';panel.replaceChildren();addHeading('¿No volver a mostrar?','Confirmar descarte');const info=document.createElement('div');info.className='eva-tour-confirm';info.textContent='La ventana no volverá a aparecer automáticamente en este navegador. Podrás iniciar el recorrido manualmente. Esta preferencia puede perderse si borras los datos del sitio o usas otro navegador.';panel.append(info);actions(btn('Cancelar','secondary',()=>{if(active)render();else welcome()}),btn('Sí, descartar','',()=>{setState('descartado');close()}))}
-function welcome(){active=false;mode='welcome';clearHighlight();panel.replaceChildren();panel.hidden=false;launcher.hidden=true;addHeading('Bienvenido a EVA-CREBE','Ecosistema Virtual Accesible');p('¿Te gustaría conocer los recursos y servicios de nuestra plataforma mediante un recorrido guiado con texto y audio opcional?');actions(btn('Iniciar recorrido','',()=>{active=true;index=0;render()}),btn('Omitir por ahora','secondary',()=>{save(SESSION,'1',sessionStorage);setState('pospuesto');close()}));actions(btn('No volver a mostrar','tertiary',confirmDiscard));}
+function welcome(){active=false;mode='welcome';clearHighlight();panel.replaceChildren();panel.style.removeProperty('display');panel.hidden=false;launcher.hidden=true;addHeading('Bienvenido a EVA-CREBE','Ecosistema Virtual Accesible');p('¿Te gustaría conocer los recursos y servicios de nuestra plataforma mediante un recorrido guiado con texto y audio opcional?');actions(btn('Iniciar recorrido','',()=>{active=true;index=0;render()}),btn('Omitir por ahora','secondary',()=>{save(SESSION,'1',sessionStorage);setState('pospuesto');close()}));actions(btn('No volver a mostrar','tertiary',confirmDiscard));}
 function show(force=false){if(document.querySelector('.eva-popup-fondo,.eva-popup-abierto'))return false;if(!force&&(read(KEY,localStorage)==='descartado'||read(KEY,localStorage)==='completado'||read(SESSION,sessionStorage)==='1'))return false;lastFocus=document.activeElement;welcome();return true}
 launcher.addEventListener('click',()=>{active=true;index=0;render()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden){if(mode==='tour'){save(SESSION,'1',sessionStorage);setState('pospuesto')}close()}});
