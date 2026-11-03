@@ -2,8 +2,8 @@
 (()=>{'use strict';
 const KEY='eva_crebe_recorrido_general_v1', SESSION='eva_crebe_recorrido_omitido_sesion_v1';
 const entries=[
-['Bienvenido a EVA-CREBE','Conoce los recursos y servicios del Ecosistema Virtual Accesible del CREBE Señor de los Milagros de Ucayali.','#titulo-herramientas-eva'],
-['Buscador de EVA','Busca recursos escribiendo palabras como materiales, braille, señas o noticias. También puedes utilizar las sugerencias que aparecen debajo del buscador.','#buscador-modulos'],
+['Bienvenido a EVA-CREBE','Conoce los recursos y servicios del Ecosistema Virtual Accesible del CREBE Señor de los Milagros de Ucayali.','.herramientas-eva'],
+['Buscador de EVA','Busca recursos escribiendo palabras como materiales, braille, señas o noticias. También puedes utilizar las sugerencias que aparecen debajo del buscador.','.campo-busqueda-modulos'],
 ['Herramientas de accesibilidad','Utiliza el botón de Accesibilidad para adaptar la lectura y la visualización de la plataforma a tus necesidades.',null],
 ['CAP: Capacitaciones CREBE','Consulta las jornadas de capacitación, sus sesiones y materiales de formación.','.tarjeta.capacitaciones'],
 ['BDA: Banco Digital Accesible','Encuentra recursos de Lengua de Señas Peruana y del sistema Braille.','.tarjeta.banco'],
@@ -18,23 +18,25 @@ const read=(k,storage)=>{try{return storage.getItem(k)}catch{return null}};
 const save=(k,v,storage)=>{try{storage.setItem(k,v)}catch{}};
 const panel=document.createElement('section');panel.className='eva-tour-panel';panel.setAttribute('role','dialog');panel.setAttribute('aria-label','Recorrido guiado de EVA-CREBE');panel.hidden=true;
 const launcher=document.createElement('button');launcher.className='eva-tour-launch';launcher.type='button';launcher.textContent='Iniciar recorrido';launcher.setAttribute('aria-label','Iniciar nuevamente el recorrido de EVA');launcher.hidden=true;
-// Fondo SVG con una abertura real (evenodd), estable ante el desplazamiento.
-const NS='http://www.w3.org/2000/svg';
-const shade=document.createElementNS(NS,'svg');shade.classList.add('eva-tour-spotlight');shade.setAttribute('aria-hidden','true');shade.hidden=true;
-const shadePath=document.createElementNS(NS,'path');shadePath.setAttribute('fill-rule','evenodd');shadePath.setAttribute('fill','rgba(5,21,34,.62)');shade.append(shadePath);
-document.body.append(shade,panel,launcher);
-function hideShades(){shade.hidden=true}
+// Cuatro regiones independientes mantienen una abertura transparente real.
+const shades=['top','right','bottom','left'].map(side=>{
+ const el=document.createElement('div');el.className='eva-tour-dimmer';el.dataset.side=side;el.hidden=true;el.setAttribute('aria-hidden','true');return el;
+});
+document.body.append(...shades,panel,launcher);
+function hideShades(){shades.forEach(s=>s.hidden=true)}
 function updateSpotlight(){
  if(!highlight||mode!=='tour'||panel.hidden)return hideShades();
- const rect=highlight.getBoundingClientRect();
- const w=document.documentElement.clientWidth,h=window.innerHeight,pad=9;
- const x=Math.max(0,Math.min(w,rect.left-pad)),y=Math.max(0,Math.min(h,rect.top-pad));
- const right=Math.max(x,Math.min(w,rect.right+pad)),bottom=Math.max(y,Math.min(h,rect.bottom+pad));
- if(right<=x||bottom<=y)return hideShades();
- shade.setAttribute('viewBox',`0 0 ${w} ${h}`);
- // Polígono externo + hueco interior, sin pintar encima del objetivo.
- shadePath.setAttribute('d',`M0 0H${w}V${h}H0Z M${x} ${y}V${bottom}H${right}V${y}Z`);
- shade.hidden=false;
+ const r=highlight.getBoundingClientRect(),w=document.documentElement.clientWidth,h=window.innerHeight,pad=10;
+ const x=Math.max(0,Math.min(w,r.left-pad)),y=Math.max(0,Math.min(h,r.top-pad));
+ const xr=Math.max(x,Math.min(w,r.right+pad)),yb=Math.max(y,Math.min(h,r.bottom+pad));
+ if(xr<=x||yb<=y)return hideShades();
+ const areas=[[0,0,w,y],[xr,y,w-xr,yb-y],[0,yb,w,h-yb],[0,y,x,yb-y]];
+ shades.forEach((el,i)=>{
+  const [left,top,width,height]=areas[i];
+  el.style.left=left+'px';el.style.top=top+'px';
+  el.style.width=Math.max(0,width)+'px';el.style.height=Math.max(0,height)+'px';
+  el.hidden=width<=0||height<=0;
+ });
 }
 let index=0,active=false,lastFocus=null,highlight=null,mode='welcome',audio=false;
 const synth=window.speechSynthesis;
