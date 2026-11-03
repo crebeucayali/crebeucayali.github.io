@@ -15,16 +15,16 @@
 .eva-tour-audio button{background:#f3f6f8;border:1px solid #9aaeba;color:#113b54;border-radius:7px;padding:7px 10px;cursor:pointer}
 .eva-tour-audio label{font-size:.88rem}
 .eva-tour-audio select{max-width:96px}
-.eva-tour-highlight{position:relative!important;z-index:8998!important;outline:4px solid #ef9b24!important;outline-offset:4px!important;scroll-margin-top:90px}
+.eva-tour-highlight{outline:4px solid #ef9b24!important;outline-offset:4px!important;scroll-margin-top:90px}
 .eva-tour-launch{position:fixed;right:18px;bottom:18px;z-index:8990;box-shadow:0 5px 18px rgba(0,0,0,.2)}
 .eva-tour-confirm{background:#fff5e8;border-radius:9px;padding:12px;margin:10px 0}
 @media(max-width:640px){.eva-tour-panel{left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:auto;max-height:min(58dvh,520px);padding:15px}.eva-tour-launch{right:12px;bottom:calc(78px + env(safe-area-inset-bottom,0px));font-size:.86rem}.eva-tour-panel h2{font-size:1.08rem}}
 @media(prefers-reduced-motion:reduce){.eva-tour-progress span{transition:none}}
 
 /* Atenuación del fondo: solo durante pasos con elemento identificado. */
-.eva-tour-dimmer{position:fixed;z-index:8996;background:rgba(5,21,34,.62);pointer-events:none}
-.eva-tour-dimmer[hidden]{display:none!important}
-.eva-tour-highlight{isolation:isolate;box-shadow:0 0 0 6px rgba(255,255,255,.85),0 4px 20px rgba(0,0,0,.12)!important;border-radius:8px}
+.eva-tour-spotlight{position:fixed;inset:0;width:100%;height:100%;z-index:8996;pointer-events:none;overflow:hidden}
+.eva-tour-spotlight[hidden]{display:none!important}
+.eva-tour-highlight{border-radius:8px}
 
 /* Separación de controles flotantes y alternativa al modo escritorio móvil. */
 .eva-tour-panel,.eva-tour-launch{max-width:calc(100vw - 24px)}
@@ -42,6 +42,7 @@
  .eva-tour-audio{gap:12px}
 }
 
-/* El enfoque se realiza sobre bloques opacos completos, no sobre texto transparente. */
-.herramientas-eva.eva-tour-highlight,.campo-busqueda-modulos.eva-tour-highlight{background-color:#fff!important;color:#16364a!important}
-.campo-busqueda-modulos.eva-tour-highlight input{background-color:#fff!important}
+
+/* El panel puede desplazarse al borde superior cuando cubre el objetivo. */
+.eva-tour-panel.eva-tour-panel-top{top:18px;bottom:auto}
+@media(max-width:640px){.eva-tour-panel.eva-tour-panel-top{top:12px;bottom:auto}}
