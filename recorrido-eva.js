@@ -18,31 +18,57 @@ const read=(k,storage)=>{try{return storage.getItem(k)}catch{return null}};
 const save=(k,v,storage)=>{try{storage.setItem(k,v)}catch{}};
 const panel=document.createElement('section');panel.className='eva-tour-panel';panel.setAttribute('role','dialog');panel.setAttribute('aria-label','Recorrido guiado de EVA-CREBE');panel.hidden=true;
 const launcher=document.createElement('button');launcher.className='eva-tour-launch';launcher.type='button';launcher.textContent='Iniciar recorrido';launcher.setAttribute('aria-label','Iniciar nuevamente el recorrido de EVA');launcher.hidden=true;
-// Cuatro regiones independientes mantienen una abertura transparente real.
-const shades=['top','right','bottom','left'].map(side=>{
- const el=document.createElement('div');el.className='eva-tour-dimmer';el.dataset.side=side;el.hidden=true;el.setAttribute('aria-hidden','true');return el;
-});
-document.body.append(...shades,panel,launcher);
-function hideShades(){shades.forEach(s=>s.hidden=true)}
+// Una máscara SVG recorta un hueco transparente sin elevar el contenido original.
+const NS='http://www.w3.org/2000/svg';
+const svgEl=(name)=>document.createElementNS(NS,name);
+const spotlight=svgEl('svg');
+spotlight.classList.add('eva-tour-spotlight');
+spotlight.setAttribute('aria-hidden','true');
+spotlight.hidden=true;
+const defs=svgEl('defs');
+const mask=svgEl('mask');
+const maskId='eva-tour-hole-v8';
+mask.setAttribute('id',maskId);
+mask.setAttribute('maskUnits','userSpaceOnUse');
+mask.setAttribute('maskContentUnits','userSpaceOnUse');
+mask.setAttribute('mask-type','alpha');
+const white=svgEl('rect');white.setAttribute('fill','#fff');
+const hole=svgEl('rect');hole.setAttribute('fill','#000');hole.setAttribute('rx','10');
+mask.append(white,hole);defs.append(mask);
+const tinted=svgEl('rect');tinted.setAttribute('fill','rgba(5,21,34,.55)');
+tinted.setAttribute('mask','url(#'+maskId+')');
+spotlight.append(defs,tinted);
+document.body.append(spotlight,panel,launcher);
+function hideShades(){spotlight.hidden=true}
 function updateSpotlight(){
  if(!highlight||mode!=='tour'||panel.hidden)return hideShades();
- const r=highlight.getBoundingClientRect(),w=document.documentElement.clientWidth,h=window.innerHeight,pad=10;
+ const r=highlight.getBoundingClientRect(),w=window.innerWidth,h=window.innerHeight,pad=9;
  const x=Math.max(0,Math.min(w,r.left-pad)),y=Math.max(0,Math.min(h,r.top-pad));
  const xr=Math.max(x,Math.min(w,r.right+pad)),yb=Math.max(y,Math.min(h,r.bottom+pad));
  if(xr<=x||yb<=y)return hideShades();
- const areas=[[0,0,w,y],[xr,y,w-xr,yb-y],[0,yb,w,h-yb],[0,y,x,yb-y]];
- shades.forEach((el,i)=>{
-  const [left,top,width,height]=areas[i];
-  el.style.left=left+'px';el.style.top=top+'px';
-  el.style.width=Math.max(0,width)+'px';el.style.height=Math.max(0,height)+'px';
-  el.hidden=width<=0||height<=0;
- });
+ spotlight.setAttribute('viewBox','0 0 '+w+' '+h);
+ for(const el of [white,tinted]){el.setAttribute('x','0');el.setAttribute('y','0');el.setAttribute('width',String(w));el.setAttribute('height',String(h))}
+ hole.setAttribute('x',String(x));hole.setAttribute('y',String(y));
+ hole.setAttribute('width',String(xr-x));hole.setAttribute('height',String(yb-y));
+ spotlight.hidden=false;
+ placePanel();
+}
+function placePanel(){
+ panel.classList.remove('eva-tour-panel-top');
+ if(panel.hidden||!highlight||mode!=='tour')return;
+ const r=highlight.getBoundingClientRect(),p=panel.getBoundingClientRect();
+ const horizontalOverlap=r.left<p.right&&r.right>p.left;
+ const verticalOverlap=r.top<p.bottom&&r.bottom>p.top;
+ if(horizontalOverlap&&verticalOverlap){
+   const freeTop=Math.max(0,r.top),freeBottom=Math.max(0,window.innerHeight-r.bottom);
+   if(freeTop>freeBottom&&freeTop>Math.min(p.height,180))panel.classList.add('eva-tour-panel-top');
+ }
 }
 let index=0,active=false,lastFocus=null,highlight=null,mode='welcome',audio=false;
 const synth=window.speechSynthesis;
 
 function stop(){if(synth)try{synth.cancel()}catch{}}
-function clearHighlight(){hideShades();if(highlight){highlight.classList.remove('eva-tour-highlight');highlight=null}}
+function clearHighlight(){hideShades();panel.classList.remove('eva-tour-panel-top');if(highlight){highlight.classList.remove('eva-tour-highlight');highlight=null}}
 function close(){stop();clearHighlight();active=false;panel.hidden=true;launcher.hidden=false;lastFocus?.focus?.()}
 function setState(value){save(KEY,value,localStorage)}
 function btn(label,cls,fn){const b=document.createElement('button');b.type='button';b.className='eva-tour-btn '+(cls||'');b.textContent=label;b.addEventListener('click',fn);return b}
@@ -50,9 +76,9 @@ function addHeading(title,kicker){const k=document.createElement('span');k.class
 function p(text){const el=document.createElement('p');el.textContent=text;panel.append(el)}
 function actions(...buttons){const row=document.createElement('div');row.className='eva-tour-actions';row.append(...buttons);panel.append(row)}
 function positionTarget(){clearHighlight();if(mode!=='tour')return;const selector=entries[index][2];let el=selector?document.querySelector(selector):null;
-if(index===2){el=document.querySelector('[aria-label*="Accesibilidad"],#boton-accesibilidad,.boton-accesibilidad,[data-accesibilidad]')||null}
+if(index===2){el=document.querySelector('#boton-accesibilidad,.boton-accesibilidad,[data-accesibilidad],[aria-label*="Accesibilidad"]')||null}
 if(index===9){el=[...document.querySelectorAll('a,button')].find(n=>/firma tu visita/i.test(n.textContent||n.getAttribute('aria-label')||''))||null}
-if(el){highlight=el;el.classList.add('eva-tour-highlight');const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;el.scrollIntoView({block:'center',behavior:reduce?'instant':'smooth'});updateSpotlight();requestAnimationFrame(updateSpotlight);setTimeout(updateSpotlight,350);}
+if(el){highlight=el;el.classList.add('eva-tour-highlight');const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;el.scrollIntoView({block:'center',behavior:reduce?'instant':'smooth'});updateSpotlight();requestAnimationFrame(updateSpotlight);setTimeout(updateSpotlight,350);setTimeout(updateSpotlight,700);}
 }
 function speak(){if(!synth||!('SpeechSynthesisUtterance' in window))return;stop();const utter=new SpeechSynthesisUtterance(entries[index][0]+'. '+entries[index][1]);utter.lang='es-PE';utter.rate=Number(panel.querySelector('#eva-tour-speed')?.value||1);synth.speak(utter)}
 function render(){stop();panel.replaceChildren();mode='tour';panel.hidden=false;launcher.hidden=true;
