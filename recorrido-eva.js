@@ -31,7 +31,7 @@ const maskId='eva-tour-hole-v8';
 mask.setAttribute('id',maskId);
 mask.setAttribute('maskUnits','userSpaceOnUse');
 mask.setAttribute('maskContentUnits','userSpaceOnUse');
-mask.setAttribute('mask-type','alpha');
+mask.setAttribute('mask-type','luminance');
 const white=svgEl('rect');white.setAttribute('fill','#fff');
 const hole=svgEl('rect');hole.setAttribute('fill','#000');hole.setAttribute('rx','10');
 mask.append(white,hole);defs.append(mask);
