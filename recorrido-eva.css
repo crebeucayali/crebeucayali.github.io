@@ -43,5 +43,5 @@
 }
 
 /* El enfoque se realiza sobre bloques opacos completos, no sobre texto transparente. */
-.eva-tour-highlight{background-color:#fff!important;color:#16364a!important}
-.eva-tour-highlight input{background-color:#fff!important}
+.herramientas-eva.eva-tour-highlight,.campo-busqueda-modulos.eva-tour-highlight{background-color:#fff!important;color:#16364a!important}
+.campo-busqueda-modulos.eva-tour-highlight input{background-color:#fff!important}
