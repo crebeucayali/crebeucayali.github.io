@@ -22,7 +22,7 @@
 @media(prefers-reduced-motion:reduce){.eva-tour-progress span{transition:none}}
 
 /* Atenuación del fondo: solo durante pasos con elemento identificado. */
-.eva-tour-dimmer{position:fixed;inset:0;z-index:8996;background:rgba(5,21,34,.62);pointer-events:none}
+.eva-tour-dimmer{position:fixed;z-index:8996;background:rgba(5,21,34,.62);pointer-events:none}
 .eva-tour-dimmer[hidden]{display:none!important}
 .eva-tour-highlight{isolation:isolate;box-shadow:0 0 0 6px rgba(255,255,255,.85),0 4px 20px rgba(0,0,0,.12)!important;border-radius:8px}
 
@@ -33,3 +33,11 @@
 .eva-tour-launch{left:18px;right:auto;bottom:18px}
 .eva-tour-panel{left:18px;right:auto;bottom:18px}
 @media(max-width:640px){.eva-tour-launch{left:12px;right:auto;bottom:calc(18px + env(safe-area-inset-bottom,0px))}.eva-tour-panel{left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
+
+/* En móviles que simulan escritorio, el ancho CSS de 980px reducía demasiado la guía. */
+@media (pointer:coarse) and (min-width:641px) and (max-width:1200px){
+ .eva-tour-panel{width:min(560px,calc(100vw - 40px));font-size:18px;padding:24px;max-height:65dvh}
+ .eva-tour-panel h2{font-size:1.5rem}
+ .eva-tour-btn{font-size:1rem}
+ .eva-tour-audio{gap:12px}
+}
