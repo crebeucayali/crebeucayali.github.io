@@ -3,7 +3,7 @@
 const KEY='eva_crebe_recorrido_general_v1', SESSION='eva_crebe_recorrido_omitido_sesion_v1';
 const entries=[
 ['Bienvenido a EVA-CREBE: buscador','EVA reúne recursos y servicios educativos accesibles. Utiliza este buscador para encontrar módulos y contenidos escribiendo palabras como materiales, braille, señas o noticias. También puedes seleccionar las sugerencias disponibles.','.herramientas-eva'],
-['Herramientas de accesibilidad','Utiliza el botón de Accesibilidad para adaptar la lectura y la visualización de la plataforma a tus necesidades.',null],
+['Herramientas de accesibilidad','Utiliza el botón de Accesibilidad para adaptar la lectura y la visualización de la plataforma a tus necesidades.','.eva-accesibilidad-boton'],
 ['Módulos oficiales de EVA','En estos seis módulos encontrarás: CAP, capacitaciones del CREBE; BDA, lengua de señas y Braille; MEA, materiales educativos accesibles; NI, noticias sobre inclusión; RA, recursos físicos del CREBE; y DUA 3.0, orientaciones y ejemplos para una enseñanza inclusiva. Selecciona el módulo que necesites para explorar sus contenidos.','.tarjetas'],
 ['AC: Firma tu visita','Puedes registrar voluntariamente tu visita a EVA-CREBE desde el acceso institucional Firma tu visita.','.firma-visita-acceso'],
 ['Ya puedes explorar EVA','Has conocido los principales espacios de EVA-CREBE. Puedes volver a iniciar este recorrido cuando lo necesites.',null]
@@ -21,7 +21,7 @@ spotlight.setAttribute('aria-hidden','true');
 spotlight.hidden=true;
 const defs=svgEl('defs');
 const mask=svgEl('mask');
-const maskId='eva-tour-hole-v8';
+const maskId='eva-tour-hole-v12';
 mask.setAttribute('id',maskId);
 mask.setAttribute('maskUnits','userSpaceOnUse');
 mask.setAttribute('maskContentUnits','userSpaceOnUse');
@@ -31,7 +31,8 @@ const hole=svgEl('rect');hole.setAttribute('fill','#000');hole.setAttribute('rx'
 mask.append(white,hole);defs.append(mask);
 const tinted=svgEl('rect');tinted.setAttribute('fill','rgba(5,21,34,.55)');
 tinted.setAttribute('mask','url(#'+maskId+')');
-spotlight.append(defs,tinted);
+const focusRing=svgEl('rect');focusRing.setAttribute('fill','none');focusRing.setAttribute('stroke','#ef9b24');focusRing.setAttribute('stroke-width','4');focusRing.setAttribute('rx','10');focusRing.setAttribute('pointer-events','none');
+spotlight.append(defs,tinted,focusRing);
 document.body.append(spotlight,panel,launcher);
 function hideShades(){spotlight.hidden=true}
 function updateSpotlight(){
@@ -44,6 +45,7 @@ function updateSpotlight(){
  for(const el of [white,tinted]){el.setAttribute('x','0');el.setAttribute('y','0');el.setAttribute('width',String(w));el.setAttribute('height',String(h))}
  hole.setAttribute('x',String(x));hole.setAttribute('y',String(y));
  hole.setAttribute('width',String(xr-x));hole.setAttribute('height',String(yb-y));
+ for(const key of ['x','y','width','height'])focusRing.setAttribute(key,hole.getAttribute(key));
  spotlight.hidden=false;
  placePanel();
 }
@@ -70,9 +72,9 @@ function addHeading(title,kicker){const k=document.createElement('span');k.class
 function p(text){const el=document.createElement('p');el.textContent=text;panel.append(el)}
 function actions(...buttons){const row=document.createElement('div');row.className='eva-tour-actions';row.append(...buttons);panel.append(row)}
 function positionTarget(){clearHighlight();if(mode!=='tour')return;const selector=entries[index][2];let el=selector?document.querySelector(selector):null;
-if(index===1){el=document.querySelector('#boton-accesibilidad,.boton-accesibilidad,[data-accesibilidad],[aria-label*="Accesibilidad"]')||null}
+if(index===1){el=document.querySelector('.eva-accesibilidad-panel .eva-accesibilidad-boton')||document.querySelector('.eva-accesibilidad-boton')||null}
 if(index===3){el=[...document.querySelectorAll('a,button')].find(n=>/firma tu visita/i.test(n.textContent||n.getAttribute('aria-label')||''))||null}
-if(el){highlight=el;el.classList.add('eva-tour-highlight');const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;el.scrollIntoView({block:'center',behavior:reduce?'instant':'smooth'});updateSpotlight();requestAnimationFrame(updateSpotlight);setTimeout(updateSpotlight,350);setTimeout(updateSpotlight,700);}
+if(el){highlight=el;el.classList.add('eva-tour-highlight');const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;if(index!==1)el.scrollIntoView({block:'center',behavior:reduce?'instant':'smooth'});updateSpotlight();requestAnimationFrame(updateSpotlight);setTimeout(updateSpotlight,350);setTimeout(updateSpotlight,700);}
 }
 function speak(){if(!synth||!('SpeechSynthesisUtterance' in window))return;stop();const utter=new SpeechSynthesisUtterance(entries[index][0]+'. '+entries[index][1]);utter.lang='es-PE';utter.rate=Number(panel.querySelector('#eva-tour-speed')?.value||1);synth.speak(utter)}
 function render(){stop();panel.replaceChildren();mode='tour';panel.hidden=false;launcher.hidden=true;
