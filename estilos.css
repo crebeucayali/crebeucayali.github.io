@@ -926,8 +926,48 @@ body.alto-contraste .recurso-destacado-eva-enlace{background:#000!important;colo
 .accesos-complementarios-weebly .alianza-institucional-subtitulo{
   margin:0;color:#50616a;font-size:.84rem;line-height:1.5;
 }
+.accesos-complementarios-weebly .alianza-institucional-control{
+  position:absolute;width:1px;height:1px;margin:0;padding:0;border:0;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
+.accesos-complementarios-weebly .alianza-institucional-accion{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  margin-top:15px;padding:11px 0 0;border-top:1px solid #dce3e7;
+  font-size:.78rem;font-weight:750;color:#215363;cursor:pointer;
+}
+.accesos-complementarios-weebly .alianza-institucional-accion svg{flex:none;transition:transform .25s ease}
+.accesos-complementarios-weebly .alianza-institucional-control:focus-visible + .alianza-institucional-accion{
+  outline:3px solid #1c6373;outline-offset:4px;border-radius:4px;
+}
+.accesos-complementarios-weebly .alianza-institucional-desplegable{
+  display:grid;grid-template-rows:0fr;opacity:0;visibility:hidden;
+  transition:grid-template-rows .28s ease,opacity .24s ease,visibility .28s;
+}
+.accesos-complementarios-weebly .alianza-institucional-desplegable-interior{
+  overflow:hidden;min-height:0;
+}
 .accesos-complementarios-weebly .alianza-institucional-detalle{
-  margin-top:20px;padding-top:19px;border-top:1px solid #dce3e7;
+  padding-top:15px;
+}
+.accesos-complementarios-weebly .alianza-institucional-control:checked ~ .alianza-institucional-desplegable,
+.accesos-complementarios-weebly .alianza-institucional-control:focus-visible ~ .alianza-institucional-desplegable{
+  grid-template-rows:1fr;opacity:1;visibility:visible;
+}
+.accesos-complementarios-weebly .alianza-institucional-control:checked + .alianza-institucional-accion svg,
+.accesos-complementarios-weebly .alianza-institucional-control:focus-visible + .alianza-institucional-accion svg{
+  transform:rotate(180deg);
+}
+@media (hover:hover) and (pointer:fine){
+  .accesos-complementarios-weebly .alianza-institucional:hover .alianza-institucional-desplegable{
+    grid-template-rows:1fr;opacity:1;visibility:visible;
+  }
+  .accesos-complementarios-weebly .alianza-institucional:hover .alianza-institucional-accion svg{
+    transform:rotate(180deg);
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  .accesos-complementarios-weebly .alianza-institucional-desplegable,
+  .accesos-complementarios-weebly .alianza-institucional-accion svg{transition:none}
 }
 .accesos-complementarios-weebly .alianza-institucional-descripcion{
   margin:0;color:#2f434e;font-size:.9rem;line-height:1.65;
@@ -958,4 +998,4 @@ body.alto-contraste .accesos-complementarios-weebly .alianza-institucional-icono
   background:#000!important;color:#fff!important;border:2px solid #fff!important;box-shadow:none!important;
 }
 body.alto-contraste .accesos-complementarios-weebly .alianza-institucional :is(h2,p,span){color:#fff!important}
-body.alto-contraste .accesos-complementarios-weebly .alianza-institucional-detalle{border-top-color:#fff!important}
+body.alto-contraste .accesos-complementarios-weebly .alianza-institucional-accion{color:#fff!important;border-top-color:#fff!important}
