@@ -901,10 +901,10 @@ body.alto-contraste .recurso-destacado-eva-enlace{background:#000!important;colo
 /* Cooperación institucional: bloque independiente bajo Servicios complementarios. */
 .accesos-complementarios-weebly .alianza-institucional{
   display:grid;
-  grid-template-columns:minmax(0,1.65fr) minmax(220px,.75fr);
+  grid-template-columns:minmax(0,1fr);
   align-items:stretch;
-  gap:clamp(18px,3vw,32px);
-  max-width:1080px;
+  gap:18px;
+  width:100%;max-width:540px;box-sizing:border-box;
   margin:24px auto 0;
   padding:clamp(22px,3vw,34px);
   border:1px solid #bdd5d2;
@@ -937,7 +937,7 @@ body.alto-contraste .recurso-destacado-eva-enlace{background:#000!important;colo
 }
 .accesos-complementarios-weebly .alianza-institucional-identidad{
   display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
-  align-content:center;gap:10px;min-height:190px;padding:23px 14px;
+  align-content:center;gap:10px;min-height:112px;padding:16px 14px;
   border-radius:14px;background:linear-gradient(140deg,#113a4f,#0f655b);
   color:#fff;text-align:center;
 }
