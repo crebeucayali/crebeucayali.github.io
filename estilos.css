@@ -838,11 +838,39 @@ body.alto-contraste .aplicaciones-apoyo :is(h2,h3,p,span,div){color:#fff!importa
 body.alto-contraste .aplicacion-apoyo-simbolo,body.alto-contraste .aplicacion-apoyo-estado{background:#000!important;border:1px solid #fff!important}
 
 
-/* Indicadores institucionales: cuadrícula legible sin recortes ni duplicación automática. */
-.impacto-crebe .impacto-carrusel{overflow:visible;padding:0}
-.impacto-crebe .impacto-carrusel::before,.impacto-crebe .impacto-carrusel::after{display:none}
-.impacto-crebe .impacto-pista{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;width:100%;animation:none!important;transform:none!important}
-.impacto-crebe .impacto-tarjeta{width:auto;min-width:0;min-height:155px;padding:18px 12px;border:1px solid #d9e2ec;border-radius:16px;background:#fff}
+/* Indicadores: desplazamiento horizontal continuo con registros dinámicos de Supabase. */
+.impacto-crebe .impacto-carrusel{overflow:hidden;padding:0 0 8px}
+.impacto-crebe .impacto-pista{
+  display:flex;
+  flex-wrap:nowrap;
+  gap:22px;
+  width:max-content;
+  animation:impacto-desplazar var(--impacto-duracion,38s) linear infinite;
+}
+.impacto-crebe .impacto-tarjeta{
+  flex:0 0 285px;
+  width:285px;
+  min-width:0;
+  min-height:150px;
+  padding:12px 10px;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
 .impacto-crebe .impacto-tarjeta strong{overflow-wrap:anywhere}
-@media(max-width:900px){.impacto-crebe .impacto-pista{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.impacto-crebe .impacto-pista{grid-template-columns:1fr;gap:12px}.impacto-crebe .impacto-tarjeta{min-height:0;padding:16px}}
+.impacto-crebe .impacto-carrusel:hover .impacto-pista,
+.impacto-crebe .impacto-carrusel:focus-within .impacto-pista{animation-play-state:paused}
+@media(max-width:720px){
+  .impacto-crebe .impacto-tarjeta{flex-basis:245px;width:245px;min-height:165px}
+}
+@media(prefers-reduced-motion:reduce){
+  .impacto-crebe .impacto-pista{
+    animation:none;
+    display:flex;
+    flex-wrap:wrap;
+    width:100%;
+    justify-content:center;
+  }
+  .impacto-crebe .impacto-tarjeta[aria-hidden="true"]{display:none}
+}
