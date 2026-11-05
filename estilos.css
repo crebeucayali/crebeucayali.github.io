@@ -898,6 +898,35 @@ body.alto-contraste .recursos-destacados-eva :is(h2,h3,p,span){color:#fff!import
 body.alto-contraste .recurso-destacado-eva-enlace{background:#000!important;color:#fff!important;border:2px solid #fff!important}
 
 
+
+/* Identidad por módulo: colores equivalentes a las seis tarjetas oficiales de EVA. */
+.recurso-destacado-eva[data-modulo="CAP"]{--destacado-color:#17324d;--destacado-color-hover:#10263a;--destacado-tinte:#e8eef5}
+.recurso-destacado-eva[data-modulo="BDA"]{--destacado-color:#0e7490;--destacado-color-hover:#0a5970;--destacado-tinte:#dff3f8}
+.recurso-destacado-eva[data-modulo="MEA"]{--destacado-color:#9a6a2a;--destacado-color-hover:#76501e;--destacado-tinte:#f1e3c9}
+.recurso-destacado-eva[data-modulo="NI"]{--destacado-color:#7c3aed;--destacado-color-hover:#5d25bb;--destacado-tinte:#ede9fe}
+.recurso-destacado-eva[data-modulo="RA"]{--destacado-color:#0b4f8a;--destacado-color-hover:#083d6b;--destacado-tinte:#dceeff}
+.recurso-destacado-eva[data-modulo="DUA 3.0"]{--destacado-color:#0b6257;--destacado-color-hover:#08483f;--destacado-tinte:#d8f0e9}
+.recurso-destacado-eva[data-modulo] .recurso-destacado-eva-modulo{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:6px 10px;border-radius:12px;
+  background:var(--destacado-tinte,#e8eef5);
+  color:var(--destacado-color,#17324d);
+  line-height:1.25;
+}
+.recurso-destacado-eva[data-modulo] .recurso-destacado-eva-enlace{
+  background:var(--destacado-color,#17324d);
+  color:#fff!important;
+}
+.recurso-destacado-eva[data-modulo] .recurso-destacado-eva-enlace:is(:hover,:focus-visible){
+  background:var(--destacado-color-hover,#10263a);
+}
+body.alto-contraste .recurso-destacado-eva[data-modulo] .recurso-destacado-eva-modulo{
+  background:#000!important;color:#fff!important;border:2px solid #fff!important;
+}
+body.alto-contraste .recurso-destacado-eva[data-modulo] .recurso-destacado-eva-enlace{
+  background:#000!important;color:#fff!important;border:2px solid #fff!important;
+}
+
 /* Convenios y alianzas: tarjeta informativa compacta con estructura editorial. */
 .accesos-complementarios-weebly .alianza-institucional{
   width:100%;max-width:540px;box-sizing:border-box;
