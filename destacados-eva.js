@@ -33,7 +33,7 @@
     const prefijo=origenes[modulo];
     const href=prefijo&&enlaceValido(recurso.enlace_url,prefijo);
     if(!href||!String(recurso.titulo||"").trim()||!String(recurso.descripcion||"").trim())return null;
-    const articulo=document.createElement("article");articulo.className="recurso-destacado-eva";
+    const articulo=document.createElement("article");articulo.className="recurso-destacado-eva";articulo.dataset.modulo=modulo;
     const img=imagenValida(recurso.imagen_url);
     if(img){
       const imagen=document.createElement("img");imagen.className="recurso-destacado-eva-imagen";
