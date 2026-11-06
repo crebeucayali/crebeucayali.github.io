@@ -913,6 +913,10 @@ body.alto-contraste .recurso-destacado-eva-enlace{background:#000!important;colo
   color:var(--destacado-color,#17324d);
   line-height:1.25;
 }
+/* Contraste WCAG AA para la etiqueta MEA: 5.64:1 sobre #f1e3c9. */
+.recurso-destacado-eva[data-modulo="MEA"] .recurso-destacado-eva-modulo{
+  color:#76501e;
+}
 .recurso-destacado-eva[data-modulo] .recurso-destacado-eva-enlace{
   background:var(--destacado-color,#17324d);
   color:#fff!important;
