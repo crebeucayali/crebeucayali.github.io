@@ -245,6 +245,10 @@ body.alto-contraste .marca-crebe .marca-version-etiqueta{
   font-size:.8125rem;
   line-height:1.55;
 }
+.pie-crebe-final p+p{margin-top:6px}
+.pie-crebe-final a{color:#ddfff7;text-decoration:underline;text-underline-offset:3px}
+.pie-crebe-final a:focus-visible{outline:3px solid #ffd166;outline-offset:3px}
+
 
 /* En pantallas intermedias el menú pasa debajo de la identidad institucional. */
 @media (max-width:1180px){
