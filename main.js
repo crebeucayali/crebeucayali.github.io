@@ -388,10 +388,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const contenido = document.createElement("div");
       contenido.className = "noticia-contenido";
 
-      const categoria = document.createElement("span");
-      categoria.className = "noticia-categoria";
-      categoria.textContent = noticia.categoria || "Noticia destacada";
-
       const titulo = document.createElement("h3");
       const urlNoticia = noticia.enlace ? resolverUrlEvaSegura(noticia.enlace) : null;
       if (urlNoticia) {
@@ -409,7 +405,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const descripcion = document.createElement("p");
       descripcion.textContent = noticia.descripcion;
 
-      contenido.append(categoria, titulo, descripcion);
+      contenido.append(titulo, descripcion);
       articulo.append(figura, contenido);
       return articulo;
     };
