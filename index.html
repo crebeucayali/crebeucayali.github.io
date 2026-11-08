@@ -20,6 +20,7 @@
 }
 </script>
 <link rel="stylesheet" href="estilos.css?v=41"/>
+<link rel="stylesheet" href="eva-layout.css?v=2"/>
 <link rel="stylesheet" href="https://crebeucayali.github.io/accesos-complementarios/accesibilidad/accesibilidad.css?v=10"/>
   <link rel="canonical" href="https://crebeucayali.github.io/">
   <meta property="og:type" content="website">
@@ -89,7 +90,8 @@
 </div>
 </div>
 </section>
-<div class="cuerpo-operativo">
+<div class="cuerpo-operativo eva-layout-preparado eva-layout-activo" id="eva-distribucion">
+<div class="eva-columna-principal" id="eva-columna-principal">
 <section aria-label="Plataformas digitales CREBE" class="tarjetas">
 <h2 class="titulo-seccion-grid">Módulos del Ecosistema Virtual Accesible</h2>
 <a class="tarjeta capacitaciones destacada" href="https://crebeucayali.github.io/capacitaciones/" rel="noopener" target="_blank">
@@ -278,7 +280,39 @@
   </div>
 </aside>
 </section>
-</div>
+</div><!-- /eva-columna-principal -->
+<aside class="eva-columna-lateral" id="eva-columna-lateral" aria-labelledby="eva-lateral-titulo">
+  <div class="eva-lateral-cabecera">
+    <p class="eva-lateral-etiqueta">ACTUALIDAD EVA</p>
+    <h2 id="eva-lateral-titulo">Explora y mantente al día</h2>
+    <p>Publicaciones y recursos institucionales disponibles para consultar.</p>
+  </div>
+  <section class="eva-lateral-bloque" aria-labelledby="eva-lateral-recursos-titulo">
+    <h3 id="eva-lateral-recursos-titulo">Últimos recursos publicados</h3>
+    <ul id="eva-lateral-recursos" class="eva-lateral-lista"><li>Consulta disponible próximamente.</li></ul>
+    <a class="eva-lateral-ver" href="https://crebeucayali.github.io/repositorio-accesible/">Ver repositorio</a>
+  </section>
+  <section class="eva-lateral-bloque" aria-labelledby="eva-lateral-noticias-titulo">
+    <h3 id="eva-lateral-noticias-titulo">Novedades institucionales</h3>
+    <ul id="eva-lateral-noticias" class="eva-lateral-lista"><li>Consulta disponible próximamente.</li></ul>
+    <a class="eva-lateral-ver" href="https://crebeucayali.github.io/noti-inclusivos/">Ver noticias inclusivas</a>
+  </section>
+  <nav class="eva-lateral-bloque" aria-labelledby="eva-lateral-accesos-titulo">
+    <h3 id="eva-lateral-accesos-titulo">Accesos rápidos</h3>
+    <ul class="eva-lateral-accesos">
+      <li><a href="https://crebeucayali.github.io/banco-digital-accesible/">Banco Digital Accesible</a></li>
+      <li><a href="https://crebeucayali.github.io/materiales-educativos-accesibles/">Materiales Educativos Accesibles</a></li>
+      <li><a href="https://crebeucayali.github.io/repositorio-accesible/">Repositorio Accesible</a></li>
+      <li><a href="https://crebeucayali.github.io/accesos-complementarios/firma-tu-visita/">Firma tu visita</a></li>
+    </ul>
+  </nav>
+  <section class="eva-lateral-bloque" aria-labelledby="eva-lateral-agenda-titulo">
+    <h3 id="eva-lateral-agenda-titulo">Próximamente</h3>
+    <ul id="eva-lateral-agenda" class="eva-lateral-lista"><li>Consulta disponible próximamente.</li></ul>
+    <a class="eva-lateral-ver" href="https://crebeucayali.github.io/accesos-complementarios/recursos/calendario.html">Ver calendario CREBE</a>
+  </section>
+</aside>
+</div><!-- /cuerpo-operativo.eva-layout-preparado -->
 </section>
 <section class="impacto-crebe" aria-labelledby="impacto-crebe-titulo">
 <div class="impacto-encabezado">
@@ -408,6 +442,7 @@
 <button id="volver-arriba" class="volver-arriba" type="button" aria-label="Volver al inicio" hidden>↑</button>
 <script src="main.js?v=14"></script>
 <script src="ra-materiales-semana.js?v=1" defer></script>
+<script src="eva-columna-lateral.js?v=1" defer></script>
 <script src="indicadores-eva.js?v=2" defer></script>
 <script src="destacados-eva.js?v=2" defer></script>
 <script src="admin-sesion.js?v=1"></script>

@@ -1,0 +1,289 @@
+/*
+ * EVA · Propuesta B · Fase 2
+ * Infraestructura de distribución, desactivada por defecto.
+ * No activar eva-layout-activo ni retirar hidden del aside antes de fases 3-5.
+ */
+
+/* En fase de preparación el contenedor intermedio es neutro:
+   las secciones existentes conservan la rejilla y el flujo anteriores. */
+#eva-distribucion.eva-layout-preparado:not(.eva-layout-activo) > .eva-columna-principal {
+  display: contents;
+}
+#eva-distribucion > .eva-columna-lateral[hidden] {
+  display: none !important;
+}
+
+/* Reglas preparadas para activación posterior, limitadas al módulo nuevo. */
+#eva-distribucion.eva-layout-activo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 280px) !important;
+  gap: 24px;
+  align-items: start;
+}
+#eva-distribucion.eva-layout-activo > .eva-columna-principal,
+#eva-distribucion.eva-layout-activo > .eva-columna-lateral {
+  min-width: 0;
+  max-width: 100%;
+}
+#eva-distribucion.eva-layout-activo > .eva-columna-principal {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* La columna lateral no flotará sobre el contenido en resoluciones pequeñas. */
+@media (max-width: 1050px) {
+  #eva-distribucion.eva-layout-activo {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+@media (max-width: 680px) {
+  #eva-distribucion.eva-layout-activo {
+    gap: 16px;
+  }
+}
+
+
+/*
+ * Fase 3: adaptación de módulos y componentes al ancho de la columna principal.
+ * Todas estas reglas requieren eva-layout-activo; no afectan a main ni
+ * a la apariencia de la portada mientras el rediseño esté desactivado.
+ */
+#eva-distribucion.eva-layout-activo > .eva-columna-principal > :is(
+  .tarjetas, .recursos-destacados-eva, .ra-semana-eva,
+  .aplicaciones-apoyo, .noticias-destacadas, .accesos-complementarios-weebly
+) {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* No heredar los desplazamientos especiales de la antigua rejilla de seis
+   columnas: dos tarjetas completas por fila en el espacio principal. */
+#eva-distribucion.eva-layout-activo .eva-columna-principal > .tarjetas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  align-items: stretch;
+  gap: clamp(12px, 1.7vw, 20px);
+}
+#eva-distribucion.eva-layout-activo .eva-columna-principal > .tarjetas > h2 {
+  grid-column: 1 / -1 !important;
+}
+#eva-distribucion.eva-layout-activo .eva-columna-principal > .tarjetas > .tarjeta {
+  grid-column: span 1 !important;
+  position: static !important;
+  left: auto !important;
+  min-width: 0;
+  max-width: 100%;
+}
+#eva-distribucion.eva-layout-activo .eva-columna-principal > .tarjetas > .tarjeta :is(h3, p, .boton) {
+  overflow-wrap: anywhere;
+}
+
+/* Tarjetas de herramientas y aplicaciones dentro del ancho real. */
+#eva-distribucion.eva-layout-activo .recursos-destacados-grid,
+#eva-distribucion.eva-layout-activo .aplicaciones-apoyo-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+#eva-distribucion.eva-layout-activo .recursos-destacados-grid > *,
+#eva-distribucion.eva-layout-activo .aplicaciones-apoyo-grid > * {
+  min-width: 0;
+}
+
+/* Carrusel RA: preservar los tres materiales, flechas, pausa e imágenes.
+   La disposición de cada material se hace vertical cuando la columna
+   principal se estrecha; sin tocar la lógica JavaScript existente. */
+#eva-distribucion.eva-layout-activo .ra-semana-visor {
+  min-width: 0;
+  max-width: 100%;
+}
+#eva-distribucion.eva-layout-activo .ra-semana-slide {
+  grid-template-columns: minmax(0, 1fr);
+}
+#eva-distribucion.eva-layout-activo .ra-semana-foto {
+  min-height: 220px;
+}
+#eva-distribucion.eva-layout-activo .ra-semana-foto img {
+  height: clamp(220px, 26vw, 330px);
+  min-height: 0;
+  max-height: 330px;
+  object-fit: contain;
+}
+#eva-distribucion.eva-layout-activo .ra-semana-detalle {
+  min-width: 0;
+}
+
+/* Noticias: el visor debe medirse respecto a su columna, no al viewport
+   general. Conserva flechas e indicadores y evita desbordamiento. */
+#eva-distribucion.eva-layout-activo .noticias-carrusel {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0;
+}
+#eva-distribucion.eva-layout-activo .noticias-viewport {
+  width: calc(100% - 80px) !important;
+  max-width: calc(100% - 80px) !important;
+  min-width: 0;
+}
+#eva-distribucion.eva-layout-activo .noticia-tarjeta,
+#eva-distribucion.eva-layout-activo .noticia-tarjeta.activa {
+  flex-basis: min(310px, 100%) !important;
+  min-width: 0;
+}
+
+/* Líneas institucionales y servicios: limitar rejillas internas. */
+#eva-distribucion.eva-layout-activo .accesos-complementarios-weebly .lista-lineas {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+#eva-distribucion.eva-layout-activo .accesos-complementarios-weebly .grid-accesos {
+  max-width: 100%;
+}
+#eva-distribucion.eva-layout-activo .accesos-complementarios-weebly :is(
+  .linea-item, .tarjeta-acceso, .alianza-institucional
+) {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* En pantalla mediana la columna lateral se apila (fase 2), y el contenido
+   aprovecha el ancho disponible sin imponer dimensiones de escritorio. */
+@media (max-width: 700px) {
+  #eva-distribucion.eva-layout-activo .eva-columna-principal > .tarjetas,
+  #eva-distribucion.eva-layout-activo .recursos-destacados-grid,
+  #eva-distribucion.eva-layout-activo .aplicaciones-apoyo-grid,
+  #eva-distribucion.eva-layout-activo .accesos-complementarios-weebly .lista-lineas,
+  #eva-distribucion.eva-layout-activo .accesos-complementarios-weebly .grid-accesos {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  #eva-distribucion.eva-layout-activo .noticias-viewport {
+    width: calc(100% - 56px) !important;
+    max-width: calc(100% - 56px) !important;
+  }
+  #eva-distribucion.eva-layout-activo .ra-semana-foto img {
+    height: 230px;
+  }
+}
+
+/* Accesibilidad: foco, contraste y movimiento los gestionan los estilos
+   y scripts originales. No sustituir ni anular esas reglas. */
+
+
+/* Fase 4 - Columna editorial, sin efecto mientras permanezca oculta. */
+#eva-distribucion.eva-layout-activo > .eva-columna-lateral:not([hidden]) {
+  display:flex;
+  flex-direction:column;
+  align-self:start;
+  gap:16px;
+  min-width:0;
+  background:transparent;
+  color:#153d50;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-cabecera,
+#eva-distribucion.eva-layout-activo .eva-lateral-bloque {
+  min-width:0;
+  box-sizing:border-box;
+  padding:18px 16px;
+  background:#fff;
+  border:1px solid #d5e5e8;
+  border-radius:14px;
+  overflow-wrap:anywhere;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-cabecera {
+  background:#edf7f5;
+  border-color:#bbdbd7;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-etiqueta {
+  color:#0d6a62;
+  font-size:.72rem;
+  font-weight:800;
+  letter-spacing:.06em;
+  margin:0 0 8px;
+}
+#eva-distribucion.eva-layout-activo .eva-columna-lateral :is(h2,h3) {
+  font-family:inherit;
+  color:#143b50;
+  line-height:1.3;
+  margin:0 0 10px;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-cabecera h2 {
+  font-size:1.15rem;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-bloque h3 {
+  font-size:1rem;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-cabecera > p:last-child {
+  margin:0;
+  line-height:1.5;
+  color:#486370;
+  font-size:.87rem;
+}
+#eva-distribucion.eva-layout-activo :is(.eva-lateral-lista,.eva-lateral-accesos) {
+  list-style:none;
+  padding:0;
+  margin:0 0 12px;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+#eva-distribucion.eva-layout-activo :is(.eva-lateral-lista,.eva-lateral-accesos) li {
+  padding:10px 0;
+  border-bottom:1px solid #e4eff0;
+  color:#4e6470;
+  line-height:1.45;
+  font-size:.84rem;
+}
+#eva-distribucion.eva-layout-activo :is(.eva-lateral-lista,.eva-lateral-accesos) li:last-child {
+  border-bottom:0;
+}
+#eva-distribucion.eva-layout-activo .eva-columna-lateral a {
+  color:#105d69;
+  font-weight:700;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  overflow-wrap:anywhere;
+}
+#eva-distribucion.eva-layout-activo .eva-columna-lateral a:is(:hover,:focus-visible) {
+  color:#093b52;
+  text-decoration-thickness:2px;
+}
+#eva-distribucion.eva-layout-activo .eva-columna-lateral a:focus-visible {
+  outline:3px solid #e4981c;
+  outline-offset:3px;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-lista small {
+  display:block;
+  color:#536a75;
+  font-size:.76rem;
+  margin-top:4px;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-ver {
+  display:inline-block;
+  margin-top:2px;
+  font-size:.82rem;
+}
+@media (max-width:1050px) {
+  #eva-distribucion.eva-layout-activo > .eva-columna-lateral:not([hidden]) {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    align-items:start;
+  }
+  #eva-distribucion.eva-layout-activo > .eva-columna-lateral .eva-lateral-cabecera {
+    grid-column:1/-1;
+  }
+}
+@media (max-width:700px) {
+  #eva-distribucion.eva-layout-activo > .eva-columna-lateral:not([hidden]) {
+    display:flex;
+  }
+}
+body.alto-contraste #eva-distribucion.eva-layout-activo :is(.eva-lateral-cabecera,.eva-lateral-bloque) {
+  color:#fff!important;
+  background:#000!important;
+  border:2px solid #fff!important;
+}
+body.alto-contraste #eva-distribucion.eva-layout-activo .eva-columna-lateral :is(h2,h3,p,li,small,a) {
+  color:#fff!important;
+}
