@@ -69,6 +69,29 @@ const row=(date,label)=>({fecha:date,tipo:"arasaac",arasaac_ids:[12345,67890],
       if(present)assert.ok(positions.today.top>=positions.modules.bottom-2&&positions.aside.top>=positions.today.bottom-2,"Orden móvil hoy antes de lateral");
       else assert.ok(positions.aside.top>=positions.modules.bottom-2,"Móvil lateral tras seis módulos");
     }
+    if(width>1050 && present){
+      const progressive=await page.evaluate(async()=>{
+        const grid=document.getElementById("eva-distribucion");
+        const aside=document.getElementById("eva-columna-lateral");
+        const twoFrames=()=>new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
+        const snapshot=()=>({
+          top:aside.getBoundingClientRect().top,
+          bottom:aside.getBoundingClientRect().bottom,
+          gridBottom:grid.getBoundingClientRect().bottom,
+          scrollHeight:aside.scrollHeight,clientHeight:aside.clientHeight
+        });
+        scrollTo(0,Math.max(0,grid.getBoundingClientRect().top+scrollY-116+700));
+        await twoFrames();const middle=snapshot();
+        scrollTo(0,Math.max(0,grid.getBoundingClientRect().bottom+scrollY-innerHeight+45));
+        await twoFrames();const nearEnd=snapshot();
+        return {middle,nearEnd};
+      });
+      assert.equal(progressive.middle.scrollHeight,progressive.middle.clientHeight,"Lateral sin desplazamiento interno");
+      assert.ok(Math.abs(progressive.middle.top-116)<4,"Lateral fijo debajo de cabecera: "+JSON.stringify(progressive));
+      assert.ok(progressive.nearEnd.top<progressive.middle.top-30,"El lateral debe liberarse cerca de indicadores");
+      assert.ok(progressive.nearEnd.bottom<=progressive.nearEnd.gridBottom+3,"El lateral no invade secciones inferiores");
+      await page.evaluate(()=>scrollTo(0,0));
+    }
     assert.equal(errors.length,0,errors.join(" | "));
     if(scenario==="programado")await page.screenshot({path:path.join("test-results/recurso-dia-06",width+".png"),fullPage:true,animations:"disabled"});
     console.log("PASS",scenario,width,{overflow:positions.width,sticky:positions.sticky});
