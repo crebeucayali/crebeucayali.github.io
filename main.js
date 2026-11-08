@@ -458,11 +458,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const slide = diapositivas[indiceActual];
         if (!slide) return;
 
-        const rellenoLateral = Math.max(0, (viewport.clientWidth - slide.clientWidth) / 2);
-        pista.style.paddingLeft = `${rellenoLateral}px`;
-        pista.style.paddingRight = `${rellenoLateral}px`;
-
-        const offsetObjetivo = slide.offsetLeft - rellenoLateral;
+        // Cada tarjeta ocupa el ancho completo del visor: el desplazamiento
+        // se calcula desde el inicio real de la pista, sin rellenos artificiales.
+        pista.style.paddingLeft = "0px";
+        pista.style.paddingRight = "0px";
+        const offsetObjetivo = slide.offsetLeft - pista.offsetLeft;
         pista.style.transform = `translateX(${-offsetObjetivo}px)`;
         actualizarIndicadores();
       });
