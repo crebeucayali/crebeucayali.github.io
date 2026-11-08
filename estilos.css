@@ -1032,3 +1032,53 @@ body.alto-contraste .accesos-complementarios-weebly .alianza-institucional-icono
 }
 body.alto-contraste .accesos-complementarios-weebly .alianza-institucional :is(h2,p,span){color:#fff!important}
 body.alto-contraste .accesos-complementarios-weebly .alianza-institucional-accion{color:#fff!important;border-top-color:#fff!important}
+
+
+/* RA - Materiales de la semana. Sección pública independiente. */
+.ra-semana-eva[hidden],.ra-semana-slide[hidden]{display:none!important}
+.ra-semana-eva{width:100%;max-width:1120px;box-sizing:border-box;margin:42px auto;padding:clamp(22px,3.5vw,38px);border:1px solid #c8e2e0;border-radius:22px;background:linear-gradient(135deg,#f1faf8,#fff);color:#163e51}
+.ra-semana-cabecera{margin-bottom:22px}
+.ra-semana-eyebrow{margin:0 0 8px!important;color:#116b64!important;font-size:.78rem!important;font-weight:800;letter-spacing:.07em}
+.ra-semana-cabecera h2{font-size:clamp(1.45rem,2.7vw,2rem);color:#143c50;margin:0 0 10px;line-height:1.2}
+.ra-semana-cabecera>p:last-child{margin:0;color:#506977;line-height:1.65}
+.ra-semana-visor{border:1px solid #d6e5e8;background:#fff;border-radius:18px;overflow:hidden;min-width:0;box-shadow:0 5px 20px rgba(24,59,72,.05)}
+.ra-semana-slide{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);min-width:0}
+.ra-semana-foto{background:#edf4f5;min-width:0;min-height:310px;display:flex;align-items:center;justify-content:center}
+.ra-semana-foto img{display:block;width:100%;height:100%;max-height:430px;min-height:310px;object-fit:contain}
+.ra-semana-foto-error{padding:32px;text-align:center;color:#3b5565}
+.ra-semana-detalle{padding:clamp(22px,3vw,38px);display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-width:0}
+.ra-semana-indice{font-weight:800;font-size:.74rem;color:#0d766a;letter-spacing:.08em}
+.ra-semana-detalle h3{font-size:clamp(1.3rem,2.2vw,1.85rem);color:#133b50;line-height:1.25;margin:0;overflow-wrap:anywhere}
+.ra-semana-detalle p{color:#3b5867;line-height:1.7;margin:0;overflow-wrap:anywhere}
+.ra-semana-enlaces{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:auto;padding-top:12px}
+.ra-semana-boton,.ra-semana-enlace{display:inline-flex;align-items:center;justify-content:center;min-height:44px;text-decoration:none!important;font-weight:750;border-radius:9px;padding:10px 15px}
+.ra-semana-boton{background:#104c74;color:#fff!important}
+.ra-semana-boton:is(:hover,:focus-visible){background:#0b3856;color:#fff!important}
+.ra-semana-enlace{border:1px solid #1b6a68;color:#125754!important;background:#fff}
+.ra-semana-enlace:is(:hover,:focus-visible){background:#e8f7f3;color:#0c4b47!important}
+.ra-semana-controles{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin:20px auto 16px}
+.ra-semana-control{border:1px solid #b4d0d5;border-radius:9px;background:#fff;color:#173f51;min-height:44px;padding:9px 13px;font-weight:700;cursor:pointer}
+.ra-semana-control:is(:hover,:focus-visible){background:#e7f2f3}
+.ra-semana-pausa{border-color:#17635e}
+.ra-semana-contador{font-weight:700;font-size:.88rem;color:#3c5b65}
+.ra-semana-puntos{display:flex;gap:6px;align-items:center;justify-content:center}
+.ra-semana-punto{width:44px;height:44px;border:0;border-radius:10px;background:transparent;cursor:pointer;display:grid;place-items:center}
+.ra-semana-punto::after{content:"";display:block;width:11px;height:11px;border-radius:50%;background:#a2bcc1}
+.ra-semana-punto[aria-current="true"]::after{background:#095b66;width:26px;border-radius:9px}
+.ra-semana-contacto{border-top:1px solid #cbdedc;margin:8px 0 0;padding-top:19px;color:#3b5867;line-height:1.6}
+.ra-semana-contacto a{color:#0e5e68;text-decoration:underline;text-underline-offset:3px}
+.ra-semana-sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.ra-semana-eva :is(a,button):focus-visible{outline:3px solid #e4981c;outline-offset:3px}
+@media(max-width:760px){
+ .ra-semana-eva{margin:30px auto;padding:20px 16px}
+ .ra-semana-slide{grid-template-columns:minmax(0,1fr)}
+ .ra-semana-foto{min-height:190px}
+ .ra-semana-foto img{min-height:190px;height:235px;max-height:270px}
+ .ra-semana-detalle{padding:22px 18px}
+}
+@media(max-width:450px){.ra-semana-control{padding:8px 11px}.ra-semana-enlaces{width:100%}.ra-semana-enlaces a{width:100%;box-sizing:border-box}}
+@media(prefers-reduced-motion:reduce){.ra-semana-eva,.ra-semana-eva *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+body.alto-contraste .ra-semana-eva,body.alto-contraste .ra-semana-visor,body.alto-contraste .ra-semana-foto,body.alto-contraste .ra-semana-detalle{background:#000!important;color:#fff!important;border-color:#fff!important}
+body.alto-contraste .ra-semana-eva :is(h2,h3,p,span,strong){color:#fff!important}
+body.alto-contraste .ra-semana-control,body.alto-contraste .ra-semana-enlaces a{border:2px solid #fff!important;background:#000!important;color:#fff!important}
+body.alto-contraste .ra-semana-punto::after{background:#fff!important}
