@@ -17,6 +17,14 @@ La trazabilidad ayuda a identificar el proceso de construcción del proyecto, la
 |---|---|---|---|
 | 08/07/2026 | Documentación | Incorporación de archivos Markdown para respaldo de autoría, naturaleza personal del proyecto, inventario, condiciones de uso y trazabilidad. | Psicólogo Gabriel Berrospi |
 
+## Actualización EVA 2.0
+
+| Fecha | Tipo de cambio | Descripción | Responsable |
+|---|---|---|---|
+| 08/11/2026 | Identificación de versión | Adopción documental de EVA 2.0 con referencia a la evolución de portada, recursos diarios, integración BDA y ARASAAC, administración, seguridad y pendientes de validación. Ver [EVA 2.0](EVA_2_0.md). | Autor del desarrollo |
+| 08/11/2026 | Presentación | Imagen ampliada y distribución lateral de imagen y detalles en la tarjeta principal; diseño apilado para móviles estrechos. | Autor del desarrollo |
+| 08/11/2026 | Programación | Habilitación técnica de recursos LSP y ARASAAC para fechas de hoy y ayer, sujeto a verificaciones administrativas; optimización del buscador ARASAAC. | Autor del desarrollo |
+
 ## Cambios que deben registrarse
 
 Se recomienda registrar en este archivo:
