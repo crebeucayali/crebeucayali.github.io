@@ -393,24 +393,23 @@ document.addEventListener("DOMContentLoaded", () => {
       categoria.textContent = noticia.categoria || "Noticia destacada";
 
       const titulo = document.createElement("h3");
-      titulo.textContent = noticia.titulo;
+      const urlNoticia = noticia.enlace ? resolverUrlEvaSegura(noticia.enlace) : null;
+      if (urlNoticia) {
+        const enlaceTitulo = document.createElement("a");
+        enlaceTitulo.className = "noticia-titulo-enlace";
+        enlaceTitulo.href = urlNoticia;
+        enlaceTitulo.target = "_blank";
+        enlaceTitulo.rel = "noopener noreferrer";
+        enlaceTitulo.textContent = noticia.titulo;
+        titulo.appendChild(enlaceTitulo);
+      } else {
+        titulo.textContent = noticia.titulo;
+      }
 
       const descripcion = document.createElement("p");
       descripcion.textContent = noticia.descripcion;
 
-      const urlNoticia = noticia.enlace ? resolverUrlEvaSegura(noticia.enlace) : null;
-
       contenido.append(categoria, titulo, descripcion);
-
-      if (urlNoticia) {
-        const enlace = document.createElement("a");
-        enlace.className = "noticia-enlace";
-        enlace.href = urlNoticia;
-        enlace.target = "_blank";
-        enlace.rel = "noopener noreferrer";
-        enlace.textContent = "Ampliar noticia →";
-        contenido.appendChild(enlace);
-      }
       articulo.append(figura, contenido);
       return articulo;
     };
