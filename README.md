@@ -28,6 +28,10 @@ El uso educativo, institucional o comunicativo de esta plataforma no implica ces
 
 © 2026 Gabriel Berrospi. Desarrollo original. Uso institucional autorizado al CREBE "Señor de los Milagros" - Ucayali, según los alcances documentados para el ecosistema y sus módulos correspondientes.
 
+## Autoría y créditos de los componentes
+
+El footer de la página principal identifica la creación y el desarrollo original del ecosistema. La página pública [Autoría y créditos](https://crebeucayali.github.io/autoria-y-creditos.html) distingue los componentes de desarrollo propio de materiales externos e institucionales, incluidos los pictogramas ARASAAC y las ilustraciones de la guía LSP del MINEDU.
+
 ## Documentación de respaldo
 
 Este repositorio incluye documentos de respaldo en formato Markdown para dejar constancia de la autoría, trazabilidad, estructura del proyecto y condiciones generales de uso:
