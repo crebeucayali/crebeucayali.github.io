@@ -348,3 +348,18 @@ body.alto-contraste #eva-distribucion.eva-layout-activo .eva-columna-lateral :is
 #eva-distribucion.eva-layout-activo > .eva-columna-principal > .ra-semana-eva:not([hidden]) + .aplicaciones-apoyo {
   margin-top: 18px !important;
 }
+
+/* Ampliación puntual del espaciado de 18 px a otros dos pares visibles.
+   No modifica márgenes cuando el bloque de recursos está oculto. */
+#eva-distribucion.eva-layout-activo > .eva-columna-principal > .tarjetas:has(+ .recursos-destacados-eva:not([hidden])) {
+  margin-bottom: 0 !important;
+}
+#eva-distribucion.eva-layout-activo > .eva-columna-principal > .tarjetas + .recursos-destacados-eva:not([hidden]) {
+  margin-top: 18px !important;
+}
+#eva-distribucion.eva-layout-activo > .eva-columna-principal > .aplicaciones-apoyo:has(+ .noticias-destacadas:not([hidden])) {
+  margin-bottom: 0 !important;
+}
+#eva-distribucion.eva-layout-activo > .eva-columna-principal > .aplicaciones-apoyo + .noticias-destacadas:not([hidden]) {
+  margin-top: 18px !important;
+}
