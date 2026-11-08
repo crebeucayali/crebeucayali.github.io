@@ -1082,3 +1082,6 @@ body.alto-contraste .ra-semana-eva,body.alto-contraste .ra-semana-visor,body.alt
 body.alto-contraste .ra-semana-eva :is(h2,h3,p,span,strong){color:#fff!important}
 body.alto-contraste .ra-semana-control,body.alto-contraste .ra-semana-enlaces a{border:2px solid #fff!important;background:#000!important;color:#fff!important}
 body.alto-contraste .ra-semana-punto::after{background:#fff!important}
+
+/* La sesión activa y el formulario son estados excluyentes. El atributo hidden tiene prioridad sobre display:grid. */
+.admin-mini-panel[hidden],.admin-mini-form[hidden],.admin-sesion-activa[hidden]{display:none!important}
