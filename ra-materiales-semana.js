@@ -11,7 +11,7 @@
   const pagination = document.getElementById("ra-semana-puntos");
   const api = "https://dteimbhwtzghhsijeeld.supabase.co/rest/v1/ra_materiales_semana_publicos";
   const key = "sb_publishable_tHbo1jTeW_dC90hdA5DvyQ_a6LrfKpq";
-  const contact = "https://crebeucayali.github.io/accesos-complementarios/paginas/contacto.html";
+  const contact = "mailto:senordelosmilagroscrebe@gmail.com";
   const catalogue = "https://crebeucayali.github.io/repositorio-accesible/";
   const media = window.matchMedia("(prefers-reduced-motion: reduce)");
   const INTERVAL = 8000;
@@ -70,7 +70,7 @@
     const actions = document.createElement("div");
     actions.className = "ra-semana-enlaces";
     actions.append(anchor("Explorar el repositorio", catalogue, "ra-semana-boton"),
-      anchor("Consultar al CREBE", contact, "ra-semana-enlace"));
+      anchor("Escribir al CREBE", contact, "ra-semana-enlace"));
     detail.append(index, title, p, actions);
     item.append(imagebox, detail);
     return item;
