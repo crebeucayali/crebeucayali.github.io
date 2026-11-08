@@ -92,11 +92,14 @@ const path = require("node:path");
           scrollTo(0, Math.min(650, Math.max(0, maxScroll - 150)));
           return new Promise(resolve => requestAnimationFrame(() => {
             const top = aside.getBoundingClientRect().top;
-            const metrics = { position:style.position, overflowY:style.overflowY, top, height:aside.clientHeight, scrollHeight:aside.scrollHeight };
+            const grid = document.getElementById("eva-distribucion").getBoundingClientRect();
+            const ancestor = aside.parentElement?.parentElement?.getBoundingClientRect();
+            const metrics = { position:style.position, overflowY:style.overflowY, top, height:aside.clientHeight, scrollHeight:aside.scrollHeight, scrollY:window.scrollY, gridTop:grid.top, gridBottom:grid.bottom, gridHeight:grid.height, ancestorBottom:ancestor?.bottom };
             aside.scrollTop = 120;
             requestAnimationFrame(() => resolve({ ...metrics, innerScrolled:aside.scrollTop }));
           }));
         });
+        console.log("STICKY DIAGNOSTICO",width,JSON.stringify(sticky));
         assert.equal(sticky.position,"sticky","Actualidad lateral debe permanecer fija al desplazar en escritorio");
         assert.equal(sticky.overflowY,"auto","Actualidad lateral debe permitir scroll interno");
         assert.ok(Math.abs(sticky.top - 76)<=3,"Top sticky sin invadir cabecera: "+sticky.top);
