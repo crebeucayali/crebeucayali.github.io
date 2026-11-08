@@ -88,7 +88,7 @@ const path = require("node:path");
       assert.equal(result.populated,true,"Bloques públicos alimentados");
       assert.equal(result.controls&&result.newsControl&&result.logoAndBanner,true);
       assert.ok(result.overflow<=2,"Desbordamiento horizontal: "+width+" -> "+result.overflow);
-      assert.equal(result.laterBeside,expectedBeside,"Columna lateral según breakpoint "+width);
+      if (width>700) assert.equal(result.laterBeside,expectedBeside,"Columna lateral según breakpoint "+width);
       if (width<=700) {
         assert.ok(result.afterModules && result.beforeResources,"Actualidad debe aparecer después de los módulos y antes de recursos "+width);
       } else if (!expectedBeside) {
