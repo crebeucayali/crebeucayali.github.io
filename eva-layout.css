@@ -332,3 +332,17 @@ body.alto-contraste #eva-distribucion.eva-layout-activo .eva-columna-lateral :is
     overscroll-behavior: auto;
   }
 }
+
+/* Ajuste puntual de separación entre secciones EVA.
+   Misma distancia de 18 px que entre Líneas de acción y Servicios complementarios.
+   No modifica el espaciado de otras secciones ni los contenidos internos. */
+#eva-distribucion.eva-layout-activo > .eva-columna-principal > .recursos-destacados-eva:not([hidden]) {
+  margin-bottom: 0 !important;
+}
+#eva-distribucion.eva-layout-activo > .eva-columna-principal > .ra-semana-eva:not([hidden]) {
+  margin-top: 18px !important;
+  margin-bottom: 0 !important;
+}
+#eva-distribucion.eva-layout-activo > .eva-columna-principal > .aplicaciones-apoyo {
+  margin-top: 18px !important;
+}
