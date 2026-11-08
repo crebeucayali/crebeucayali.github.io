@@ -1,0 +1,133 @@
+/* Materiales de la semana · tres tarjetas simultáneas, sin carrusel.
+   Mantiene programación de Supabase, títulos, descripciones y fotos reales. */
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-visor {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:stretch;
+  gap:14px;
+  padding:0;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  background:transparent;
+  overflow:visible;
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-slide {
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  min-height:100%;
+  overflow:hidden;
+  border:1px solid #c2dad9;
+  border-radius:15px;
+  background:#fff;
+  box-shadow:0 7px 20px rgba(12,48,65,.08);
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-foto {
+  position:relative;
+  isolation:isolate;
+  display:block;
+  width:100%;
+  min-width:0;
+  min-height:0;
+  aspect-ratio:4/5;
+  overflow:hidden;
+  background:linear-gradient(145deg,#0b3040,#19616c);
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-foto img {
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:0;
+  max-height:none;
+  object-fit:cover;
+  object-position:center;
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::after {
+  content:"";
+  position:absolute;
+  z-index:1;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(to top,rgba(8,31,45,.94) 0%,rgba(8,31,45,.63) 32%,transparent 76%);
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-overlay {
+  position:absolute;
+  z-index:2;
+  left:0;
+  right:0;
+  bottom:0;
+  padding:16px 14px;
+  overflow-wrap:anywhere;
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-overlay .ra-semana-indice {
+  display:block;
+  margin-bottom:7px;
+  font-size:.67rem;
+  line-height:1.35;
+  color:#d7f4ed;
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-overlay h3 {
+  margin:0;
+  color:#fff;
+  font-size:clamp(1rem,1.55vw,1.35rem);
+  font-weight:800;
+  line-height:1.2;
+  text-shadow:0 1px 3px rgba(0,0,0,.65);
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-detalle {
+  display:block;
+  min-width:0;
+  padding:16px 14px 20px;
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-detalle p {
+  margin:0;
+  color:#365569;
+  line-height:1.55;
+  font-size:.9rem;
+  overflow-wrap:anywhere;
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-foto-error {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100%;
+  min-height:180px;
+  margin:0;
+  padding:16px;
+  color:#fff;
+  background:#12465a;
+  text-align:center;
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-contacto {
+  margin-top:20px;
+}
+@media(max-width:800px) {
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-visor {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+@media(max-width:560px) {
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-visor {
+    grid-template-columns:minmax(0,1fr);
+    gap:16px;
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto {
+    aspect-ratio:5/4;
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-overlay h3 {
+    font-size:1.25rem;
+  }
+}
+body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide {
+  background:#000!important;
+  border:2px solid #fff!important;
+}
+body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-overlay {
+  background:#000!important;
+}
+body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-overlay :is(h3,span),
+body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-detalle p {
+  color:#fff!important;
+}
