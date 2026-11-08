@@ -106,7 +106,7 @@
   }
   function start() {
     stop();
-    if (!playing || hover || focused || media.matches || !visible || slides.length < 2 || document.hidden) return;
+    if (!playing || hover || (focused && document.activeElement !== toggle) || !visible || slides.length < 2 || document.hidden) return;
     clock = window.setInterval(() => show(current + 1), INTERVAL);
   }
   function manual(n) {
