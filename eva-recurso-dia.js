@@ -56,10 +56,10 @@
     body.replaceChildren();
     box.hidden = true;
   }
-  function image(id, title, index) {
+  function image(id, altText, index) {
     const img = elem("img");
     img.src = "https://static.arasaac.org/pictograms/" + id + "/" + id + "_500.png";
-    img.alt = title + ", pictograma " + (index + 1);
+    img.alt = altText + (index > 0 ? " (pictograma " + (index + 1) + ")" : "");
     img.loading = "lazy";
     img.decoding = "async";
     img.addEventListener("error", () => {
@@ -83,7 +83,7 @@
     const gallery = elem("div", "eva-recurso-dia-fotos");
     gallery.style.setProperty("--eva-picto-count", String(record.arasaac_ids.length));
     for (let i = 0; i < record.arasaac_ids.length; i++)
-      gallery.appendChild(image(record.arasaac_ids[i], record.titulo, i));
+      gallery.appendChild(image(record.arasaac_ids[i], record.texto_alternativo, i));
     const detail = elem("div", "eva-recurso-dia-detalles");
     const date = elem("p", "eva-recurso-dia-etiqueta", readableDate(record.fecha));
     const heading = elem(compact ? "h4" : "h3", "eva-recurso-dia-nombre", record.titulo);
