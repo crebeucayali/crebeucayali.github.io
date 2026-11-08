@@ -84,6 +84,27 @@ const path = require("node:path");
           logoAndBanner:!!document.querySelector(".cabecera-crebe")&&!!document.querySelector(".hero .patron-portada")
         };
       });
+      if (width > 1050) {
+        const sticky = await page.evaluate(() => {
+          const aside = document.getElementById("eva-columna-lateral");
+          const style = getComputedStyle(aside);
+          const maxScroll = document.documentElement.scrollHeight - innerHeight;
+          scrollTo(0, Math.min(650, Math.max(0, maxScroll - 150)));
+          return new Promise(resolve => requestAnimationFrame(() => {
+            const top = aside.getBoundingClientRect().top;
+            const metrics = { position:style.position, overflowY:style.overflowY, top, height:aside.clientHeight, scrollHeight:aside.scrollHeight };
+            aside.scrollTop = 120;
+            requestAnimationFrame(() => resolve({ ...metrics, innerScrolled:aside.scrollTop }));
+          }));
+        });
+        assert.equal(sticky.position,"sticky","Actualidad lateral debe permanecer fija al desplazar en escritorio");
+        assert.equal(sticky.overflowY,"auto","Actualidad lateral debe permitir scroll interno");
+        assert.ok(Math.abs(sticky.top - 76)<=3,"Top sticky sin invadir cabecera: "+sticky.top);
+        assert.ok(sticky.height<=900-90,"Sidebar no excede altura útil del viewport");
+        if (sticky.scrollHeight>sticky.height) assert.ok(sticky.innerScrolled>0,"Scroll de sidebar accesible");
+        console.log("STICKY PASS",width,JSON.stringify(sticky));
+        await page.evaluate(() => window.scrollTo(0,0));
+      }
       await page.screenshot({ path:path.join("test-results/eva-fase5",width+".png"), fullPage:true, animations:"disabled" });
       const expectedBeside=width>1050;
       assert.equal(result.cardCount,6,"6 módulos preservados");
