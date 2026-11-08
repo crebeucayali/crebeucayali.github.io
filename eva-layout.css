@@ -169,3 +169,121 @@
 
 /* Accesibilidad: foco, contraste y movimiento los gestionan los estilos
    y scripts originales. No sustituir ni anular esas reglas. */
+
+
+/* Fase 4 - Columna editorial, sin efecto mientras permanezca oculta. */
+#eva-distribucion.eva-layout-activo > .eva-columna-lateral:not([hidden]) {
+  display:flex;
+  flex-direction:column;
+  align-self:start;
+  gap:16px;
+  min-width:0;
+  background:transparent;
+  color:#153d50;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-cabecera,
+#eva-distribucion.eva-layout-activo .eva-lateral-bloque {
+  min-width:0;
+  box-sizing:border-box;
+  padding:18px 16px;
+  background:#fff;
+  border:1px solid #d5e5e8;
+  border-radius:14px;
+  overflow-wrap:anywhere;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-cabecera {
+  background:#edf7f5;
+  border-color:#bbdbd7;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-etiqueta {
+  color:#0d6a62;
+  font-size:.72rem;
+  font-weight:800;
+  letter-spacing:.06em;
+  margin:0 0 8px;
+}
+#eva-distribucion.eva-layout-activo .eva-columna-lateral :is(h2,h3) {
+  font-family:inherit;
+  color:#143b50;
+  line-height:1.3;
+  margin:0 0 10px;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-cabecera h2 {
+  font-size:1.15rem;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-bloque h3 {
+  font-size:1rem;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-cabecera > p:last-child {
+  margin:0;
+  line-height:1.5;
+  color:#486370;
+  font-size:.87rem;
+}
+#eva-distribucion.eva-layout-activo :is(.eva-lateral-lista,.eva-lateral-accesos) {
+  list-style:none;
+  padding:0;
+  margin:0 0 12px;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+#eva-distribucion.eva-layout-activo :is(.eva-lateral-lista,.eva-lateral-accesos) li {
+  padding:10px 0;
+  border-bottom:1px solid #e4eff0;
+  color:#4e6470;
+  line-height:1.45;
+  font-size:.84rem;
+}
+#eva-distribucion.eva-layout-activo :is(.eva-lateral-lista,.eva-lateral-accesos) li:last-child {
+  border-bottom:0;
+}
+#eva-distribucion.eva-layout-activo .eva-columna-lateral a {
+  color:#105d69;
+  font-weight:700;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  overflow-wrap:anywhere;
+}
+#eva-distribucion.eva-layout-activo .eva-columna-lateral a:is(:hover,:focus-visible) {
+  color:#093b52;
+  text-decoration-thickness:2px;
+}
+#eva-distribucion.eva-layout-activo .eva-columna-lateral a:focus-visible {
+  outline:3px solid #e4981c;
+  outline-offset:3px;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-lista small {
+  display:block;
+  color:#536a75;
+  font-size:.76rem;
+  margin-top:4px;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-ver {
+  display:inline-block;
+  margin-top:2px;
+  font-size:.82rem;
+}
+@media (max-width:1050px) {
+  #eva-distribucion.eva-layout-activo > .eva-columna-lateral:not([hidden]) {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    align-items:start;
+  }
+  #eva-distribucion.eva-layout-activo > .eva-columna-lateral .eva-lateral-cabecera {
+    grid-column:1/-1;
+  }
+}
+@media (max-width:700px) {
+  #eva-distribucion.eva-layout-activo > .eva-columna-lateral:not([hidden]) {
+    display:flex;
+  }
+}
+body.alto-contraste #eva-distribucion.eva-layout-activo :is(.eva-lateral-cabecera,.eva-lateral-bloque) {
+  color:#fff!important;
+  background:#000!important;
+  border:2px solid #fff!important;
+}
+body.alto-contraste #eva-distribucion.eva-layout-activo .eva-columna-lateral :is(h2,h3,p,li,small,a) {
+  color:#fff!important;
+}
