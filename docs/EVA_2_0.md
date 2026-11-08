@@ -69,3 +69,7 @@ AC:
 ## 5. Criterio de continuidad
 
 Toda mejora posterior de EVA 2.0 debe documentarse con su fecha, repositorio, cambio funcional, evidencia de verificación y pendientes reales. La documentación de autoría original y naturaleza del proyecto se mantiene vigente; esta denominación de versión no altera las condiciones de titularidad ni las licencias de recursos de terceros.
+
+## 6. Autoría pública y reconocimiento de recursos externos
+
+Con EVA 2.0 se incorpora en el footer de la página principal la identificación «Ecosistema Virtual Accesible (EVA) | Creación y desarrollo original: Gabriel Berrospi» y el enlace [Autoría y créditos](https://crebeucayali.github.io/autoria-y-creditos.html). Esta página pública distingue la arquitectura, organización, integración de módulos y componentes originales del ecosistema de los recursos ajenos: pictogramas ARASAAC (Sergio Palao, Gobierno de Aragón, CC BY-NC-SA 4.0), señas e ilustraciones de la guía LSP del MINEDU, signos institucionales del CREBE, noticias y documentos de terceros y servicios tecnológicos. La declaración mantiene los derechos y atribuciones particulares y no convierte el acceso abierto a la guía MINEDU en autorización automática de reproducción.
