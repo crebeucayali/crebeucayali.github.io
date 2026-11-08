@@ -1,0 +1,44 @@
+/*
+ * EVA · Propuesta B · Fase 2
+ * Infraestructura de distribución, desactivada por defecto.
+ * No activar eva-layout-activo ni retirar hidden del aside antes de fases 3-5.
+ */
+
+/* En fase de preparación el contenedor intermedio es neutro:
+   las secciones existentes conservan la rejilla y el flujo anteriores. */
+#eva-distribucion.eva-layout-preparado:not(.eva-layout-activo) > .eva-columna-principal {
+  display: contents;
+}
+#eva-distribucion > .eva-columna-lateral[hidden] {
+  display: none !important;
+}
+
+/* Reglas preparadas para activación posterior, limitadas al módulo nuevo. */
+#eva-distribucion.eva-layout-activo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 280px) !important;
+  gap: 24px;
+  align-items: start;
+}
+#eva-distribucion.eva-layout-activo > .eva-columna-principal,
+#eva-distribucion.eva-layout-activo > .eva-columna-lateral {
+  min-width: 0;
+  max-width: 100%;
+}
+#eva-distribucion.eva-layout-activo > .eva-columna-principal {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* La columna lateral no flotará sobre el contenido en resoluciones pequeñas. */
+@media (max-width: 1050px) {
+  #eva-distribucion.eva-layout-activo {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+@media (max-width: 680px) {
+  #eva-distribucion.eva-layout-activo {
+    gap: 16px;
+  }
+}
