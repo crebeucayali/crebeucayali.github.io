@@ -186,3 +186,97 @@ body.alto-contraste .noticias-destacadas .noticia-contenido,
 body.alto-contraste .noticias-destacadas .noticia-contenido p {
   color: #fff !important;
 }
+
+/* Ajuste de ancho: las flechas se superponen a la diapositiva.
+   El visor no reserva franjas laterales y la tarjeta ocupa el 100 %. */
+.noticias-destacadas .noticias-carrusel,
+#eva-distribucion.eva-layout-activo .noticias-carrusel {
+  container-type: inline-size;
+}
+.noticias-destacadas .noticias-viewport,
+#eva-distribucion.eva-layout-activo .noticias-viewport {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 4px 0 12px;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+.noticias-destacadas .noticias-control {
+  top: 50% !important;
+  bottom: auto !important;
+  width: 44px !important;
+  height: 48px !important;
+  transform: translateY(-50%) !important;
+  border-radius: 10px;
+  background: rgba(8,47,73,.9);
+  color: #fff;
+  box-shadow: 0 3px 12px rgba(8,47,73,.24);
+  z-index: 5;
+}
+.noticias-destacadas .noticias-control:hover,
+.noticias-destacadas .noticias-control:focus-visible {
+  transform: translateY(-50%) !important;
+  background: #0f766e;
+}
+.noticias-destacadas .noticias-anterior {
+  left: 12px !important;
+  right: auto !important;
+}
+.noticias-destacadas .noticias-siguiente {
+  right: 12px !important;
+  left: auto !important;
+}
+.noticias-destacadas .noticia-contenido {
+  overflow: visible;
+  padding-inline: clamp(52px, 5vw, 60px);
+}
+.noticias-destacadas .noticia-tarjeta,
+.noticias-destacadas .noticia-tarjeta.activa,
+.noticias-destacadas .noticia-tarjeta.vecina,
+.noticias-destacadas .noticia-tarjeta.lejana,
+#eva-distribucion.eva-layout-activo .noticia-tarjeta,
+#eva-distribucion.eva-layout-activo .noticia-tarjeta.activa {
+  height: auto;
+  min-height: 300px;
+  grid-template-rows: auto;
+}
+.noticias-destacadas .noticia-media {
+  min-height: 300px !important;
+  height: 100%;
+}
+/* El tamaño de la columna principal, no el zoom del navegador,
+   determina cuándo la noticia pasa a la presentación vertical. */
+@container (max-width: 600px) {
+  .noticias-destacadas .noticia-tarjeta,
+  .noticias-destacadas .noticia-tarjeta.activa,
+  .noticias-destacadas .noticia-tarjeta.vecina,
+  .noticias-destacadas .noticia-tarjeta.lejana,
+  #eva-distribucion.eva-layout-activo .noticia-tarjeta,
+  #eva-distribucion.eva-layout-activo .noticia-tarjeta.activa {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    min-height: 0;
+  }
+  .noticias-destacadas .noticia-media {
+    min-height: 0 !important;
+    height: clamp(155px, 33cqw, 245px);
+  }
+  .noticias-destacadas .noticia-contenido {
+    padding: 18px clamp(18px, 5cqw, 30px);
+  }
+  .noticias-destacadas .noticias-control {
+    top: clamp(78px, 16.5cqw, 123px) !important;
+    width: 38px !important;
+    height: 44px !important;
+  }
+  .noticias-destacadas .noticias-anterior { left: 6px !important; }
+  .noticias-destacadas .noticias-siguiente { right: 6px !important; }
+}
+@media (max-width: 420px) {
+  .noticias-destacadas .noticias-carrusel { padding-bottom: 0 !important; }
+}
+body.alto-contraste .noticias-destacadas .noticias-control {
+  background: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff;
+}
