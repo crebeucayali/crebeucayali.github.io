@@ -85,7 +85,7 @@
     return rows.filter(row => clean(row.titulo)).slice(0, 3).map(row => line(
       clean(row.titulo, 100),
       safeLink(row.enlace_url, NEWS),
-      readableDate(row.created_at) ? "Publicado: " + readableDate(row.created_at) : ""
+      readableDate(row.created_at) ? "Registrado: " + readableDate(row.created_at) : ""
     ));
   }
   function upcoming(rows) {
