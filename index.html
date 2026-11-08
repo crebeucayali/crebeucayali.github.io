@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="eva-layout.css?v=8"/>
 <link rel="stylesheet" href="noticias-carrusel-responsive.css?v=4"/>
 <link rel="stylesheet" href="ra-semana-tarjetas.css?v=1"/>
+<link rel="stylesheet" href="eva-recurso-dia.css?v=1"/>
 <link rel="stylesheet" href="https://crebeucayali.github.io/accesos-complementarios/accesibilidad/accesibilidad.css?v=10"/>
   <link rel="canonical" href="https://crebeucayali.github.io/">
   <meta property="og:type" content="website">
@@ -132,6 +133,14 @@
 <p>Explora los tres principios, las nueve directrices y sus consideraciones, con orientaciones y ejemplos para planificar experiencias de aprendizaje inclusivas.</p>
 <span class="boton">Explorar DUA 3.0</span>
 </a>
+</section>
+<section class="eva-recurso-hoy" id="eva-recurso-hoy" aria-labelledby="eva-recurso-hoy-titulo" hidden>
+  <div class="eva-recurso-dia-encabezado">
+    <p class="eva-recurso-dia-etiqueta">APRENDE CADA DÍA · RECURSO ACCESIBLE</p>
+    <h2 id="eva-recurso-hoy-titulo">El recurso del día</h2>
+    <p>Descubre un recurso educativo seleccionado por el CREBE para apoyar la comunicación inclusiva.</p>
+  </div>
+  <article class="eva-recurso-dia-contenido" id="eva-recurso-hoy-contenido" aria-label="Recurso educativo de hoy"></article>
 </section>
 <section class="recursos-destacados-eva" id="recursos-destacados-eva" aria-labelledby="recursos-destacados-titulo" hidden>
   <div class="recursos-destacados-encabezado">
@@ -281,6 +290,11 @@
     <h2 id="eva-lateral-titulo">Explora y mantente al día</h2>
     <p>Publicaciones y recursos institucionales disponibles para consultar.</p>
   </div>
+  <section class="eva-lateral-bloque eva-recurso-ayer" id="eva-recurso-ayer" aria-labelledby="eva-recurso-ayer-titulo" hidden>
+    <p class="eva-recurso-dia-etiqueta">APRENDE CADA DÍA</p>
+    <h3 id="eva-recurso-ayer-titulo">El recurso de ayer</h3>
+    <div id="eva-recurso-ayer-contenido" aria-label="Recurso educativo del día anterior"></div>
+  </section>
   <section class="eva-lateral-bloque" aria-labelledby="eva-lateral-recursos-titulo">
     <h3 id="eva-lateral-recursos-titulo">Últimos recursos publicados</h3>
     <ul id="eva-lateral-recursos" class="eva-lateral-lista"><li>Consulta disponible próximamente.</li></ul>
@@ -437,6 +451,7 @@
 <script src="main.js?v=15"></script>
 <script src="ra-materiales-semana.js?v=2" defer></script>
 <script src="eva-columna-lateral.js?v=1" defer></script>
+<script src="eva-recurso-dia.js?v=1" defer></script>
 <script src="indicadores-eva.js?v=2" defer></script>
 <script src="destacados-eva.js?v=2" defer></script>
 <script src="admin-sesion.js?v=1"></script>
