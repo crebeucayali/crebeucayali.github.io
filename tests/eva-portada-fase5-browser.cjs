@@ -56,6 +56,8 @@ const path = require("node:path");
         const get = selector => document.querySelector(selector).getBoundingClientRect();
         const main = get(".eva-columna-principal");
         const aside = get(".eva-columna-lateral");
+        const modules = get(".eva-columna-principal > .tarjetas");
+        const resources = get(".eva-columna-principal > .recursos-destacados-eva");
         const hero = get(".hero");
         const search = get(".herramientas-eva");
         const cards=[...document.querySelectorAll(".tarjetas > a.tarjeta")];
@@ -65,8 +67,10 @@ const path = require("node:path");
           lateralVisible:!document.getElementById("eva-columna-lateral").hidden,
           laterBeside:aside.left >= main.right-2,
           laterBelow:aside.top >= main.bottom-2,
-          heroAbove:hero.bottom <= main.top + 2,
-          searchAbove:search.bottom <= main.top + 2,
+          afterModules:aside.top >= modules.bottom-2,
+          beforeResources:aside.bottom <= resources.top+2,
+          heroAbove:hero.bottom <= modules.top + 2,
+          searchAbove:search.bottom <= modules.top + 2,
           mainWidth:Math.round(main.width),
           asideWidth:Math.round(aside.width),
           modulesInMain:cards.every(x=>document.querySelector(".eva-columna-principal").contains(x)),
@@ -85,7 +89,11 @@ const path = require("node:path");
       assert.equal(result.controls&&result.newsControl&&result.logoAndBanner,true);
       assert.ok(result.overflow<=2,"Desbordamiento horizontal: "+width+" -> "+result.overflow);
       assert.equal(result.laterBeside,expectedBeside,"Columna lateral según breakpoint "+width);
-      if (!expectedBeside) assert.ok(result.laterBelow,"Columna apilada "+width);
+      if (width<=700) {
+        assert.ok(result.afterModules && result.beforeResources,"Actualidad debe aparecer después de los módulos y antes de recursos "+width);
+      } else if (!expectedBeside) {
+        assert.ok(result.laterBelow,"Columna apilada "+width);
+      }
       assert.ok(result.heroAbove&&result.searchAbove,"Hero y buscador conservados arriba");
       assert.equal(errors.length,0,"Errores JS "+errors.join(" | "));
       results.push({width,...result,errors});
