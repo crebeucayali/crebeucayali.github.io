@@ -1,0 +1,42 @@
+name: EVA - etapa 06 recursos hoy y ayer
+on:
+  push:
+    branches: [feature/eva-recurso-dia-etapa-06-dos-columnas]
+    paths:
+      - "index.html"
+      - "eva-recurso-dia.js"
+      - "eva-recurso-dia.css"
+      - "tests/eva-recurso-dia-etapa6-browser.cjs"
+      - ".github/workflows/eva-recurso-dia-etapa6.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  navegador:
+    runs-on: ubuntu-latest
+    timeout-minutes: 17
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Instalar Playwright
+        run: npm install --no-save --no-package-lock playwright@1.56.1
+      - name: Validar sintaxis JS
+        run: |
+          node --check eva-recurso-dia.js
+          node --check tests/eva-recurso-dia-etapa6-browser.cjs
+      - name: Comprobar hoy ayer y casos vacíos
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/eva-dia-server.log 2>&1 &
+          PID=$!
+          trap "kill $PID || true" EXIT
+          sleep 2
+          node tests/eva-recurso-dia-etapa6-browser.cjs
+      - name: Capturas de escritorio y móvil
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eva-recurso-dia-etapa6
+          path: test-results/recurso-dia-06/
+          if-no-files-found: ignore
