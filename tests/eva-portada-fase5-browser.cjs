@@ -89,7 +89,7 @@ const path = require("node:path");
           const aside = document.getElementById("eva-columna-lateral");
           const style = getComputedStyle(aside);
           const maxScroll = document.documentElement.scrollHeight - innerHeight;
-          scrollTo(0, Math.min(650, Math.max(0, maxScroll - 150)));
+          scrollTo(0, Math.min(1000, Math.max(0, maxScroll - 150)));
           return new Promise(resolve => requestAnimationFrame(() => {
             const top = aside.getBoundingClientRect().top;
             const grid = document.getElementById("eva-distribucion").getBoundingClientRect();
