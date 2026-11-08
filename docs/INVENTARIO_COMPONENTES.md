@@ -30,7 +30,7 @@ El repositorio Inicio puede articular el acceso hacia los siguientes módulos o 
 - CAP: Capacitaciones CREBE.
 - BDA: Banco Digital Accesible.
 - MEA: Materiales Educativos Accesibles.
-- JIA: Juegos Interactivos Accesibles.
+- DUA 3.0: Diseño Universal para el Aprendizaje 3.0.
 - NI: Notiinclusivo.
 - RA: Repositorio Accesible.
 - AC: Accesos Complementarios.
