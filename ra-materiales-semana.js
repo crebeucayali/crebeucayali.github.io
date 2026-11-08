@@ -3,20 +3,10 @@
   const root = document.getElementById("ra-semana-eva");
   if (!root) return;
   const viewport = document.getElementById("ra-semana-visor");
-  const counter = document.getElementById("ra-semana-contador");
   const heading = document.getElementById("ra-semana-titulo");
-  const previous = document.getElementById("ra-semana-anterior");
-  const next = document.getElementById("ra-semana-siguiente");
-  const toggle = document.getElementById("ra-semana-pausa");
-  const pagination = document.getElementById("ra-semana-puntos");
   const api = "https://dteimbhwtzghhsijeeld.supabase.co/rest/v1/ra_materiales_semana_publicos";
   const key = "sb_publishable_tHbo1jTeW_dC90hdA5DvyQ_a6LrfKpq";
-  const contact = "mailto:senordelosmilagroscrebe@gmail.com";
   const catalogue = "https://crebeucayali.github.io/repositorio-accesible/";
-  const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const INTERVAL = 8000;
-  let slides = [], buttons = [], current = 0, clock = null, playing = !media.matches, hover = false, focused = false;
-  let visible = true;
 
   function imageURL(value) {
     const path = String(value || "").trim();
@@ -33,150 +23,62 @@
       return fromRA || fromStorage ? url.href : null;
     } catch { return null; }
   }
-  function anchor(text, url, className) {
-    const a = document.createElement("a");
-    a.href = url;
-    a.className = className;
-    a.textContent = text;
-    return a;
-  }
   function card(name, description, image, alt, number) {
-    if (!name || !description || !alt || !imageURL(image)) return null;
+    const source = imageURL(image);
+    if (!name || !description || !alt || !source) return null;
     const item = document.createElement("article");
-    item.className = "ra-semana-slide";
-    item.setAttribute("aria-label", "Material " + number + " de 3: " + name);
+    item.className = "ra-semana-slide ra-semana-tarjeta";
+    item.setAttribute("aria-labelledby", "ra-semana-material-" + number);
     const imagebox = document.createElement("div");
     imagebox.className = "ra-semana-foto";
     const img = document.createElement("img");
-    img.src = imageURL(image);
+    img.src = source;
     img.alt = alt;
     img.loading = number === 1 ? "eager" : "lazy";
     img.decoding = "async";
     img.addEventListener("error", () => {
       img.replaceWith(Object.assign(document.createElement("p"), {
-        className: "ra-semana-foto-error", textContent: "Fotografía temporalmente no disponible"
+        className: "ra-semana-foto-error",
+        textContent: "Fotografía temporalmente no disponible"
       }));
     }, { once: true });
-    imagebox.append(img);
+    const overlay = document.createElement("div");
+    overlay.className = "ra-semana-overlay";
+    const label = document.createElement("span");
+    label.className = "ra-semana-indice";
+    label.textContent = "RECURSO " + number + " DE 3";
+    const title = document.createElement("h3");
+    title.id = "ra-semana-material-" + number;
+    title.textContent = name;
+    overlay.append(label, title);
+    imagebox.append(img, overlay);
     const detail = document.createElement("div");
     detail.className = "ra-semana-detalle";
-    const index = document.createElement("span");
-    index.className = "ra-semana-indice";
-    index.textContent = "RECURSO " + number + " DE 3";
-    const title = document.createElement("h3");
-    title.textContent = name;
     const p = document.createElement("p");
     p.textContent = description;
-    const actions = document.createElement("div");
-    actions.className = "ra-semana-enlaces";
-    actions.append(anchor("Explorar el repositorio", catalogue, "ra-semana-boton"),
-      anchor("Escribir al CREBE", contact, "ra-semana-enlace"));
-    detail.append(index, title, p, actions);
+    detail.append(p);
     item.append(imagebox, detail);
     return item;
   }
-  function stop() {
-    if (clock !== null) window.clearInterval(clock);
-    clock = null;
-  }
-  function show(n, announce = false) {
-    if (!slides.length) return;
-    current = (n + slides.length) % slides.length;
-    slides.forEach((slide, i) => {
-      slide.hidden = i !== current;
-      slide.setAttribute("aria-hidden", String(i !== current));
-    });
-    buttons.forEach((button, i) => {
-      button.setAttribute("aria-current", i === current ? "true" : "false");
-      button.setAttribute("aria-label", "Mostrar material " + (i + 1) + " de " + slides.length
-        + (i === current ? ", seleccionado" : ""));
-    });
-    counter.textContent = "Material " + (current + 1) + " de " + slides.length;
-    if (announce) {
-      const status = document.getElementById("ra-semana-anuncio");
-      status.textContent = "Material " + (current + 1) + ": "
-        + slides[current].querySelector("h3").textContent;
-    }
-  }
-  function pause() { playing = false; stop(); updateButton(); }
-  function updateButton() {
-    toggle.textContent = playing ? "Pausar rotación" : "Reanudar rotación";
-    toggle.setAttribute("aria-label", playing ? "Pausar carrusel de materiales" : "Reanudar carrusel de materiales");
-    toggle.setAttribute("aria-pressed", String(!playing));
-  }
-  function start() {
-    stop();
-    if (!playing || hover || (focused && document.activeElement !== toggle) || !visible || slides.length < 2 || document.hidden) return;
-    clock = window.setInterval(() => show(current + 1), INTERVAL);
-  }
-  function manual(n) {
-    pause();
-    show(n, true);
-  }
+
   function initialize(row) {
-    const draft = [];
-    for (let n = 1; n <= 3; n++) {
+    const items = [];
+    for (let number = 1; number <= 3; number++) {
       const item = card(
-        String(row["titulo_" + n] || "").trim(),
-        String(row["descripcion_" + n] || "").trim(),
-        row["imagen_" + n],
-        String(row["alt_" + n] || "").trim(),
-        n
+        String(row["titulo_" + number] || "").trim(),
+        String(row["descripcion_" + number] || "").trim(),
+        row["imagen_" + number],
+        String(row["alt_" + number] || "").trim(),
+        number
       );
       if (!item) return;
-      draft.push(item);
+      items.push(item);
     }
-    slides = draft;
-    viewport.replaceChildren(...slides);
-    pagination.replaceChildren();
-    buttons = slides.map((_, i) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "ra-semana-punto";
-      button.addEventListener("click", () => manual(i));
-      pagination.append(button);
-      return button;
-    });
-    const weekly = row.etiqueta === "semana";
-    heading.textContent = weekly ? "Materiales de la semana" : "Materiales destacados";
+    heading.textContent = row.etiqueta === "semana"
+      ? "Materiales de la semana"
+      : "Materiales destacados";
+    viewport.replaceChildren(...items);
     root.hidden = false;
-    show(0);
-    updateButton();
-    start();
-  }
-  previous.addEventListener("click", () => manual(current - 1));
-  next.addEventListener("click", () => manual(current + 1));
-  toggle.addEventListener("click", () => {
-    playing = !playing;
-    updateButton();
-    start();
-  });
-  root.addEventListener("mouseenter", () => { hover = true; stop(); });
-  root.addEventListener("mouseleave", () => { hover = false; start(); });
-  root.addEventListener("focusin", () => { focused = true; stop(); });
-  root.addEventListener("focusout", event => {
-    if (!root.contains(event.relatedTarget)) { focused = false; start(); }
-  });
-  root.addEventListener("keydown", event => {
-    if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
-    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
-      event.preventDefault();
-      manual(current + (event.key === "ArrowRight" ? 1 : -1));
-    }
-  });
-  document.addEventListener("visibilitychange", start);
-  const motionChanged = () => {
-    if (media.matches) { pause(); }
-    else start();
-  };
-  if (media.addEventListener) media.addEventListener("change", motionChanged);
-  else if (media.addListener) media.addListener(motionChanged);
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(entries => {
-      visible = entries[0]?.isIntersecting ?? false;
-      start();
-    }, {threshold: 0.15});
-    observer.observe(root);
   }
 
   async function load() {
@@ -195,7 +97,6 @@
     } catch {
       root.hidden = true;
       viewport.replaceChildren();
-      stop();
     }
   }
   load();

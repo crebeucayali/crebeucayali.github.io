@@ -8,10 +8,13 @@ on:
       - fix/eva-actualidad-sticky-escritorio
       - fix/eva-lateral-scroll-unico
       - fix/eva-lateral-anclaje-progresivo
+      - feature/eva-ra-tres-tarjetas-semana
     paths:
       - "index.html"
       - "eva-layout.css"
       - "eva-columna-lateral.js"
+      - "ra-materiales-semana.js"
+      - "ra-semana-tarjetas.css"
       - "tests/eva-portada-fase5-browser.cjs"
       - ".github/workflows/eva-portada-fase5.yml"
   workflow_dispatch:

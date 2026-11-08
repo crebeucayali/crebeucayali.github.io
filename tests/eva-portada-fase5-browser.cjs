@@ -28,8 +28,14 @@ const path = require("node:path");
         await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(data[resource] || []) });
       });
       await page.route("https://crebeucayali.github.io/**", async route => {
-        // Scripts externos no forman parte de las pruebas del layout aislado.
-        await route.abort();
+        // Fotografía de prueba para validar la estructura de las tres tarjetas.
+        // Las imágenes institucionales reales se comprueban tras publicación.
+        if (/\/repositorio-accesible\/assets\/.*\.(?:webp|png|jpe?g)$/i.test(new URL(route.request().url()).pathname)) {
+          const pixel=Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j5n8AAAAASUVORK5CYII=","base64");
+          await route.fulfill({status:200,contentType:"image/png",body:pixel});
+        } else {
+          await route.abort();
+        }
       });
       await page.goto("http://127.0.0.1:8765/index.html", { waitUntil: "domcontentloaded" });
       // Validar activación automática: no introducir clases ni retirar hidden artificialmente.
@@ -37,13 +43,30 @@ const path = require("node:path");
         && !document.getElementById("eva-columna-lateral")?.hidden, { timeout: 8000 });
       await page.waitForFunction(() => document.querySelector("#eva-lateral-recursos li a") !== null, { timeout: 8000 });
       await page.waitForFunction(() => document.querySelectorAll("#ra-semana-visor .ra-semana-slide").length===3 && document.querySelectorAll("#noticias-pista .noticia-tarjeta").length===3, {timeout:8000});
-      const beforeRA = await page.locator("#ra-semana-contador").innerText();
-      await page.locator("#ra-semana-siguiente").click();
-      const afterRA = await page.locator("#ra-semana-contador").innerText();
-      assert.notEqual(beforeRA, afterRA, "Botón Siguiente del carrusel RA funcional");
-      assert.ok((await page.locator("#ra-semana-pausa").innerText()).includes("Reanudar"),"Navegación manual pausa RA");
-      await page.locator("#ra-semana-pausa").click();
-      assert.ok((await page.locator("#ra-semana-pausa").innerText()).includes("Pausar"),"Reanudar RA funciona");
+      const raCards=page.locator("#ra-semana-visor .ra-semana-tarjeta");
+      assert.equal(await raCards.count(),3,"Se muestran tres tarjetas RA simultáneamente");
+      assert.equal(await page.locator("#ra-semana-eva [aria-roledescription='carrusel']").count(),0,"No existe rol de carrusel RA");
+      for (let n=0;n<3;n++) {
+        assert.equal(await raCards.nth(n).isVisible(),true,"Tarjeta RA "+(n+1)+" visible");
+        assert.equal(await raCards.nth(n).locator("h3").count(),1,"Título en imagen");
+        assert.equal(await raCards.nth(n).locator(".ra-semana-detalle p").count(),1,"Descripción bajo la imagen");
+        const realImage=await raCards.nth(n).locator("img[alt]").count();
+        const fallback=await raCards.nth(n).locator(".ra-semana-foto-error").count();
+        assert.equal(realImage+fallback,1,"Imagen accesible o mensaje alternativo visible si falla el recurso");
+      }
+      assert.equal(await page.locator("#ra-semana-eva .ra-semana-controles").count(),0,"Sin controles de rotación RA");
+      assert.equal(await page.locator("#ra-semana-eva .ra-semana-contacto a[href='https://crebeucayali.github.io/accesos-complementarios/paginas/contacto.html']").count(),1,"Contacto institucional conservado");
+      const raLayout=await page.evaluate(()=>{
+        const cards=[...document.querySelectorAll("#ra-semana-visor .ra-semana-tarjeta")];
+        const r=cards.map(c=>c.getBoundingClientRect());
+        return {cols:getComputedStyle(document.getElementById("ra-semana-visor")).gridTemplateColumns.split(" ").length,
+        sameRow:r[0].top===r[1].top&&r[1].top===r[2].top,
+        overflow:r.some(x=>x.right>innerWidth+1)};
+      });
+      assert.equal(raLayout.cols,width>800?3:width>560?2:1,"Columnas RA por resolución "+width);
+      assert.equal(raLayout.sameRow,width>800,"Tres tarjetas por fila en escritorio "+width);
+      assert.equal(raLayout.overflow,false,"RA sin desbordamientos");
+      console.log("RA TARJETAS PASS",width,JSON.stringify(raLayout));
       await page.locator(".noticias-siguiente").click();
       assert.equal(await page.locator(".noticias-indicador[aria-pressed='true']").count(),1,"Indicador de noticia activa");
       await page.locator("#eva-lateral-recursos a").first().focus();
@@ -79,7 +102,7 @@ const path = require("node:path");
           asideWidth:Math.round(aside.width),
           modulesInMain:cards.every(x=>document.querySelector(".eva-columna-principal").contains(x)),
           populated:["eva-lateral-recursos","eva-lateral-noticias","eva-lateral-agenda"].every(id=>document.getElementById(id).querySelector("a")),
-          controls:["ra-semana-anterior","ra-semana-siguiente","ra-semana-pausa"].every(id=>document.getElementById(id)),
+          controls:!!document.querySelector("#ra-semana-visor .ra-semana-tarjeta"),
           newsControl:!!document.querySelector(".noticias-anterior")&&!!document.querySelector(".noticias-siguiente"),
           logoAndBanner:!!document.querySelector(".cabecera-crebe")&&!!document.querySelector(".hero .patron-portada")
         };
