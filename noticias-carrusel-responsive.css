@@ -280,3 +280,24 @@ body.alto-contraste .noticias-destacadas .noticias-control {
   color: #fff !important;
   border: 2px solid #fff;
 }
+
+/* Enlace editorial sobre el título; sin botón redundante. */
+.noticias-destacadas .noticia-titulo-enlace {
+  color: inherit;
+  text-decoration: none;
+  text-underline-offset: .16em;
+  overflow-wrap: anywhere;
+}
+.noticias-destacadas .noticia-titulo-enlace:hover {
+  text-decoration: underline;
+}
+.noticias-destacadas .noticia-titulo-enlace:focus-visible {
+  outline: 3px solid #c27b00;
+  outline-offset: 4px;
+  border-radius: 2px;
+  text-decoration: underline;
+}
+body.alto-contraste .noticias-destacadas .noticia-titulo-enlace {
+  color: #fff !important;
+  text-decoration: underline;
+}
