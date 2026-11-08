@@ -5,6 +5,12 @@ Proyecto: Ecosistema Virtual Accesible (EVA)
 Autor del desarrollo original: Psicólogo Gabriel Berrospi  
 Fecha de referencia documental: 08 de abril de 2026
 
+## Versión documental vigente: EVA 2.0
+
+La actualización del 8 de noviembre de 2026 se identifica como **EVA 2.0**. Comprende mejoras de la portada y su presentación adaptable, la tarjeta ampliada del recurso del día, el recurso del día anterior, la integración administrativa de los catálogos ARASAAC y LSP del BDA y las mejoras de programación y consulta.
+
+Consulta [EVA 2.0: actualización funcional, verificaciones y pendientes](docs/EVA_2_0.md). La denominación de versión documenta las implementaciones recientes; no implica que todas las programaciones o verificaciones estén concluidas.
+
 ## Descripción
 
 Este repositorio funciona como entrada principal del Ecosistema Virtual Accesible (EVA), una propuesta personal de innovación tecnológica aplicada a la educación inclusiva, la accesibilidad y el acompañamiento educativo.
