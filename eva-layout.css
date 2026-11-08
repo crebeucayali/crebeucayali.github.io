@@ -315,6 +315,11 @@ body.alto-contraste #eva-distribucion.eva-layout-activo .eva-columna-lateral :is
    Permanece en el contenedor EVA, sin cubrir cabecera ni pie de página.
    Si excede la altura de pantalla dispone de desplazamiento propio. */
 @media (min-width:1051px) {
+  /* overflow-x:hidden crea un contenedor de desplazamiento y anula sticky.
+     clip recorta el exceso horizontal sin capturar el scroll vertical. */
+  .portal-crebe {
+    overflow-x: clip;
+  }
   #eva-distribucion.eva-layout-activo > .eva-columna-lateral:not([hidden]) {
     position: sticky;
     top: 76px;
