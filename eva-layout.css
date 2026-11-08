@@ -311,14 +311,20 @@ body.alto-contraste #eva-distribucion.eva-layout-activo .eva-columna-lateral :is
   }
 }
 
-/* Desplazamiento único como en la referencia editorial de Bootstrap.
-   La columna de Actualidad participa en el flujo de la página sin
-   posición fija, alto máximo ni barra de desplazamiento independiente.
-   La distribución de escritorio y el orden móvil se mantienen. */
+/* Anclaje progresivo de Actualidad EVA:
+   - Al entrar a los módulos, la columna delgada permanece a la vista.
+   - Mientras la columna principal continúa, no se mueve ni tiene scroll propio.
+   - Al alcanzar el límite inferior del contenedor, la columna completa sube
+     de manera natural y deja ver sus últimas tarjetas antes de los indicadores.
+   La columna nunca se superpone al footer, y los móviles mantienen su flujo. */
 @media (min-width:1051px) {
+  /* Evitar que el overflow horizontal de la portada inhiba position:sticky. */
+  .portal-crebe {
+    overflow-x: clip;
+  }
   #eva-distribucion.eva-layout-activo > .eva-columna-lateral:not([hidden]) {
-    position: static;
-    top: auto;
+    position: sticky;
+    top: 116px;
     align-self: start;
     height: auto;
     max-height: none;

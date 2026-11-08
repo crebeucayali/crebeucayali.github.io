@@ -85,31 +85,37 @@ const path = require("node:path");
         };
       });
       if (width > 1050) {
-        const naturalScroll = await page.evaluate(() => {
-          const aside = document.getElementById("eva-columna-lateral");
-          const css = getComputedStyle(aside);
-          const initial = aside.getBoundingClientRect().top;
-          const initialPageY = window.scrollY;
-          window.scrollBy(0, 550);
-          return new Promise(resolve => requestAnimationFrame(() => {
-            const current = aside.getBoundingClientRect().top;
-            resolve({
-              position: css.position, overflowY: css.overflowY,
-              height: aside.clientHeight, scrollHeight: aside.scrollHeight,
-              maxHeight: css.maxHeight,
-              movedBy: initial - current, pageMovedBy: window.scrollY - initialPageY
-            });
-          }));
+        const behavior=await page.evaluate(async () => {
+          const sidebar=document.getElementById("eva-columna-lateral");
+          const grid=document.getElementById("eva-distribucion");
+          const style=getComputedStyle(sidebar);
+          const snapshot=()=>({
+            scroll:scrollY,
+            sidebarTop:sidebar.getBoundingClientRect().top,
+            sidebarBottom:sidebar.getBoundingClientRect().bottom,
+            gridBottom:grid.getBoundingClientRect().bottom
+          });
+          const frame=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+          scrollTo(0, Math.max(0, grid.getBoundingClientRect().top + scrollY - 116 + 650));
+          await frame();const middle=snapshot();
+          scrollTo(0,Math.max(0,grid.getBoundingClientRect().bottom+scrollY-innerHeight+45));
+          await frame();const nearEnd=snapshot();
+          return {position:style.position,overflowY:style.overflowY,
+            maxHeight:style.maxHeight,scrollHeight:sidebar.scrollHeight,
+            clientHeight:sidebar.clientHeight,middle,nearEnd};
         });
-        assert.equal(naturalScroll.position,"static","Actualidad sigue el flujo normal, sin sticky");
-        assert.equal(naturalScroll.overflowY,"visible","Actualidad no genera scroll interior");
-        assert.equal(naturalScroll.maxHeight,"none","Actualidad muestra todos sus bloques");
-        assert.equal(naturalScroll.height,naturalScroll.scrollHeight,"No existe contenido oculto dentro de Actualidad");
-        assert.ok(naturalScroll.pageMovedBy>=400,"El desplazamiento general de la página funciona");
-        assert.ok(Math.abs(naturalScroll.movedBy-naturalScroll.pageMovedBy)<3,
-          "Actualidad avanza junto a la página, sin scroll independiente");
-        console.log("SCROLL UNICO PASS",width,JSON.stringify(naturalScroll));
-        await page.evaluate(() => window.scrollTo(0,0));
+        assert.equal(behavior.position,"sticky","La columna delgada permanece anclada durante el recorrido");
+        assert.equal(behavior.overflowY,"visible","No se crea desplazamiento interior");
+        assert.equal(behavior.maxHeight,"none","No se recorta el contenido lateral");
+        assert.equal(behavior.clientHeight,behavior.scrollHeight,"Todos los bloques laterales permanecen disponibles");
+        assert.ok(Math.abs(behavior.middle.sidebarTop-116)<4,
+          "Anclaje intermedio bajo el encabezado: "+JSON.stringify(behavior));
+        assert.ok(behavior.nearEnd.sidebarTop < behavior.middle.sidebarTop-30,
+          "Al final del contenido principal la columna lateral debe comenzar a subir: "+JSON.stringify(behavior));
+        assert.ok(behavior.nearEnd.sidebarBottom<=behavior.nearEnd.gridBottom+3,
+          "El lateral no debe invadir la sección siguiente");
+        console.log("ANCLAJE PROGRESIVO PASS",width,JSON.stringify(behavior));
+        await page.evaluate(()=>scrollTo(0,0));
       }
       await page.screenshot({ path:path.join("test-results/eva-fase5",width+".png"), fullPage:true, animations:"disabled" });
       const expectedBeside=width>1050;

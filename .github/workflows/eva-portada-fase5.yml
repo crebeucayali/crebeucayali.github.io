@@ -7,6 +7,7 @@ on:
       - fix/eva-actualidad-visible-movil
       - fix/eva-actualidad-sticky-escritorio
       - fix/eva-lateral-scroll-unico
+      - fix/eva-lateral-anclaje-progresivo
     paths:
       - "index.html"
       - "eva-layout.css"
