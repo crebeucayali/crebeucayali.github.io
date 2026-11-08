@@ -37,13 +37,28 @@ const path = require("node:path");
         && !document.getElementById("eva-columna-lateral")?.hidden, { timeout: 8000 });
       await page.waitForFunction(() => document.querySelector("#eva-lateral-recursos li a") !== null, { timeout: 8000 });
       await page.waitForFunction(() => document.querySelectorAll("#ra-semana-visor .ra-semana-slide").length===3 && document.querySelectorAll("#noticias-pista .noticia-tarjeta").length===3, {timeout:8000});
-      const beforeRA = await page.locator("#ra-semana-contador").innerText();
-      await page.locator("#ra-semana-siguiente").click();
-      const afterRA = await page.locator("#ra-semana-contador").innerText();
-      assert.notEqual(beforeRA, afterRA, "Botón Siguiente del carrusel RA funcional");
-      assert.ok((await page.locator("#ra-semana-pausa").innerText()).includes("Reanudar"),"Navegación manual pausa RA");
-      await page.locator("#ra-semana-pausa").click();
-      assert.ok((await page.locator("#ra-semana-pausa").innerText()).includes("Pausar"),"Reanudar RA funciona");
+      const raCards=page.locator("#ra-semana-visor .ra-semana-tarjeta");
+      assert.equal(await raCards.count(),3,"Se muestran tres tarjetas RA simultáneamente");
+      assert.equal(await page.locator("#ra-semana-eva [aria-roledescription='carrusel']").count(),0,"No existe rol de carrusel RA");
+      for (let n=0;n<3;n++) {
+        assert.equal(await raCards.nth(n).isVisible(),true,"Tarjeta RA "+(n+1)+" visible");
+        assert.equal(await raCards.nth(n).locator("h3").count(),1,"Título en imagen");
+        assert.equal(await raCards.nth(n).locator(".ra-semana-detalle p").count(),1,"Descripción bajo la imagen");
+        assert.equal(await raCards.nth(n).locator("img[alt]").count(),1,"Imagen con texto alternativo");
+      }
+      assert.equal(await page.locator("#ra-semana-eva .ra-semana-controles").count(),0,"Sin controles de rotación RA");
+      assert.equal(await page.locator("#ra-semana-eva .ra-semana-contacto a[href='https://crebeucayali.github.io/accesos-complementarios/paginas/contacto.html']").count(),1,"Contacto institucional conservado");
+      const raLayout=await page.evaluate(()=>{
+        const cards=[...document.querySelectorAll("#ra-semana-visor .ra-semana-tarjeta")];
+        const r=cards.map(c=>c.getBoundingClientRect());
+        return {cols:getComputedStyle(document.getElementById("ra-semana-visor")).gridTemplateColumns.split(" ").length,
+        sameRow:r[0].top===r[1].top&&r[1].top===r[2].top,
+        overflow:r.some(x=>x.right>innerWidth+1)};
+      });
+      assert.equal(raLayout.cols,width>800?3:width>560?2:1,"Columnas RA por resolución "+width);
+      assert.equal(raLayout.sameRow,width>800,"Tres tarjetas por fila en escritorio "+width);
+      assert.equal(raLayout.overflow,false,"RA sin desbordamientos");
+      console.log("RA TARJETAS PASS",width,JSON.stringify(raLayout));
       await page.locator(".noticias-siguiente").click();
       assert.equal(await page.locator(".noticias-indicador[aria-pressed='true']").count(),1,"Indicador de noticia activa");
       await page.locator("#eva-lateral-recursos a").first().focus();
@@ -79,7 +94,7 @@ const path = require("node:path");
           asideWidth:Math.round(aside.width),
           modulesInMain:cards.every(x=>document.querySelector(".eva-columna-principal").contains(x)),
           populated:["eva-lateral-recursos","eva-lateral-noticias","eva-lateral-agenda"].every(id=>document.getElementById(id).querySelector("a")),
-          controls:["ra-semana-anterior","ra-semana-siguiente","ra-semana-pausa"].every(id=>document.getElementById(id)),
+          controls:!!document.querySelector("#ra-semana-visor .ra-semana-tarjeta"),
           newsControl:!!document.querySelector(".noticias-anterior")&&!!document.querySelector(".noticias-siguiente"),
           logoAndBanner:!!document.querySelector(".cabecera-crebe")&&!!document.querySelector(".hero .patron-portada")
         };
