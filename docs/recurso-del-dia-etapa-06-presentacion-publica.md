@@ -44,3 +44,7 @@ Validación humana con programación real, revisión editorial y pedagógica de 
 - `eva-recurso-dia.css`: tamaños, contraste, organización de columnas y separación.
 - `tests/eva-recurso-dia-etapa6-browser.cjs`: escenarios de hoy/ayer/vacío.
 - `.github/workflows/eva-recurso-dia-etapa6.yml`: pruebas y regresión visual.
+
+## Adenda documental: EVA 2.0 (8 de noviembre de 2026)
+
+Este documento conserva el alcance histórico de la etapa 06 en el momento de su cierre. Las afirmaciones anteriores sobre exclusión total de LSP y el diseño original de la tarjeta **no describen el estado posterior**. En EVA 2.0 se añadió la posibilidad técnica de programar fichas LSP bajo verificaciones administrativas, se ampliaron las vistas públicas y se modificó la tarjeta principal para mostrar una imagen de mayor tamaño junto a los detalles. No se presume autorización de reproducción de imágenes MINEDU por el simple hecho de figurar en el BDA. Véase [EVA 2.0](EVA_2_0.md) para el estado actualizado y sus pendientes.
