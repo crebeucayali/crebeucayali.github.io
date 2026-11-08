@@ -52,6 +52,21 @@
       typeof row.atribucion === "string" &&
       ["Sergio Palao", "ARASAAC", "Gobierno de Aragón"].every(part => row.atribucion.includes(part));
   }
+  function safeLsp(row) {
+    if (!row || row.tipo !== "lsp" || !/^LSP-[0-9]{6}$/.test(row.lsp_id || "")) return false;
+    try {
+      const src = new URL(row.fuente_url);
+      const img = new URL(row.imagen_lsp_url);
+      if (src.protocol !== "https:" || img.protocol !== "https:" ||
+          src.hostname !== "crebeucayali.github.io" || img.hostname !== "crebeucayali.github.io" ||
+          !src.pathname.startsWith("/banco-digital-accesible/lsp/") ||
+          !/^\/banco-digital-accesible\/lsp\/imagenes\/[a-z0-9áéíóúñ_./-]+\.(png|jpe?g|webp)$/i.test(img.pathname) ||
+          img.pathname.includes("..")) return false;
+    } catch { return false; }
+    return ["titulo","descripcion","texto_alternativo","atribucion","licencia"]
+      .every(key => typeof row[key] === "string" && row[key].trim()) &&
+      row.atribucion.includes("Ministerio de Educación del Perú");
+  }
   function empty(box, body) {
     body.replaceChildren();
     box.hidden = true;
@@ -76,22 +91,39 @@
     return a;
   }
   function paint(box, body, record, expected, compact) {
-    if (!safeArasaac(record) || record.fecha !== expected) {
+    if (!(safeArasaac(record) || safeLsp(record)) || record.fecha !== expected) {
       empty(box, body);
       return;
     }
     const gallery = elem("div", "eva-recurso-dia-fotos");
-    gallery.style.setProperty("--eva-picto-count", String(record.arasaac_ids.length));
-    for (let i = 0; i < record.arasaac_ids.length; i++)
-      gallery.appendChild(image(record.arasaac_ids[i], record.texto_alternativo, i));
+    if (record.tipo === "lsp") {
+      gallery.style.setProperty("--eva-picto-count", "1");
+      const img = elem("img");
+      img.src = record.imagen_lsp_url;
+      img.alt = record.texto_alternativo;
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.addEventListener("error", () => {
+        img.replaceWith(elem("span", "eva-recurso-dia-imagen-error", "Imagen de la seña no disponible"));
+      }, { once: true });
+      gallery.append(img);
+    } else {
+      gallery.style.setProperty("--eva-picto-count", String(record.arasaac_ids.length));
+      for (let i = 0; i < record.arasaac_ids.length; i++)
+        gallery.appendChild(image(record.arasaac_ids[i], record.texto_alternativo, i));
+    }
     const detail = elem("div", "eva-recurso-dia-detalles");
     const date = elem("p", "eva-recurso-dia-etiqueta", readableDate(record.fecha));
     const heading = elem(compact ? "h4" : "h3", "eva-recurso-dia-nombre", record.titulo);
     const desc = elem("p", "eva-recurso-dia-descripcion", record.descripcion);
     const credit = elem("p", "eva-recurso-dia-creditos", record.atribucion);
     const links = elem("div", "eva-recurso-dia-enlaces");
-    links.append(link("Consultar en MEA", MEA), link("Fuente ARASAAC", ARASAAC),
-      link("Licencia CC BY-NC-SA", LICENSE));
+    if (record.tipo === "lsp") {
+      links.append(link("Consultar en BDA", BDA), link("Fuente MINEDU / BDA", record.fuente_url));
+    } else {
+      links.append(link("Consultar en MEA", MEA), link("Fuente ARASAAC", ARASAAC),
+        link("Licencia CC BY-NC-SA", LICENSE));
+    }
     detail.append(date, heading, desc, credit, links);
     body.replaceChildren(gallery, detail);
     box.hidden = false;
@@ -99,7 +131,7 @@
   async function query(view, signal) {
     const url = new URL(view, API);
     url.searchParams.set("select",
-      "fecha,tipo,arasaac_ids,titulo,descripcion,texto_alternativo,fuente_url,atribucion,licencia");
+      "fecha,tipo,lsp_id,imagen_lsp_url,arasaac_ids,titulo,descripcion,texto_alternativo,fuente_url,atribucion,licencia");
     url.searchParams.set("limit", "1");
     const response = await fetch(url.href, {
       method: "GET",
