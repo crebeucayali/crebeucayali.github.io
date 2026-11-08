@@ -111,3 +111,14 @@ body.alto-contraste #eva-distribucion :is(
  .eva-recurso-dia-descripcion,.eva-recurso-dia-creditos,.eva-recurso-dia-etiqueta,
  .eva-recurso-dia-enlaces a
 ) {color:#fff!important;}
+
+/* Mantener separación de 18 px cuando el recurso diario está oculto o visible.
+   El nuevo contenedor no debe romper el ajuste previo entre seis módulos
+   y "Recursos y herramientas destacadas". */
+#eva-distribucion.eva-layout-activo > .eva-columna-principal > .tarjetas:has(
+  + .eva-recurso-hoy[hidden] + .recursos-destacados-eva:not([hidden])
+) {margin-bottom:0!important;}
+#eva-distribucion.eva-layout-activo > .eva-columna-principal > .eva-recurso-hoy[hidden] + .recursos-destacados-eva:not([hidden]),
+#eva-distribucion.eva-layout-activo > .eva-columna-principal > .eva-recurso-hoy:not([hidden]) + .recursos-destacados-eva:not([hidden]) {
+  margin-top:18px!important;
+}
