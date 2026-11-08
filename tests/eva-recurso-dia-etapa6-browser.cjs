@@ -50,7 +50,7 @@ const row=(date,label)=>({fecha:date,tipo:"arasaac",arasaac_ids:[12345,67890],
       assert.equal(await page.locator("#eva-recurso-ayer .eva-recurso-dia-enlaces a").count(),3);
     }
     const positions=await page.evaluate(()=>{
-      const rect=id=>document.querySelector(id).getBoundingClientRect();
+      const rect=id=>document.querySelector(id).getBoundingClientRect().toJSON();
       return {width:document.documentElement.scrollWidth-innerWidth,
         modules:rect(".eva-columna-principal > .tarjetas"),
         today:rect("#eva-recurso-hoy"),aside:rect("#eva-columna-lateral"),
