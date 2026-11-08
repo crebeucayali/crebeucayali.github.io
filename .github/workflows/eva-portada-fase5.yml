@@ -5,6 +5,7 @@ on:
     branches:
       - feature/eva-portada-columna-lateral-fase2
       - fix/eva-actualidad-visible-movil
+      - fix/eva-actualidad-sticky-escritorio
     paths:
       - "index.html"
       - "eva-layout.css"
