@@ -311,29 +311,18 @@ body.alto-contraste #eva-distribucion.eva-layout-activo .eva-columna-lateral :is
   }
 }
 
-/* Columna editorial persistente en escritorio.
-   Permanece en el contenedor EVA, sin cubrir cabecera ni pie de página.
-   Si excede la altura de pantalla dispone de desplazamiento propio. */
+/* Desplazamiento único como en la referencia editorial de Bootstrap.
+   La columna de Actualidad participa en el flujo de la página sin
+   posición fija, alto máximo ni barra de desplazamiento independiente.
+   La distribución de escritorio y el orden móvil se mantienen. */
 @media (min-width:1051px) {
-  /* overflow-x:hidden crea un contenedor de desplazamiento y anula sticky.
-     clip recorta el exceso horizontal sin capturar el scroll vertical. */
-  .portal-crebe {
-    overflow-x: clip;
-  }
   #eva-distribucion.eva-layout-activo > .eva-columna-lateral:not([hidden]) {
-    position: sticky;
-    top: 76px;
+    position: static;
+    top: auto;
     align-self: start;
-    max-height: calc(100vh - 92px);
-    max-height: calc(100dvh - 92px);
-    overflow-y: auto;
-    overflow-x: hidden;
-    overscroll-behavior-y: contain;
-    scrollbar-width: thin;
-    scrollbar-color: #92b6bb transparent;
-  }
-  #eva-distribucion.eva-layout-activo > .eva-columna-lateral:focus-visible {
-    outline: 3px solid #d19b2c;
-    outline-offset: 3px;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    overscroll-behavior: auto;
   }
 }

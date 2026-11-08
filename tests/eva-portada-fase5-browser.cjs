@@ -85,27 +85,30 @@ const path = require("node:path");
         };
       });
       if (width > 1050) {
-        const sticky = await page.evaluate(() => {
+        const naturalScroll = await page.evaluate(() => {
           const aside = document.getElementById("eva-columna-lateral");
-          const style = getComputedStyle(aside);
-          const maxScroll = document.documentElement.scrollHeight - innerHeight;
-          scrollTo(0, Math.min(1000, Math.max(0, maxScroll - 150)));
+          const css = getComputedStyle(aside);
+          const initial = aside.getBoundingClientRect().top;
+          const initialPageY = window.scrollY;
+          window.scrollBy(0, 550);
           return new Promise(resolve => requestAnimationFrame(() => {
-            const top = aside.getBoundingClientRect().top;
-            const grid = document.getElementById("eva-distribucion").getBoundingClientRect();
-            const ancestor = aside.parentElement?.parentElement?.getBoundingClientRect();
-            const metrics = { position:style.position, overflowY:style.overflowY, top, height:aside.clientHeight, scrollHeight:aside.scrollHeight, scrollY:window.scrollY, gridTop:grid.top, gridBottom:grid.bottom, gridHeight:grid.height, ancestorBottom:ancestor?.bottom };
-            aside.scrollTop = 120;
-            requestAnimationFrame(() => resolve({ ...metrics, innerScrolled:aside.scrollTop }));
+            const current = aside.getBoundingClientRect().top;
+            resolve({
+              position: css.position, overflowY: css.overflowY,
+              height: aside.clientHeight, scrollHeight: aside.scrollHeight,
+              maxHeight: css.maxHeight,
+              movedBy: initial - current, pageMovedBy: window.scrollY - initialPageY
+            });
           }));
         });
-        console.log("STICKY DIAGNOSTICO",width,JSON.stringify(sticky));
-        assert.equal(sticky.position,"sticky","Actualidad lateral debe permanecer fija al desplazar en escritorio");
-        assert.equal(sticky.overflowY,"auto","Actualidad lateral debe permitir scroll interno");
-        assert.ok(Math.abs(sticky.top - 76)<=3,"Top sticky sin invadir cabecera: "+sticky.top);
-        assert.ok(sticky.height<=900-90,"Sidebar no excede altura útil del viewport");
-        if (sticky.scrollHeight>sticky.height) assert.ok(sticky.innerScrolled>0,"Scroll de sidebar accesible");
-        console.log("STICKY PASS",width,JSON.stringify(sticky));
+        assert.equal(naturalScroll.position,"static","Actualidad sigue el flujo normal, sin sticky");
+        assert.equal(naturalScroll.overflowY,"visible","Actualidad no genera scroll interior");
+        assert.equal(naturalScroll.maxHeight,"none","Actualidad muestra todos sus bloques");
+        assert.equal(naturalScroll.height,naturalScroll.scrollHeight,"No existe contenido oculto dentro de Actualidad");
+        assert.ok(naturalScroll.pageMovedBy>=400,"El desplazamiento general de la página funciona");
+        assert.ok(Math.abs(naturalScroll.movedBy-naturalScroll.pageMovedBy)<3,
+          "Actualidad avanza junto a la página, sin scroll independiente");
+        console.log("SCROLL UNICO PASS",width,JSON.stringify(naturalScroll));
         await page.evaluate(() => window.scrollTo(0,0));
       }
       await page.screenshot({ path:path.join("test-results/eva-fase5",width+".png"), fullPage:true, animations:"disabled" });
