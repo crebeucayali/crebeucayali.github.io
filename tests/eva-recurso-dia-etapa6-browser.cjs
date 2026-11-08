@@ -3,7 +3,7 @@ const {strict:assert}=require("node:assert");
 const fs=require("node:fs");
 const path=require("node:path");
 const TODAY=new Intl.DateTimeFormat("sv-SE",{timeZone:"America/Lima",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
-const y=(x)=>{const [a,b,c]=x.split("-").map(Number);return new Date(Date.UTC(a,b-1,c-1)).toISOString().slice(0,10)};
+const y=(x)=>{const [a,b,c]=x.split("-").map(Number);return new Date(Date.UTC(a,b-1,c-1)-86400000).toISOString().slice(0,10)};
 const row=(date,label)=>({fecha:date,tipo:"arasaac",arasaac_ids:[12345,67890],
  titulo:label,descripcion:"Orientación educativa accesible, revisada y aprobada.",
  texto_alternativo:"Dos pictogramas educativos que representan el concepto",
@@ -26,7 +26,7 @@ const row=(date,label)=>({fecha:date,tipo:"arasaac",arasaac_ids:[12345,67890],
          :[];
      return route.fulfill({status:200,contentType:"application/json",body:JSON.stringify(data)});
     });
-    await page.route("https://static.arasaac.org/**",route=>route.fulfill({status:200,contentType:"image/svg+xml",body:'<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="#ddd"/></svg>'}));
+    await page.route("https://static.arasaac.org/**",route=>route.fulfill({status:200,contentType:"image/png",body:Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGO8c+cOAwMDEwMDAwMDAwMDAwAfGgKYD0CQvAAAAABJRU5ErkJggg==","base64")}));
     await page.route("https://crebeucayali.github.io/**",route=>route.abort());
     await page.goto("http://127.0.0.1:8765/index.html",{waitUntil:"domcontentloaded"});
     await page.waitForFunction(()=>window.EvaRecursoDiaPublico!==undefined,{timeout:10000});
