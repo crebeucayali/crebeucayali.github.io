@@ -3,7 +3,7 @@ const {strict:assert}=require("node:assert");
 const fs=require("node:fs");
 const path=require("node:path");
 const TODAY=new Intl.DateTimeFormat("sv-SE",{timeZone:"America/Lima",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
-const y=(x)=>{const [a,b,c]=x.split("-").map(Number);return new Date(Date.UTC(a,b-1,c-1)-86400000).toISOString().slice(0,10)};
+const y=(x)=>{const [a,b,c]=x.split("-").map(Number);return new Date(Date.UTC(a,b-1,c)-86400000).toISOString().slice(0,10)};
 const row=(date,label)=>({fecha:date,tipo:"arasaac",arasaac_ids:[12345,67890],
  titulo:label,descripcion:"Orientación educativa accesible, revisada y aprobada.",
  texto_alternativo:"Dos pictogramas educativos que representan el concepto",
