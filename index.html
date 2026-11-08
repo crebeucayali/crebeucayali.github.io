@@ -19,7 +19,7 @@
   "url": "https://crebeucayali.github.io/"
 }
 </script>
-<link rel="stylesheet" href="estilos.css?v=39"/>
+<link rel="stylesheet" href="estilos.css?v=40"/>
 <link rel="stylesheet" href="https://crebeucayali.github.io/accesos-complementarios/accesibilidad/accesibilidad.css?v=10"/>
   <link rel="canonical" href="https://crebeucayali.github.io/">
   <meta property="og:type" content="website">
@@ -136,6 +136,23 @@
     <p>Accede directamente a herramientas y materiales educativos seleccionados de nuestros módulos oficiales.</p>
   </div>
   <div class="recursos-destacados-grid" id="recursos-destacados-grid" aria-live="polite"></div>
+</section>
+<section class="ra-semana-eva" id="ra-semana-eva" aria-labelledby="ra-semana-titulo" aria-roledescription="carrusel" hidden>
+  <div class="ra-semana-cabecera">
+    <p class="ra-semana-eyebrow">REPOSITORIO ACCESIBLE · CREBE UCAYALI</p>
+    <h2 id="ra-semana-titulo">Materiales de la semana</h2>
+    <p>Conoce tres recursos educativos disponibles en nuestro Centro de Recursos y descubre sus posibilidades de uso para la educación inclusiva.</p>
+  </div>
+  <div class="ra-semana-visor" id="ra-semana-visor" aria-live="off"></div>
+  <div class="ra-semana-controles" aria-label="Controles de materiales de la semana">
+    <button id="ra-semana-anterior" class="ra-semana-control" type="button" aria-label="Mostrar material anterior">‹ Anterior</button>
+    <span class="ra-semana-contador" id="ra-semana-contador"></span>
+    <div class="ra-semana-puntos" id="ra-semana-puntos" role="group" aria-label="Seleccionar material"></div>
+    <button id="ra-semana-siguiente" class="ra-semana-control" type="button" aria-label="Mostrar material siguiente">Siguiente ›</button>
+    <button id="ra-semana-pausa" class="ra-semana-control ra-semana-pausa" type="button" aria-pressed="false">Pausar rotación</button>
+  </div>
+  <p id="ra-semana-anuncio" class="ra-semana-sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+  <p class="ra-semana-contacto"><strong>¿Deseas conocer estos materiales?</strong> Comunícate con el CREBE mediante su <a href="https://crebeucayali.github.io/accesos-complementarios/paginas/contacto.html">página de contacto</a> o visítanos para recibir orientación sobre su utilización educativa.</p>
 </section>
 <section class="aplicaciones-apoyo" id="aplicaciones-apoyo" aria-labelledby="titulo-aplicaciones-apoyo">
   <div class="aplicaciones-apoyo-encabezado">
@@ -389,6 +406,7 @@
 
 <button id="volver-arriba" class="volver-arriba" type="button" aria-label="Volver al inicio" hidden>↑</button>
 <script src="main.js?v=14"></script>
+<script src="ra-materiales-semana.js?v=1" defer></script>
 <script src="indicadores-eva.js?v=2" defer></script>
 <script src="destacados-eva.js?v=2" defer></script>
 <script src="admin-sesion.js?v=1"></script>
