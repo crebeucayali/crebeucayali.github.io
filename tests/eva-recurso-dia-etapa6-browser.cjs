@@ -26,7 +26,7 @@ const row=(date,label)=>({fecha:date,tipo:"arasaac",arasaac_ids:[12345,67890],
          :[];
      return route.fulfill({status:200,contentType:"application/json",body:JSON.stringify(data)});
     });
-    await page.route("https://static.arasaac.org/**",route=>route.fulfill({status:200,contentType:"image/png",body:Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j5n8AAAAASUVORK5CYII=","base64")}));
+    await page.route("https://static.arasaac.org/**",route=>route.fulfill({status:200,contentType:"image/svg+xml",body:'<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="#ddd"/></svg>'}));
     await page.route("https://crebeucayali.github.io/**",route=>route.abort());
     await page.goto("http://127.0.0.1:8765/index.html",{waitUntil:"domcontentloaded"});
     await page.waitForFunction(()=>window.EvaRecursoDiaPublico!==undefined,{timeout:10000});
