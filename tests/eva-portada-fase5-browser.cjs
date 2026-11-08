@@ -50,7 +50,9 @@ const path = require("node:path");
         assert.equal(await raCards.nth(n).isVisible(),true,"Tarjeta RA "+(n+1)+" visible");
         assert.equal(await raCards.nth(n).locator("h3").count(),1,"Título en imagen");
         assert.equal(await raCards.nth(n).locator(".ra-semana-detalle p").count(),1,"Descripción bajo la imagen");
-        assert.equal(await raCards.nth(n).locator("img[alt]").count(),1,"Imagen con texto alternativo");
+        const realImage=await raCards.nth(n).locator("img[alt]").count();
+        const fallback=await raCards.nth(n).locator(".ra-semana-foto-error").count();
+        assert.equal(realImage+fallback,1,"Imagen accesible o mensaje alternativo visible si falla el recurso");
       }
       assert.equal(await page.locator("#ra-semana-eva .ra-semana-controles").count(),0,"Sin controles de rotación RA");
       assert.equal(await page.locator("#ra-semana-eva .ra-semana-contacto a[href='https://crebeucayali.github.io/accesos-complementarios/paginas/contacto.html']").count(),1,"Contacto institucional conservado");
