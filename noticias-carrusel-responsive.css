@@ -1,0 +1,175 @@
+/* Noticias destacadas: una diapositiva completa, sin escalas ni tarjetas recortadas.
+   Cargado después de estilos.css y eva-layout.css para aislar la corrección. */
+.noticias-destacadas {
+  min-width: 0;
+  max-width: 100%;
+  overflow: visible;
+}
+.noticias-destacadas .noticias-carrusel,
+#eva-distribucion.eva-layout-activo .noticias-carrusel {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0;
+  position: relative;
+  margin-inline: auto;
+}
+.noticias-destacadas .noticias-viewport,
+#eva-distribucion.eva-layout-activo .noticias-viewport {
+  box-sizing: border-box;
+  width: calc(100% - 104px) !important;
+  max-width: calc(100% - 104px) !important;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 4px 0 12px;
+  overflow: hidden;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+.noticias-destacadas .noticias-pista {
+  display: flex;
+  gap: 0 !important;
+  align-items: stretch !important;
+  padding-inline: 0;
+  transition: transform .4s ease;
+  will-change: transform;
+}
+.noticias-destacadas .noticia-tarjeta,
+.noticias-destacadas .noticia-tarjeta.activa,
+.noticias-destacadas .noticia-tarjeta.vecina,
+.noticias-destacadas .noticia-tarjeta.lejana,
+#eva-distribucion.eva-layout-activo .noticia-tarjeta,
+#eva-distribucion.eva-layout-activo .noticia-tarjeta.activa {
+  box-sizing: border-box;
+  flex: 0 0 100% !important;
+  width: 100%;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  min-height: 300px;
+  display: grid;
+  grid-template-columns: minmax(0, 44%) minmax(0, 56%);
+  align-items: stretch;
+  transform: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(16, 42, 67, .1);
+}
+.noticias-destacadas .noticia-media {
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  height: 100%;
+}
+.noticias-destacadas .noticia-media img {
+  height: 100%;
+  min-height: 300px;
+  object-fit: cover;
+}
+.noticias-destacadas .noticia-contenido {
+  box-sizing: border-box;
+  min-width: 0;
+  justify-content: center;
+  padding: clamp(20px, 3vw, 32px);
+}
+.noticias-destacadas .noticia-contenido h3 {
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  overflow-wrap: anywhere;
+}
+.noticias-destacadas .noticia-contenido p {
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.noticias-destacadas .noticia-enlace {
+  max-width: 100%;
+  text-align: center;
+  white-space: normal;
+}
+.noticias-destacadas .noticias-control {
+  width: 44px;
+  height: 44px;
+  top: 50%;
+  z-index: 4;
+}
+.noticias-destacadas .noticias-anterior { left: 0; }
+.noticias-destacadas .noticias-siguiente { right: 0; }
+.noticias-destacadas .noticias-control:focus-visible,
+.noticias-destacadas .noticias-indicador:focus-visible,
+.noticias-destacadas .noticia-enlace:focus-visible {
+  outline: 3px solid #c27b00;
+  outline-offset: 3px;
+}
+.noticias-destacadas .noticias-indicadores {
+  flex-wrap: wrap;
+  margin-top: 8px;
+  min-height: 24px;
+}
+.noticias-destacadas .noticias-indicador {
+  min-width: 12px;
+  min-height: 12px;
+}
+@media (max-width: 780px) {
+  .noticias-destacadas .noticias-viewport,
+  #eva-distribucion.eva-layout-activo .noticias-viewport {
+    width: calc(100% - 72px) !important;
+    max-width: calc(100% - 72px) !important;
+  }
+  .noticias-destacadas .noticia-tarjeta,
+  .noticias-destacadas .noticia-tarjeta.activa,
+  .noticias-destacadas .noticia-tarjeta.vecina,
+  .noticias-destacadas .noticia-tarjeta.lejana,
+  #eva-distribucion.eva-layout-activo .noticia-tarjeta,
+  #eva-distribucion.eva-layout-activo .noticia-tarjeta.activa {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+  .noticias-destacadas .noticia-media {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9 !important;
+  }
+  .noticias-destacadas .noticia-media img {
+    min-height: 0;
+    height: 100%;
+  }
+  .noticias-destacadas .noticia-contenido {
+    padding: 18px;
+  }
+  .noticias-destacadas .noticias-control {
+    width: 36px;
+    height: 44px;
+  }
+}
+@media (max-width: 420px) {
+  .noticias-destacadas .noticias-viewport,
+  #eva-distribucion.eva-layout-activo .noticias-viewport {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .noticias-destacadas .noticias-carrusel {
+    padding-bottom: 46px;
+  }
+  .noticias-destacadas .noticias-control {
+    top: auto;
+    bottom: 0;
+    transform: none !important;
+    width: 42px;
+    height: 40px;
+  }
+  .noticias-destacadas .noticias-anterior { left: calc(50% - 66px); }
+  .noticias-destacadas .noticias-siguiente { right: calc(50% - 66px); }
+  .noticias-destacadas .noticia-contenido { padding: 16px; }
+  .noticias-destacadas .noticia-contenido h3 { font-size: 1.18rem; }
+  .noticias-destacadas .noticias-indicadores { margin-top: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .noticias-destacadas .noticias-pista { transition: none !important; }
+  .noticias-destacadas .noticia-tarjeta { transition: none !important; }
+}
+body.alto-contraste .noticias-destacadas .noticia-tarjeta {
+  background: #111 !important;
+  border: 2px solid #fff !important;
+  box-shadow: none !important;
+}
+body.alto-contraste .noticias-destacadas .noticia-contenido,
+body.alto-contraste .noticias-destacadas .noticia-contenido p {
+  color: #fff !important;
+}
