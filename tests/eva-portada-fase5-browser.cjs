@@ -28,8 +28,14 @@ const path = require("node:path");
         await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(data[resource] || []) });
       });
       await page.route("https://crebeucayali.github.io/**", async route => {
-        // Scripts externos no forman parte de las pruebas del layout aislado.
-        await route.abort();
+        // Fotografía de prueba para validar la estructura de las tres tarjetas.
+        // Las imágenes institucionales reales se comprueban tras publicación.
+        if (/\/repositorio-accesible\/assets\/.*\.(?:webp|png|jpe?g)$/i.test(new URL(route.request().url()).pathname)) {
+          const pixel=Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j5n8AAAAASUVORK5CYII=","base64");
+          await route.fulfill({status:200,contentType:"image/png",body:pixel});
+        } else {
+          await route.abort();
+        }
       });
       await page.goto("http://127.0.0.1:8765/index.html", { waitUntil: "domcontentloaded" });
       // Validar activación automática: no introducir clases ni retirar hidden artificialmente.
