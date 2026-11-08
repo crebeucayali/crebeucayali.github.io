@@ -17,10 +17,10 @@ const path = require("node:path");
         const resource = new URL(route.request().url()).pathname.split("/").pop();
         const data = {
           repositorio_recursos: [{ id:21, titulo:"Libro de texturas", created_at:"2026-09-27T14:51:45+00:00" }],
-          noticias_destacadas: [{ id:3, titulo:"Práctica Braille", descripcion:"Recurso accesible", categoria:"MEA", imagen_url:"", enlace_url:"https://crebeucayali.github.io/materiales-educativos-accesibles/", visible:true,estado_publicacion:"publicado",orden:1, created_at:"2026-09-27T14:51:45+00:00" }],
+          noticias_destacadas: [1,2,3].map(i=>({id:i,titulo:"Práctica Braille "+i,descripcion:"Recurso accesible",categoria:"MEA",imagen_url:"",enlace_url:"https://crebeucayali.github.io/materiales-educativos-accesibles/",visible:true,estado_publicacion:"publicado",orden:i,created_at:"2026-09-27T14:51:45+00:00"})),
           calendario_publico: [{ registro_id:"test", fecha:"2099-11-12", contenido_lineas:["Sesión futura"], orden:1 }],
           eva_recursos_destacados: [],
-          ra_materiales_semana_publicos: [],
+          ra_materiales_semana_publicos: [{programacion_id:15,etiqueta:"semana",titulo_1:"Amplificador de imagen",descripcion_1:"Recurso 1",imagen_1:"assets/imagenes/equipos-tecnologicos/amplificador-de-imagen.webp",alt_1:"Amplificador",titulo_2:"Máquina Perkins",descripcion_2:"Recurso 2",imagen_2:"assets/imagenes/equipos-tecnologicos/maquina-perkins.webp",alt_2:"Perkins",titulo_3:"Mis rutinas",descripcion_3:"Recurso 3",imagen_3:"assets/imagenes/materiales-elaborados/mis-rutinas.webp",alt_3:"Mis rutinas"}],
           eva_indicadores_config: [],
           eva_indicadores_institucionales: [],
           eva_comunicados_emergentes: []
@@ -40,6 +40,22 @@ const path = require("node:path");
         window.EvaColumnaLateral.iniciar();
       });
       await page.waitForFunction(() => document.querySelector("#eva-lateral-recursos li a") !== null, { timeout: 8000 });
+      await page.waitForFunction(() => document.querySelectorAll("#ra-semana-visor .ra-semana-slide").length===3 && document.querySelectorAll("#noticias-pista .noticia-tarjeta").length===3, {timeout:8000});
+      const beforeRA = await page.locator("#ra-semana-contador").innerText();
+      await page.locator("#ra-semana-siguiente").click();
+      const afterRA = await page.locator("#ra-semana-contador").innerText();
+      assert.notEqual(beforeRA, afterRA, "Botón Siguiente del carrusel RA funcional");
+      assert.ok((await page.locator("#ra-semana-pausa").innerText()).includes("Reanudar"),"Navegación manual pausa RA");
+      await page.locator("#ra-semana-pausa").click();
+      assert.ok((await page.locator("#ra-semana-pausa").innerText()).includes("Pausar"),"Reanudar RA funciona");
+      await page.locator(".noticias-siguiente").click();
+      assert.equal(await page.locator(".noticias-indicador[aria-pressed='true']").count(),1,"Indicador de noticia activa");
+      await page.locator("#eva-lateral-recursos a").first().focus();
+      assert.equal(await page.evaluate(()=>document.activeElement.closest("#eva-columna-lateral")!==null),true,"Foco accesible en columna lateral");
+      await page.evaluate(()=>document.body.classList.add("alto-contraste"));
+      const highContrast=await page.locator(".eva-lateral-bloque").first().evaluate(el=>getComputedStyle(el).backgroundColor);
+      assert.equal(highContrast,"rgb(0, 0, 0)","Alto contraste en columna lateral");
+      await page.evaluate(()=>document.body.classList.remove("alto-contraste"));
       const result = await page.evaluate(() => {
         const get = selector => document.querySelector(selector).getBoundingClientRect();
         const main = get(".eva-columna-principal");
