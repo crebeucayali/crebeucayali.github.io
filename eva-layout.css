@@ -287,3 +287,26 @@ body.alto-contraste #eva-distribucion.eva-layout-activo :is(.eva-lateral-cabecer
 body.alto-contraste #eva-distribucion.eva-layout-activo .eva-columna-lateral :is(h2,h3,p,li,small,a) {
   color:#fff!important;
 }
+
+/* Visibilidad móvil: actualidad inmediatamente después de los seis módulos.
+   Sólo pantallas pequeñas. La rejilla de escritorio y su orden no cambian. */
+@media (max-width:700px) {
+  #eva-distribucion.eva-layout-activo {
+    row-gap: 0;
+  }
+  #eva-distribucion.eva-layout-activo > .eva-columna-principal {
+    display: contents;
+  }
+  #eva-distribucion.eva-layout-activo > .eva-columna-principal > * {
+    order: 3;
+    min-width: 0;
+  }
+  #eva-distribucion.eva-layout-activo > .eva-columna-principal > .tarjetas {
+    order: 1;
+  }
+  #eva-distribucion.eva-layout-activo > .eva-columna-lateral:not([hidden]) {
+    order: 2;
+    width: 100%;
+    margin: 16px 0 28px;
+  }
+}
