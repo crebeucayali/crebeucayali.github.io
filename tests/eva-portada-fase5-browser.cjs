@@ -32,13 +32,9 @@ const path = require("node:path");
         await route.abort();
       });
       await page.goto("http://127.0.0.1:8765/index.html", { waitUntil: "domcontentloaded" });
-      await page.evaluate(() => {
-        const layout=document.getElementById("eva-distribucion");
-        const aside=document.getElementById("eva-columna-lateral");
-        layout.classList.add("eva-layout-activo");
-        aside.hidden=false;
-        window.EvaColumnaLateral.iniciar();
-      });
+      // Validar activación automática: no introducir clases ni retirar hidden artificialmente.
+      await page.waitForFunction(() => document.getElementById("eva-distribucion")?.classList.contains("eva-layout-activo")
+        && !document.getElementById("eva-columna-lateral")?.hidden, { timeout: 8000 });
       await page.waitForFunction(() => document.querySelector("#eva-lateral-recursos li a") !== null, { timeout: 8000 });
       await page.waitForFunction(() => document.querySelectorAll("#ra-semana-visor .ra-semana-slide").length===3 && document.querySelectorAll("#noticias-pista .noticia-tarjeta").length===3, {timeout:8000});
       const beforeRA = await page.locator("#ra-semana-contador").innerText();
