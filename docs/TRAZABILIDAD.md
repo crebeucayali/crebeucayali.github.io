@@ -25,6 +25,12 @@ La trazabilidad ayuda a identificar el proceso de construcción del proyecto, la
 | 08/11/2026 | Presentación | Imagen ampliada y distribución lateral de imagen y detalles en la tarjeta principal; diseño apilado para móviles estrechos. | Autor del desarrollo |
 | 08/11/2026 | Programación | Habilitación técnica de recursos LSP y ARASAAC para fechas de hoy y ayer, sujeto a verificaciones administrativas; optimización del buscador ARASAAC. | Autor del desarrollo |
 
+## Identificación de autoría y créditos en EVA 2.0
+
+| Fecha | Tipo de cambio | Descripción | Responsable |
+|---|---|---|---|
+| 08/11/2026 | Transparencia y autoría | Nueva página pública `autoria-y-creditos.html` con delimitación de componentes originales, institucionales y de terceros; actualización de la declaración del footer y enlace de consulta. | Autor del desarrollo |
+
 ## Cambios que deben registrarse
 
 Se recomienda registrar en este archivo:
