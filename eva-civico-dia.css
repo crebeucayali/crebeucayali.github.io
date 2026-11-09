@@ -1,0 +1,24 @@
+/* EVA 2.0 · Tarjeta cívica del día. Invisible sin una programación publicada. */
+#eva-civico-hoy[hidden]{display:none!important}
+.eva-civico-hoy{margin:28px 0;padding:22px;border-radius:18px;background:#f4faf8;border:1px solid #bddcd5;min-width:0}
+.eva-civico-encabezado{margin-bottom:16px}
+.eva-civico-encabezado h2{color:#133f51;font-size:clamp(1.3rem,2.6vw,1.8rem);margin:4px 0 8px}
+.eva-civico-etiqueta{text-transform:uppercase;font-weight:850;font-size:.76rem;letter-spacing:.08em;color:#075c54}
+.eva-civico-tarjeta{display:grid;grid-template-columns:minmax(0,1fr);border:1px solid #c1d9d4;border-radius:14px;overflow:hidden;background:#fff}
+.eva-civico-tarjeta:has(.eva-civico-foto){grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.eva-civico-foto{display:block;width:100%;height:100%;max-height:420px;object-fit:cover}
+.eva-civico-texto{min-width:0;padding:24px}
+.eva-civico-fecha{font-weight:800;color:#0b6059;font-size:.85rem}
+.eva-civico-texto h3{margin:8px 0 14px;font-size:clamp(1.15rem,2.4vw,1.55rem);color:#123d51}
+.eva-civico-texto p{margin:0 0 18px;white-space:pre-line;line-height:1.7;overflow-wrap:anywhere;color:#334e5b}
+.eva-civico-enlace{font-weight:800;color:#075c54;text-decoration:underline;text-underline-offset:3px}
+.eva-civico-enlace:focus-visible{outline:3px solid #b45309;outline-offset:4px}
+.eva-civico-extras{margin:14px 0 0;border-top:1px solid #c1d9d4;padding:13px 2px 0}
+.eva-civico-extras>h3{font-size:1.02rem;margin:0 0 12px}
+.eva-civico-extra{background:#fff;border:1px solid #c1d9d4;border-radius:10px;padding:12px;margin:8px 0}
+.eva-civico-extra h4{margin:0 0 6px;color:#153c50}
+.eva-civico-extra p{margin:0;color:#405564;overflow-wrap:anywhere}
+@media(max-width:720px){.eva-civico-hoy{padding:15px}.eva-civico-tarjeta:has(.eva-civico-foto){grid-template-columns:1fr}.eva-civico-foto{max-height:260px;aspect-ratio:16/9}.eva-civico-texto{padding:17px}}
+html.eva-alto-contraste .eva-civico-hoy,html.eva-alto-contraste .eva-civico-tarjeta,html.eva-alto-contraste .eva-civico-extra{background:#000!important;border:2px solid #fff!important;color:#fff!important}
+html.eva-alto-contraste .eva-civico-hoy :is(h2,h3,h4,p,span){color:#fff!important}
+html.eva-alto-contraste .eva-civico-enlace{color:#ffff00!important}
