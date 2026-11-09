@@ -1127,3 +1127,23 @@ body.alto-contraste .ra-semana-punto::after{background:#fff!important}
 
 /* La sesión activa y el formulario son estados excluyentes. El atributo hidden tiene prioridad sobre display:grid. */
 .admin-mini-panel[hidden],.admin-mini-form[hidden],.admin-sesion-activa[hidden]{display:none!important}
+
+
+/* EVA 2.0: contraste de etiquetas y sugerencias del buscador.
+   Son superficies claras en modo normal; al activar alto contraste deben
+   oscurecerse antes de que el nucleo central aplique texto blanco/amarillo. */
+html.eva-alto-contraste .herramientas-intro .etiqueta-herramientas,
+html.eva-alto-contraste .marca-crebe .marca-version-etiqueta{
+  background:#000000 !important;
+  color:#ffffff !important;
+  border:2px solid #ffffff !important;
+  text-shadow:none !important;
+}
+html.eva-alto-contraste .sugerencias-busqueda .sugerencia-busqueda,
+html.eva-alto-contraste .sugerencias-busqueda .sugerencia-busqueda:hover,
+html.eva-alto-contraste .sugerencias-busqueda .sugerencia-busqueda:focus-visible{
+  color:#ffff00 !important;
+  background:#000000 !important;
+  border:2px solid #ffffff !important;
+  opacity:1 !important;
+}
