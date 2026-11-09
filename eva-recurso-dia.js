@@ -170,8 +170,13 @@
         const record = await query(item.view, controller.signal);
         if (generation !== requestId || today !== peruDay()) return;
         paint(item.box, item.body, record, item.date, item.compact);
-      } catch {
-        if (generation === requestId) empty(item.box, item.body);
+      } catch (error) {
+        if (generation === requestId) {
+          empty(item.box, item.body);
+          if (error?.name !== "AbortError") {
+            console.warn("[EVA recursos del día] Error al consultar "+item.view+":",error);
+          }
+        }
       } finally {
         if (activeQueries.get(item.view) === controller) activeQueries.delete(item.view);
       }
@@ -182,8 +187,13 @@
   refresh();
   // Solo consulta de nuevo si cambió la fecha; sin consultas periódicas a Supabase.
   setInterval(() => { if (peruDay() !== daySeen) refresh(); }, 60000);
+  // Reconsultar al regresar a la pestaña: las programaciones pueden cambiar durante el mismo día.
   document.addEventListener("visibilitychange", () => {
-    if (!document.hidden && peruDay() !== daySeen) refresh();
+    if (!document.hidden) refresh(true);
+  });
+  // La activación de otra ventana también puede indicar una programación recién guardada.
+  window.addEventListener("focus", () => {
+    if (!document.hidden) refresh(true);
   });
   window.EvaRecursoDiaPublico = Object.freeze({ actualizar: () => refresh(true) });
 })();
