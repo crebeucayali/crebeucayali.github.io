@@ -1,0 +1,35 @@
+name: Validar Actualidad EVA
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'eva-columna-lateral.js'
+      - 'eva-layout.css'
+      - 'recursos-educativos.json'
+      - 'tests/eva-lateral.test.mjs'
+      - '.github/workflows/eva-actualidad-verify.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  comprobar:
+    name: Verificar estructura y scripts
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Obtener código
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Preparar Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+      - name: Comprobar sintaxis
+        run: node --check eva-columna-lateral.js
+      - name: Ejecutar pruebas de actualidad
+        run: node --test tests/eva-lateral.test.mjs
