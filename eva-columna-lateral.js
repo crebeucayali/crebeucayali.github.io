@@ -146,7 +146,7 @@
     button.textContent = text;
     button.disabled = disabled;
     if (current) button.setAttribute("aria-current", "page");
-    button.setAttribute("aria-label", current ? "Página " + page + ", actual" : "Ir a la página " + page);
+    button.setAttribute("aria-label", text === "‹" ? "Página anterior" : text === "›" ? "Página siguiente" : current ? "Página " + page + ", actual" : "Ir a la página " + page);
     button.addEventListener("click", () => { item.page = page; render(item, true); });
     return button;
   }
