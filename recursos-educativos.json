@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "descripcion": "Catálogo editorial de recursos digitales de EVA. Incorporar únicamente recursos publicados y enlaces verificados.",
+  "recursos": [
+    {
+      "titulo": "Método de Jan van Dijk",
+      "modulo": "MEA",
+      "url": "https://crebeucayali.github.io/materiales-educativos-accesibles/metodo-van-dijk/",
+      "visible": true
+    },
+    {
+      "titulo": "Mediación táctil: mano bajo mano",
+      "modulo": "MEA",
+      "url": "https://crebeucayali.github.io/materiales-educativos-accesibles/metodo-van-dijk/mediacion-tactil-mano-bajo-mano/",
+      "visible": true
+    }
+  ]
+}

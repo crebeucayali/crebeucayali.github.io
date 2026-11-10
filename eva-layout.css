@@ -363,3 +363,38 @@ body.alto-contraste #eva-distribucion.eva-layout-activo .eva-columna-lateral :is
 #eva-distribucion.eva-layout-activo > .eva-columna-principal > .aplicaciones-apoyo + .noticias-destacadas:not([hidden]) {
   margin-top: 18px !important;
 }
+
+/* Actualidad EVA: controles de despliegue y paginación internos por tarjeta. */
+#eva-distribucion.eva-layout-activo .eva-lateral-controles {
+  display:flex; flex-direction:column; gap:10px; margin:0 0 10px;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-toggle,
+#eva-distribucion.eva-layout-activo .eva-lateral-paginas button {
+  border:1px solid #a8cbd0; border-radius:8px; background:#f5faf9;
+  color:#105d69; font:inherit; font-size:.8rem; font-weight:700;
+  padding:7px 10px; cursor:pointer; min-height:36px;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-toggle {
+  align-self:flex-start;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-paginas:not([hidden]) {
+  display:flex; align-items:center; flex-wrap:wrap; gap:5px;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-paginas button[aria-current="page"] {
+  background:#105d69; color:#fff;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-paginas button:disabled {
+  opacity:.45; cursor:default;
+}
+#eva-distribucion.eva-layout-activo .eva-lateral-paginas small {
+  flex-basis:100%; font-size:.74rem; color:#536a75;
+}
+#eva-distribucion.eva-layout-activo .eva-columna-lateral :is(.eva-lateral-toggle,.eva-lateral-paginas button):focus-visible {
+  outline:3px solid #e4981c; outline-offset:2px;
+}
+body.alto-contraste #eva-distribucion.eva-layout-activo :is(.eva-lateral-toggle,.eva-lateral-paginas button) {
+  background:#000!important; color:#fff!important; border:2px solid #fff!important;
+}
+body.alto-contraste #eva-distribucion.eva-layout-activo .eva-lateral-paginas button[aria-current="page"] {
+  background:#fff!important; color:#000!important;
+}
