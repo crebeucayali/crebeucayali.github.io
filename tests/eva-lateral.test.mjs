@@ -17,7 +17,9 @@ test('Cinco bloques presentes y ordenados', () => {
     'eva-lateral-recursos', 'eva-lateral-accesos', 'eva-lateral-agenda'];
   let previous = -1;
   for (const id of ids) {
-    const current = html.indexOf('id="' + id + '"');
+    const current = id === 'eva-lateral-accesos'
+      ? html.indexOf('class="eva-lateral-accesos"')
+      : html.indexOf('id="' + id + '"');
     assert.ok(current > previous, 'Orden inválido o ausente: ' + id);
     previous = current;
   }
