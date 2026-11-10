@@ -76,7 +76,12 @@ try {
     await toggle.click();
     await page.waitForFunction(() => document.querySelectorAll('#eva-lateral-recursos li').length === 5);
     assert.equal(await toggle.getAttribute('aria-expanded'), 'true');
-    await page.locator('#eva-lateral-recursos + .eva-lateral-controles button[aria-label="Ir a la página 2"]').click();
+    const pagination = page.locator('#eva-lateral-recursos + .eva-lateral-controles');
+    const pageTwoButton = pagination.getByRole('button', { name: 'Ir a la página 2', exact: true });
+    const nextPageButton = pagination.getByRole('button', { name: 'Página siguiente', exact: true });
+    assert.equal(await pageTwoButton.count(), 1, 'La página 2 debe tener un botón inequívoco');
+    assert.equal(await nextPageButton.count(), 1, 'La flecha siguiente debe tener nombre accesible propio');
+    await pageTwoButton.click();
     await page.waitForFunction(() => document.querySelector('#eva-lateral-recursos li a')?.textContent === 'Material 6');
     assert.equal(await page.locator('#eva-lateral-recursos li').count(), 5);
     assert.equal(await page.locator('#eva-lateral-noticias li').count(), 3);
