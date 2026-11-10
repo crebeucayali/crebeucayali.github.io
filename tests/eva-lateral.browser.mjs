@@ -45,6 +45,13 @@ try {
           headers: { 'access-control-allow-origin': '*' }, body: catalog });
       }
       if (url.hostname === 'dteimbhwtzghhsijeeld.supabase.co') {
+        if (route.request().method() === 'OPTIONS') {
+          return route.fulfill({ status: 204, headers: {
+            'access-control-allow-origin': '*',
+            'access-control-allow-headers': 'apikey,accept,prefer',
+            'access-control-allow-methods': 'GET, OPTIONS'
+          } });
+        }
         const table = url.pathname.split('/').at(-1);
         const records = rows[table] || [];
         const offset = Math.max(0, Number(url.searchParams.get('offset') || 0));
