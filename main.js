@@ -423,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const diapositivas = Array.from(pista.children);
     const puntos = Array.from(indicadores.children);
     let indiceActual = 0;
-    let indiceFisico = 1;
+    let indiceFisico = diapositivas.length > 1 ? 1 : 0;
     let enTransicion = false;
     let temporizador = null;
 
