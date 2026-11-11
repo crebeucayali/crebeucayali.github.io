@@ -61,10 +61,19 @@
   async function cargar(){
     try{
       const [config,filas]=await Promise.all([
-        solicitar("eva_indicadores_config?select=etiqueta,titulo,descripcion&id=eq.1"),
+        solicitar("eva_indicadores_config?select=etiqueta,titulo,descripcion,fondo_url&id=eq.1"),
         solicitar("eva_indicadores_institucionales?select=cifra,titulo,descripcion,orden&visible=eq.true&order=orden.asc,id.asc")
       ]);
       if(config[0]){
+        const url=config[0].fondo_url;
+        const valido=typeof url==="string" && /^https:\/\/dteimbhwtzghhsijeeld\.supabase\.co\/storage\/v1\/object\/public\/eva-publico\/indicadores\/[a-zA-Z0-9_./-]+\.webp$/.test(url);
+        if(valido){
+          seccion.style.setProperty("--impacto-fondo",'url("'+url+'")');
+          seccion.classList.add("impacto-con-fondo");
+        }else{
+          seccion.style.removeProperty("--impacto-fondo");
+          seccion.classList.remove("impacto-con-fondo");
+        }
         const etiqueta=seccion.querySelector(".impacto-etiqueta");
         const titulo=seccion.querySelector("#impacto-crebe-titulo");
         const descripcion=seccion.querySelector(".impacto-encabezado > p:last-child");
