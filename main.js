@@ -463,8 +463,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     };
 
-    const irA = (indice, reiniciar = false) => {
-      indiceActual = (indice + diapositivas.length) % diapositivas.length;
+    const irA = (indice, reiniciar = false, direccion = 0) => {
+      const siguienteIndice = (indice + diapositivas.length) % diapositivas.length;
+      if (siguienteIndice !== indiceActual) {
+        carrusel.dataset.transicionDireccion =
+          direccion < 0 || (direccion === 0 && indice < indiceActual) ? "izquierda" : "derecha";
+      }
+      indiceActual = siguienteIndice;
       desplazar();
       if (reiniciar) {
         detenerAuto();
@@ -472,8 +477,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
 
-    const siguiente = () => irA(indiceActual + 1, true);
-    const anterior = () => irA(indiceActual - 1, true);
+    const siguiente = () => irA(indiceActual + 1, true, 1);
+    const anterior = () => irA(indiceActual - 1, true, -1);
 
     const detenerAuto = () => {
       if (!temporizador) return;
@@ -484,8 +489,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const iniciarAuto = () => {
       if (prefiereReducirMovimiento || diapositivas.length < 2 || temporizador) return;
       temporizador = window.setInterval(() => {
-        indiceActual = (indiceActual + 1) % diapositivas.length;
-        desplazar();
+        irA(indiceActual + 1, false, 1);
       }, 6000);
     };
 
@@ -499,6 +503,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.addEventListener("resize", desplazar, { passive: true });
 
+    carrusel.dataset.transicionDireccion = "derecha";
     irA(0, false);
     iniciarAuto();
   };
