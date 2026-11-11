@@ -1,0 +1,36 @@
+/* Fondo institucional WebP administrable; solo se activa al publicar una imagen. */
+.impacto-crebe.impacto-con-fondo{
+  width:100%;
+  max-width:none;
+  box-sizing:border-box;
+  margin:24px auto 0;
+  padding:clamp(42px,5vw,78px) max(18px,calc((100vw - 1200px)/2)) clamp(48px,5vw,80px);
+  background-image:linear-gradient(110deg,rgba(5,51,85,.80),rgba(8,88,126,.70)),var(--impacto-fondo);
+  background-position:center,center;
+  background-repeat:no-repeat;
+  background-size:cover;
+  color:#fff;
+}
+.impacto-crebe.impacto-con-fondo :is(.impacto-etiqueta,.impacto-encabezado h2,.impacto-encabezado p,.impacto-tarjeta strong,.impacto-tarjeta h3,.impacto-tarjeta p){
+  color:#fff!important;
+}
+.impacto-crebe.impacto-con-fondo .impacto-tarjeta{
+  color:#fff;
+  text-shadow:0 1px 4px rgba(0,0,0,.45);
+}
+.impacto-crebe.impacto-con-fondo .impacto-carrusel::before{
+  background:linear-gradient(90deg,rgba(5,51,85,.42),transparent);
+}
+.impacto-crebe.impacto-con-fondo .impacto-carrusel::after{
+  background:linear-gradient(270deg,rgba(5,51,85,.42),transparent);
+}
+@media(max-width:720px){
+  .impacto-crebe.impacto-con-fondo{
+    width:100%;
+    padding:38px 12px 45px;
+  }
+}
+body.alto-contraste .impacto-crebe.impacto-con-fondo,html.eva-alto-contraste .impacto-crebe.impacto-con-fondo{
+  background:#000!important;
+  background-image:none!important;
+}
