@@ -85,3 +85,21 @@ body.alto-contraste #eva-distribucion .eva-lecturas-lista button,
 html.eva-alto-contraste #eva-distribucion .eva-lecturas-lista button{
   color:#fff !important;
 }
+
+/* AC: prioridad visual explícita de los cuatro botones de acceso.
+   El contraste se restaura al interactuar; excluye los modos de alto contraste. */
+html:not(.eva-alto-contraste) body:not(.alto-contraste)
+#eva-distribucion .accesos-complementarios-weebly :is(.boton-lineas,.enlace-acceso) {
+  --eva-cta:var(--eva-ac) !important;
+  border-color:var(--eva-ac) !important;
+  color:var(--eva-ac) !important;
+  background:transparent !important;
+}
+html:not(.eva-alto-contraste) body:not(.alto-contraste)
+#eva-distribucion .accesos-complementarios-weebly .boton-lineas:is(:hover,:focus-visible),
+html:not(.eva-alto-contraste) body:not(.alto-contraste)
+#eva-distribucion .accesos-complementarios-weebly .tarjeta-acceso:is(:hover,:focus-visible) .enlace-acceso {
+  background:var(--eva-ac) !important;
+  border-color:var(--eva-ac) !important;
+  color:#fff !important;
+}
