@@ -856,7 +856,7 @@ body.alto-contraste .eva-indicador-icono span{
 }
 
 /* Sección independiente NeuroNova Apps, sin modificar las tarjetas de los módulos. */
-.aplicaciones-apoyo{width:100%;max-width:1120px;margin:44px auto;padding:clamp(24px,3.5vw,38px);background:linear-gradient(150deg,#f0f6f6,#fafcfa);border:1px solid #cbdedc;border-radius:20px;box-shadow:0 10px 34px rgba(22,55,70,.07);color:#203b4a}
+.aplicaciones-apoyo{width:100%;max-width:1120px;margin:44px auto;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;color:#203b4a}
 .aplicaciones-apoyo *{box-sizing:border-box}
 .aplicaciones-apoyo-cabecera{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
 .aplicaciones-apoyo-etiqueta{color:#11665e;font-size:.78rem;font-weight:800;letter-spacing:.09em}
@@ -864,7 +864,7 @@ body.alto-contraste .eva-indicador-icono span{
 .aplicaciones-apoyo-encabezado h2{margin:0 0 12px;color:#143b4e;font-family:inherit;font-size:clamp(1.55rem,2.5vw,2rem);line-height:1.25}
 .aplicaciones-apoyo-encabezado>p{margin:0 0 25px;max-width:850px;line-height:1.65;color:#496270;font-size:1rem}
 .aplicaciones-apoyo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.aplicacion-apoyo{display:flex;flex-direction:column;min-width:0;min-height:245px;padding:24px;background:#fff;border:1px solid #d5e2e4;border-top:4px solid #146a72;border-radius:15px;box-shadow:0 8px 25px rgba(23,50,77,.065)}
+.aplicacion-apoyo{display:flex;flex-direction:column;min-width:0;min-height:245px;padding:24px;background:#f5f7f8;border:1px solid #d9e2e6;border-top:4px solid #146a72;border-radius:15px;box-shadow:0 8px 25px rgba(23,50,77,.065)}
 .aplicacion-comunicago{border-top-color:#1d826e}
 .aplicacion-apoyo-superior{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
 .aplicacion-apoyo-simbolo{display:grid;width:50px;height:50px;place-items:center;flex-shrink:0;border-radius:14px;background:#e2f1f2;color:#135568;font-size:1rem;font-weight:900;letter-spacing:.02em}
@@ -874,7 +874,7 @@ body.alto-contraste .eva-indicador-icono span{
 .aplicacion-apoyo>p{margin:0 0 24px;color:#4f6371;line-height:1.6;font-size:.97rem}
 .aplicacion-apoyo-pie{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-top:auto;padding-top:13px;border-top:1px solid #e4edef;font-size:.78rem;font-weight:700;color:#526a75}
 .aplicaciones-apoyo-nota{margin:20px 0 0;color:#576c78;font-size:.86rem;line-height:1.6}
-@media(max-width:700px){.aplicaciones-apoyo{margin:30px auto;padding:20px 16px}.aplicaciones-apoyo-grid{grid-template-columns:1fr;gap:14px}.aplicacion-apoyo{min-height:215px;padding:19px}}
+@media(max-width:700px){.aplicaciones-apoyo{margin:30px auto;padding:0}.aplicaciones-apoyo-grid{grid-template-columns:1fr;gap:14px}.aplicacion-apoyo{min-height:215px;padding:19px}}
 body.alto-contraste .aplicaciones-apoyo,body.alto-contraste .aplicacion-apoyo{background:#000!important;color:#fff!important;border-color:#fff!important}
 body.alto-contraste .aplicaciones-apoyo :is(h2,h3,p,span,div){color:#fff!important}
 body.alto-contraste .aplicacion-apoyo-simbolo,body.alto-contraste .aplicacion-apoyo-estado{background:#000!important;border:1px solid #fff!important}
@@ -1078,7 +1078,7 @@ body.alto-contraste .accesos-complementarios-weebly .alianza-institucional-accio
 
 /* RA - Materiales de la semana. Sección pública independiente. */
 .ra-semana-eva[hidden],.ra-semana-slide[hidden]{display:none!important}
-.ra-semana-eva{width:100%;max-width:1120px;box-sizing:border-box;margin:42px auto;padding:clamp(22px,3.5vw,38px);border:1px solid #c8e2e0;border-radius:22px;background:linear-gradient(135deg,#f1faf8,#fff);color:#163e51}
+.ra-semana-eva{width:100%;max-width:1120px;box-sizing:border-box;margin:42px auto;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;color:#163e51}
 .ra-semana-cabecera{margin-bottom:22px}
 .ra-semana-eyebrow{margin:0 0 8px!important;color:#116b64!important;font-size:.78rem!important;font-weight:800;letter-spacing:.07em}
 .ra-semana-cabecera h2{font-size:clamp(1.45rem,2.7vw,2rem);color:#143c50;margin:0 0 10px;line-height:1.2}
@@ -1112,7 +1112,7 @@ body.alto-contraste .accesos-complementarios-weebly .alianza-institucional-accio
 .ra-semana-sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 .ra-semana-eva :is(a,button):focus-visible{outline:3px solid #e4981c;outline-offset:3px}
 @media(max-width:760px){
- .ra-semana-eva{margin:30px auto;padding:20px 16px}
+ .ra-semana-eva{margin:30px auto;padding:0}
  .ra-semana-slide{grid-template-columns:minmax(0,1fr)}
  .ra-semana-foto{min-height:190px}
  .ra-semana-foto img{min-height:190px;height:235px;max-height:270px}
