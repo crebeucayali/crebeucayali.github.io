@@ -1,0 +1,30 @@
+/* Identidad cromática de navegación EVA 2.0: AC en ciruela e Inicio independiente.
+   Solo enlaces de la navegación institucional; no afecta el botón de sesión ni el cuerpo. */
+.cabecera-crebe .pestanas-crebe > a[href*="/accesos-complementarios/"] {
+  color:#823b63 !important;
+  border-color:#823b63;
+}
+.cabecera-crebe .pestanas-crebe > a[href*="/accesos-complementarios/"]:is(:hover,:focus-visible) {
+  background:#823b63 !important;
+  color:#fff !important;
+}
+.cabecera-crebe .pestanas-crebe > a.activo[href="/"] {
+  background:#9b3434 !important;
+  color:#fff !important;
+}
+.cabecera-crebe .pestanas-crebe > a.activo[href="/"]:is(:hover,:focus-visible) {
+  background:#842626 !important;
+  color:#fff !important;
+}
+/* Mantener las opciones de alto contraste institucional. */
+body.alto-contraste .cabecera-crebe .pestanas-crebe > a,
+html.eva-alto-contraste .cabecera-crebe .pestanas-crebe > a {
+  color:#fff !important;
+  background:#000 !important;
+  border-color:#fff !important;
+}
+body.alto-contraste .cabecera-crebe .pestanas-crebe > a:is(:hover,:focus-visible,.activo),
+html.eva-alto-contraste .cabecera-crebe .pestanas-crebe > a:is(:hover,:focus-visible,.activo) {
+  background:#fff !important;
+  color:#000 !important;
+}
