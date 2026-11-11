@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#0b3550">
+  <title>Prueba de tarjetas de módulos | EVA 2.0</title>
+  <link rel="icon" type="image/webp" href="https://crebeucayali.github.io/materiales-educativos-accesibles/logo-crebe.webp?v=20261105">
+  <style>
+    :root {font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#143c50;background:#f4f8f8}
+    *{box-sizing:border-box}
+    body{margin:0}
+    header{background:#0b3550;color:#fff}
+    .barra{max-width:1150px;margin:auto;padding:17px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .marca{display:flex;align-items:center;gap:12px;font-weight:750}
+    .marca img{width:49px;height:49px;object-fit:contain;background:#fff;border-radius:11px;padding:3px}
+    header a{color:#fff}
+    .volver{padding:10px 12px;border:1px solid #b1d6d6;border-radius:8px;text-decoration:none}
+    main{max-width:1150px;margin:auto;padding:46px 22px 72px}
+    .eyebrow{color:#11695f;text-transform:uppercase;letter-spacing:.08em;font-size:.8rem;font-weight:800}
+    h1{font-size:clamp(1.5rem,3vw,2.25rem);margin:8px 0 12px}
+    .intro{max-width:720px;line-height:1.6;color:#49616d;margin-bottom:30px}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .tarjeta{--capa:linear-gradient(140deg,#16395d,#2f7099);position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:22px;text-decoration:none;text-align:center;color:white;min-height:245px;padding:28px 20px;isolation:isolate;border-radius:16px;overflow:hidden;box-shadow:0 10px 24px #173d4a26;background-color:#174258;background-image:url("https://crebeucayali.github.io/patron-shipibo.webp?v=11");background-position:center;background-size:260px auto;transition:transform .32s ease,box-shadow .32s ease}
+    .tarjeta::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--capa);opacity:.92;transition:opacity .38s ease}
+    .tarjeta.cap{--capa:linear-gradient(140deg,#1b3f73,#427db6)}
+    .tarjeta.bda{--capa:linear-gradient(140deg,#086078,#17a0b3)}
+    .tarjeta.mea{--capa:linear-gradient(140deg,#a66016,#d59937)}
+    .tarjeta.dua{--capa:linear-gradient(140deg,#185f48,#339678)}
+    .tarjeta h2{font-size:clamp(1.18rem,2.5vw,1.7rem);line-height:1.25;margin:0;color:#fff;text-shadow:0 2px 9px #000c;max-width:95%}
+    .signo{width:48px;height:48px;display:grid;place-items:center;border-radius:50%;border:1px solid #ffffffb8;background:#0006;color:#fff;font-size:2.2rem;line-height:1;font-weight:600}
+    .signo::before{content:"−"}
+    @media(hover:hover){.tarjeta:hover::before{opacity:.13}.tarjeta:hover .signo::before{content:"+"}.tarjeta:hover{transform:translateY(-3px);box-shadow:0 16px 32px #173d4a33}}
+    .tarjeta:focus-visible{outline:4px solid #eea620;outline-offset:4px}
+    .tarjeta:focus-visible::before{opacity:.13}
+    .tarjeta:focus-visible .signo::before{content:"+"}
+    .nota{font-size:.9rem;line-height:1.5;color:#526875;margin:24px 0 0}
+    footer{padding:22px;text-align:center;color:#526875;border-top:1px solid #d5e5e5;font-size:.88rem}
+    @media(max-width:650px){.grid{grid-template-columns:1fr}.tarjeta{min-height:195px}.barra{flex-wrap:wrap}.volver{font-size:.85rem}}
+    @media(prefers-reduced-motion:reduce){.tarjeta,.tarjeta::before{transition:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="barra">
+      <div class="marca"><img alt="Logotipo del CREBE Ucayali" src="https://crebeucayali.github.io/materiales-educativos-accesibles/logo-crebe.webp?v=20261105"><span>CREBE "Señor de los Milagros" - Ucayali<br>EVA 2.0 · Página de prueba</span></div>
+      <a class="volver" href="https://crebeucayali.github.io/">Volver a EVA</a>
+    </div>
+  </header>
+  <main>
+    <p class="eyebrow">Prototipo visual, no incorporado a la portada</p>
+    <h1>Tarjetas de acceso a los módulos</h1>
+    <p class="intro">Pasa el cursor sobre una tarjeta para comprobar cómo se desvanece su capa de color y cambia el signo de menos (−) a más (+). Los enlaces conducen a los módulos reales.</p>
+    <div class="grid" aria-label="Cuatro módulos de EVA 2.0">
+      <a class="tarjeta cap" href="https://crebeucayali.github.io/capacitaciones/"><h2>Capacitaciones CREBE</h2><span class="signo" aria-hidden="true"></span></a>
+      <a class="tarjeta bda" href="https://crebeucayali.github.io/banco-digital-accesible/"><h2>Banco Digital Accesible</h2><span class="signo" aria-hidden="true"></span></a>
+      <a class="tarjeta mea" href="https://crebeucayali.github.io/materiales-educativos-accesibles/"><h2>Materiales Educativos Accesibles</h2><span class="signo" aria-hidden="true"></span></a>
+      <a class="tarjeta dua" href="https://crebeucayali.github.io/DUA-3.0/"><h2>Diseño Universal para el Aprendizaje 3.0</h2><span class="signo" aria-hidden="true"></span></a>
+    </div>
+    <p class="nota">La prueba no sustituye las tarjetas existentes ni modifica el diseño público de la portada. En dispositivos táctiles, los accesos funcionan sin depender del efecto al pasar el cursor.</p>
+  </main>
+  <footer>EVA 2.0 | Prototipo de tarjetas · Creación y desarrollo original: Gabriel Berrospi.</footer>
+</body>
+</html>
