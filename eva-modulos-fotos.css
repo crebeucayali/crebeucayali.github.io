@@ -59,7 +59,7 @@
   margin:0;
   max-width:100%;
   color:#fff !important;
-  font-size:clamp(1.02rem,1.65vw,1.3rem);
+  font-size:clamp(.98rem,1.5vw,1.2rem);
   line-height:1.25;
   font-weight:800;
   overflow-wrap:anywhere;
