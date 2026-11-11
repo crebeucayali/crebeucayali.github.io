@@ -65,6 +65,17 @@
   text-shadow:0 1px 3px rgba(0,0,0,.55);
   pointer-events:none;
 }
+/* Solo al interactuar: fondo opaco de las siglas según su módulo. */
+@media (hover:hover) {
+  #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto.capacitaciones:hover .eva-modulo-sigla {background-color:#1b3f73;}
+  #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto.banco:hover .eva-modulo-sigla {background-color:#086078;}
+  #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto.materiales:hover .eva-modulo-sigla {background-color:#a66016;}
+  #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto.dua-3:hover .eva-modulo-sigla {background-color:#185f48;}
+}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto.capacitaciones:focus-visible .eva-modulo-sigla {background-color:#1b3f73;}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto.banco:focus-visible .eva-modulo-sigla {background-color:#086078;}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto.materiales:focus-visible .eva-modulo-sigla {background-color:#a66016;}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto.dua-3:focus-visible .eva-modulo-sigla {background-color:#185f48;}
 #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto .eva-modulo-cuerpo {
   display:flex;
   flex:1 1 auto;
