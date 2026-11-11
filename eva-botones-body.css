@@ -1,0 +1,117 @@
+/* EVA 2.0 - acabado unificado para enlaces de acción del contenido.
+   No afecta navegación, cabecera, pie de página, controles administrativos,
+   buscador, accesibilidad, paginación ni botones operativos de carruseles. */
+#eva-distribucion {
+  --eva-cta-institucional:#173f6c;
+  --eva-cta-ac:#0f655b;
+}
+#eva-distribucion :is(
+  .boton-lineas,
+  .recurso-destacado-eva-enlace,
+  .ra-semana-boton,
+  .ra-semana-enlace,
+  .eva-lectura-enlace,
+  .eva-recurso-dia-enlaces a:first-child,
+  .accesos-complementarios-weebly .enlace-acceso
+) {
+  --eva-cta:var(--eva-cta-institucional);
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:max-content;
+  max-width:100%;
+  box-sizing:border-box;
+  min-height:40px;
+  padding:9px 14px !important;
+  border:1px solid var(--eva-cta) !important;
+  border-radius:2px !important;
+  background:transparent !important;
+  color:var(--eva-cta) !important;
+  font-weight:750;
+  text-decoration:none !important;
+  text-align:center;
+  line-height:1.3;
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease;
+}
+/* Flecha circular pequeña similar a la referencia; no afecta otros enlaces. */
+#eva-distribucion :is(
+  .boton-lineas,
+  .recurso-destacado-eva-enlace,
+  .ra-semana-boton,
+  .ra-semana-enlace,
+  .eva-lectura-enlace,
+  .eva-recurso-dia-enlaces a:first-child,
+  .accesos-complementarios-weebly .enlace-acceso
+)::after {
+  content:"›";
+  display:inline-flex;
+  width:16px;
+  height:16px;
+  align-items:center;
+  justify-content:center;
+  flex:none;
+  border:1px solid currentColor;
+  border-radius:50%;
+  font-size:15px;
+  font-weight:700;
+  line-height:1;
+}
+/* Identidad por procedencia de cada recurso/módulo. */
+#eva-distribucion .recurso-destacado-eva[data-modulo] .recurso-destacado-eva-enlace {
+  --eva-cta:var(--destacado-color,#173f6c);
+}
+#eva-distribucion :is(.ra-semana-boton,.ra-semana-enlace) {--eva-cta:#0b4f8a;}
+#eva-distribucion .eva-lectura-enlace {--eva-cta:#0f655b;}
+#eva-distribucion .eva-recurso-dia-enlaces a:first-child {--eva-cta:#9a6a2a;}
+#eva-distribucion .eva-recurso-dia-enlaces a:first-child[href*="banco-digital-accesible"] {--eva-cta:#0e7490;}
+#eva-distribucion .eva-recurso-dia-enlaces a:first-child[href*="materiales-educativos-accesibles"] {--eva-cta:#9a6a2a;}
+#eva-distribucion .accesos-complementarios-weebly .enlace-acceso {--eva-cta:var(--eva-cta-ac);}
+
+/* Relleno del color característico al interactuar, texto e icono en blanco. */
+#eva-distribucion :is(
+  .boton-lineas,
+  .recurso-destacado-eva-enlace,
+  .ra-semana-boton,
+  .ra-semana-enlace,
+  .eva-lectura-enlace,
+  .eva-recurso-dia-enlaces a:first-child,
+  .accesos-complementarios-weebly .enlace-acceso
+):is(:hover,:focus-visible),
+#eva-distribucion .accesos-complementarios-weebly .tarjeta-acceso:is(:hover,:focus-visible) .enlace-acceso {
+  background:var(--eva-cta) !important;
+  color:#fff !important;
+  text-decoration:none !important;
+}
+#eva-distribucion :is(
+  .boton-lineas,
+  .recurso-destacado-eva-enlace,
+  .ra-semana-boton,
+  .ra-semana-enlace,
+  .eva-lectura-enlace,
+  .eva-recurso-dia-enlaces a:first-child
+):focus-visible,
+#eva-distribucion .accesos-complementarios-weebly .tarjeta-acceso:focus-visible {
+  outline:3px solid #d39b27;
+  outline-offset:3px;
+}
+/* Evitar modificación de los controles de accesibilidad de alto contraste. */
+body.alto-contraste #eva-distribucion :is(
+  .boton-lineas,.recurso-destacado-eva-enlace,.ra-semana-boton,
+  .ra-semana-enlace,.eva-lectura-enlace,
+  .eva-recurso-dia-enlaces a:first-child,
+  .accesos-complementarios-weebly .enlace-acceso
+),
+html.eva-alto-contraste #eva-distribucion :is(
+  .boton-lineas,.recurso-destacado-eva-enlace,.ra-semana-boton,
+  .ra-semana-enlace,.eva-lectura-enlace,
+  .eva-recurso-dia-enlaces a:first-child,
+  .accesos-complementarios-weebly .enlace-acceso
+) {
+  background:#000 !important;
+  color:#fff !important;
+  border:2px solid #fff !important;
+}
+@media(prefers-reduced-motion:reduce) {
+  #eva-distribucion :is(.boton-lineas,.recurso-destacado-eva-enlace,.ra-semana-boton,.ra-semana-enlace,.eva-lectura-enlace,.eva-recurso-dia-enlaces a:first-child,.accesos-complementarios-weebly .enlace-acceso) {transition:none !important;}
+}
