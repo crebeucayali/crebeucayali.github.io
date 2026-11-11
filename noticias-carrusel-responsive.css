@@ -302,27 +302,19 @@ body.alto-contraste .noticias-destacadas .noticia-titulo-enlace {
   text-decoration: underline;
 }
 
-/* Transición editorial suave: 10 px de entrada y breve desvanecimiento.
-   Solo se anima contenido de la noticia entrante; no se alteran flechas,
-   ancho de diapositivas, imágenes, temporizador ni accesibilidad. */
-@keyframes eva-noticia-entrada-derecha {
-  from { opacity:.72; transform:translateX(10px); }
-  to { opacity:1; transform:translateX(0); }
-}
-@keyframes eva-noticia-entrada-izquierda {
-  from { opacity:.72; transform:translateX(-10px); }
-  to { opacity:1; transform:translateX(0); }
-}
+/* Difuminado lateral durante el desplazamiento entre noticias.
+   Se concentra en el borde de avance: derecha al siguiente,
+   izquierda al anterior. Desaparece en cuanto termina el movimiento.
+   Flechas, tamaños y contenido quedan intactos. */
 @media (prefers-reduced-motion:no-preference) {
-  .noticias-destacadas .noticias-carrusel[data-transicion-direccion="derecha"] .noticia-tarjeta.activa > :is(.noticia-media,.noticia-contenido) {
-    animation:eva-noticia-entrada-derecha .32s ease-out both;
+  .noticias-destacadas .noticias-carrusel.noticias-en-transicion[data-transicion-direccion="derecha"] .noticias-viewport,
+  #eva-distribucion.eva-layout-activo .noticias-carrusel.noticias-en-transicion[data-transicion-direccion="derecha"] .noticias-viewport {
+    -webkit-mask-image:linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 38px), transparent 100%) !important;
+    mask-image:linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 38px), transparent 100%) !important;
   }
-  .noticias-destacadas .noticias-carrusel[data-transicion-direccion="izquierda"] .noticia-tarjeta.activa > :is(.noticia-media,.noticia-contenido) {
-    animation:eva-noticia-entrada-izquierda .32s ease-out both;
-  }
-}
-@media (prefers-reduced-motion:reduce) {
-  .noticias-destacadas .noticia-tarjeta > :is(.noticia-media,.noticia-contenido) {
-    animation:none!important;
+  .noticias-destacadas .noticias-carrusel.noticias-en-transicion[data-transicion-direccion="izquierda"] .noticias-viewport,
+  #eva-distribucion.eva-layout-activo .noticias-carrusel.noticias-en-transicion[data-transicion-direccion="izquierda"] .noticias-viewport {
+    -webkit-mask-image:linear-gradient(to right, transparent 0, #000 38px, #000 calc(100% - 12px), transparent 100%) !important;
+    mask-image:linear-gradient(to right, transparent 0, #000 38px, #000 calc(100% - 12px), transparent 100%) !important;
   }
 }
