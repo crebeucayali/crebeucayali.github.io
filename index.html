@@ -21,6 +21,7 @@
 </script>
 <link rel="stylesheet" href="estilos.css?v=44"/>
 <link rel="stylesheet" href="eva-layout.css?v=9"/>
+<link rel="stylesheet" href="eva-lecturas-inclusivas.css?v=1"/>
 <link rel="stylesheet" href="noticias-carrusel-responsive.css?v=4"/>
 <link rel="stylesheet" href="ra-semana-tarjetas.css?v=1"/>
 <link rel="stylesheet" href="eva-recurso-dia.css?v=3"/>
@@ -138,6 +139,11 @@
     <p>Accede directamente a herramientas y materiales educativos seleccionados de nuestros módulos oficiales.</p>
   </div>
   <div class="recursos-destacados-grid" id="recursos-destacados-grid" aria-live="polite"></div>
+</section>
+<section class="eva-lecturas-destacada" id="eva-lecturas-destacada" aria-labelledby="eva-lecturas-destacada-titulo" hidden>
+  <p class="eva-lecturas-sobretitulo">LECTURAS INCLUSIVAS · ACCESOS COMPLEMENTARIOS (AC)</p>
+  <h2 id="eva-lecturas-destacada-titulo">Lectura inclusiva destacada</h2>
+  <article class="eva-lectura-contenido" id="eva-lectura-contenido" aria-live="polite" aria-atomic="true"></article>
 </section>
 <section class="ra-semana-eva ra-semana-tarjetas" id="ra-semana-eva" aria-labelledby="ra-semana-titulo" hidden>
   <div class="ra-semana-cabecera">
@@ -301,6 +307,12 @@
     <ul id="eva-lateral-noticias" class="eva-lateral-lista"><li>Consulta disponible próximamente.</li></ul>
     <a class="eva-lateral-ver" href="https://crebeucayali.github.io/noti-inclusivos/">Ver noticias inclusivas</a>
   </section>
+  <section class="eva-lateral-bloque" aria-labelledby="eva-lecturas-lateral-titulo">
+    <p class="eva-lateral-etiqueta">CONTENIDOS DE AC</p>
+    <h3 id="eva-lecturas-lateral-titulo">Lecturas inclusivas</h3>
+    <ul class="eva-lecturas-lista" id="eva-lecturas-lista"><li>Consultando publicaciones…</li></ul>
+    <a class="eva-lateral-ver" href="https://crebeucayali.github.io/noti-inclusivos/">Ver todas las lecturas</a>
+  </section>
   <section class="eva-lateral-bloque" aria-labelledby="eva-lateral-recursos-titulo">
     <h3 id="eva-lateral-recursos-titulo">Últimos materiales del CREBE</h3>
     <ul id="eva-lateral-recursos" class="eva-lateral-lista"><li>Consulta disponible próximamente.</li></ul>
@@ -454,6 +466,7 @@
 <script src="main.js?v=16"></script>
 <script src="ra-materiales-semana.js?v=2" defer></script>
 <script src="eva-columna-lateral.js?v=2" defer></script>
+<script src="eva-lecturas-inclusivas.js?v=1" defer></script>
 <script src="eva-recurso-dia.js?v=3" defer></script>
 <script src="eva-civico-dia.js?v=1" defer></script>
 <script src="indicadores-eva.js?v=2" defer></script>
