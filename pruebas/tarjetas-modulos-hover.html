@@ -22,12 +22,12 @@
     h1{font-size:clamp(1.5rem,3vw,2.25rem);margin:8px 0 12px}
     .intro{max-width:720px;line-height:1.6;color:#49616d;margin-bottom:30px}
     .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-    .tarjeta{--capa:linear-gradient(140deg,#16395d,#2f7099);position:relative;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;text-align:center;color:#fff;min-height:245px;padding:0;isolation:isolate;border-radius:16px;overflow:hidden;box-shadow:0 10px 24px #173d4a26;background-color:#174258;background-image:url("https://crebeucayali.github.io/patron-shipibo.webp?v=11");background-position:center;background-size:260px auto;transition:transform .32s ease,box-shadow .32s ease}
+    .tarjeta{--capa:linear-gradient(140deg,#16395d,#2f7099);position:relative;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;text-align:center;color:#fff;min-height:245px;padding:0;isolation:isolate;border-radius:16px;overflow:hidden;box-shadow:0 10px 24px #173d4a26;background-color:#174258;background-image:linear-gradient(0deg,rgba(4,25,36,.28),rgba(4,25,36,.12)),var(--foto);background-position:center;background-size:cover;transition:transform .32s ease,box-shadow .32s ease}
     .tarjeta::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--capa);opacity:.92;transition:opacity .38s ease}
-    .tarjeta.cap{--capa:linear-gradient(140deg,#1b3f73,#427db6)}
-    .tarjeta.bda{--capa:linear-gradient(140deg,#086078,#17a0b3)}
-    .tarjeta.mea{--capa:linear-gradient(140deg,#a66016,#d59937)}
-    .tarjeta.dua{--capa:linear-gradient(140deg,#185f48,#339678)}
+    .tarjeta.cap{--capa:linear-gradient(140deg,#1b3f73,#427db6);--foto:url("https://unsplash.com/photos/vBg0dxwfIYM/download?force=true&w=1200")}
+    .tarjeta.bda{--capa:linear-gradient(140deg,#086078,#17a0b3);--foto:url("https://unsplash.com/photos/i8UxWRabF0E/download?force=true&w=1200")}
+    .tarjeta.mea{--capa:linear-gradient(140deg,#a66016,#d59937);--foto:url("https://unsplash.com/photos/E1shiIGT8Oo/download?force=true&w=1200")}
+    .tarjeta.dua{--capa:linear-gradient(140deg,#185f48,#339678);--foto:url("https://unsplash.com/photos/CXa6E3krENE/download?force=true&w=1200")}
     .tarjeta-cuerpo{display:flex;flex:1;justify-content:center;align-items:center;padding:28px 20px 12px}
     .tarjeta h2{font-size:clamp(1.18rem,2.5vw,1.7rem);line-height:1.25;margin:0;color:#fff;text-shadow:0 2px 9px #000c;max-width:95%}
     .tarjeta-footer{width:100%;min-height:66px;display:flex;justify-content:center;align-items:center;padding:7px 12px 17px;background:linear-gradient(to top,rgba(0,0,0,.24),transparent)}
@@ -70,6 +70,7 @@
       <a class="tarjeta dua" href="https://crebeucayali.github.io/DUA-3.0/"><div class="tarjeta-cuerpo"><h2>Diseño Universal para el Aprendizaje 3.0</h2></div><div class="tarjeta-footer" aria-hidden="true"><span class="signo-lineal"></span></div></a>
     </div>
     <p class="nota">La prueba no sustituye las tarjetas existentes ni modifica el diseño público de la portada. En dispositivos táctiles, los accesos funcionan sin depender del efecto al pasar el cursor.</p>
+    <p class="nota"><strong>Fotografías de prueba:</strong> selección de <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer">Unsplash (licencia gratuita)</a>. Fuentes: <a href="https://unsplash.com/photos/vBg0dxwfIYM" target="_blank" rel="noopener noreferrer">CAP · Vitaly Gariev</a>, <a href="https://unsplash.com/photos/i8UxWRabF0E" target="_blank" rel="noopener noreferrer">BDA · Ramona</a>, <a href="https://unsplash.com/photos/E1shiIGT8Oo" target="_blank" rel="noopener noreferrer">MEA · Angie Dutton</a> y <a href="https://unsplash.com/photos/CXa6E3krENE" target="_blank" rel="noopener noreferrer">DUA · David Geneugelijk</a>. Las imágenes son ilustrativas; no corresponden a actividades realizadas por CREBE.</p>
   </main>
   <footer>EVA 2.0 | Prototipo de tarjetas · Creación y desarrollo original: Gabriel Berrospi.</footer>
 </body>
