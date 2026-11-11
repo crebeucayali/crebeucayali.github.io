@@ -423,7 +423,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const diapositivas = Array.from(pista.children);
     const puntos = Array.from(indicadores.children);
     let indiceActual = 0;
+    let indiceFisico = 1;
+    let enTransicion = false;
     let temporizador = null;
+
+    // Copias de los extremos para avanzar siempre en la misma dirección:
+    // última -> copia de primera, primera -> copia de última.
+    // Tras el movimiento se vuelve a la diapositiva original sin animación.
+    if (diapositivas.length > 1) {
+      const copiaUltima = diapositivas[diapositivas.length - 1].cloneNode(true);
+      const copiaPrimera = diapositivas[0].cloneNode(true);
+      [copiaUltima, copiaPrimera].forEach((copia) => {
+        copia.setAttribute("aria-hidden", "true");
+        copia.inert = true;
+      });
+      pista.prepend(copiaUltima);
+      pista.append(copiaPrimera);
+    }
 
     const actualizarIndicadores = () => {
       puntos.forEach((punto, indice) => {
@@ -446,32 +462,57 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     };
 
-    const desplazar = () => {
-      actualizarEstadoDiapositivas();
+    const posicionar = (instantaneo = false) => {
+      const slide = pista.children[indiceFisico];
+      if (!slide) return;
+      pista.style.paddingLeft = "0px";
+      pista.style.paddingRight = "0px";
+      if (instantaneo) pista.style.transition = "none";
+      const offsetObjetivo = slide.offsetLeft - pista.offsetLeft;
+      pista.style.transform = `translateX(${-offsetObjetivo}px)`;
+      if (instantaneo) {
+        // Confirmar la posición antes de reactivar la transición CSS.
+        void pista.offsetWidth;
+        pista.style.transition = "";
+      }
+    };
 
-      window.requestAnimationFrame(() => {
-        const slide = diapositivas[indiceActual];
-        if (!slide) return;
-
-        // Cada tarjeta ocupa el ancho completo del visor: el desplazamiento
-        // se calcula desde el inicio real de la pista, sin rellenos artificiales.
-        pista.style.paddingLeft = "0px";
-        pista.style.paddingRight = "0px";
-        const offsetObjetivo = slide.offsetLeft - pista.offsetLeft;
-        pista.style.transform = `translateX(${-offsetObjetivo}px)`;
-        actualizarIndicadores();
-      });
+    const finalizarTransicion = () => {
+      if (!enTransicion) return;
+      enTransicion = false;
+      if (indiceFisico === 0) indiceFisico = diapositivas.length;
+      else if (indiceFisico === diapositivas.length + 1) indiceFisico = 1;
+      posicionar(true);
+      carrusel.classList.remove("noticias-en-transicion");
     };
 
     const irA = (indice, reiniciar = false, direccion = 0) => {
+      if (enTransicion || !diapositivas.length) return;
+
       const siguienteIndice = (indice + diapositivas.length) % diapositivas.length;
-      if (siguienteIndice !== indiceActual) {
-        carrusel.dataset.transicionDireccion =
-          direccion < 0 || (direccion === 0 && indice < indiceActual) ? "izquierda" : "derecha";
-        if (!prefiereReducirMovimiento) carrusel.classList.add("noticias-en-transicion");
+      if (siguienteIndice === indiceActual) return;
+
+      const sentido = direccion || (indice > indiceActual ? 1 : -1);
+      carrusel.dataset.transicionDireccion = sentido < 0 ? "izquierda" : "derecha";
+
+      if (prefiereReducirMovimiento) {
+        indiceActual = siguienteIndice;
+        indiceFisico = indiceActual + 1;
+        actualizarEstadoDiapositivas();
+        posicionar(true);
+        actualizarIndicadores();
+      } else {
+        // Las flechas y el avance automático usan siempre el vecino físico,
+        // incluso al atravesar el último o el primer elemento.
+        indiceFisico = direccion ? indiceFisico + (direccion > 0 ? 1 : -1) : siguienteIndice + 1;
+        indiceActual = siguienteIndice;
+        enTransicion = true;
+        carrusel.classList.add("noticias-en-transicion");
+        actualizarEstadoDiapositivas();
+        window.requestAnimationFrame(() => posicionar());
+        actualizarIndicadores();
       }
-      indiceActual = siguienteIndice;
-      desplazar();
+
       if (reiniciar) {
         detenerAuto();
         iniciarAuto();
@@ -495,10 +536,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     pista.addEventListener("transitionend", (evento) => {
-      if (evento.target === pista && evento.propertyName === "transform") {
-        carrusel.classList.remove("noticias-en-transicion");
-      }
+      if (evento.target === pista && evento.propertyName === "transform") finalizarTransicion();
     });
+    pista.addEventListener("transitioncancel", finalizarTransicion);
 
     botonAnterior.addEventListener("click", anterior);
     botonSiguiente.addEventListener("click", siguiente);
@@ -508,10 +548,17 @@ document.addEventListener("DOMContentLoaded", () => {
     carrusel.addEventListener("focusin", detenerAuto);
     carrusel.addEventListener("focusout", iniciarAuto);
 
-    window.addEventListener("resize", desplazar, { passive: true });
+    window.addEventListener("resize", () => {
+      enTransicion = false;
+      indiceFisico = indiceActual + 1;
+      carrusel.classList.remove("noticias-en-transicion");
+      posicionar(true);
+    }, { passive: true });
 
     carrusel.dataset.transicionDireccion = "derecha";
-    irA(0, false);
+    actualizarEstadoDiapositivas();
+    posicionar(true);
+    actualizarIndicadores();
     iniciarAuto();
   };
 
