@@ -46,6 +46,25 @@
   --eva-modulo-capa:linear-gradient(140deg,#185f48,#339678);
   --eva-modulo-foto:url("https://images.unsplash.com/photo-1758270705696-ec9caffc73dd?auto=format&fit=crop&w=1200&q=80");
 }
+/* Identificación breve del módulo, sin alterar el flujo ni tamaño de la tarjeta. */
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto .eva-modulo-sigla {
+  position:absolute;
+  top:12px;
+  right:12px;
+  z-index:1;
+  display:inline-block;
+  padding:5px 9px;
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:7px;
+  background:rgba(0,0,0,.34);
+  color:#fff;
+  font-size:.72rem;
+  font-weight:800;
+  line-height:1.2;
+  letter-spacing:.04em;
+  text-shadow:0 1px 3px rgba(0,0,0,.55);
+  pointer-events:none;
+}
 #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto .eva-modulo-cuerpo {
   display:flex;
   flex:1 1 auto;
