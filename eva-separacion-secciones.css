@@ -1,0 +1,19 @@
+/* EVA 2.0 - separación visual entre secciones de la columna principal.
+   No se modifican las tarjetas, sus dimensiones, ni la columna lateral. */
+#eva-distribucion.eva-layout-activo > .eva-columna-principal > :is(
+  .recursos-destacados-eva,
+  .eva-lecturas-destacada,
+  .ra-semana-eva,
+  .aplicaciones-apoyo,
+  .noticias-destacadas,
+  .accesos-complementarios-weebly
+):not([hidden]) {
+  margin-top:34px !important;
+  padding-top:24px !important;
+  border-top:1px solid #d9e2e6 !important;
+}
+/* El recurso del día abre la secuencia: no recibe línea divisoria superior.
+   Su separación anterior y el diseño de su tarjeta permanecen intactos. */
+#eva-distribucion.eva-layout-activo > .eva-columna-principal > .eva-recurso-hoy {
+  border-top:0;
+}
