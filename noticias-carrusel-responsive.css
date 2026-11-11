@@ -307,11 +307,11 @@ body.alto-contraste .noticias-destacadas .noticia-titulo-enlace {
    pronunciado sigue la última dirección. No afecta a controles ni medidas. */
 .noticias-destacadas .noticias-carrusel[data-transicion-direccion="derecha"] .noticias-viewport,
 #eva-distribucion.eva-layout-activo .noticias-carrusel[data-transicion-direccion="derecha"] .noticias-viewport {
-  -webkit-mask-image:linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 48px), transparent 100%) !important;
-  mask-image:linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 48px), transparent 100%) !important;
+  -webkit-mask-image:linear-gradient(to right, transparent 0, #000 20px, #000 calc(100% - 58px), transparent 100%) !important;
+  mask-image:linear-gradient(to right, transparent 0, #000 20px, #000 calc(100% - 58px), transparent 100%) !important;
 }
 .noticias-destacadas .noticias-carrusel[data-transicion-direccion="izquierda"] .noticias-viewport,
 #eva-distribucion.eva-layout-activo .noticias-carrusel[data-transicion-direccion="izquierda"] .noticias-viewport {
-  -webkit-mask-image:linear-gradient(to right, transparent 0, #000 48px, #000 calc(100% - 16px), transparent 100%) !important;
-  mask-image:linear-gradient(to right, transparent 0, #000 48px, #000 calc(100% - 16px), transparent 100%) !important;
+  -webkit-mask-image:linear-gradient(to right, transparent 0, #000 58px, #000 calc(100% - 20px), transparent 100%) !important;
+  mask-image:linear-gradient(to right, transparent 0, #000 58px, #000 calc(100% - 20px), transparent 100%) !important;
 }
