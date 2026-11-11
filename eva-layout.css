@@ -398,3 +398,39 @@ body.alto-contraste #eva-distribucion.eva-layout-activo :is(.eva-lateral-toggle,
 body.alto-contraste #eva-distribucion.eva-layout-activo .eva-lateral-paginas button[aria-current="page"] {
   background:#fff!important; color:#000!important;
 }
+
+/* Tarjetas RA de EVA: ficha breve y acceso directo, sin afectar el catálogo RA. */
+#ra-semana-eva .ra-semana-tarjeta-resumida {
+  display: flex !important;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+}
+#ra-semana-eva .ra-semana-tarjeta-resumida .ra-semana-foto {
+  width: 100%;
+  min-height: 0;
+}
+#ra-semana-eva .ra-semana-tarjeta-resumida .ra-semana-foto img {
+  width: 100%;
+  height: clamp(185px, 21vw, 270px);
+  min-height: 0;
+  max-height: 270px;
+  object-fit: contain;
+}
+#ra-semana-eva .ra-semana-tarjeta-resumida .ra-semana-detalle {
+  display: flex;
+  padding: 14px 16px 18px;
+  min-height: 72px;
+  justify-content: center;
+  align-items: stretch;
+}
+#ra-semana-eva .ra-semana-tarjeta-resumida .ra-semana-boton {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+@media (max-width: 700px) {
+  #ra-semana-eva .ra-semana-tarjeta-resumida .ra-semana-foto img {
+    height: 230px;
+  }
+}
