@@ -3,10 +3,10 @@
 #eva-recurso-hoy[hidden],#eva-recurso-ayer[hidden] {display:none!important;}
 #eva-distribucion.eva-layout-activo > .eva-columna-principal > .eva-recurso-hoy:not([hidden]) {
   box-sizing:border-box;width:100%;max-width:100%;min-width:0;
-  margin:18px 0 0;padding:clamp(18px,2.5vw,28px);
-  border:1px solid #b9d9d3;border-radius:18px;
-  background:#edf8f5;color:#143b50;
-  box-shadow:0 7px 18px rgba(11,51,67,.06);
+  margin:18px 0 0;padding:0;
+  border:0;border-radius:0;
+  background:transparent;color:#143b50;
+  box-shadow:none;
 }
 #eva-recurso-hoy .eva-recurso-dia-encabezado {margin:0 0 16px;}
 #eva-recurso-hoy .eva-recurso-dia-encabezado h2 {
@@ -102,7 +102,7 @@
   #eva-distribucion.eva-layout-activo > .eva-columna-principal > .eva-recurso-hoy {order:2;}
   #eva-distribucion.eva-layout-activo > .eva-columna-lateral:not([hidden]) {order:3;}
   #eva-distribucion.eva-layout-activo > .eva-columna-principal > .eva-recurso-hoy:not([hidden]) {
-    margin:18px 0 0;padding:16px;
+    margin:18px 0 0;padding:0;
   }
   #eva-recurso-hoy .eva-recurso-dia-contenido {padding:12px;}
   #eva-recurso-hoy .eva-recurso-dia-fotos {min-height:130px;}
