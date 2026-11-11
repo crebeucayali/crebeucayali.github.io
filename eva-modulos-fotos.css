@@ -1,7 +1,6 @@
 /* EVA 2.0: tarjetas de los cuatro módulos principales.
    El alcance se limita a las tarjetas; la cuadrícula y sus dimensiones existentes se conservan. */
 #eva-distribucion.eva-layout-activo .eva-columna-principal > .tarjetas > .tarjeta.eva-modulo-foto {
-  --eva-modulo-capa:linear-gradient(140deg,#183c6f,#3068a0);
   position:relative !important;
   z-index:0;
   contain:paint;
