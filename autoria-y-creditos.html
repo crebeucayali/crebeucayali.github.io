@@ -38,7 +38,7 @@
     .salto{position:absolute;left:12px;top:-90px;z-index:100;background:#fff;color:#123e57;padding:10px 14px;border-radius:7px}
     .salto:focus{top:10px}
     .cabecera-eva{padding:0;color:#fff;background:#0b3550}
-    .cabecera-interior{max-width:1180px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .cabecera-interior{width:min(100% - 40px,1360px);margin:auto;padding:14px 0;display:flex;align-items:center;justify-content:space-between;gap:28px}
     .marca-eva{color:#fff;text-decoration:none;display:flex;align-items:center;gap:14px;min-width:0}
     .marca-eva img,.pie-identidad img{object-fit:contain;background:#fff;border-radius:12px;flex-shrink:0;padding:5px}
     .marca-texto{display:flex;flex-direction:column;line-height:1.35}
@@ -49,7 +49,8 @@
     .enlaces-eva{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap}
     .enlaces-eva a{color:#fff;text-decoration:none;font-size:.91rem;font-weight:650;padding:9px 11px;border-radius:8px}
     .enlaces-eva a:hover,.enlaces-eva a:focus-visible{background:rgba(255,255,255,.17)}
-    .portada-eva{padding:35px max(20px,calc((100vw - 960px)/2)) 40px;background-image:linear-gradient(115deg,rgba(11,53,80,.86),rgba(14,105,95,.81)),url("./patron-shipibo.webp?v=11");background-size:cover,320px auto;background-repeat:no-repeat,repeat;background-position:center}
+    .portada-eva{padding:35px 0 40px;background-image:linear-gradient(115deg,rgba(11,53,80,.86),rgba(14,105,95,.81)),url("./patron-shipibo.webp?v=11");background-size:cover,320px auto;background-repeat:no-repeat,repeat;background-position:center}
+    .portada-eva-contenido{width:min(100% - 40px,960px);margin:0 auto}
     .portada-eva .sobretitulo{color:#defff3;font-size:.76rem;font-weight:800;letter-spacing:.075em;margin-bottom:10px}
     .cabecera-eva .portada-eva h1{margin:0 0 10px}
     .cabecera-eva .portada-eva p:last-child{max-width:740px}
@@ -65,7 +66,7 @@
     .pie-final{text-align:center;padding:18px 20px 22px}
     .pie-final p{margin:3px auto;color:#e8f5f4;font-size:.84rem}
     @media(max-width:850px){.cabecera-interior{flex-direction:column;align-items:stretch}.enlaces-eva{justify-content:flex-start}.pie-contenido{grid-template-columns:1fr 1fr}.pie-identidad{grid-column:1 / -1}}
-    @media(max-width:580px){.cabecera-interior{padding:14px 16px}.marca-eva img{width:50px;height:50px}.marca-texto strong{font-size:.88rem}.marca-texto small{font-size:.7rem}.marca-texto>span{font-size:.72rem}.enlaces-eva{gap:3px}.enlaces-eva a{padding:8px;font-size:.83rem}.portada-eva{padding:28px 18px 34px}.pie-contenido{grid-template-columns:1fr;padding:28px 18px;gap:22px}.pie-identidad{grid-column:auto}.pie-legal{justify-content:flex-start}}
+    @media(max-width:580px){.cabecera-interior{width:calc(100% - 32px);padding:14px 0}.marca-eva img{width:50px;height:50px}.marca-texto strong{font-size:.88rem}.marca-texto small{font-size:.7rem}.marca-texto>span{font-size:.72rem}.enlaces-eva{gap:3px}.enlaces-eva a{padding:8px;font-size:.83rem}.portada-eva{padding:28px 0 34px}.portada-eva-contenido{width:calc(100% - 36px)}.pie-contenido{grid-template-columns:1fr;padding:28px 18px;gap:22px}.pie-identidad{grid-column:auto}.pie-legal{justify-content:flex-start}}
   </style>
 </head>
 <body>
@@ -84,9 +85,11 @@
       </nav>
     </div>
     <div class="portada-eva">
-      <p class="sobretitulo">EVA 2.0 · INFORMACIÓN Y RECONOCIMIENTOS</p>
-      <h1>Autoría, créditos y evolución de EVA</h1>
-      <p>Presentación del desarrollo original de EVA, sus etapas de organización y los créditos de materiales, contenidos y servicios de terceros.</p>
+      <div class="portada-eva-contenido">
+        <p class="sobretitulo">EVA 2.0 · INFORMACIÓN Y RECONOCIMIENTOS</p>
+        <h1>Autoría, créditos y evolución de EVA</h1>
+        <p>Presentación del desarrollo original de EVA, sus etapas de organización y los créditos de materiales, contenidos y servicios de terceros.</p>
+      </div>
     </div>
   </header>
   <main id="contenido">
