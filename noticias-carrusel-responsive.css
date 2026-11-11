@@ -301,3 +301,28 @@ body.alto-contraste .noticias-destacadas .noticia-titulo-enlace {
   color: #fff !important;
   text-decoration: underline;
 }
+
+/* Transición editorial suave: 10 px de entrada y breve desvanecimiento.
+   Solo se anima contenido de la noticia entrante; no se alteran flechas,
+   ancho de diapositivas, imágenes, temporizador ni accesibilidad. */
+@keyframes eva-noticia-entrada-derecha {
+  from { opacity:.72; transform:translateX(10px); }
+  to { opacity:1; transform:translateX(0); }
+}
+@keyframes eva-noticia-entrada-izquierda {
+  from { opacity:.72; transform:translateX(-10px); }
+  to { opacity:1; transform:translateX(0); }
+}
+@media (prefers-reduced-motion:no-preference) {
+  .noticias-destacadas .noticias-carrusel[data-transicion-direccion="derecha"] .noticia-tarjeta.activa > :is(.noticia-media,.noticia-contenido) {
+    animation:eva-noticia-entrada-derecha .32s ease-out both;
+  }
+  .noticias-destacadas .noticias-carrusel[data-transicion-direccion="izquierda"] .noticia-tarjeta.activa > :is(.noticia-media,.noticia-contenido) {
+    animation:eva-noticia-entrada-izquierda .32s ease-out both;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  .noticias-destacadas .noticia-tarjeta > :is(.noticia-media,.noticia-contenido) {
+    animation:none!important;
+  }
+}
