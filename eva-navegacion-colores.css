@@ -28,3 +28,21 @@ html.eva-alto-contraste .cabecera-crebe .pestanas-crebe > a:is(:hover,:focus-vis
   background:#fff !important;
   color:#000 !important;
 }
+
+/* Acceso administrativo de cabecera: identidad AC, sin cambiar forma ni comportamiento. */
+.cabecera-crebe .pestanas-crebe > .admin-toggle-nav {
+  color:#823b63 !important;
+  border-color:rgba(130,59,99,.38) !important;
+  background:rgba(130,59,99,.07) !important;
+}
+.cabecera-crebe .pestanas-crebe > .admin-toggle-nav:is(:hover,:focus-visible) {
+  color:#fff !important;
+  border-color:#823b63 !important;
+  background:#823b63 !important;
+}
+body.alto-contraste .cabecera-crebe .pestanas-crebe > .admin-toggle-nav,
+html.eva-alto-contraste .cabecera-crebe .pestanas-crebe > .admin-toggle-nav {
+  color:#fff !important;
+  border-color:#fff !important;
+  background:#000 !important;
+}
