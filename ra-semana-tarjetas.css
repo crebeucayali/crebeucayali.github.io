@@ -18,9 +18,9 @@
   min-width:0;
   min-height:100%;
   overflow:hidden;
-  border:1px solid #c2dad9;
+  border:1px solid #d9e2e6;
   border-radius:15px;
-  background:#fff;
+  background:#f5f7f8;
   box-shadow:0 7px 20px rgba(12,48,65,.08);
 }
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto {
