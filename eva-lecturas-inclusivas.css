@@ -1,0 +1,52 @@
+/* Lecturas inclusivas en EVA. Estilos aislados de las demás secciones. */
+#eva-distribucion .eva-lecturas-destacada {
+  min-width: 0; width: 100%; box-sizing: border-box;
+  margin: 18px 0 0; padding: clamp(20px, 3vw, 30px);
+  background: #f4f8f7; border: 1px solid #cfe2de; border-radius: 18px;
+  color: #173b4b;
+}
+#eva-distribucion .eva-lecturas-destacada .eva-lecturas-sobretitulo {
+  margin: 0 0 8px; color: #17685f; font-size: .78rem; font-weight: 800; letter-spacing: .045em;
+}
+#eva-distribucion .eva-lecturas-destacada h2 { margin: 0 0 16px; font-size: clamp(1.25rem, 2vw, 1.65rem); color: #14394b; }
+#eva-distribucion .eva-lecturas-destacada .eva-lectura-contenido {
+  border: 1px solid #dce9e7; border-radius: 14px; background: #fff;
+  padding: clamp(16px, 2.5vw, 24px); overflow-wrap: anywhere;
+}
+#eva-distribucion .eva-lectura-categoria {
+  margin: 0 0 6px; color: #17685f; font-size: .8rem; font-weight: 800;
+}
+#eva-distribucion .eva-lectura-contenido h3 {
+  color: #163e50; font-size: clamp(1.1rem, 1.8vw, 1.4rem); line-height: 1.35; margin: 0 0 8px;
+}
+#eva-distribucion .eva-lectura-fecha { color: #566975; font-size: .84rem; margin: 0 0 12px; }
+#eva-distribucion .eva-lectura-resumen { margin: 0 0 16px; line-height: 1.6; }
+#eva-distribucion .eva-lectura-enlace {
+  display: inline-block; padding: 10px 15px; border-radius: 9px;
+  background: #0e7469; color: #fff; font-weight: 750; text-decoration: none;
+}
+#eva-distribucion .eva-lectura-enlace:hover { background: #07564e; color: #fff; }
+#eva-distribucion .eva-lecturas-lista { list-style: none; padding: 0; margin: 0 0 12px; }
+#eva-distribucion .eva-lecturas-lista li + li { border-top: 1px solid #e0eaed; }
+#eva-distribucion .eva-lecturas-lista button {
+  appearance: none; display: block; width: 100%; border: 0; border-radius: 6px;
+  padding: 11px 4px; background: transparent; color: #105b67;
+  font: inherit; font-weight: 700; font-size: .87rem; text-align: left;
+  line-height: 1.4; cursor: pointer; overflow-wrap: anywhere;
+}
+#eva-distribucion .eva-lecturas-lista button:hover,
+#eva-distribucion .eva-lecturas-lista button[aria-pressed="true"] { background: #e8f3f0; }
+#eva-distribucion .eva-lecturas-lista button:focus-visible,
+#eva-distribucion .eva-lectura-enlace:focus-visible { outline: 3px solid #d89120; outline-offset: 3px; }
+#eva-distribucion .eva-lecturas-lista small {
+  display: block; font-size: .76rem; font-weight: 400; color: #506b75; margin-top: 3px;
+}
+body.alto-contraste #eva-distribucion :is(.eva-lecturas-destacada,.eva-lectura-contenido) {
+  background: #000 !important; border-color: #fff !important; color: #fff !important;
+}
+body.alto-contraste #eva-distribucion .eva-lecturas-destacada :is(h2,h3,p,a),
+body.alto-contraste #eva-distribucion .eva-lecturas-lista :is(button,small) { color: #fff !important; }
+body.alto-contraste #eva-distribucion .eva-lecturas-lista button[aria-pressed="true"] { background: #333 !important; }
+@media (max-width:700px) {
+ #eva-distribucion .eva-lecturas-destacada { margin: 16px 0 0; padding: 18px 14px; }
+}
