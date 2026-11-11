@@ -32,26 +32,24 @@
     .tarjeta h2{font-size:clamp(1.18rem,2.5vw,1.7rem);line-height:1.25;margin:0;color:#fff;text-shadow:0 2px 9px #000c;max-width:95%}
     .tarjeta-footer{width:100%;min-height:66px;display:flex;justify-content:center;align-items:center;padding:7px 12px 17px;background:linear-gradient(to top,rgba(0,0,0,.24),transparent)}
     /* Dos trazos sin círculo: la línea vertical desaparece al completar el giro. */
-    .signo-lineal{display:block;position:relative;width:34px;height:34px;flex-shrink:0;transform-origin:center}
+    /* Transiciones bidireccionales: entrar (+ a −) y salir (− a +). */
+    .signo-lineal{display:block;position:relative;width:34px;height:34px;flex-shrink:0;transform-origin:center;transform:rotate(0deg);transition:transform .8s ease-in-out}
     .signo-lineal::before,.signo-lineal::after{content:"";position:absolute;left:50%;top:50%;background:#fff;border-radius:2px;transform:translate(-50%,-50%);box-shadow:0 1px 5px #0006}
     .signo-lineal::before{width:28px;height:3px}
-    .signo-lineal::after{width:3px;height:28px}
-    @keyframes giroSigno{from{transform:rotate(0deg)}to{transform:rotate(720deg)}}
-    @keyframes convertirEnMenos{0%,76%{opacity:1;transform:translate(-50%,-50%) scaleY(1)}100%{opacity:0;transform:translate(-50%,-50%) scaleY(0)}}
+    .signo-lineal::after{width:3px;height:28px;opacity:1;transition:opacity .18s ease-in-out}
     @media(hover:hover){
       .tarjeta:hover::before{opacity:.13}
       .tarjeta:hover{transform:translateY(-3px);box-shadow:0 16px 32px #173d4a33}
-      .tarjeta:hover .signo-lineal{animation:giroSigno .8s ease-in-out forwards}
-      .tarjeta:hover .signo-lineal::after{animation:convertirEnMenos .8s ease-in-out forwards}
     }
+    /* El estado final conserva el giro completo. Al salir, CSS recorre 720° -> 0°. */
+    .tarjeta:is(:hover,:focus-visible) .signo-lineal{transform:rotate(720deg)}
+    .tarjeta:is(:hover,:focus-visible) .signo-lineal::after{opacity:0;transition-delay:.62s}
     .tarjeta:focus-visible{outline:4px solid #eea620;outline-offset:4px}
     .tarjeta:focus-visible::before{opacity:.13}
-    .tarjeta:focus-visible .signo-lineal{animation:giroSigno .8s ease-in-out forwards}
-    .tarjeta:focus-visible .signo-lineal::after{animation:convertirEnMenos .8s ease-in-out forwards}
     .nota{font-size:.9rem;line-height:1.5;color:#526875;margin:24px 0 0}
     footer{padding:22px;text-align:center;color:#526875;border-top:1px solid #d5e5e5;font-size:.88rem}
     @media(max-width:650px){.grid{grid-template-columns:1fr}.tarjeta{min-height:195px}.barra{flex-wrap:wrap}.volver{font-size:.85rem}}
-    @media(prefers-reduced-motion:reduce){.tarjeta,.tarjeta::before{transition:none}.tarjeta:hover .signo-lineal,.tarjeta:focus-visible .signo-lineal,.tarjeta:hover .signo-lineal::after,.tarjeta:focus-visible .signo-lineal::after{animation:none}.tarjeta:hover .signo-lineal::after,.tarjeta:focus-visible .signo-lineal::after{opacity:0}}
+    @media(prefers-reduced-motion:reduce){.tarjeta,.tarjeta::before,.signo-lineal,.signo-lineal::after{transition:none!important}.tarjeta:is(:hover,:focus-visible) .signo-lineal{transform:none}.tarjeta:is(:hover,:focus-visible) .signo-lineal::after{opacity:0}}
   </style>
 </head>
 <body>
@@ -64,7 +62,7 @@
   <main>
     <p class="eyebrow">Prototipo visual, no incorporado a la portada</p>
     <h1>Tarjetas de acceso a los módulos</h1>
-    <p class="intro">Pasa el cursor sobre una tarjeta para comprobar cómo se desvanece su capa de color y hace girar el signo más (+) hasta detenerse como menos (−). Los enlaces conducen a los módulos reales.</p>
+    <p class="intro">Pasa el cursor sobre una tarjeta: la capa de color se desvanece y el símbolo «+» gira hasta convertirse en «−». Al retirar el cursor, el giro se invierte y vuelve a «+». Los enlaces conducen a los módulos reales.</p>
     <div class="grid" aria-label="Cuatro módulos de EVA 2.0">
       <a class="tarjeta cap" href="https://crebeucayali.github.io/capacitaciones/"><div class="tarjeta-cuerpo"><h2>Capacitaciones CREBE</h2></div><div class="tarjeta-footer" aria-hidden="true"><span class="signo-lineal"></span></div></a>
       <a class="tarjeta bda" href="https://crebeucayali.github.io/banco-digital-accesible/"><div class="tarjeta-cuerpo"><h2>Banco Digital Accesible</h2></div><div class="tarjeta-footer" aria-hidden="true"><span class="signo-lineal"></span></div></a>
