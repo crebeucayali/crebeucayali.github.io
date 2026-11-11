@@ -158,3 +158,25 @@ html.eva-alto-contraste #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto,
 body.alto-contraste #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto {background-image:none!important;background-color:#000!important;border:2px solid #fff!important;}
 html.eva-alto-contraste #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto::before,
 body.alto-contraste #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto::before {opacity:0!important;}
+
+/* En pantallas táctiles la apariencia de las cuatro tarjetas es uniforme:
+   fotografía visible y signo menos, sin depender del hover retenido por el toque.
+   La experiencia de hover en escritorio y las dimensiones no cambian. */
+@media (hover:none) and (pointer:coarse) {
+  #eva-distribucion.eva-layout-activo .eva-columna-principal > .tarjetas > .tarjeta.eva-modulo-foto::before {
+    opacity:.20;
+  }
+  #eva-distribucion.eva-layout-activo .eva-columna-principal > .tarjetas > .tarjeta.eva-modulo-foto:is(:hover,:focus-visible)::before {
+    opacity:.20;
+  }
+  #eva-distribucion.eva-layout-activo .eva-columna-principal > .tarjetas > .tarjeta.eva-modulo-foto .eva-modulo-signo,
+  #eva-distribucion.eva-layout-activo .eva-columna-principal > .tarjetas > .tarjeta.eva-modulo-foto:is(:hover,:focus-visible) .eva-modulo-signo {
+    transform:none;
+    transition:none;
+  }
+  #eva-distribucion.eva-layout-activo .eva-columna-principal > .tarjetas > .tarjeta.eva-modulo-foto .eva-modulo-signo::after,
+  #eva-distribucion.eva-layout-activo .eva-columna-principal > .tarjetas > .tarjeta.eva-modulo-foto:is(:hover,:focus-visible) .eva-modulo-signo::after {
+    opacity:0;
+    transition:none;
+  }
+}
