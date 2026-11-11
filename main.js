@@ -468,6 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (siguienteIndice !== indiceActual) {
         carrusel.dataset.transicionDireccion =
           direccion < 0 || (direccion === 0 && indice < indiceActual) ? "izquierda" : "derecha";
+        if (!prefiereReducirMovimiento) carrusel.classList.add("noticias-en-transicion");
       }
       indiceActual = siguienteIndice;
       desplazar();
@@ -492,6 +493,12 @@ document.addEventListener("DOMContentLoaded", () => {
         irA(indiceActual + 1, false, 1);
       }, 6000);
     };
+
+    pista.addEventListener("transitionend", (evento) => {
+      if (evento.target === pista && evento.propertyName === "transform") {
+        carrusel.classList.remove("noticias-en-transicion");
+      }
+    });
 
     botonAnterior.addEventListener("click", anterior);
     botonSiguiente.addEventListener("click", siguiente);
