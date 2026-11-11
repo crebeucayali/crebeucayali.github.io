@@ -302,19 +302,16 @@ body.alto-contraste .noticias-destacadas .noticia-titulo-enlace {
   text-decoration: underline;
 }
 
-/* Difuminado lateral durante el desplazamiento entre noticias.
-   Se concentra en el borde de avance: derecha al siguiente,
-   izquierda al anterior. Desaparece en cuanto termina el movimiento.
-   Flechas, tamaños y contenido quedan intactos. */
-@media (prefers-reduced-motion:no-preference) {
-  .noticias-destacadas .noticias-carrusel.noticias-en-transicion[data-transicion-direccion="derecha"] .noticias-viewport,
-  #eva-distribucion.eva-layout-activo .noticias-carrusel.noticias-en-transicion[data-transicion-direccion="derecha"] .noticias-viewport {
-    -webkit-mask-image:linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 38px), transparent 100%) !important;
-    mask-image:linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 38px), transparent 100%) !important;
-  }
-  .noticias-destacadas .noticias-carrusel.noticias-en-transicion[data-transicion-direccion="izquierda"] .noticias-viewport,
-  #eva-distribucion.eva-layout-activo .noticias-carrusel.noticias-en-transicion[data-transicion-direccion="izquierda"] .noticias-viewport {
-    -webkit-mask-image:linear-gradient(to right, transparent 0, #000 38px, #000 calc(100% - 12px), transparent 100%) !important;
-    mask-image:linear-gradient(to right, transparent 0, #000 38px, #000 calc(100% - 12px), transparent 100%) !important;
-  }
+/* Difuminado lateral permanente del carrusel de noticias.
+   Se mantiene en reposo y durante el desplazamiento; el lado más
+   pronunciado sigue la última dirección. No afecta a controles ni medidas. */
+.noticias-destacadas .noticias-carrusel[data-transicion-direccion="derecha"] .noticias-viewport,
+#eva-distribucion.eva-layout-activo .noticias-carrusel[data-transicion-direccion="derecha"] .noticias-viewport {
+  -webkit-mask-image:linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 38px), transparent 100%) !important;
+  mask-image:linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 38px), transparent 100%) !important;
+}
+.noticias-destacadas .noticias-carrusel[data-transicion-direccion="izquierda"] .noticias-viewport,
+#eva-distribucion.eva-layout-activo .noticias-carrusel[data-transicion-direccion="izquierda"] .noticias-viewport {
+  -webkit-mask-image:linear-gradient(to right, transparent 0, #000 38px, #000 calc(100% - 12px), transparent 100%) !important;
+  mask-image:linear-gradient(to right, transparent 0, #000 38px, #000 calc(100% - 12px), transparent 100%) !important;
 }
