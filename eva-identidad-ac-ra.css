@@ -1,0 +1,87 @@
+/* EVA 2.0 - identidad cromática de AC y asociación de RA a BDA.
+   Únicamente las secciones identificadas de AC, NI/AC y RA/BDA. */
+#eva-distribucion{
+  --eva-ac:#823b63;
+  --eva-ac-fondo:#faf4f8;
+  --eva-ac-borde:#dec5d3;
+  --eva-bda:#0e7490;
+}
+/* RA pertenece a BDA: CTA y recursos del repositorio en turquesa. */
+#eva-distribucion :is(.ra-semana-boton,.ra-semana-enlace){
+  --eva-cta:var(--eva-bda);
+}
+#eva-distribucion .recurso-destacado-eva[data-modulo="RA"]{
+  --destacado-color:var(--eva-bda);
+  --destacado-color-hover:#0a5970;
+  --destacado-tinte:#dff3f8;
+}
+/* NI está integrado en AC: identidad ciruela en sus recursos destacados. */
+#eva-distribucion .recurso-destacado-eva[data-modulo="NI"]{
+  --destacado-color:var(--eva-ac);
+  --destacado-color-hover:#682c4e;
+  --destacado-tinte:#f2e4ec;
+}
+/* Sección de lectura inclusiva: color institucional AC, manteniendo estructura. */
+#eva-distribucion .eva-lecturas-destacada{
+  background:var(--eva-ac-fondo);
+  border-color:var(--eva-ac-borde);
+}
+#eva-distribucion .eva-lecturas-destacada .eva-lecturas-sobretitulo,
+#eva-distribucion .eva-lecturas-destacada .eva-lectura-categoria{
+  color:var(--eva-ac);
+}
+#eva-distribucion .eva-lecturas-destacada .eva-lectura-contenido{
+  border-color:var(--eva-ac-borde);
+}
+#eva-distribucion .eva-lectura-enlace{
+  --eva-cta:var(--eva-ac);
+}
+/* AC: líneas de acción, servicios complementarios y alianza institucional. */
+#eva-distribucion .accesos-complementarios-weebly{
+  --azul:var(--eva-ac);
+  --eva-cta-ac:var(--eva-ac);
+}
+#eva-distribucion .accesos-complementarios-weebly .bloque-lineas,
+#eva-distribucion .accesos-complementarios-weebly .tarjeta-acceso{
+  border-top-color:var(--eva-ac);
+}
+#eva-distribucion .accesos-complementarios-weebly .tarjeta-acceso:is(:hover,:focus-visible){
+  border-color:var(--eva-ac-borde);
+  border-top-color:var(--eva-ac);
+}
+#eva-distribucion .accesos-complementarios-weebly .boton-lineas,
+#eva-distribucion .accesos-complementarios-weebly .enlace-acceso{
+  --eva-cta:var(--eva-ac);
+}
+#eva-distribucion .accesos-complementarios-weebly .alianza-institucional-icono{
+  color:var(--eva-ac);
+  background:var(--eva-ac-fondo);
+}
+#eva-distribucion .accesos-complementarios-weebly .alianza-institucional-accion{
+  color:var(--eva-ac);
+}
+/* Legibilidad de la selección de lecturas dentro del lateral de AC. */
+#eva-distribucion .eva-lecturas-lista button{
+  color:var(--eva-ac);
+}
+#eva-distribucion .eva-lecturas-lista button:hover,
+#eva-distribucion .eva-lecturas-lista button[aria-pressed="true"]{
+  background:#f2e4ec;
+}
+/* Precedencia de los modos de alto contraste existentes. */
+body.alto-contraste #eva-distribucion .eva-lecturas-destacada,
+html.eva-alto-contraste #eva-distribucion .eva-lecturas-destacada,
+body.alto-contraste #eva-distribucion .eva-lecturas-destacada .eva-lectura-contenido,
+html.eva-alto-contraste #eva-distribucion .eva-lecturas-destacada .eva-lectura-contenido{
+  background:#000 !important;
+  color:#fff !important;
+  border-color:#fff !important;
+}
+body.alto-contraste #eva-distribucion .eva-lecturas-destacada :is(.eva-lecturas-sobretitulo,.eva-lectura-categoria),
+html.eva-alto-contraste #eva-distribucion .eva-lecturas-destacada :is(.eva-lecturas-sobretitulo,.eva-lectura-categoria){
+  color:#fff !important;
+}
+body.alto-contraste #eva-distribucion .eva-lecturas-lista button,
+html.eva-alto-contraste #eva-distribucion .eva-lecturas-lista button{
+  color:#fff !important;
+}
