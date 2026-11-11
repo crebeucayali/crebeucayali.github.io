@@ -1,0 +1,82 @@
+/* Vista experimental: cuatro tarjetas EVA 2.0. Solo existe en rama de prueba. */
+#eva-distribucion.eva-layout-activo .eva-columna-principal > .tarjetas > .tarjeta.modulo-hover-preview {
+  position: relative !important;
+  display: flex;
+  min-height: 230px;
+  padding: 24px 18px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 18px;
+  background-color: #183c53;
+  background-image: url("./patron-shipibo.webp?v=11");
+  background-size: 250px auto;
+  background-repeat: repeat;
+  background-position: center;
+  text-align: center;
+  box-shadow: 0 9px 22px rgba(14, 40, 57, .14);
+  color: #fff;
+  text-decoration: none;
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+#eva-distribucion .tarjeta.modulo-hover-preview::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--fondo-modulo);
+  opacity: .91;
+  transition: opacity .38s ease;
+}
+#eva-distribucion .tarjeta.modulo-hover-preview.capacitaciones { --fondo-modulo: linear-gradient(145deg, #183c6f, #3068a0); }
+#eva-distribucion .tarjeta.modulo-hover-preview.banco { --fondo-modulo: linear-gradient(145deg, #075c76, #0e93aa); }
+#eva-distribucion .tarjeta.modulo-hover-preview.materiales { --fondo-modulo: linear-gradient(145deg, #b76d12, #d59a30); }
+#eva-distribucion .tarjeta.modulo-hover-preview.dua-3 { --fondo-modulo: linear-gradient(145deg, #176647, #38956b); }
+#eva-distribucion .tarjeta.modulo-hover-preview h3 {
+  color: #fff !important;
+  max-width: 98%;
+  margin: 0;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  line-height: 1.25;
+  font-weight: 800;
+  text-shadow: 0 2px 10px rgba(0,0,0,.8);
+}
+#eva-distribucion .tarjeta.modulo-hover-preview .modulo-hover-signo {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  color: #fff;
+  font-size: 1.95rem;
+  line-height: 1;
+  font-weight: 700;
+  background: rgba(0,0,0,.28);
+  border: 1px solid rgba(255,255,255,.7);
+  border-radius: 50%;
+}
+#eva-distribucion .tarjeta.modulo-hover-preview .modulo-hover-signo::before { content: "−"; }
+@media (hover: hover) {
+  #eva-distribucion .tarjeta.modulo-hover-preview:hover::before { opacity: .14; }
+  #eva-distribucion .tarjeta.modulo-hover-preview:hover .modulo-hover-signo::before { content: "+"; }
+  #eva-distribucion .tarjeta.modulo-hover-preview:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(14,40,57,.2);
+  }
+}
+#eva-distribucion .tarjeta.modulo-hover-preview:focus-visible::before { opacity: .14; }
+#eva-distribucion .tarjeta.modulo-hover-preview:focus-visible .modulo-hover-signo::before { content: "+"; }
+#eva-distribucion .tarjeta.modulo-hover-preview:focus-visible {
+  outline: 4px solid #f5b526;
+  outline-offset: 4px;
+}
+@media (max-width: 650px) {
+  #eva-distribucion.eva-layout-activo .eva-columna-principal > .tarjetas > .tarjeta.modulo-hover-preview { min-height: 200px; }
+  #eva-distribucion .tarjeta.modulo-hover-preview h3 { font-size: 1.05rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #eva-distribucion .tarjeta.modulo-hover-preview,
+  #eva-distribucion .tarjeta.modulo-hover-preview::before { transition: none; }
+}
