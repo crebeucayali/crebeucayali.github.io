@@ -33,13 +33,61 @@
     footer a{color:#dbfff7}
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
     @media(forced-colors:active){section{border:1px solid CanvasText}}
+
+    /* Encabezado y pie institucional adaptados a EVA 2.0: estilos solo de esta página. */
+    .salto{position:absolute;left:12px;top:-90px;z-index:100;background:#fff;color:#123e57;padding:10px 14px;border-radius:7px}
+    .salto:focus{top:10px}
+    .cabecera-eva{padding:0;color:#fff;background:#0b3550}
+    .cabecera-interior{max-width:1180px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .marca-eva{color:#fff;text-decoration:none;display:flex;align-items:center;gap:14px;min-width:0}
+    .marca-eva img,.pie-identidad img{object-fit:contain;background:#fff;border-radius:12px;flex-shrink:0;padding:5px}
+    .marca-texto{display:flex;flex-direction:column;line-height:1.35}
+    .marca-texto strong{font-size:1rem}
+    .marca-texto small{font-size:.77rem;color:#e3f4f2}
+    .marca-texto>span{font-size:.83rem;color:#e2f6f1;margin-top:4px}
+    .version-eva{background:#e6f5ed;color:#064d49;padding:3px 8px;border-radius:6px;font-size:.75rem;margin-left:6px;white-space:nowrap}
+    .enlaces-eva{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap}
+    .enlaces-eva a{color:#fff;text-decoration:none;font-size:.91rem;font-weight:650;padding:9px 11px;border-radius:8px}
+    .enlaces-eva a:hover,.enlaces-eva a:focus-visible{background:rgba(255,255,255,.17)}
+    .portada-eva{padding:35px max(20px,calc((100vw - 960px)/2)) 40px;background-image:linear-gradient(115deg,rgba(11,53,80,.86),rgba(14,105,95,.81)),url("./patron-shipibo.webp?v=11");background-size:cover,320px auto;background-repeat:no-repeat,repeat;background-position:center}
+    .portada-eva .sobretitulo{color:#defff3;font-size:.76rem;font-weight:800;letter-spacing:.075em;margin-bottom:10px}
+    .cabecera-eva .portada-eva h1{margin:0 0 10px}
+    .cabecera-eva .portada-eva p:last-child{max-width:740px}
+    .pie-eva{background:linear-gradient(135deg,#082f49,#0b4f4a 65%,#0f766e);color:#fff;padding:0;text-align:left;font-size:.91rem}
+    .pie-eva a{color:#e3fff8}
+    .pie-contenido{max-width:1180px;margin:auto;display:grid;grid-template-columns:1.35fr .8fr 1fr;gap:28px;padding:34px 20px 26px}
+    .pie-bloque{min-width:0}
+    .pie-bloque h2{color:#fff;font-size:1.04rem;margin:0 0 11px}
+    .pie-bloque p{color:#e8f3f5;font-size:.91rem;line-height:1.6;margin:0 0 8px;overflow-wrap:anywhere}
+    .pie-identidad{display:flex;align-items:flex-start;gap:14px}
+    .pie-bloque a{display:block;margin:5px 0;text-decoration:underline;text-underline-offset:3px}
+    .pie-legal{padding:14px 20px;display:flex;justify-content:center;flex-wrap:wrap;gap:10px 24px;border-top:1px solid rgba(255,255,255,.24);border-bottom:1px solid rgba(255,255,255,.24)}
+    .pie-final{text-align:center;padding:18px 20px 22px}
+    .pie-final p{margin:3px auto;color:#e8f5f4;font-size:.84rem}
+    @media(max-width:850px){.cabecera-interior{flex-direction:column;align-items:stretch}.enlaces-eva{justify-content:flex-start}.pie-contenido{grid-template-columns:1fr 1fr}.pie-identidad{grid-column:1 / -1}}
+    @media(max-width:580px){.cabecera-interior{padding:14px 16px}.marca-eva img{width:50px;height:50px}.marca-texto strong{font-size:.88rem}.marca-texto small{font-size:.7rem}.marca-texto>span{font-size:.72rem}.enlaces-eva{gap:3px}.enlaces-eva a{padding:8px;font-size:.83rem}.portada-eva{padding:28px 18px 34px}.pie-contenido{grid-template-columns:1fr;padding:28px 18px;gap:22px}.pie-identidad{grid-column:auto}.pie-legal{justify-content:flex-start}}
   </style>
 </head>
 <body>
-  <header>
-    <a class="volver" href="./">Volver al inicio de EVA</a>
-    <h1>Autoría, créditos y evolución de EVA</h1>
-    <p>Presentación del desarrollo original de EVA, sus etapas de organización y los créditos de materiales, contenidos y servicios de terceros.</p>
+  <a class="salto" href="#contenido">Ir al contenido principal</a>
+  <header class="cabecera-eva" aria-label="Encabezado institucional">
+    <div class="cabecera-interior">
+      <a class="marca-eva" href="./" aria-label="Inicio del Ecosistema Virtual Accesible">
+        <img src="https://crebeucayali.github.io/accesos-complementarios/logo-crebe.webp?v=3" alt="Logo del CREBE Señor de los Milagros - Ucayali" width="64" height="64">
+        <span class="marca-texto"><strong>CREBE "Señor de los Milagros" - Ucayali</strong><small>Centro de Recursos de Educación Básica Especial</small><span>Ecosistema Virtual Accesible <b class="version-eva">EVA 2.0</b></span></span>
+      </a>
+      <nav class="enlaces-eva" aria-label="Navegación principal">
+        <a href="./">Inicio EVA</a>
+        <a href="https://crebeucayali.github.io/accesos-complementarios/paginas/nosotros.html">Nosotros</a>
+        <a href="https://crebeucayali.github.io/accesos-complementarios/paginas/contacto.html">Contacto</a>
+        <a href="#perfil-profesional">Perfil del creador</a>
+      </nav>
+    </div>
+    <div class="portada-eva">
+      <p class="sobretitulo">EVA 2.0 · INFORMACIÓN Y RECONOCIMIENTOS</p>
+      <h1>Autoría, créditos y evolución de EVA</h1>
+      <p>Presentación del desarrollo original de EVA, sus etapas de organización y los créditos de materiales, contenidos y servicios de terceros.</p>
+    </div>
   </header>
   <main id="contenido">
     <section class="intro" aria-labelledby="declaracion">
@@ -129,9 +177,36 @@
       <p class="fecha">Actualización documental: 11 de noviembre de 2026.</p>
     </section>
   </main>
-  <footer>
-    <p>Ecosistema Virtual Accesible (EVA) | Creación y desarrollo original: Gabriel Berrospi.</p>
-    <p><a href="./">Inicio de EVA</a></p>
+  <footer class="pie-eva" aria-label="Pie de página institucional">
+    <div class="pie-contenido">
+      <div class="pie-bloque pie-identidad">
+        <img src="https://crebeucayali.github.io/accesos-complementarios/logo-crebe.webp?v=3" alt="Logo del CREBE Señor de los Milagros - Ucayali" width="68" height="68" loading="lazy">
+        <div><h2>Ecosistema Virtual Accesible</h2><p>Plataforma educativa del CREBE "Señor de los Milagros" - Ucayali.</p></div>
+      </div>
+      <nav class="pie-bloque" aria-label="Enlaces del ecosistema">
+        <h2>Enlaces</h2>
+        <a href="./">Inicio principal</a>
+        <a href="#declaracion">Declaración de autoría</a>
+        <a href="#perfil-profesional">Perfil profesional</a>
+        <a href="#evolucion-eva">Evolución de EVA</a>
+      </nav>
+      <div class="pie-bloque">
+        <h2>Contacto institucional</h2>
+        <p>CREBE "Señor de los Milagros" - Ucayali</p>
+        <p>senordelosmilagroscrebe@gmail.com</p>
+        <a href="https://crebeucayali.github.io/accesos-complementarios/paginas/contacto.html">Página de contacto</a>
+      </div>
+    </div>
+    <nav class="pie-legal" aria-label="Información legal">
+      <a href="https://crebeucayali.github.io/accesos-complementarios/paginas/aviso-legal.html">Aviso legal</a>
+      <a href="https://crebeucayali.github.io/accesos-complementarios/paginas/politica-privacidad.html">Privacidad</a>
+      <a href="https://crebeucayali.github.io/accesos-complementarios/paginas/politica-cookies.html">Cookies</a>
+      <a href="https://crebeucayali.github.io/accesos-complementarios/mapa-web.html">Mapa web</a>
+    </nav>
+    <div class="pie-final">
+      <p>Ecosistema Virtual Accesible (EVA) | Creación y desarrollo original: Gabriel Berrospi.</p>
+      <p>© 2026. Uso institucional autorizado al CREBE "Señor de los Milagros" - Ucayali. Los materiales de terceros conservan sus respectivas atribuciones.</p>
+    </div>
   </footer>
 </body>
 </html>
