@@ -1,0 +1,129 @@
+/* EVA 2.0: tarjetas de los cuatro módulos principales.
+   El alcance se limita a las tarjetas; la cuadrícula y sus dimensiones existentes se conservan. */
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto {
+  --eva-modulo-capa:linear-gradient(140deg,#183c6f,#3068a0);
+  position:relative !important;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  align-items:stretch;
+  isolation:isolate;
+  overflow:hidden;
+  box-sizing:border-box;
+  padding:0;
+  /* No se establece width, height, min-height ni grid-column: se conservan las medidas de EVA. */
+  color:#fff;
+  text-align:center;
+  background-color:#174258;
+  background-image:linear-gradient(0deg,rgba(4,25,36,.28),rgba(4,25,36,.12)),var(--eva-modulo-foto);
+  background-position:center;
+  background-size:cover;
+  transition:transform .32s ease,box-shadow .32s ease;
+}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:var(--eva-modulo-capa);
+  opacity:.72;
+  transition:opacity .38s ease;
+}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto.capacitaciones {
+  --eva-modulo-capa:linear-gradient(140deg,#1b3f73,#427db6);
+  --eva-modulo-foto:url("https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80");
+}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto.banco {
+  --eva-modulo-capa:linear-gradient(140deg,#086078,#17a0b3);
+  --eva-modulo-foto:url("https://images.unsplash.com/photo-1660839061462-c9c8ceecb33d?auto=format&fit=crop&w=1200&q=80");
+}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto.materiales {
+  --eva-modulo-capa:linear-gradient(140deg,#a66016,#d59937);
+  --eva-modulo-foto:url("https://images.unsplash.com/photo-1774464593838-85b320eb7453?auto=format&fit=crop&w=1200&q=80");
+}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto.dua-3 {
+  --eva-modulo-capa:linear-gradient(140deg,#185f48,#339678);
+  --eva-modulo-foto:url("https://images.unsplash.com/photo-1758270705696-ec9caffc73dd?auto=format&fit=crop&w=1200&q=80");
+}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto .eva-modulo-cuerpo {
+  display:flex;
+  flex:1 1 auto;
+  min-height:0;
+  justify-content:center;
+  align-items:center;
+  padding:28px 20px 12px;
+}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto h3 {
+  margin:0;
+  max-width:100%;
+  color:#fff !important;
+  font-size:clamp(1.18rem,2.5vw,1.7rem);
+  line-height:1.25;
+  font-weight:800;
+  overflow-wrap:anywhere;
+  text-shadow:0 2px 9px rgba(0,0,0,.8);
+}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto .eva-modulo-pie {
+  display:flex;
+  width:100%;
+  min-height:66px;
+  align-items:center;
+  justify-content:center;
+  padding:7px 12px 17px;
+  background:linear-gradient(to top,rgba(0,0,0,.24),transparent);
+}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto .eva-modulo-signo {
+  display:block;
+  position:relative;
+  width:34px;
+  height:34px;
+  flex-shrink:0;
+  transform:rotate(0deg);
+  transform-origin:center;
+  transition:transform .8s ease-in-out;
+}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto .eva-modulo-signo::before,
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto .eva-modulo-signo::after {
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  background:#fff;
+  border-radius:2px;
+  transform:translate(-50%,-50%);
+  box-shadow:0 1px 5px rgba(0,0,0,.4);
+}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto .eva-modulo-signo::before { width:28px;height:3px; }
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto .eva-modulo-signo::after {
+  width:3px;
+  height:28px;
+  opacity:1;
+  transition:opacity .18s ease-in-out;
+}
+@media (hover:hover) {
+  #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto:hover::before {opacity:.13;}
+  #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto:hover {
+    transform:translateY(-3px);
+    box-shadow:0 16px 32px rgba(23,61,74,.2);
+  }
+}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto:is(:hover,:focus-visible) .eva-modulo-signo { transform:rotate(720deg); }
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto:is(:hover,:focus-visible) .eva-modulo-signo::after {
+  opacity:0;
+  transition-delay:.62s;
+}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto:focus-visible {outline:4px solid #eea620;outline-offset:4px;}
+#eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto:focus-visible::before {opacity:.13;}
+@media (prefers-reduced-motion:reduce) {
+  #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto,
+  #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto::before,
+  #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto .eva-modulo-signo,
+  #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto .eva-modulo-signo::after {transition:none !important;}
+  #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto:is(:hover,:focus-visible) .eva-modulo-signo {transform:none;}
+  #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto:is(:hover,:focus-visible) .eva-modulo-signo::after {opacity:0;}
+}
+/* La accesibilidad institucional mantiene preferencia en modo alto contraste. */
+html.eva-alto-contraste #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto,
+body.alto-contraste #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto {background-image:none!important;background-color:#000!important;border:2px solid #fff!important;}
+html.eva-alto-contraste #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto::before,
+body.alto-contraste #eva-distribucion .tarjetas > .tarjeta.eva-modulo-foto::before {opacity:0!important;}
