@@ -4,7 +4,7 @@
   const destacado = document.getElementById("eva-lectura-contenido");
   const panel = document.getElementById("eva-lecturas-destacada");
   if (!lateral || !destacado || !panel) return;
-  const origen = "https://crebeucayali.github.io/noti-inclusivos/";
+  const origen = "https://crebeucayali.github.io/accesos-complementarios/lecturas-inclusivas/";
   const max = 3;
   const normalizar = texto => String(texto || "").replace(/\s+/g, " ").trim();
   const contenido = (tag, clase, texto) => {
@@ -61,7 +61,7 @@
         const enlace = articulo.querySelector("a[href]");
         if (!enlace) continue;
         const url = new URL(enlace.getAttribute("href"), origen);
-        if (url.origin !== location.origin || !url.pathname.startsWith("/noti-inclusivos/articulos/")) continue;
+        if (url.origin !== location.origin || !url.pathname.startsWith("/accesos-complementarios/lecturas-inclusivas/articulos/")) continue;
         const titulo = normalizar(articulo.querySelector("h3")?.textContent);
         const resumen = normalizar(articulo.querySelector(".tarjeta-contenido > p:not(.tarjeta-etiqueta):not(.tarjeta-meta)")?.textContent);
         const categoria = normalizar(articulo.querySelector(".tarjeta-etiqueta")?.textContent) || "Lectura inclusiva";
