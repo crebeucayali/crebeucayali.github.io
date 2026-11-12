@@ -315,3 +315,17 @@ body.alto-contraste .noticias-destacadas .noticia-titulo-enlace {
   -webkit-mask-image:linear-gradient(to right, transparent 0, #000 58px, #000 calc(100% - 20px), transparent 100%) !important;
   mask-image:linear-gradient(to right, transparent 0, #000 58px, #000 calc(100% - 20px), transparent 100%) !important;
 }
+
+/* Flechas de noticias: sin contenedor cromático, únicamente símbolo negro. */
+.noticias-destacadas .noticias-control,
+.noticias-destacadas .noticias-control:hover,
+.noticias-destacadas .noticias-control:focus-visible {
+  background:transparent !important;
+  background-color:transparent !important;
+  color:#000 !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+.noticias-destacadas .noticias-control span {
+  color:#000 !important;
+}
