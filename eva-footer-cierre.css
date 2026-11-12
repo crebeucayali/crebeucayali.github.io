@@ -165,6 +165,12 @@ body.theme-crebe .pie-crebe.pie-crebe-completo{
 /* Los bloques internos conservan su ancho, centrado y separación anteriores. */
 
 
+/* Evitar que el contenedor de portada recorte la extensión vertical del patrón. */
+body.theme-crebe .portal-crebe{
+  overflow-x:clip !important;
+  overflow-y:visible !important;
+}
+
 /* Portada EVA: fondo Shipibo a todo el ancho, contenido en la posición original.
    La capa visual se extiende sin modificar el tamaño ni el padding del hero
    y sin alterar el panel de búsqueda superpuesto. */
@@ -180,7 +186,7 @@ body.theme-crebe .portal-crebe .hero::before{
   content:"";
   position:absolute;
   z-index:-1;
-  top:0;
+  top:-120px;
   bottom:0;
   left:50%;
   width:100vw;
