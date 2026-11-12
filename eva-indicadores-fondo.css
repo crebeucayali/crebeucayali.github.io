@@ -11,12 +11,26 @@
   margin-left:0 !important;
   margin-right:0 !important;
   border-radius:0;
-  padding:clamp(42px,5vw,78px) max(18px,calc((100vw - 1200px)/2)) clamp(48px,5vw,80px);
+  padding:clamp(42px,5vw,78px) 0 clamp(48px,5vw,80px);
   background-image:linear-gradient(110deg,rgba(5,51,85,.80),rgba(8,88,126,.70)),var(--impacto-fondo);
   background-position:center,center;
   background-repeat:no-repeat;
   background-size:cover;
   color:#fff;
+}
+/* El encabezado se centra; el carrusel llega hasta ambos bordes de la franja. */
+.impacto-crebe.impacto-con-fondo .impacto-encabezado{
+  max-width:840px;
+  padding-inline:clamp(16px,3vw,28px);
+  box-sizing:border-box;
+}
+.impacto-crebe.impacto-con-fondo .impacto-carrusel{
+  width:100%;
+  max-width:none;
+  margin:0;
+  /* Desvanecimiento progresivo de las tarjetas justo en el borde visible. */
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 58px,#000 calc(100% - 58px),transparent 100%);
+  mask-image:linear-gradient(to right,transparent 0,#000 58px,#000 calc(100% - 58px),transparent 100%);
 }
 .impacto-crebe.impacto-con-fondo :is(.impacto-etiqueta,.impacto-encabezado h2,.impacto-encabezado p,.impacto-tarjeta strong,.impacto-tarjeta h3,.impacto-tarjeta p){
   color:#fff!important;
@@ -25,11 +39,9 @@
   color:#fff;
   text-shadow:0 1px 4px rgba(0,0,0,.45);
 }
-.impacto-crebe.impacto-con-fondo .impacto-carrusel::before{
-  background:linear-gradient(90deg,rgba(5,51,85,.42),transparent);
-}
+.impacto-crebe.impacto-con-fondo .impacto-carrusel::before,
 .impacto-crebe.impacto-con-fondo .impacto-carrusel::after{
-  background:linear-gradient(270deg,rgba(5,51,85,.42),transparent);
+  display:none;
 }
 @media(max-width:720px){
   .impacto-crebe.impacto-con-fondo{
@@ -37,8 +49,19 @@
     max-width:none !important;
     margin-left:0 !important;
     margin-right:0 !important;
-    padding:38px 12px 45px;
+    padding:38px 0 45px;
   }
+}
+@media(max-width:720px){
+  .impacto-crebe.impacto-con-fondo .impacto-carrusel{
+    -webkit-mask-image:linear-gradient(to right,transparent 0,#000 28px,#000 calc(100% - 28px),transparent 100%);
+    mask-image:linear-gradient(to right,transparent 0,#000 28px,#000 calc(100% - 28px),transparent 100%);
+  }
+}
+body.alto-contraste .impacto-crebe.impacto-con-fondo .impacto-carrusel,
+html.eva-alto-contraste .impacto-crebe.impacto-con-fondo .impacto-carrusel{
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
 }
 body.alto-contraste .impacto-crebe.impacto-con-fondo,html.eva-alto-contraste .impacto-crebe.impacto-con-fondo{
   background:#000!important;
