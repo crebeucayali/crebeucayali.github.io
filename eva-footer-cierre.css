@@ -211,3 +211,23 @@ body.theme-crebe .portal-crebe .hero::before{
   background-size:cover,cover,cover,cover,cover,cover,cover,cover,cover,320px auto;
   background-position:center,center;
 }
+
+
+/* Halos decorativos detrás del contenido general de EVA.
+   El patrón de posiciones es irregular y se repite por mosaicos de dimensiones
+   fijas. Los radios no dependen del tamaño de la ventana. */
+body.theme-crebe{
+  background-color:#ffffff !important;
+  background-image:
+    radial-gradient(circle 94px at 11% 18%,transparent 72px,rgba(27,63,115,.15) 81px,transparent 92px),
+    radial-gradient(circle 63px at 36% 61%,transparent 43px,rgba(8,96,120,.17) 52px,transparent 61px),
+    radial-gradient(circle 82px at 66% 25%,transparent 61px,rgba(166,96,22,.14) 70px,transparent 80px),
+    radial-gradient(circle 106px at 89% 73%,transparent 83px,rgba(24,95,72,.15) 94px,transparent 104px),
+    radial-gradient(circle 58px at 22% 87%,transparent 40px,rgba(24,95,72,.14) 49px,transparent 57px),
+    radial-gradient(circle 74px at 77% 94%,transparent 53px,rgba(27,63,115,.13) 63px,transparent 73px),
+    radial-gradient(circle 69px at 52% 9%,transparent 49px,rgba(8,96,120,.13) 59px,transparent 68px),
+    radial-gradient(circle 55px at 96% 37%,transparent 38px,rgba(166,96,22,.13) 47px,transparent 54px) !important;
+  background-size:1440px 1100px !important;
+  background-position:center top !important;
+  background-repeat:repeat !important;
+}
