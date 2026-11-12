@@ -21,9 +21,7 @@
 body.theme-crebe{
   margin:0;
   color:var(--tinta);
-  background:
-    radial-gradient(circle at 91% 5%,rgba(15,118,110,.11) 0 20rem,transparent 21rem),
-    var(--arena-50);
+  background:#ffffff;
   font-family:Arial, Helvetica, sans-serif;
   line-height:1.6;
   overflow-x:hidden;
