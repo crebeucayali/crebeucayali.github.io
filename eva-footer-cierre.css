@@ -140,3 +140,26 @@ body.theme-crebe .eva-accesibilidad-panel .eva-accesibilidad-boton:focus-visible
   outline:3px solid #ffd166 !important;
   outline-offset:3px !important;
 }
+
+
+/* EVA 2.0: fondos institucionales a todo el ancho de pantalla.
+   No se modifican los contenedores ni la distribución de sus contenidos. */
+body.theme-crebe .cabecera-crebe{
+  width:100% !important;
+  max-width:none !important;
+  margin-left:0 !important;
+  margin-right:0 !important;
+  border-radius:0 !important;
+}
+body.theme-crebe .pie-crebe.pie-crebe-completo{
+  box-sizing:border-box;
+  width:100% !important;
+  max-width:none !important;
+  margin-left:0 !important;
+  margin-right:0 !important;
+  margin-bottom:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+/* Los bloques internos conservan su ancho, centrado y separación anteriores. */
