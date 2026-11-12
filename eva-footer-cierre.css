@@ -194,8 +194,20 @@ body.theme-crebe .portal-crebe .hero::before{
   border-radius:0;
   pointer-events:none;
   background-color:#0b3550;
-  background-image:linear-gradient(135deg,rgba(11,53,80,.78) 0%,rgba(15,79,87,.72) 48%,rgba(15,118,110,.72) 100%),url("./patron-shipibo.webp?v=11");
-  background-repeat:no-repeat,repeat;
-  background-size:cover,320px auto;
+  /* Halos de trazo fino, posiciones irregulares y radios en píxeles.
+     CAP azul, BDA cian, MEA ámbar, DUA verde. Sin animación. */
+  background-image:
+    radial-gradient(circle 82px at 8% 29%, transparent 65px, rgba(66,125,182,.24) 70px, transparent 78px),
+    radial-gradient(circle 65px at 27% 72%, transparent 48px, rgba(23,160,179,.22) 53px, transparent 62px),
+    radial-gradient(circle 105px at 46% 18%, transparent 87px, rgba(213,153,55,.19) 93px, transparent 102px),
+    radial-gradient(circle 72px at 69% 78%, transparent 54px, rgba(51,150,120,.22) 60px, transparent 69px),
+    radial-gradient(circle 57px at 88% 25%, transparent 40px, rgba(23,160,179,.24) 46px, transparent 55px),
+    radial-gradient(circle 93px at 17% 88%, transparent 74px, rgba(213,153,55,.16) 81px, transparent 90px),
+    radial-gradient(circle 68px at 60% 40%, transparent 51px, rgba(66,125,182,.19) 57px, transparent 65px),
+    radial-gradient(circle 85px at 94% 82%, transparent 67px, rgba(51,150,120,.19) 73px, transparent 82px),
+    linear-gradient(135deg,rgba(11,53,80,.78) 0%,rgba(15,79,87,.72) 48%,rgba(15,118,110,.72) 100%),
+    url("./patron-shipibo.webp?v=11");
+  background-repeat:no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,repeat;
+  background-size:cover,cover,cover,cover,cover,cover,cover,cover,cover,320px auto;
   background-position:center,center;
 }
