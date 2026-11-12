@@ -20,11 +20,6 @@
     "url": "https://crebeucayali.github.io/materiales-educativos-accesibles/datos/buscador.json"
   },
   {
-    "id": "ni",
-    "nombre": "Notiinclusivo",
-    "url": "https://crebeucayali.github.io/noti-inclusivos/datos/buscador.json"
-  },
-  {
     "id": "ra",
     "nombre": "Repositorio Accesible",
     "url": "https://crebeucayali.github.io/banco-digital-accesible/repositorio-accesible/datos/buscador.json"
