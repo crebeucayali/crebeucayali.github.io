@@ -7,8 +7,8 @@ body.theme-crebe .pie-crebe-completo .pie-crebe-contenido{
   box-sizing:border-box;
   width:min(100% - 48px,1200px);
   max-width:1200px;
-  grid-template-columns:minmax(0,1.35fr) minmax(150px,.8fr) minmax(210px,1fr) minmax(185px,.85fr);
-  gap:clamp(20px,2.5vw,36px);
+  grid-template-columns:minmax(0,1.1fr) minmax(0,.8fr) minmax(0,1fr) minmax(0,.95fr);
+  gap:clamp(14px,1.8vw,28px);
   padding-block:clamp(30px,3.5vw,44px);
   align-items:start;
 }
@@ -22,7 +22,7 @@ body.theme-crebe .pie-crebe-completo .pie-crebe-secundario{
   padding:18px max(20px,calc((100% - 1200px)/2));
 }
 body.theme-crebe .pie-crebe-completo .pie-crebe-final{padding:20px 24px 24px}
-@media(max-width:1050px){
+@media(max-width:820px){
   body.theme-crebe .pie-crebe-completo .pie-crebe-contenido{
     grid-template-columns:repeat(2,minmax(0,1fr));
     gap:26px 32px;
