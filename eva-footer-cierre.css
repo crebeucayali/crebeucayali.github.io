@@ -163,3 +163,33 @@ body.theme-crebe .pie-crebe.pie-crebe-completo{
   box-shadow:none !important;
 }
 /* Los bloques internos conservan su ancho, centrado y separación anteriores. */
+
+
+/* Portada EVA: fondo Shipibo a todo el ancho, contenido en la posición original.
+   La capa visual se extiende sin modificar el tamaño ni el padding del hero
+   y sin alterar el panel de búsqueda superpuesto. */
+body.theme-crebe .portal-crebe .hero{
+  background:transparent !important;
+  background-image:none !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  overflow:visible !important;
+  isolation:isolate;
+}
+body.theme-crebe .portal-crebe .hero::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  top:0;
+  bottom:0;
+  left:50%;
+  width:100vw;
+  transform:translateX(-50%);
+  border-radius:0;
+  pointer-events:none;
+  background-color:#0b3550;
+  background-image:linear-gradient(135deg,rgba(11,53,80,.78) 0%,rgba(15,79,87,.72) 48%,rgba(15,118,110,.72) 100%),url("./patron-shipibo.webp?v=11");
+  background-repeat:no-repeat,repeat;
+  background-size:cover,320px auto;
+  background-position:center,center;
+}
