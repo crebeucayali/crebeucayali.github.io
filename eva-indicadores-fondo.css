@@ -1,12 +1,12 @@
 /* Fondo institucional WebP administrable; solo se activa al publicar una imagen. */
 .impacto-crebe.impacto-con-fondo{
-  /* Fondo de borde a borde respecto a la ventana, incluso si el contenido tiene ancho limitado. */
+  /* Sección hermana de main: ancho natural completo sin desplazamientos artificiales. */
   position:relative;
-  left:50%;
-  width:100vw;
+  left:auto;
+  width:100%;
   max-width:none;
   box-sizing:border-box;
-  margin:24px 0 0 -50vw;
+  margin:24px 0 0;
   border-radius:0;
   padding:clamp(42px,5vw,78px) max(18px,calc((100vw - 1200px)/2)) clamp(48px,5vw,80px);
   background-image:linear-gradient(110deg,rgba(5,51,85,.80),rgba(8,88,126,.70)),var(--impacto-fondo);
@@ -30,7 +30,7 @@
 }
 @media(max-width:720px){
   .impacto-crebe.impacto-con-fondo{
-    width:100vw;
+    width:100%;
     padding:38px 12px 45px;
   }
 }
