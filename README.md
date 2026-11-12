@@ -47,3 +47,9 @@ Este repositorio incluye documentos de respaldo en formato Markdown para dejar c
 Los documentos incluidos tienen finalidad de respaldo interno, trazabilidad y reconocimiento de autoría. No reemplazan una licencia legal formal, acta de entrega, convenio, registro de obra u otro documento jurídico.
 
 Actualización de despliegue de GitHub Pages.
+
+## Ubicación vigente de RA
+
+Repositorio Accesible (RA) ya no se presenta como repositorio público independiente dentro de EVA; se consulta como una sección de Banco Digital Accesible (BDA): https://crebeucayali.github.io/banco-digital-accesible/repositorio-accesible/.
+
+Los enlaces antiguos del repositorio RA se mantienen como redirecciones de compatibilidad. No deben desactivarse ni archivarse mientras existan enlaces históricos que dependan de GitHub Pages.
