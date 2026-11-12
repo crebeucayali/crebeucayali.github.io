@@ -6,8 +6,8 @@
   const ENDPOINT = "https://dteimbhwtzghhsijeeld.supabase.co/rest/v1/";
   const PUBLIC_KEY = "sb_publishable_tHbo1jTeW_dC90hdA5DvyQ_a6LrfKpq";
   const ROOT = "https://crebeucayali.github.io/";
-  const REPOSITORY = ROOT + "repositorio-accesible/";
-  const NEWS = ROOT + "noti-inclusivos/";
+  const REPOSITORY = ROOT + "banco-digital-accesible/repositorio-accesible/";
+  const NEWS = ROOT + "accesos-complementarios/lecturas-inclusivas/";
   const CALENDAR = ROOT + "accesos-complementarios/recursos/calendario.html";
   const PAGE_SIZE = 5;
   const INITIAL_SIZE = 3;
