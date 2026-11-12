@@ -9,8 +9,8 @@
     "CAP":"/capacitaciones/",
     "BDA":"/banco-digital-accesible/",
     "MEA":"/materiales-educativos-accesibles/",
-    "NI":"/noti-inclusivos/",
-    "RA":"/repositorio-accesible/",
+    "NI":"/accesos-complementarios/lecturas-inclusivas/",
+    "RA":"/banco-digital-accesible/repositorio-accesible/",
     "DUA 3.0":"/DUA-3.0/"
   };
   function enlaceValido(valor,prefijo){
