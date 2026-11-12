@@ -22,6 +22,54 @@ body.theme-crebe .pie-crebe-completo .pie-crebe-secundario{
   padding:18px max(20px,calc((100% - 1200px)/2));
 }
 body.theme-crebe .pie-crebe-completo .pie-crebe-final{padding:20px 24px 24px}
+/* Disposición real en cuatro columnas. Evita el grid-column:1/-1 heredado
+   a <=1100px y compacta la identidad sin reducir la legibilidad del texto. */
+@media(min-width:821px){
+  body.theme-crebe .pie-crebe-completo .pie-crebe-contenido{
+    grid-template-columns:minmax(0,1.1fr) minmax(0,.85fr) minmax(0,1fr) minmax(0,1fr);
+    gap:clamp(12px,1.6vw,26px);
+  }
+  body.theme-crebe .pie-crebe-completo .pie-crebe-identidad{
+    grid-column:auto;
+    display:grid;
+    grid-template-columns:52px minmax(0,1fr);
+    grid-template-rows:auto auto;
+    align-content:start;
+    align-items:start;
+    column-gap:10px;
+    row-gap:10px;
+  }
+  body.theme-crebe .pie-crebe-completo .pie-crebe-identidad .pie-crebe-logo{
+    grid-column:1;
+    grid-row:1;
+    width:52px;
+    height:52px;
+    flex-basis:auto;
+    border-radius:14px;
+  }
+  body.theme-crebe .pie-crebe-completo .pie-crebe-identidad > div{
+    display:contents;
+  }
+  body.theme-crebe .pie-crebe-completo .pie-crebe-identidad h2{
+    grid-column:2;
+    grid-row:1;
+    min-width:0;
+    margin:0;
+    align-self:center;
+  }
+  body.theme-crebe .pie-crebe-completo .pie-crebe-identidad p{
+    grid-column:1/-1;
+    grid-row:2;
+    margin:0;
+    overflow-wrap:normal;
+    hyphens:auto;
+  }
+  body.theme-crebe .pie-crebe-completo .pie-crebe-indicador{
+    grid-column:auto;
+    width:100%;
+    min-width:0;
+  }
+}
 @media(max-width:820px){
   body.theme-crebe .pie-crebe-completo .pie-crebe-contenido{
     grid-template-columns:repeat(2,minmax(0,1fr));
