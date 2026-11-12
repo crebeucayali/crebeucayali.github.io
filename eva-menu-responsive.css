@@ -82,5 +82,5 @@ body.alto-contraste .cabecera-crebe.eva-menu-abierto .pestanas-crebe>a,html.eva-
 @media (prefers-reduced-motion:reduce){.cabecera-crebe .eva-menu-toggle span{transition:none!important}}
 
 /* Transparencia sutil de cabecera EVA; mantiene legibilidad y desenfoque. */
-.cabecera-crebe{background:rgba(255,255,255,.75)!important;backdrop-filter:saturate(1.05) blur(12px)!important;-webkit-backdrop-filter:saturate(1.05) blur(12px)!important}
+.cabecera-crebe{background:rgba(255,255,255,.65)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 body.alto-contraste .cabecera-crebe,html.eva-alto-contraste .cabecera-crebe{background:#000!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
