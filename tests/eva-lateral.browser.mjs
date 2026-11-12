@@ -10,7 +10,7 @@ const report = [];
 const items = (count, label) => Array.from({ length: count }, (_, index) => ({
   id: count - index,
   titulo: label + ' ' + (index + 1),
-  enlace_url: 'https://crebeucayali.github.io/noti-inclusivos/',
+  enlace_url: 'https://crebeucayali.github.io/accesos-complementarios/lecturas-inclusivas/',
   created_at: '2026-11-10T12:00:00Z'
 }));
 const rows = {
