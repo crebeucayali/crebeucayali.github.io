@@ -1,0 +1,81 @@
+/* EVA 2.0 · Cierre estético controlado: footer y controles flotantes.
+   Se mantienen textos, enlaces, colores institucionales y comportamiento JS. */
+body.theme-crebe .pie-crebe-completo{
+  margin-top:clamp(32px,4vw,48px);
+}
+body.theme-crebe .pie-crebe-completo .pie-crebe-contenido{
+  box-sizing:border-box;
+  width:min(100% - 48px,1200px);
+  max-width:1200px;
+  grid-template-columns:minmax(0,1.35fr) minmax(150px,.8fr) minmax(210px,1fr) minmax(185px,.85fr);
+  gap:clamp(20px,2.5vw,36px);
+  padding-block:clamp(30px,3.5vw,44px);
+  align-items:start;
+}
+body.theme-crebe .pie-crebe-completo .pie-crebe-bloque{min-width:0}
+body.theme-crebe .pie-crebe-completo .pie-crebe-bloque :is(p,a){
+  overflow-wrap:anywhere;
+}
+body.theme-crebe .pie-crebe-completo .pie-crebe-bloque p{line-height:1.65}
+body.theme-crebe .pie-crebe-completo .pie-crebe-secundario{
+  gap:10px 24px;
+  padding:18px max(20px,calc((100% - 1200px)/2));
+}
+body.theme-crebe .pie-crebe-completo .pie-crebe-final{padding:20px 24px 24px}
+@media(max-width:1050px){
+  body.theme-crebe .pie-crebe-completo .pie-crebe-contenido{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:26px 32px;
+  }
+  body.theme-crebe .pie-crebe-completo .pie-crebe-identidad{grid-column:1/-1}
+  body.theme-crebe .pie-crebe-completo .pie-crebe-indicador{max-width:360px}
+}
+@media(max-width:640px){
+  body.theme-crebe .pie-crebe-completo .pie-crebe-contenido{
+    width:calc(100% - 36px);
+    grid-template-columns:minmax(0,1fr);
+    gap:0;
+    padding:30px 0 20px;
+  }
+  body.theme-crebe .pie-crebe-completo .pie-crebe-identidad{
+    grid-column:auto;
+    gap:12px;
+    padding-bottom:20px;
+  }
+  body.theme-crebe .pie-crebe-completo .pie-crebe-logo{
+    width:56px;height:56px;flex-basis:56px;border-radius:14px;
+  }
+  body.theme-crebe .pie-crebe-completo .pie-crebe-bloque:not(.pie-crebe-identidad){
+    padding-block:18px;
+    border-top:1px solid rgba(255,255,255,.18);
+  }
+  body.theme-crebe .pie-crebe-completo .pie-crebe-bloque h2{margin-bottom:9px}
+  body.theme-crebe .pie-crebe-completo .pie-crebe-indicador{width:100%;max-width:100%}
+  body.theme-crebe .pie-crebe-completo .pie-crebe-secundario{
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+    gap:12px 18px;
+    padding:20px 18px;
+    text-align:center;
+  }
+  body.theme-crebe .pie-crebe-completo .pie-crebe-final{
+    padding:18px 18px calc(100px + env(safe-area-inset-bottom,0px));
+  }
+  /* Los dos accesos permanecen en esquinas opuestas, sin invadir el texto final. */
+  body.theme-crebe .eva-tour-launch{
+    left:12px;right:auto;
+    bottom:calc(12px + env(safe-area-inset-bottom,0px));
+    max-width:min(44vw,180px);
+    box-sizing:border-box;
+  }
+  body.theme-crebe .eva-accesibilidad-panel{
+    right:12px;left:auto;
+    bottom:calc(12px + env(safe-area-inset-bottom,0px));
+    max-width:44vw;
+  }
+}
+@media(max-width:360px){
+  body.theme-crebe .eva-tour-launch{left:8px;max-width:43vw;padding-inline:9px;font-size:.78rem}
+  body.theme-crebe .eva-accesibilidad-panel{right:8px;max-width:45vw}
+}
