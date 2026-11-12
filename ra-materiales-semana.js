@@ -6,7 +6,7 @@
   const heading = document.getElementById("ra-semana-titulo");
   const api = "https://dteimbhwtzghhsijeeld.supabase.co/rest/v1/ra_materiales_semana_publicos";
   const key = "sb_publishable_tHbo1jTeW_dC90hdA5DvyQ_a6LrfKpq";
-  const catalogue = "https://crebeucayali.github.io/repositorio-accesible/";
+  const catalogue = "https://crebeucayali.github.io/banco-digital-accesible/repositorio-accesible/";
 
   function imageURL(value) {
     const path = String(value || "").trim();
@@ -17,10 +17,11 @@
       const url = new URL(path);
       if (url.protocol !== "https:" || url.username || url.password || url.search || url.hash) return null;
       const fromRA = url.hostname === "crebeucayali.github.io"
-        && /^\/repositorio-accesible\/assets\/[a-z0-9._/-]+\.(?:jpe?g|png|webp)$/i.test(url.pathname);
+        && /^\/(?:repositorio-accesible|banco-digital-accesible\/repositorio-accesible)\/assets\/[a-z0-9._/-]+\.(?:jpe?g|png|webp)$/i.test(url.pathname);
       const fromStorage = url.hostname === "dteimbhwtzghhsijeeld.supabase.co"
         && /^\/storage\/v1\/object\/public\/eva-publico\/repositorio\/[a-z0-9._/-]+\.(?:jpe?g|png|webp)$/i.test(url.pathname);
-      return fromRA || fromStorage ? url.href : null;
+      if (fromRA) return catalogue + url.pathname.replace(/^\/(?:repositorio-accesible|banco-digital-accesible\/repositorio-accesible)\//, "");
+      return fromStorage ? url.href : null;
     } catch { return null; }
   }
   const categoryRoutes = Object.freeze({
