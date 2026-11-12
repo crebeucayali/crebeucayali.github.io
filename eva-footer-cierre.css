@@ -79,3 +79,16 @@ body.theme-crebe .pie-crebe-completo .pie-crebe-final{padding:20px 24px 24px}
   body.theme-crebe .eva-tour-launch{left:8px;max-width:43vw;padding-inline:9px;font-size:.78rem}
   body.theme-crebe .eva-accesibilidad-panel{right:8px;max-width:45vw}
 }
+
+/* Legibilidad de los dos controles flotantes sobre superficies oscuras o claras.
+   Sin cambios al pie de página, posición, tamaño ni colores de los botones. */
+body.theme-crebe .eva-tour-launch,
+body.theme-crebe .eva-accesibilidad-panel .eva-accesibilidad-boton{
+  border:2px solid rgba(255,255,255,.96) !important;
+  box-shadow:0 0 0 1px rgba(9,39,57,.34),0 7px 20px rgba(0,0,0,.34) !important;
+}
+body.theme-crebe .eva-tour-launch:focus-visible,
+body.theme-crebe .eva-accesibilidad-panel .eva-accesibilidad-boton:focus-visible{
+  outline:3px solid #ffd166 !important;
+  outline-offset:3px !important;
+}
