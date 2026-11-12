@@ -274,7 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
         titulo: "Jornada de sensibilización sobre inclusión educativa",
         descripcion: "Actividad orientada a fortalecer el respeto por la diversidad y promover prácticas de inclusión en la comunidad educativa.",
         imagen: "imagenes/noticias/noticia-1.svg",
-        enlace: "https://crebeucayali.github.io/noti-inclusivos/"
+        enlace: "https://crebeucayali.github.io/accesos-complementarios/lecturas-inclusivas/"
       },
       {
         titulo: "Capacitación docente en adaptaciones curriculares",
@@ -298,7 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
         titulo: "Estudiantes de educación superior participan en acciones formativas",
         descripcion: "Participación de estudiantes en jornadas de sensibilización y procesos de formación vinculados a inclusión y accesibilidad.",
         imagen: "imagenes/noticias/noticia-5.svg",
-        enlace: "https://crebeucayali.github.io/noti-inclusivos/"
+        enlace: "https://crebeucayali.github.io/accesos-complementarios/lecturas-inclusivas/"
       }
     ];
 
