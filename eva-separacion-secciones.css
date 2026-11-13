@@ -17,3 +17,42 @@
 #eva-distribucion.eva-layout-activo > .eva-columna-principal > .eva-recurso-hoy {
   border-top:0;
 }
+
+/* Subrayado editorial de títulos en las cinco secciones de Inicio.
+   Tramo rojo de la identidad de Inicio y prolongación gris discreta. */
+#eva-distribucion .eva-columna-principal :is(
+  #eva-recurso-hoy-titulo,
+  #recursos-destacados-titulo,
+  #eva-lecturas-destacada-titulo,
+  #ra-semana-titulo,
+  #titulo-aplicaciones-apoyo
+)::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 7px;
+  margin-top: 11px;
+  background:
+    linear-gradient(to right, #9b3434 0 56px, transparent 56px),
+    linear-gradient(to bottom, transparent 6px, #d9e2e6 6px);
+}
+
+/* Conservar legibilidad del acento decorativo en modos de alto contraste. */
+html.eva-alto-contraste #eva-distribucion .eva-columna-principal :is(
+  #eva-recurso-hoy-titulo,
+  #recursos-destacados-titulo,
+  #eva-lecturas-destacada-titulo,
+  #ra-semana-titulo,
+  #titulo-aplicaciones-apoyo
+)::after,
+body.alto-contraste #eva-distribucion .eva-columna-principal :is(
+  #eva-recurso-hoy-titulo,
+  #recursos-destacados-titulo,
+  #eva-lecturas-destacada-titulo,
+  #ra-semana-titulo,
+  #titulo-aplicaciones-apoyo
+)::after {
+  background:
+    linear-gradient(to right, #fff 0 56px, transparent 56px),
+    linear-gradient(to bottom, transparent 6px, #fff 6px) !important;
+}
