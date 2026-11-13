@@ -48,7 +48,7 @@ try {
    assert.ok(value.height>=40,`Altura accesible ${width}`);
    assert.equal(value.arrow,'"›"',`Flecha circular ${width}`);
    assert.equal(value.arrowBorder,"solid",`Contorno circular de flecha ${width}`);
-   assert.equal(value.otherColor,rgb(14,116,144),`Botón RA independiente ${width}`);
+   assert.equal(value.otherColor,rgb(23,63,108),`Color existente del botón RA intacto ${width}`);
    assert.equal(value.otherBackground,"rgba(0, 0, 0, 0)",`Botón RA sin relleno ${width}`);
    assert.match(value.href,/lecturas-inclusivas\/articulos\/ejemplo\.html$/);
    assert.equal(value.overflow,false,`Sin desbordamiento horizontal ${width}`);
