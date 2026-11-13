@@ -121,9 +121,9 @@ html:not(.eva-alto-contraste) body:not(.alto-contraste)
 html:not(.eva-alto-contraste) body:not(.alto-contraste)
 #eva-distribucion .eva-lecturas-destacada .eva-lectura-enlace {
   --eva-cta:var(--eva-ac);
-  background:var(--eva-ac) !important;
+  background:transparent !important;
   border-color:var(--eva-ac) !important;
-  color:#fff !important;
+  color:var(--eva-ac) !important;
 }
 html:not(.eva-alto-contraste) body:not(.alto-contraste)
 #eva-distribucion .eva-lecturas-destacada .eva-lectura-enlace:is(:hover,:focus-visible) {
