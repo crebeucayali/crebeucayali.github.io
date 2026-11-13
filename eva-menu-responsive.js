@@ -23,10 +23,12 @@
    if(!moreVisible())return;
    more.setAttribute("aria-expanded","false");
    morePanel.hidden=true;
+   header.classList.remove("eva-mas-abierto");
    if(restore)more.focus();
    updateBackground();
  }
  function openMore(){
+   header.classList.add("eva-mas-abierto");
    morePanel.hidden=false;
    more.setAttribute("aria-expanded","true");
    updateBackground();
