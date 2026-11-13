@@ -114,7 +114,7 @@ html:not(.eva-alto-contraste) body:not(.alto-contraste)
 }
 html:not(.eva-alto-contraste) body:not(.alto-contraste)
 #eva-distribucion .eva-lecturas-destacada .eva-lectura-contenido {
-  background:var(--eva-ac-fondo);
+  background:transparent;
   border-color:var(--eva-ac-borde);
   border-left:4px solid var(--eva-ac);
 }
