@@ -54,12 +54,15 @@ try{
      const position=await page.locator("#eva-mas-panel a").first().evaluate(el=>{
        const css=getComputedStyle(el),rect=el.getBoundingClientRect();
        const group=el.parentElement.getBoundingClientRect();
-       return {align:css.textAlign,justify:css.justifyContent,left:rect.left,groupLeft:group.left,width:rect.width,groupWidth:group.width};
+       const parentStyle=getComputedStyle(el.parentElement);
+       const contentWidth=group.width-parseFloat(parentStyle.paddingLeft)-parseFloat(parentStyle.paddingRight);
+       return {align:css.textAlign,justify:css.justifyContent,left:rect.left,groupLeft:group.left,width:rect.width,contentWidth};
      });
      assert.equal(position.align,"left","Texto de Más a la izquierda en móvil");
      assert.equal(position.justify,"flex-start","Accesos de Más alineados como menú principal");
      assert.ok(position.left>=position.groupLeft && position.left-position.groupLeft<=26,"Sin centrado horizontal del enlace");
-     assert.ok(position.width>=position.groupWidth-2,"Enlace de Más ocupa toda la fila");
+     assert.ok(Math.abs(position.width-position.contentWidth)<=2,
+       "Enlace de Más ocupa el ancho disponible sin eliminar márgenes internos: "+JSON.stringify(position));
      assert.equal(await page.locator(".eva-mas-identidad").isVisible(),false);
      await page.locator("#eva-mas-toggle").click();
      assert.equal(await page.locator("#eva-mas-panel").isHidden(),true);
