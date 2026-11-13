@@ -18,8 +18,46 @@
   border-top:0;
 }
 
-/* Subrayado editorial de títulos en las cinco secciones de Inicio.
-   Tramo rojo de la identidad de Inicio y prolongación gris discreta. */
+/* Subrayado editorial: acento de cada módulo o servicio.
+   La sección de destacados usa identidad EVA cuando mezcla módulos. */
+#eva-distribucion #eva-recurso-hoy-titulo {
+  --eva-subrayado-acento:#9a6a2a; /* MEA, pictogramas */
+}
+#eva-distribucion #eva-recurso-hoy[data-modulo="BDA"] #eva-recurso-hoy-titulo {
+  --eva-subrayado-acento:var(--eva-bda,#0e7490);
+}
+#eva-distribucion #eva-recurso-hoy[data-modulo="MEA"] #eva-recurso-hoy-titulo {
+  --eva-subrayado-acento:#9a6a2a;
+}
+#eva-distribucion #recursos-destacados-titulo {
+  --eva-subrayado-acento:#146747; /* EVA: varios módulos */
+}
+#eva-distribucion #recursos-destacados-eva[data-modulo="CAP"] #recursos-destacados-titulo {
+  --eva-subrayado-acento:#17324d;
+}
+#eva-distribucion #recursos-destacados-eva[data-modulo="BDA"] #recursos-destacados-titulo,
+#eva-distribucion #recursos-destacados-eva[data-modulo="RA"] #recursos-destacados-titulo {
+  --eva-subrayado-acento:var(--eva-bda,#0e7490);
+}
+#eva-distribucion #recursos-destacados-eva[data-modulo="MEA"] #recursos-destacados-titulo {
+  --eva-subrayado-acento:#9a6a2a;
+}
+#eva-distribucion #recursos-destacados-eva[data-modulo="NI"] #recursos-destacados-titulo {
+  --eva-subrayado-acento:var(--eva-ac,#823b63);
+}
+#eva-distribucion #recursos-destacados-eva[data-modulo="DUA 3.0"] #recursos-destacados-titulo {
+  --eva-subrayado-acento:#0b6257;
+}
+#eva-distribucion #eva-lecturas-destacada-titulo {
+  --eva-subrayado-acento:var(--eva-ac,#823b63); /* AC */
+}
+#eva-distribucion #ra-semana-titulo {
+  --eva-subrayado-acento:var(--eva-bda,#0e7490); /* RA: asociado a BDA */
+}
+#eva-distribucion #titulo-aplicaciones-apoyo {
+  --eva-subrayado-acento:#146a72; /* NeuroNova Apps */
+}
+
 #eva-distribucion .eva-columna-principal :is(
   #eva-recurso-hoy-titulo,
   #recursos-destacados-titulo,
@@ -33,11 +71,11 @@
   height: 7px;
   margin-top: 11px;
   background:
-    linear-gradient(to right, #9b3434 0 56px, transparent 56px),
+    linear-gradient(to right, var(--eva-subrayado-acento,#146747) 0 56px, transparent 56px),
     linear-gradient(to bottom, transparent 6px, #d9e2e6 6px);
 }
 
-/* Conservar legibilidad del acento decorativo en modos de alto contraste. */
+/* Alto contraste: ambos tramos permanecen visibles en blanco. */
 html.eva-alto-contraste #eva-distribucion .eva-columna-principal :is(
   #eva-recurso-hoy-titulo,
   #recursos-destacados-titulo,
