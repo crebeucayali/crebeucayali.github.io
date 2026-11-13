@@ -69,6 +69,7 @@
   }
   function empty(box, body) {
     body.replaceChildren();
+    box.removeAttribute("data-modulo");
     box.hidden = true;
   }
   function image(id, altText, index) {
@@ -126,6 +127,7 @@
     }
     detail.append(date, heading, desc, credit, links);
     body.replaceChildren(gallery, detail);
+    box.dataset.modulo = record.tipo === "lsp" ? "BDA" : "MEA";
     box.hidden = false;
   }
   async function query(view, signal) {
