@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="eva-botones-body.css?v=1"/>
 <link rel="stylesheet" href="eva-identidad-ac-ra.css?v=5"/>
 <link rel="stylesheet" href="eva-navegacion-colores.css?v=2"/>
-<link rel="stylesheet" href="eva-menu-responsive.css?v=6"/>
+<link rel="stylesheet" href="eva-menu-responsive.css?v=7"/>
 <link rel="stylesheet" href="eva-lecturas-inclusivas.css?v=2"/>
 <link rel="stylesheet" href="noticias-carrusel-responsive.css?v=10"/>
 <link rel="stylesheet" href="ra-semana-tarjetas.css?v=2"/>
@@ -61,12 +61,35 @@
 </a>
 <button id="eva-menu-toggle" class="eva-menu-toggle" type="button" aria-expanded="false" aria-controls="eva-nav-principal" aria-label="Abrir menú de navegación"><span></span><span></span><span></span></button>
 <nav id="eva-nav-principal" aria-label="Navegación principal" class="pestanas-crebe">
+<div class="eva-menu-identidad">
+  <img src="https://crebeucayali.github.io/accesos-complementarios/logo-crebe.webp?v=3" alt="Logo institucional del CREBE" width="48" height="48">
+  <div><strong>EVA 2.0</strong><small>Ecosistema Virtual Accesible</small></div>
+  <button id="eva-menu-cerrar" class="eva-menu-cerrar" type="button" aria-label="Cerrar menú de navegación">×</button>
+</div>
 <a class="activo" href="/">Inicio</a>
 <a href="https://crebeucayali.github.io/accesos-complementarios/paginas/nosotros.html">Nosotros</a>
 <a href="https://crebeucayali.github.io/accesos-complementarios/paginas/que-hacemos.html">Qué hacemos</a>
-<a href="https://crebeucayali.github.io/accesos-complementarios/directorios/directorio-institucional.html">Directorio</a>
-<a href="https://crebeucayali.github.io/accesos-complementarios/directorios/directorio-ciudadano.html">Entidades</a>
 <a href="https://crebeucayali.github.io/accesos-complementarios/paginas/contacto.html">Contacto</a>
+<button id="eva-mas-toggle" class="eva-mas-toggle" type="button" aria-expanded="false" aria-controls="eva-mas-panel">Más <span aria-hidden="true" class="eva-mas-chevron">⌄</span></button>
+<section id="eva-mas-panel" class="eva-mas-panel" aria-label="Más accesos de EVA" hidden>
+  <div class="eva-mas-identidad">
+    <img src="https://crebeucayali.github.io/accesos-complementarios/logo-crebe.webp?v=3" alt="Logo institucional del CREBE" width="48" height="48">
+    <div><strong>EVA 2.0</strong><small>Más accesos</small></div>
+    <button id="eva-mas-cerrar" class="eva-menu-cerrar" type="button" aria-label="Cerrar más accesos">×</button>
+  </div>
+  <div class="eva-mas-enlaces">
+    <p class="eva-mas-grupo">Institucional</p>
+    <a href="https://crebeucayali.github.io/accesos-complementarios/directorios/directorio-institucional.html">Directorio</a>
+    <a href="https://crebeucayali.github.io/accesos-complementarios/directorios/directorio-ciudadano.html">Entidades</a>
+    <p class="eva-mas-grupo">Actividades y contenidos</p>
+    <a href="https://crebeucayali.github.io/accesos-complementarios/recursos/calendarios.html">Calendarios CREBE</a>
+    <a href="https://crebeucayali.github.io/accesos-complementarios/recursos/galeria.html">Galería</a>
+    <a href="https://crebeucayali.github.io/accesos-complementarios/lecturas-inclusivas/">Lecturas inclusivas</a>
+    <p class="eva-mas-grupo">Orientación</p>
+    <a href="https://crebeucayali.github.io/accesos-complementarios/paginas/guia-de-uso.html">Guía de uso</a>
+    <a href="https://crebeucayali.github.io/accesos-complementarios/paginas/mapa-web.html">Mapa web</a>
+  </div>
+</section>
 <button id="admin-toggle" class="admin-toggle admin-toggle-nav" type="button" aria-expanded="false" aria-controls="admin-mini-panel" aria-label="Acceso para administradores">
 <span class="admin-text-default">Iniciar sesión</span>
 <span class="admin-text-hover" aria-hidden="true">Acceso admin</span>
@@ -74,6 +97,7 @@
 </nav>
 </div>
 </header>
+<button id="eva-menu-fondo" class="eva-menu-fondo" type="button" aria-label="Cerrar navegación" hidden></button>
 <main class="portal-crebe">
 <section class="hero">
 <div class="patron-portada" aria-hidden="true"></div>
@@ -469,7 +493,7 @@
 
 <button id="volver-arriba" class="volver-arriba" type="button" aria-label="Volver al inicio" hidden>↑</button>
 <script src="main.js?v=19"></script>
-<script src="eva-menu-responsive.js?v=1" defer></script>
+<script src="eva-menu-responsive.js?v=2" defer></script>
 <script src="ra-materiales-semana.js?v=3" defer></script>
 <script src="eva-columna-lateral.js?v=2" defer></script>
 <script src="eva-lecturas-inclusivas.js?v=2" defer></script>
