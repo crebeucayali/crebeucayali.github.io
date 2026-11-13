@@ -1,0 +1,23 @@
+/* EVA 2.0: esquinas rectas en las secciones y tarjetas de la columna principal.
+   Se conservan los radios de botones, insignias, indicadores, controles,
+   los elementos de accesibilidad y toda la columna lateral. */
+
+#eva-distribucion > .eva-columna-principal > section,
+#eva-distribucion .eva-columna-principal :is(
+  .tarjetas > .tarjeta,
+  .eva-recurso-dia-contenido,
+  .recurso-destacado-eva,
+  .eva-lectura-contenido,
+  .ra-semana-visor,
+  .ra-semana-slide,
+  .aplicacion-apoyo,
+  .eva-civico-tarjeta,
+  .eva-civico-extra,
+  .noticia-tarjeta,
+  .bloque-lineas,
+  .linea-item,
+  .tarjeta-acceso,
+  .alianza-institucional
+) {
+  border-radius: 0 !important;
+}
