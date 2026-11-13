@@ -68,10 +68,14 @@
       const tarjetas=filas.map(tarjeta).filter(Boolean);
       if(!tarjetas.length)return;
       contenedor.replaceChildren(...tarjetas);
+      const modulos=new Set(tarjetas.map(item=>item.dataset.modulo));
+      if(modulos.size===1) seccion.dataset.modulo=tarjetas[0].dataset.modulo;
+      else seccion.removeAttribute("data-modulo");
       seccion.hidden=false;
     }catch{
       // Ante errores de red o ausencia de registros, no mostrar un bloque vacío.
       seccion.hidden=true;contenedor.replaceChildren();
+      seccion.removeAttribute("data-modulo");
     }
   }
   cargar();
