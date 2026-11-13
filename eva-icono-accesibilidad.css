@@ -12,10 +12,10 @@ body .eva-accesibilidad-panel .eva-accesibilidad-boton {
   min-height: 60px;
   padding: 0;
   overflow: hidden;
-  border: 4px solid #1246ff;
+  border: 4px solid #9B3434;
   border-radius: 50%;
-  background: #052d7c;
-  box-shadow: 0 0 0 3px rgba(18, 70, 255, .15), 0 8px 20px rgba(0, 25, 69, .28);
+  background: #9B3434;
+  box-shadow: 0 0 0 3px rgba(155, 52, 52, .15), 0 8px 20px rgba(0, 0, 0, .25);
   color: transparent;
   font-size: 0;
   line-height: 0;
@@ -30,7 +30,9 @@ body .eva-accesibilidad-panel .eva-accesibilidad-boton::before {
   pointer-events: none;
 }
 body .eva-accesibilidad-panel .eva-accesibilidad-boton:hover {
-  box-shadow: 0 0 0 3px rgba(18, 70, 255, .24), 0 10px 24px rgba(0, 25, 69, .32);
+  background: #8B2E2E;
+  border-color: #8B2E2E;
+  box-shadow: 0 0 0 3px rgba(155, 52, 52, .24), 0 10px 24px rgba(0, 0, 0, .30);
 }
 @media (max-width: 700px) {
   body .eva-accesibilidad-panel .eva-accesibilidad-boton {

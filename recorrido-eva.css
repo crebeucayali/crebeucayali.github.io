@@ -78,3 +78,16 @@
  .eva-tour-panel{max-height:calc(100dvh - 60px)}
  .eva-tour-panel.eva-tour-panel-top{top:50px;max-height:calc(100dvh - 60px)}
 }
+
+/* Color institucional compartido con el control de accesibilidad de EVA. */
+.eva-tour-launch,
+.eva-tour-btn:not(.secondary):not(.tertiary) {
+  background: #9B3434;
+  border-color: #9B3434;
+  color: #ffffff;
+}
+.eva-tour-launch:hover,
+.eva-tour-btn:not(.secondary):not(.tertiary):hover {
+  background: #8B2E2E;
+  border-color: #8B2E2E;
+}
