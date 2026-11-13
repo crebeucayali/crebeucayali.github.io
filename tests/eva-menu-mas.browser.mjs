@@ -76,8 +76,14 @@ try{
    }
    await page.locator("#eva-mas-toggle").evaluate(el=>el.focus());
    assert.equal(await page.locator("#eva-mas-toggle").getAttribute("aria-controls"),"eva-mas-panel");
-   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2);
-   assert.equal(overflow,false,"Sin desplazamiento horizontal "+width);
+   const overflow=await page.evaluate(()=>({
+     width:innerWidth,scroll:document.documentElement.scrollWidth,
+     elements:[...document.querySelectorAll("body *")].map(el=>{
+       const r=el.getBoundingClientRect();
+       return {selector:el.id||el.className||el.tagName,right:Math.round(r.right),left:Math.round(r.left),width:Math.round(r.width)};
+     }).filter(x=>x.right>innerWidth+2||x.left< -2).slice(0,12)
+   }));
+   assert.ok(overflow.scroll<=overflow.width+2,"Sin desplazamiento horizontal "+width+": "+JSON.stringify(overflow));
    await page.close();
  }
  const contrast=await browser.newPage({viewport:{width:390,height:780}});
