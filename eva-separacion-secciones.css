@@ -94,3 +94,61 @@ body.alto-contraste #eva-distribucion .eva-columna-principal :is(
     linear-gradient(to right, #fff 0 56px, transparent 56px),
     linear-gradient(to bottom, transparent 6px, #fff 6px) !important;
 }
+
+/* Asegurar la línea visible en tres encabezados con un elemento HTML real.
+   No duplicar los pseudo-elementos anteriores. */
+#eva-distribucion .eva-columna-principal :is(
+  #eva-recurso-hoy-titulo,
+  #recursos-destacados-titulo,
+  #ra-semana-titulo
+)::after {
+  content:none !important;
+  display:none !important;
+}
+#eva-distribucion .eva-columna-principal .eva-subrayado-titulo {
+  --eva-subrayado-acento:#146747;
+  display:block !important;
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  height:7px;
+  margin:0 0 12px;
+  border:0;
+  background:
+    linear-gradient(to right, var(--eva-subrayado-acento) 0 56px, transparent 56px),
+    linear-gradient(to bottom, transparent 6px, #d9e2e6 6px);
+}
+#eva-distribucion #eva-recurso-hoy .eva-subrayado-titulo {
+  --eva-subrayado-acento:#9a6a2a; /* MEA */
+}
+#eva-distribucion #eva-recurso-hoy[data-modulo="BDA"] .eva-subrayado-titulo {
+  --eva-subrayado-acento:var(--eva-bda,#0e7490);
+}
+#eva-distribucion #recursos-destacados-eva .eva-subrayado-titulo {
+  --eva-subrayado-acento:#146747; /* Varios módulos EVA */
+}
+#eva-distribucion #recursos-destacados-eva[data-modulo="CAP"] .eva-subrayado-titulo {
+  --eva-subrayado-acento:#17324d;
+}
+#eva-distribucion #recursos-destacados-eva[data-modulo="BDA"] .eva-subrayado-titulo,
+#eva-distribucion #recursos-destacados-eva[data-modulo="RA"] .eva-subrayado-titulo {
+  --eva-subrayado-acento:var(--eva-bda,#0e7490);
+}
+#eva-distribucion #recursos-destacados-eva[data-modulo="MEA"] .eva-subrayado-titulo {
+  --eva-subrayado-acento:#9a6a2a;
+}
+#eva-distribucion #recursos-destacados-eva[data-modulo="NI"] .eva-subrayado-titulo {
+  --eva-subrayado-acento:var(--eva-ac,#823b63);
+}
+#eva-distribucion #recursos-destacados-eva[data-modulo="DUA 3.0"] .eva-subrayado-titulo {
+  --eva-subrayado-acento:#0b6257;
+}
+#eva-distribucion #ra-semana-eva .eva-subrayado-titulo {
+  --eva-subrayado-acento:var(--eva-bda,#0e7490); /* RA / BDA */
+}
+html.eva-alto-contraste #eva-distribucion .eva-columna-principal .eva-subrayado-titulo,
+body.alto-contraste #eva-distribucion .eva-columna-principal .eva-subrayado-titulo {
+  background:
+    linear-gradient(to right, #fff 0 56px, transparent 56px),
+    linear-gradient(to bottom, transparent 6px, #fff 6px) !important;
+}
