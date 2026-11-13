@@ -7,7 +7,7 @@ const html=await readFile(new URL("index.html",root),"utf8");
 const layout=await readFile(new URL("estilos.css",root),"utf8");
 const menuCSS=await readFile(new URL("eva-menu-responsive.css",root),"utf8");
 const menuJS=await readFile(new URL("eva-menu-responsive.js",root),"utf8");
-assert.match(html,/eva-menu-responsive\.css\?v=7/);
+assert.match(html,/eva-menu-responsive\.css\?v=8/);
 assert.match(html,/eva-menu-responsive\.js\?v=2/);
 const section=html.slice(html.indexOf('<header class="cabecera-crebe">'),html.indexOf('<main class="portal-crebe">'));
 assert.ok(section.includes("eva-menu-identidad")&&section.includes("eva-mas-panel"));
@@ -51,6 +51,15 @@ try{
      await page.locator("#eva-mas-toggle").click();
      assert.equal(await page.locator("#eva-mas-panel").isVisible(),true);
      assert.equal(await page.locator("#eva-mas-toggle").getAttribute("aria-expanded"),"true");
+     const position=await page.locator("#eva-mas-panel a").first().evaluate(el=>{
+       const css=getComputedStyle(el),rect=el.getBoundingClientRect();
+       const group=el.parentElement.getBoundingClientRect();
+       return {align:css.textAlign,justify:css.justifyContent,left:rect.left,groupLeft:group.left,width:rect.width,groupWidth:group.width};
+     });
+     assert.equal(position.align,"left","Texto de Más a la izquierda en móvil");
+     assert.equal(position.justify,"flex-start","Accesos de Más alineados como menú principal");
+     assert.ok(position.left>=position.groupLeft && position.left-position.groupLeft<=26,"Sin centrado horizontal del enlace");
+     assert.ok(position.width>=position.groupWidth-2,"Enlace de Más ocupa toda la fila");
      assert.equal(await page.locator(".eva-mas-identidad").isVisible(),false);
      await page.locator("#eva-mas-toggle").click();
      assert.equal(await page.locator("#eva-mas-panel").isHidden(),true);
@@ -65,6 +74,9 @@ try{
      await page.locator("#eva-mas-toggle").click();
      assert.equal(await page.locator("#eva-mas-panel").isVisible(),true);
      assert.equal(await page.locator(".eva-mas-identidad strong").innerText(),"EVA 2.0");
+     const alignment=await page.locator("#eva-mas-panel a").first().evaluate(el=>({textAlign:getComputedStyle(el).textAlign,justify:getComputedStyle(el).justifyContent}));
+     assert.equal(alignment.textAlign,"left");
+     assert.equal(alignment.justify,"flex-start");
      const rect=await page.locator("#eva-mas-panel").boundingBox();
      assert.ok(rect.x>=width-rect.width-2,"Panel Más a la derecha "+width);
      assert.equal(await page.locator("#eva-menu-fondo").isVisible(),true);
