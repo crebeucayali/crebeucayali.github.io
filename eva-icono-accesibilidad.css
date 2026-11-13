@@ -1,0 +1,43 @@
+/* Identidad de icono de accesibilidad solo para la portada principal de EVA.
+   La herramienta, sus preferencias y el texto accesible siguen en el componente compartido. */
+body .eva-accesibilidad-panel .eva-accesibilidad-boton {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  min-height: 60px;
+  padding: 0;
+  overflow: hidden;
+  border: 4px solid #1246ff;
+  border-radius: 50%;
+  background: #052d7c;
+  box-shadow: 0 0 0 3px rgba(18, 70, 255, .15), 0 8px 20px rgba(0, 25, 69, .28);
+  color: transparent;
+  font-size: 0;
+  line-height: 0;
+  cursor: pointer;
+}
+body .eva-accesibilidad-panel .eva-accesibilidad-boton::before {
+  position: absolute;
+  inset: 2px;
+  display: block;
+  background: url("assets/icono-accesibilidad.svg") center / contain no-repeat;
+  content: "";
+  pointer-events: none;
+}
+body .eva-accesibilidad-panel .eva-accesibilidad-boton:hover {
+  box-shadow: 0 0 0 3px rgba(18, 70, 255, .24), 0 10px 24px rgba(0, 25, 69, .32);
+}
+@media (max-width: 700px) {
+  body .eva-accesibilidad-panel .eva-accesibilidad-boton {
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    min-height: 54px;
+    padding: 0;
+  }
+}
