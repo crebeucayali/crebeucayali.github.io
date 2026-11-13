@@ -103,3 +103,31 @@ html:not(.eva-alto-contraste) body:not(.alto-contraste)
   border-color:var(--eva-ac) !important;
   color:#fff !important;
 }
+
+/* Corrección de identidad AC en lectura destacada.
+   Alcance limitado a esta sección, sin alterar RA ni las otras tarjetas. */
+html:not(.eva-alto-contraste) body:not(.alto-contraste)
+#eva-distribucion .eva-lecturas-destacada .eva-lecturas-sobretitulo,
+html:not(.eva-alto-contraste) body:not(.alto-contraste)
+#eva-distribucion .eva-lecturas-destacada .eva-lectura-categoria {
+  color:var(--eva-ac);
+}
+html:not(.eva-alto-contraste) body:not(.alto-contraste)
+#eva-distribucion .eva-lecturas-destacada .eva-lectura-contenido {
+  background:var(--eva-ac-fondo);
+  border-color:var(--eva-ac-borde);
+  border-left:4px solid var(--eva-ac);
+}
+html:not(.eva-alto-contraste) body:not(.alto-contraste)
+#eva-distribucion .eva-lecturas-destacada .eva-lectura-enlace {
+  --eva-cta:var(--eva-ac);
+  background:var(--eva-ac) !important;
+  border-color:var(--eva-ac) !important;
+  color:#fff !important;
+}
+html:not(.eva-alto-contraste) body:not(.alto-contraste)
+#eva-distribucion .eva-lecturas-destacada .eva-lectura-enlace:is(:hover,:focus-visible) {
+  background:#682c4e !important;
+  border-color:#682c4e !important;
+  color:#fff !important;
+}
