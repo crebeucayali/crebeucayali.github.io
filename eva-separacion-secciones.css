@@ -152,3 +152,32 @@ body.alto-contraste #eva-distribucion .eva-columna-principal .eva-subrayado-titu
     linear-gradient(to right, #fff 0 56px, transparent 56px),
     linear-gradient(to bottom, transparent 6px, #fff 6px) !important;
 }
+
+/* Destacados EVA: dos tramos HTML explícitos para evitar que desaparezca
+   el subrayado por diferencias en el dibujo del degradado. */
+#eva-distribucion #recursos-destacados-eva .eva-subrayado-destacados {
+  display:flex !important;
+  align-items:flex-end;
+  width:100%;
+  min-height:7px;
+  height:7px;
+  overflow:visible;
+  background:none !important;
+}
+#eva-distribucion #recursos-destacados-eva .eva-subrayado-destacados .eva-subrayado-tramo {
+  display:block !important;
+  flex:0 0 56px;
+  height:7px;
+  background:var(--eva-subrayado-acento,#146747) !important;
+}
+#eva-distribucion #recursos-destacados-eva .eva-subrayado-destacados .eva-subrayado-continuacion {
+  display:block !important;
+  flex:1 1 auto;
+  min-width:0;
+  height:1px;
+  background:#d9e2e6 !important;
+}
+html.eva-alto-contraste #eva-distribucion #recursos-destacados-eva .eva-subrayado-destacados > span,
+body.alto-contraste #eva-distribucion #recursos-destacados-eva .eva-subrayado-destacados > span {
+  background:#fff !important;
+}
