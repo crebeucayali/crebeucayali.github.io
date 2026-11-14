@@ -43,17 +43,88 @@
   object-fit:cover;
   object-position:center;
 }
+/* Materiales de la semana (RA): capa cromática y revelación de fotografía.
+   Se limita a las imágenes de estas tarjetas; no incorpora signos +/-.
+   El degradado oscuro de títulos se conserva en ::after. */
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:linear-gradient(140deg,#0b4f8a,#1b8190);
+  opacity:.72;
+  pointer-events:none;
+  transition:opacity .38s ease;
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-foto img {
+  transform:scale(1.12);
+  transform-origin:center;
+  transition:transform .65s cubic-bezier(.22,1,.36,1);
+}
+@media (hover:hover) and (pointer:fine) {
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:hover {
+    transform:translateY(-3px);
+    box-shadow:0 16px 32px rgba(23,61,74,.2);
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:hover .ra-semana-foto::before {
+    opacity:.13;
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:hover .ra-semana-foto img {
+    transform:scale(1);
+  }
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-slide {
+  transition:transform .32s ease,box-shadow .32s ease;
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:focus-within {
+  outline:3px solid #e4981c;
+  outline-offset:3px;
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:focus-within .ra-semana-foto::before {
+  opacity:.13;
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:focus-within .ra-semana-foto img {
+  transform:scale(1);
+}
+@media (hover:none) and (pointer:coarse) {
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before,
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:focus-within .ra-semana-foto::before {
+    opacity:.20;
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto img,
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:focus-within .ra-semana-foto img {
+    transform:scale(1);
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide,
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before,
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto img {
+    transition:none !important;
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide,
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:hover {
+    transform:none;
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto img {
+    transform:scale(1) !important;
+  }
+}
+html.eva-alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before,
+body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before {
+  display:none !important;
+}
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::after {
   content:"";
   position:absolute;
-  z-index:1;
+  z-index:2;
   inset:0;
   pointer-events:none;
   background:linear-gradient(to top,rgba(8,31,45,.94) 0%,rgba(8,31,45,.63) 32%,transparent 76%);
 }
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-overlay {
   position:absolute;
-  z-index:2;
+  z-index:3;
   left:0;
   right:0;
   bottom:0;
