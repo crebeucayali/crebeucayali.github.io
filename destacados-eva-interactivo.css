@@ -5,6 +5,17 @@
   isolation:isolate;
   transition:transform .32s ease,box-shadow .32s ease;
 }
+/* Identidad cromática de cada recurso: mismos degradados de eva-modulos-fotos.css.
+   Solo afecta la capa que cubre la fotografía, nunca los textos ni los botones. */
+#recursos-destacados-eva .recurso-destacado-eva[data-modulo="CAP"] {
+  --destacado-capa:linear-gradient(140deg,#1b3f73,#427db6);
+}
+#recursos-destacados-eva .recurso-destacado-eva[data-modulo="BDA"] {
+  --destacado-capa:linear-gradient(140deg,#086078,#17a0b3);
+}
+#recursos-destacados-eva .recurso-destacado-eva[data-modulo="MEA"] {
+  --destacado-capa:linear-gradient(140deg,#a66016,#d59937);
+}
 #recursos-destacados-eva .recurso-destacado-eva-visual {
   position:relative;
   width:100%;
@@ -30,8 +41,8 @@
   position:absolute;
   inset:0;
   z-index:1;
-  background:var(--destacado-color,#17324d);
-  opacity:.20;
+  background:var(--destacado-capa,var(--destacado-color,#17324d));
+  opacity:.72;
   pointer-events:none;
   transition:opacity .38s ease;
 }
@@ -94,7 +105,7 @@
   outline-offset:3px;
 }
 #recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-visual::before {
-  opacity:.04;
+  opacity:.13;
 }
 #recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-imagen {
   transform:scale(1);
@@ -112,7 +123,7 @@
     box-shadow:0 16px 32px rgba(23,61,74,.2);
   }
   #recursos-destacados-eva .recurso-destacado-eva:hover .recurso-destacado-eva-visual::before {
-    opacity:.04;
+    opacity:.13;
   }
   #recursos-destacados-eva .recurso-destacado-eva:hover .recurso-destacado-eva-imagen {
     transform:scale(1);
@@ -128,7 +139,8 @@
 /* Al tocar la tarjeta se abre directamente el recurso. La fotografía se
    mantiene visible en móvil, sin depender de un hover persistente. */
 @media (hover:none) and (pointer:coarse) {
-  #recursos-destacados-eva .recurso-destacado-eva-visual::before {opacity:.08;}
+  #recursos-destacados-eva .recurso-destacado-eva-visual::before,
+  #recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-visual::before {opacity:.20;}
   #recursos-destacados-eva .recurso-destacado-eva-signo,
   #recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-signo {
     transform:translateX(-50%);
