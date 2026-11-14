@@ -1,0 +1,172 @@
+/* EVA 2.0 - Etapa 5: interacción de Recursos destacados.
+   Aislada del resto de tarjetas y módulos de la portada. */
+#recursos-destacados-eva .recurso-destacado-eva {
+  position:relative;
+  isolation:isolate;
+  transition:transform .32s ease,box-shadow .32s ease;
+}
+#recursos-destacados-eva .recurso-destacado-eva-visual {
+  position:relative;
+  width:100%;
+  aspect-ratio:16/7;
+  overflow:hidden;
+  flex:0 0 auto;
+  background:#eef4f1;
+}
+#recursos-destacados-eva .recurso-destacado-eva-visual .recurso-destacado-eva-imagen {
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  aspect-ratio:auto;
+  object-fit:cover;
+  transform:scale(1.12);
+  transform-origin:center;
+  transition:transform .65s cubic-bezier(.22,1,.36,1);
+}
+#recursos-destacados-eva .recurso-destacado-eva-visual::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:var(--destacado-color,#17324d);
+  opacity:.20;
+  pointer-events:none;
+  transition:opacity .38s ease;
+}
+/* Reproduce el signo + que se transforma en - de los módulos principales.
+   Es decorativo: la acción real sigue siendo Explorar recurso. */
+#recursos-destacados-eva .recurso-destacado-eva-signo {
+  position:absolute;
+  z-index:2;
+  bottom:12px;
+  left:50%;
+  width:34px;
+  height:34px;
+  transform:translateX(-50%) rotate(0deg);
+  transform-origin:center;
+  background:rgba(0,0,0,.24);
+  border:1px solid rgba(255,255,255,.5);
+  border-radius:50%;
+  pointer-events:none;
+  transition:transform .8s ease-in-out;
+}
+#recursos-destacados-eva .recurso-destacado-eva-signo::before,
+#recursos-destacados-eva .recurso-destacado-eva-signo::after {
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  background:#fff;
+  border-radius:2px;
+  transform:translate(-50%,-50%);
+  box-shadow:0 1px 5px rgba(0,0,0,.45);
+}
+#recursos-destacados-eva .recurso-destacado-eva-signo::before {
+  width:23px;
+  height:3px;
+}
+#recursos-destacados-eva .recurso-destacado-eva-signo::after {
+  width:3px;
+  height:23px;
+  opacity:1;
+  transition:opacity .18s ease-in-out;
+}
+/* Toda la tarjeta comparte el enlace existente: un solo destino y un
+   único elemento de teclado, sin enlaces anidados ni onclick artificial. */
+#recursos-destacados-eva .recurso-destacado-eva-enlace::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:3;
+}
+#recursos-destacados-eva .recurso-destacado-eva:focus-within {
+  outline:3px solid #e4981c;
+  outline-offset:3px;
+}
+#recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-visual::before {
+  opacity:.04;
+}
+#recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-imagen {
+  transform:scale(1);
+}
+#recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-signo {
+  transform:translateX(-50%) rotate(720deg);
+}
+#recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-signo::after {
+  opacity:0;
+  transition-delay:.62s;
+}
+@media (hover:hover) and (pointer:fine) {
+  #recursos-destacados-eva .recurso-destacado-eva:hover {
+    transform:translateY(-3px);
+    box-shadow:0 16px 32px rgba(23,61,74,.2);
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:hover .recurso-destacado-eva-visual::before {
+    opacity:.04;
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:hover .recurso-destacado-eva-imagen {
+    transform:scale(1);
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:hover .recurso-destacado-eva-signo {
+    transform:translateX(-50%) rotate(720deg);
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:hover .recurso-destacado-eva-signo::after {
+    opacity:0;
+    transition-delay:.62s;
+  }
+}
+/* Al tocar la tarjeta se abre directamente el recurso. La fotografía se
+   mantiene visible en móvil, sin depender de un hover persistente. */
+@media (hover:none) and (pointer:coarse) {
+  #recursos-destacados-eva .recurso-destacado-eva-visual::before {opacity:.08;}
+  #recursos-destacados-eva .recurso-destacado-eva-signo,
+  #recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-signo {
+    transform:translateX(-50%);
+    transition:none;
+  }
+  #recursos-destacados-eva .recurso-destacado-eva-signo::after,
+  #recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-signo::after {
+    opacity:0;
+    transition:none;
+  }
+  #recursos-destacados-eva .recurso-destacado-eva-imagen,
+  #recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-imagen {
+    transform:scale(1);
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  #recursos-destacados-eva .recurso-destacado-eva,
+  #recursos-destacados-eva .recurso-destacado-eva-visual::before,
+  #recursos-destacados-eva .recurso-destacado-eva-imagen,
+  #recursos-destacados-eva .recurso-destacado-eva-signo,
+  #recursos-destacados-eva .recurso-destacado-eva-signo::after {
+    transition:none !important;
+  }
+  #recursos-destacados-eva .recurso-destacado-eva,
+  #recursos-destacados-eva .recurso-destacado-eva:hover {
+    transform:none;
+  }
+  #recursos-destacados-eva .recurso-destacado-eva-imagen {
+    transform:scale(1) !important;
+  }
+  #recursos-destacados-eva .recurso-destacado-eva-signo,
+  #recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-signo,
+  #recursos-destacados-eva .recurso-destacado-eva:hover .recurso-destacado-eva-signo {
+    transform:translateX(-50%);
+  }
+}
+html.eva-alto-contraste #recursos-destacados-eva .recurso-destacado-eva-visual::before,
+body.alto-contraste #recursos-destacados-eva .recurso-destacado-eva-visual::before {
+  display:none !important;
+}
+html.eva-alto-contraste #recursos-destacados-eva .recurso-destacado-eva-signo,
+body.alto-contraste #recursos-destacados-eva .recurso-destacado-eva-signo {
+  background:#000 !important;
+  border:2px solid #fff !important;
+}
+html.eva-alto-contraste #recursos-destacados-eva .recurso-destacado-eva:focus-within,
+body.alto-contraste #recursos-destacados-eva .recurso-destacado-eva:focus-within {
+  outline:3px solid #ffff00 !important;
+}
