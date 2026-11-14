@@ -21,3 +21,23 @@
 ) {
   border-radius: 0 !important;
 }
+
+/* Corrección de prioridad: El recurso del día se presenta sin caja externa
+   ni fondo detrás de la imagen, como la lectura inclusiva destacada.
+   Excluye modos de alto contraste y no modifica imágenes, textos ni CTA. */
+html:not(.eva-alto-contraste) body:not(.alto-contraste)
+#eva-distribucion #eva-recurso-hoy .eva-recurso-dia-contenido {
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  padding:0 !important;
+}
+html:not(.eva-alto-contraste) body:not(.alto-contraste)
+#eva-distribucion #eva-recurso-hoy .eva-recurso-dia-fotos {
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  padding:0 !important;
+}
