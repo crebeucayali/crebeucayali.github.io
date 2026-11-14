@@ -20,7 +20,7 @@
   overflow:hidden;
   border:1px solid #d9e2e6;
   border-radius:15px;
-  background:#f5f7f8;
+  background:transparent;
   box-shadow:0 7px 20px rgba(12,48,65,.08);
 }
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto {
@@ -62,37 +62,23 @@
   transition:transform .65s cubic-bezier(.22,1,.36,1);
 }
 @media (hover:hover) and (pointer:fine) {
-  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:hover {
-    transform:translateY(-3px);
-    box-shadow:0 16px 32px rgba(23,61,74,.2);
-  }
-  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:hover .ra-semana-foto::before {
+  /* La interacción visual se activa únicamente dentro del recuadro de imagen. */
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto:hover::before {
     opacity:.13;
   }
-  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:hover .ra-semana-foto img {
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto:hover img {
     transform:scale(1);
   }
-}
-#ra-semana-eva.ra-semana-tarjetas .ra-semana-slide {
-  transition:transform .32s ease,box-shadow .32s ease;
 }
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:focus-within {
   outline:3px solid #e4981c;
   outline-offset:3px;
 }
-#ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:focus-within .ra-semana-foto::before {
-  opacity:.13;
-}
-#ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:focus-within .ra-semana-foto img {
-  transform:scale(1);
-}
 @media (hover:none) and (pointer:coarse) {
-  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before,
-  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:focus-within .ra-semana-foto::before {
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before {
     opacity:.20;
   }
-  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto img,
-  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:focus-within .ra-semana-foto img {
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto img {
     transform:scale(1);
   }
 }
@@ -150,6 +136,7 @@ body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before {
   display:block;
   min-width:0;
   padding:16px 14px 20px;
+  background:transparent;
 }
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-detalle p {
   margin:0;
