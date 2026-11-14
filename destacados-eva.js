@@ -20,12 +20,23 @@
         url.pathname.startsWith(prefijo)&&!url.username&&!url.password?url.href:null;
     }catch{return null;}
   }
+  // Etapa 4: imágenes de GitHub CREBE y de la carpeta exclusiva de destacados.
+  // No se aceptan otras carpetas de Storage ni direcciones externas.
   function imagenValida(valor){
-    if(!valor)return null;
+    if(!valor||typeof valor!=="string")return null;
     try{
       const url=new URL(valor);
-      return url.protocol==="https:"&&url.hostname==="crebeucayali.github.io"&&
-        !url.username&&!url.password&&/\.(png|jpe?g|webp|gif|avif)$/i.test(url.pathname)?url.href:null;
+      if(url.protocol!=="https:"||url.username||url.password)return null;
+      // Mantener las imágenes históricas de GitHub, incluidas sus versiones en URL.
+      if(url.hostname==="crebeucayali.github.io"&&
+        /\.(png|jpe?g|webp|gif|avif)$/i.test(url.pathname))return url.href;
+      const prefijo="/storage/v1/object/public/eva-publico/destacados/";
+      if(url.hostname==="dteimbhwtzghhsijeeld.supabase.co"&&
+        !url.port&&!url.search&&!url.hash&&url.pathname.startsWith(prefijo)&&
+        /^[A-Za-z0-9_-]+\.(webp|jpe?g|png)$/.test(url.pathname.slice(prefijo.length))){
+        return url.href;
+      }
+      return null;
     }catch{return null;}
   }
   function tarjeta(recurso){
@@ -37,7 +48,8 @@
     const img=imagenValida(recurso.imagen_url);
     if(img){
       const imagen=document.createElement("img");imagen.className="recurso-destacado-eva-imagen";
-      imagen.src=img;imagen.alt="";imagen.loading="lazy";imagen.decoding="async";
+      imagen.src=img;imagen.alt=String(recurso.imagen_alt||"").trim().slice(0,220);
+      imagen.loading="lazy";imagen.decoding="async";
       imagen.addEventListener("error",()=>imagen.remove(),{once:true});
       articulo.appendChild(imagen);
     }
@@ -54,7 +66,7 @@
   async function cargar(){
     try{
       const url=new URL(api);
-      url.searchParams.set("select","modulo,titulo,descripcion,enlace_url,imagen_url,orden");
+      url.searchParams.set("select","modulo,titulo,descripcion,enlace_url,imagen_url,imagen_alt,orden");
       url.searchParams.set("visible","eq.true");
       url.searchParams.set("order","orden.asc,id.asc");
       url.searchParams.set("limit","4");
