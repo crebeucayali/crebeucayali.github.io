@@ -410,22 +410,46 @@ document.addEventListener("DOMContentLoaded", () => {
       return articulo;
     };
 
+    // Navegación editorial: contador y segmentos, manteniendo los botones accesibles.
+    const contador = document.createElement("span");
+    contador.className = "noticias-contador";
+    contador.setAttribute("aria-hidden", "true");
+    const segmentos = document.createElement("div");
+    segmentos.className = "noticias-segmentos";
+    const rotulo = document.createElement("span");
+    rotulo.className = "noticias-rotulo";
+    rotulo.textContent = "NOTICIAS EVA";
+    rotulo.setAttribute("aria-hidden", "true");
+
     noticias.forEach((noticia, indice) => {
       pista.appendChild(crearTarjeta(noticia));
       const indicador = document.createElement("button");
       indicador.type = "button";
       indicador.className = "noticias-indicador";
-      indicador.setAttribute("aria-label", `Ir a la noticia ${indice + 1}`);
+      indicador.setAttribute("aria-label", `Ir a la noticia ${indice + 1} de ${noticias.length}: ${noticia.titulo}`);
+      const relleno = document.createElement("span");
+      relleno.className = "noticias-indicador-relleno";
+      relleno.setAttribute("aria-hidden", "true");
+      indicador.appendChild(relleno);
       indicador.addEventListener("click", () => irA(indice, true));
-      indicadores.appendChild(indicador);
+      segmentos.appendChild(indicador);
     });
+    indicadores.append(contador, segmentos, rotulo);
+    indicadores.classList.toggle("noticias-indicadores-unica", noticias.length === 1);
 
     const diapositivas = Array.from(pista.children);
-    const puntos = Array.from(indicadores.children);
+    const puntos = Array.from(segmentos.children);
     let indiceActual = 0;
     let indiceFisico = diapositivas.length > 1 ? 1 : 0;
     let enTransicion = false;
     let temporizador = null;
+    const duracionNoticia = 6000;
+    let tiempoRestante = duracionNoticia;
+    let instanteInicio = 0;
+    let punteroEnCarrusel = false;
+    let punteroEnIndicadores = false;
+    let focoEnCarrusel = false;
+    let focoEnIndicadores = false;
 
     // Copias de los extremos para avanzar siempre en la misma dirección:
     // última -> copia de primera, primera -> copia de última.
@@ -442,10 +466,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const actualizarIndicadores = () => {
+      contador.textContent = `${String(indiceActual + 1).padStart(2, "0")} / ${String(puntos.length).padStart(2, "0")}`;
       puntos.forEach((punto, indice) => {
         punto.classList.toggle("activo", indice === indiceActual);
+        punto.classList.toggle("completado", indice < indiceActual);
         punto.setAttribute("aria-pressed", indice === indiceActual ? "true" : "false");
       });
+    };
+
+    const reiniciarRelleno = () => {
+      tiempoRestante = duracionNoticia;
+      const barra = puntos[indiceActual]?.firstElementChild;
+      if (!barra) return;
+      barra.style.animation = "none";
+      void barra.offsetWidth;
+      barra.style.animation = "";
     };
 
     const actualizarEstadoDiapositivas = () => {
@@ -492,6 +527,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const siguienteIndice = (indice + diapositivas.length) % diapositivas.length;
       if (siguienteIndice === indiceActual) return;
 
+      if (reiniciar) detenerAuto();
       const sentido = direccion || (indice > indiceActual ? 1 : -1);
       carrusel.dataset.transicionDireccion = sentido < 0 ? "izquierda" : "derecha";
 
@@ -513,26 +549,34 @@ document.addEventListener("DOMContentLoaded", () => {
         actualizarIndicadores();
       }
 
-      if (reiniciar) {
-        detenerAuto();
-        iniciarAuto();
-      }
+      reiniciarRelleno();
+      if (reiniciar) iniciarAuto();
     };
 
     const siguiente = () => irA(indiceActual + 1, true, 1);
     const anterior = () => irA(indiceActual - 1, true, -1);
 
     const detenerAuto = () => {
-      if (!temporizador) return;
-      window.clearInterval(temporizador);
-      temporizador = null;
+      if (temporizador !== null) {
+        window.clearTimeout(temporizador);
+        temporizador = null;
+        tiempoRestante = Math.max(1, tiempoRestante - (performance.now() - instanteInicio));
+      }
+      indicadores.classList.remove("noticias-en-reproduccion");
     };
 
     const iniciarAuto = () => {
-      if (prefiereReducirMovimiento || diapositivas.length < 2 || temporizador) return;
-      temporizador = window.setInterval(() => {
+      if (prefiereReducirMovimiento || diapositivas.length < 2 ||
+          temporizador !== null || punteroEnCarrusel || punteroEnIndicadores ||
+          focoEnCarrusel || focoEnIndicadores || document.hidden) return;
+      instanteInicio = performance.now();
+      indicadores.classList.add("noticias-en-reproduccion");
+      temporizador = window.setTimeout(() => {
+        temporizador = null;
+        tiempoRestante = duracionNoticia;
         irA(indiceActual + 1, false, 1);
-      }, 6000);
+        iniciarAuto();
+      }, tiempoRestante);
     };
 
     pista.addEventListener("transitionend", (evento) => {
@@ -543,10 +587,35 @@ document.addEventListener("DOMContentLoaded", () => {
     botonAnterior.addEventListener("click", anterior);
     botonSiguiente.addEventListener("click", siguiente);
 
-    carrusel.addEventListener("mouseenter", detenerAuto);
-    carrusel.addEventListener("mouseleave", iniciarAuto);
-    carrusel.addEventListener("focusin", detenerAuto);
-    carrusel.addEventListener("focusout", iniciarAuto);
+    const configurarPausa = (nodo, tipo) => {
+      nodo.addEventListener("mouseenter", () => {
+        if (tipo === "carrusel") punteroEnCarrusel = true;
+        else punteroEnIndicadores = true;
+        detenerAuto();
+      });
+      nodo.addEventListener("mouseleave", () => {
+        if (tipo === "carrusel") punteroEnCarrusel = false;
+        else punteroEnIndicadores = false;
+        iniciarAuto();
+      });
+      nodo.addEventListener("focusin", () => {
+        if (tipo === "carrusel") focoEnCarrusel = true;
+        else focoEnIndicadores = true;
+        detenerAuto();
+      });
+      nodo.addEventListener("focusout", (evento) => {
+        if (evento.relatedTarget && nodo.contains(evento.relatedTarget)) return;
+        if (tipo === "carrusel") focoEnCarrusel = false;
+        else focoEnIndicadores = false;
+        iniciarAuto();
+      });
+    };
+    configurarPausa(carrusel, "carrusel");
+    configurarPausa(indicadores, "indicadores");
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) detenerAuto();
+      else iniciarAuto();
+    });
 
     window.addEventListener("resize", () => {
       enTransicion = false;
@@ -559,6 +628,7 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarEstadoDiapositivas();
     posicionar(true);
     actualizarIndicadores();
+    reiniciarRelleno();
     iniciarAuto();
   };
 
