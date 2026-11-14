@@ -47,11 +47,25 @@
     const articulo=document.createElement("article");articulo.className="recurso-destacado-eva";articulo.dataset.modulo=modulo;
     const img=imagenValida(recurso.imagen_url);
     if(img){
-      const imagen=document.createElement("img");imagen.className="recurso-destacado-eva-imagen";
-      imagen.src=img;imagen.alt=String(recurso.imagen_alt||"").trim().slice(0,220);
+      // Mismo patrón visual de los módulos principales: fotografía con capa
+      // cromática y signo decorativo. El enlace de la tarjeta se mantiene único.
+      const visual=document.createElement("div");
+      visual.className="recurso-destacado-eva-visual";
+      const imagen=document.createElement("img");
+      imagen.className="recurso-destacado-eva-imagen";
+      imagen.src=img;
+      imagen.alt=String(recurso.imagen_alt||"").trim().slice(0,220);
       imagen.loading="lazy";imagen.decoding="async";
-      imagen.addEventListener("error",()=>imagen.remove(),{once:true});
-      articulo.appendChild(imagen);
+      const signo=document.createElement("span");
+      signo.className="recurso-destacado-eva-signo";
+      signo.setAttribute("aria-hidden","true");
+      imagen.addEventListener("error",()=>{
+        visual.remove();
+        articulo.classList.remove("recurso-destacado-eva-con-imagen");
+      },{once:true});
+      visual.append(imagen,signo);
+      articulo.appendChild(visual);
+      articulo.classList.add("recurso-destacado-eva-con-imagen");
     }
     const cuerpo=document.createElement("div");cuerpo.className="recurso-destacado-eva-contenido";
     const etiqueta=document.createElement("span");etiqueta.className="recurso-destacado-eva-modulo";etiqueta.textContent=modulo;
@@ -60,6 +74,7 @@
     const link=document.createElement("a");link.className="recurso-destacado-eva-enlace";
     link.href=href;link.target="_blank";link.rel="noopener noreferrer";
     link.textContent="Explorar recurso";link.setAttribute("aria-label","Explorar "+titulo.textContent+" (abre una nueva pestaña)");
+    // CSS amplía el área pulsable del enlace sin crear enlaces anidados.
     cuerpo.append(etiqueta,titulo,descripcion,link);articulo.appendChild(cuerpo);
     return articulo;
   }
