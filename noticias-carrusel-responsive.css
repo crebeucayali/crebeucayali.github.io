@@ -329,3 +329,148 @@ body.alto-contraste .noticias-destacadas .noticia-titulo-enlace {
 .noticias-destacadas .noticias-control span {
   color:#000 !important;
 }
+
+/* Noticias destacadas - Indicador editorial de progreso segmentado.
+   Sustituye únicamente la presentación de los puntos, conserva la
+   navegación por botón y el progreso de seis segundos del carrusel. */
+#noticias-indicadores.noticias-indicadores {
+  width:min(560px,100%);
+  max-width:100%;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:nowrap;
+  gap:14px;
+  min-height:44px;
+  margin:9px auto 5px;
+}
+#noticias-indicadores .noticias-contador {
+  flex:none;
+  color:#151515;
+  font-size:.78rem;
+  font-weight:750;
+  line-height:1;
+  letter-spacing:.025em;
+  white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+#noticias-indicadores .noticias-rotulo {
+  flex:none;
+  color:#565f65;
+  font-size:.66rem;
+  font-weight:750;
+  letter-spacing:.1em;
+  white-space:nowrap;
+}
+#noticias-indicadores .noticias-segmentos {
+  display:flex;
+  flex:1 1 auto;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+}
+#noticias-indicadores .noticias-indicador,
+#noticias-indicadores .noticias-indicador.activo {
+  box-sizing:border-box;
+  position:relative;
+  display:block;
+  flex:1 1 0;
+  width:auto;
+  min-width:24px;
+  height:44px;
+  min-height:44px;
+  border:0;
+  border-radius:0;
+  margin:0;
+  padding:0;
+  background:transparent !important;
+  box-shadow:none;
+  cursor:pointer;
+  transform:none;
+  transition:none;
+}
+#noticias-indicadores .noticias-indicador::before {
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:50%;
+  height:3px;
+  border-radius:3px;
+  transform:translateY(-50%);
+  background:#d5d9dc;
+  pointer-events:none;
+}
+#noticias-indicadores .noticias-indicador-relleno {
+  position:absolute;
+  top:50%;
+  left:0;
+  display:block;
+  width:100%;
+  height:3px;
+  border-radius:3px;
+  background:#101010;
+  pointer-events:none;
+  transform-origin:left center;
+  transform:translateY(-50%) scaleX(0);
+}
+#noticias-indicadores .noticias-indicador.completado .noticias-indicador-relleno {
+  opacity:.45;
+  transform:translateY(-50%) scaleX(1);
+}
+#noticias-indicadores .noticias-indicador.activo .noticias-indicador-relleno {
+  opacity:1;
+  animation:noticias-progreso-negro 6000ms linear both;
+  animation-play-state:paused;
+}
+#noticias-indicadores.noticias-en-reproduccion
+.noticias-indicador.activo .noticias-indicador-relleno {
+  animation-play-state:running;
+}
+#noticias-indicadores.noticias-indicadores-unica
+.noticias-indicador.activo .noticias-indicador-relleno {
+  animation:none;
+  transform:translateY(-50%) scaleX(1);
+}
+@keyframes noticias-progreso-negro {
+  from {transform:translateY(-50%) scaleX(0);}
+  to {transform:translateY(-50%) scaleX(1);}
+}
+#noticias-indicadores .noticias-indicador:hover::before {
+  background:#9ba2a7;
+}
+#noticias-indicadores .noticias-indicador:focus-visible {
+  outline:3px solid #c27b00;
+  outline-offset:-2px;
+  border-radius:5px;
+}
+@media(max-width:560px) {
+  #noticias-indicadores.noticias-indicadores {
+    gap:12px;
+    padding-inline:5px;
+  }
+  #noticias-indicadores .noticias-rotulo {display:none;}
+  #noticias-indicadores .noticias-segmentos {gap:6px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  #noticias-indicadores .noticias-indicador.activo .noticias-indicador-relleno {
+    animation:none !important;
+    transform:translateY(-50%) scaleX(1);
+  }
+}
+html.eva-alto-contraste #noticias-indicadores .noticias-contador,
+html.eva-alto-contraste #noticias-indicadores .noticias-rotulo,
+body.alto-contraste #noticias-indicadores .noticias-contador,
+body.alto-contraste #noticias-indicadores .noticias-rotulo {
+  color:#fff !important;
+}
+html.eva-alto-contraste #noticias-indicadores .noticias-indicador::before,
+body.alto-contraste #noticias-indicadores .noticias-indicador::before {
+  background:#777 !important;
+}
+html.eva-alto-contraste #noticias-indicadores .noticias-indicador-relleno,
+body.alto-contraste #noticias-indicadores .noticias-indicador-relleno {
+  background:#fff !important;
+  opacity:1 !important;
+}
