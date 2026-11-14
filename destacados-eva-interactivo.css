@@ -35,20 +35,23 @@
   pointer-events:none;
   transition:opacity .38s ease;
 }
-/* Reproduce el signo + que se transforma en - de los módulos principales.
-   Es decorativo: la acción real sigue siendo Explorar recurso. */
+/* Mismo signo de los módulos principales: + y - blancos, sin círculo.
+   Es decorativo: el botón Explorar recurso conserva su destino y flecha. */
 #recursos-destacados-eva .recurso-destacado-eva-signo {
+  display:block;
   position:absolute;
   z-index:2;
   bottom:12px;
   left:50%;
   width:34px;
   height:34px;
+  flex-shrink:0;
   transform:translateX(-50%) rotate(0deg);
   transform-origin:center;
-  background:rgba(0,0,0,.24);
-  border:1px solid rgba(255,255,255,.5);
-  border-radius:50%;
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
   pointer-events:none;
   transition:transform .8s ease-in-out;
 }
@@ -61,15 +64,15 @@
   background:#fff;
   border-radius:2px;
   transform:translate(-50%,-50%);
-  box-shadow:0 1px 5px rgba(0,0,0,.45);
+  box-shadow:0 1px 5px rgba(0,0,0,.4);
 }
 #recursos-destacados-eva .recurso-destacado-eva-signo::before {
-  width:23px;
+  width:28px;
   height:3px;
 }
 #recursos-destacados-eva .recurso-destacado-eva-signo::after {
   width:3px;
-  height:23px;
+  height:28px;
   opacity:1;
   transition:opacity .18s ease-in-out;
 }
@@ -166,10 +169,13 @@ html.eva-alto-contraste #recursos-destacados-eva .recurso-destacado-eva-visual::
 body.alto-contraste #recursos-destacados-eva .recurso-destacado-eva-visual::before {
   display:none !important;
 }
+/* En alto contraste también se mantiene el signo sin contorno circular. */
 html.eva-alto-contraste #recursos-destacados-eva .recurso-destacado-eva-signo,
 body.alto-contraste #recursos-destacados-eva .recurso-destacado-eva-signo {
-  background:#000 !important;
-  border:2px solid #fff !important;
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
 }
 html.eva-alto-contraste #recursos-destacados-eva .recurso-destacado-eva:focus-within,
 body.alto-contraste #recursos-destacados-eva .recurso-destacado-eva:focus-within {
