@@ -78,7 +78,11 @@
     cuerpo.append(etiqueta,titulo,descripcion,link);articulo.appendChild(cuerpo);
     return articulo;
   }
+  let ultimaConsulta=0;
+  let numeroConsulta=0;
   async function cargar(){
+    const numero=++numeroConsulta;
+    ultimaConsulta=Date.now();
     try{
       const url=new URL(api);
       url.searchParams.set("select","modulo,titulo,descripcion,enlace_url,imagen_url,imagen_alt,orden");
@@ -91,6 +95,8 @@
       });
       if(!respuesta.ok)throw new Error("Recursos destacados no disponibles");
       const filas=await respuesta.json();
+      // Evitar que una respuesta anterior sobrescriba un cambio más reciente.
+      if(numero!==numeroConsulta)return;
       if(!Array.isArray(filas))throw new Error("Respuesta inválida");
       const tarjetas=filas.map(tarjeta).filter(Boolean);
       if(!tarjetas.length)return;
@@ -100,10 +106,23 @@
       else seccion.removeAttribute("data-modulo");
       seccion.hidden=false;
     }catch{
-      // Ante errores de red o ausencia de registros, no mostrar un bloque vacío.
-      seccion.hidden=true;contenedor.replaceChildren();
-      seccion.removeAttribute("data-modulo");
+      if(numero!==numeroConsulta)return;
+      // Una pérdida temporal de conexión al regresar a la pestaña no debe
+      // borrar tarjetas que ya estaban visibles correctamente.
+      if(!contenedor.children.length){
+        seccion.hidden=true;
+        contenedor.replaceChildren();
+        seccion.removeAttribute("data-modulo");
+      }
     }
   }
   cargar();
+  // La portada puede permanecer abierta durante la edición en otra pestaña.
+  // Releer solo al regresar, sin sondeo continuo ni afectar otros módulos.
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible"&&Date.now()-ultimaConsulta>1000)cargar();
+  });
+  window.addEventListener("pageshow",evento=>{
+    if(evento.persisted&&Date.now()-ultimaConsulta>1000)cargar();
+  });
 })();
