@@ -21,17 +21,21 @@
   --destacado-color-hover:#682c4e;
   --destacado-tinte:#f2e4ec;
 }
-/* Sección de lectura inclusiva: color institucional AC, manteniendo estructura. */
+/* La lectura destacada queda sin recuadro de color; su identidad AC
+   permanece en los rótulos, el subrayado del título y el botón. */
 #eva-distribucion .eva-lecturas-destacada{
-  background:var(--eva-ac-fondo);
-  border-color:var(--eva-ac-borde);
+  background:transparent;
+  border-color:transparent;
 }
 #eva-distribucion .eva-lecturas-destacada .eva-lecturas-sobretitulo,
 #eva-distribucion .eva-lecturas-destacada .eva-lectura-categoria{
   color:var(--eva-ac);
 }
 #eva-distribucion .eva-lecturas-destacada .eva-lectura-contenido{
-  border-color:var(--eva-ac-borde);
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  padding:0;
 }
 #eva-distribucion .eva-lectura-enlace{
   --eva-cta:var(--eva-ac);
@@ -115,8 +119,9 @@ html:not(.eva-alto-contraste) body:not(.alto-contraste)
 html:not(.eva-alto-contraste) body:not(.alto-contraste)
 #eva-distribucion .eva-lecturas-destacada .eva-lectura-contenido {
   background:transparent;
-  border-color:var(--eva-ac-borde);
-  border-left:4px solid var(--eva-ac);
+  border:0;
+  box-shadow:none;
+  padding:0;
 }
 html:not(.eva-alto-contraste) body:not(.alto-contraste)
 #eva-distribucion .eva-lecturas-destacada .eva-lectura-enlace {
