@@ -248,3 +248,18 @@ body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-overlay :is(h3,
 body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-detalle p {
   color:#fff!important;
 }
+
+
+/* Ajuste de movimiento reducido para el signo decorativo. */
+@media (prefers-reduced-motion:reduce) {
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-signo,
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-signo::after {
+    transition:none !important;
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto:hover .ra-semana-signo {
+    transform:translateX(-50%) !important;
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto:hover .ra-semana-signo::after {
+    opacity:1 !important;
+  }
+}
