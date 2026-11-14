@@ -355,20 +355,17 @@ body.alto-contraste .noticias-destacadas .noticia-titulo-enlace {
   white-space:nowrap;
   font-variant-numeric:tabular-nums;
 }
-#noticias-indicadores .noticias-rotulo {
-  flex:none;
-  color:#565f65;
-  font-size:.66rem;
-  font-weight:750;
-  letter-spacing:.1em;
-  white-space:nowrap;
-}
 #noticias-indicadores .noticias-segmentos {
   display:flex;
   flex:1 1 auto;
   align-items:center;
   gap:8px;
   min-width:0;
+  /* Más segmentos que los disponibles en pantalla: navegación desplazable
+     sin recortar los botones ni afectar el contador. */
+  overflow-x:auto;
+  overscroll-behavior-inline:contain;
+  scrollbar-width:thin;
 }
 #noticias-indicadores .noticias-indicador,
 #noticias-indicadores .noticias-indicador.activo {
@@ -450,7 +447,6 @@ body.alto-contraste .noticias-destacadas .noticia-titulo-enlace {
     gap:12px;
     padding-inline:5px;
   }
-  #noticias-indicadores .noticias-rotulo {display:none;}
   #noticias-indicadores .noticias-segmentos {gap:6px;}
 }
 @media(prefers-reduced-motion:reduce) {
@@ -460,9 +456,7 @@ body.alto-contraste .noticias-destacadas .noticia-titulo-enlace {
   }
 }
 html.eva-alto-contraste #noticias-indicadores .noticias-contador,
-html.eva-alto-contraste #noticias-indicadores .noticias-rotulo,
-body.alto-contraste #noticias-indicadores .noticias-contador,
-body.alto-contraste #noticias-indicadores .noticias-rotulo {
+body.alto-contraste #noticias-indicadores .noticias-contador {
   color:#fff !important;
 }
 html.eva-alto-contraste #noticias-indicadores .noticias-indicador::before,
