@@ -82,7 +82,13 @@
     title.id = "ra-semana-material-" + number;
     title.textContent = name;
     overlay.append(label, title);
-    imagebox.append(img, overlay);
+
+    const sign = document.createElement("span");
+    sign.className = "ra-semana-signo";
+    sign.setAttribute("aria-hidden", "true");
+    img.addEventListener("error", () => sign.remove(), { once: true });
+    imagebox.append(img, sign);
+
     const detail = document.createElement("div");
     detail.className = "ra-semana-detalle";
     const a = document.createElement("a");
@@ -90,7 +96,7 @@
     a.href = link || catalogue;
     a.textContent = link ? "Ver material" : "Explorar repositorio";
     a.setAttribute("aria-label", (link ? "Ver ficha del material: " : "Explorar el repositorio para consultar: ") + name);
-    detail.append(a);
+    detail.append(overlay, a);
     item.append(imagebox, detail);
     return item;
   }

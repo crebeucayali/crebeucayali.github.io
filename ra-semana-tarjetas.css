@@ -70,6 +70,13 @@
   #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto:hover img {
     transform:scale(1);
   }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto:hover .ra-semana-signo {
+    transform:translateX(-50%) rotate(720deg);
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto:hover .ra-semana-signo::after {
+    opacity:0;
+    transition-delay:.62s;
+  }
 }
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:focus-within {
   outline:3px solid #e4981c;
@@ -96,52 +103,95 @@
   #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto img {
     transform:scale(1) !important;
   }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-signo {
+    transform:translateX(-50%);
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-signo::after {
+    opacity:1;
+  }
 }
 html.eva-alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before,
 body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before {
   display:none !important;
 }
-#ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::after {
-  content:"";
-  position:absolute;
-  z-index:2;
-  inset:0;
-  pointer-events:none;
-  background:linear-gradient(to top,rgba(8,31,45,.94) 0%,rgba(8,31,45,.63) 32%,transparent 76%);
-}
+/* El nombre y el número del recurso se ubican debajo de la fotografía,
+   centrados y antes del botón de acceso. */
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-overlay {
-  position:absolute;
-  z-index:3;
-  left:0;
-  right:0;
-  bottom:0;
-  padding:16px 14px;
+  position:static;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  min-width:0;
+  padding:12px 12px 0;
   overflow-wrap:anywhere;
+  text-align:center;
+  background:transparent;
 }
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-overlay .ra-semana-indice {
   display:block;
-  margin-bottom:7px;
+  margin:0 0 5px;
   font-size:.67rem;
   line-height:1.35;
-  color:#d7f4ed;
+  font-weight:800;
+  letter-spacing:.035em;
+  color:#426477;
 }
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-overlay h3 {
   margin:0;
-  color:#fff;
-  font-size:clamp(1rem,1.55vw,1.35rem);
+  color:#17324d;
+  font-size:clamp(1rem,1.55vw,1.25rem);
   font-weight:800;
   line-height:1.2;
-  text-shadow:0 1px 3px rgba(0,0,0,.65);
+  text-align:center;
 }
-/* El pie deja de comportarse como una segunda tarjeta:
-   fondo integrado, sin panel, altura forzada ni relleno inferior. */
+/* Signo + decorativo en la fotografía: al pasar el cursor se convierte en -. */
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-signo {
+  display:block;
+  position:absolute;
+  z-index:3;
+  bottom:12px;
+  left:50%;
+  width:34px;
+  height:34px;
+  flex-shrink:0;
+  transform:translateX(-50%) rotate(0deg);
+  transform-origin:center;
+  pointer-events:none;
+  transition:transform .8s ease-in-out;
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-signo::before,
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-signo::after {
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  background:#fff;
+  border-radius:2px;
+  transform:translate(-50%,-50%);
+  box-shadow:0 1px 5px rgba(0,0,0,.4);
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-signo::before {
+  width:28px;
+  height:3px;
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-signo::after {
+  width:3px;
+  height:28px;
+  opacity:1;
+  transition:opacity .18s ease-in-out;
+}
+/* El contenido inferior integra título, índice y botón sin crear otro panel. */
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-tarjeta-resumida .ra-semana-detalle {
   display:flex;
-  align-items:flex-start;
+  flex-direction:column;
+  align-items:center;
   justify-content:flex-start;
+  gap:10px;
   min-width:0;
   min-height:0;
-  padding:12px 14px 0;
+  padding:12px 14px 12px;
   border:0;
   border-radius:0;
   background:transparent;
