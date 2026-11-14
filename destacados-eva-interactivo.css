@@ -287,3 +287,41 @@ body.alto-contraste #recursos-destacados-eva .recurso-destacado-eva:focus-within
   }
 }
 
+
+
+/* Sincronización de hover botón e imagen por tarjeta.
+   El botón conserva su destino; su interacción visual se refleja en la imagen
+   correspondiente, sin afectar las demás tarjetas. */
+@media (hover:hover) and (pointer:fine) {
+  #recursos-destacados-eva .recurso-destacado-eva:has(.recurso-destacado-eva-enlace:hover) .recurso-destacado-eva-visual::before,
+  #recursos-destacados-eva .recurso-destacado-eva:has(.recurso-destacado-eva-enlace:focus-visible) .recurso-destacado-eva-visual::before {
+    opacity:.13;
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:has(.recurso-destacado-eva-enlace:hover) .recurso-destacado-eva-imagen,
+  #recursos-destacados-eva .recurso-destacado-eva:has(.recurso-destacado-eva-enlace:focus-visible) .recurso-destacado-eva-imagen {
+    transform:scale(1);
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:has(.recurso-destacado-eva-enlace:hover) .recurso-destacado-eva-signo,
+  #recursos-destacados-eva .recurso-destacado-eva:has(.recurso-destacado-eva-enlace:focus-visible) .recurso-destacado-eva-signo {
+    transform:translateX(-50%) rotate(720deg);
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:has(.recurso-destacado-eva-enlace:hover) .recurso-destacado-eva-signo::after,
+  #recursos-destacados-eva .recurso-destacado-eva:has(.recurso-destacado-eva-enlace:focus-visible) .recurso-destacado-eva-signo::after {
+    opacity:0;
+    transition-delay:.62s;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  #recursos-destacados-eva .recurso-destacado-eva:has(.recurso-destacado-eva-enlace:hover) .recurso-destacado-eva-imagen,
+  #recursos-destacados-eva .recurso-destacado-eva:has(.recurso-destacado-eva-enlace:focus-visible) .recurso-destacado-eva-imagen {
+    transform:scale(1) !important;
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:has(.recurso-destacado-eva-enlace:hover) .recurso-destacado-eva-signo,
+  #recursos-destacados-eva .recurso-destacado-eva:has(.recurso-destacado-eva-enlace:focus-visible) .recurso-destacado-eva-signo {
+    transform:translateX(-50%) !important;
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:has(.recurso-destacado-eva-enlace:hover) .recurso-destacado-eva-signo::after,
+  #recursos-destacados-eva .recurso-destacado-eva:has(.recurso-destacado-eva-enlace:focus-visible) .recurso-destacado-eva-signo::after {
+    opacity:1 !important;
+  }
+}

@@ -279,3 +279,40 @@ body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-detalle p {
     opacity:1 !important;
   }
 }
+
+
+/* Sincronización de hover botón e imagen por tarjeta.
+   Cada botón controla exclusivamente la fotografía de su propio material. */
+@media (hover:hover) and (pointer:fine) {
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:has(.ra-semana-boton:hover) .ra-semana-foto::before,
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:has(.ra-semana-boton:focus-visible) .ra-semana-foto::before {
+    opacity:.13;
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:has(.ra-semana-boton:hover) .ra-semana-foto img,
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:has(.ra-semana-boton:focus-visible) .ra-semana-foto img {
+    transform:scale(1);
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:has(.ra-semana-boton:hover) .ra-semana-signo,
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:has(.ra-semana-boton:focus-visible) .ra-semana-signo {
+    transform:translateX(-50%) rotate(720deg);
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:has(.ra-semana-boton:hover) .ra-semana-signo::after,
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:has(.ra-semana-boton:focus-visible) .ra-semana-signo::after {
+    opacity:0;
+    transition-delay:.62s;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:has(.ra-semana-boton:hover) .ra-semana-foto img,
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:has(.ra-semana-boton:focus-visible) .ra-semana-foto img {
+    transform:scale(1) !important;
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:has(.ra-semana-boton:hover) .ra-semana-signo,
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:has(.ra-semana-boton:focus-visible) .ra-semana-signo {
+    transform:translateX(-50%) !important;
+  }
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:has(.ra-semana-boton:hover) .ra-semana-signo::after,
+  #ra-semana-eva.ra-semana-tarjetas .ra-semana-slide:has(.ra-semana-boton:focus-visible) .ra-semana-signo::after {
+    opacity:1 !important;
+  }
+}
