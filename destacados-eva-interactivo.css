@@ -193,3 +193,97 @@ html.eva-alto-contraste #recursos-destacados-eva .recurso-destacado-eva:focus-wi
 body.alto-contraste #recursos-destacados-eva .recurso-destacado-eva:focus-within {
   outline:3px solid #ffff00 !important;
 }
+
+/* Ajuste visual solicitado: Recursos y herramientas destacadas.
+   El contenido inferior se integra al fondo de la página; el botón conserva
+   su estilo. Los efectos se limitan a la fotografía y al propio botón. */
+#recursos-destacados-eva .recurso-destacado-eva {
+  border:0;
+  border-radius:0;
+  overflow:visible;
+  background:transparent;
+  box-shadow:none;
+  transform:none;
+  transition:none;
+}
+#recursos-destacados-eva .recurso-destacado-eva-contenido {
+  background:transparent;
+  border:0;
+  box-shadow:none;
+}
+#recursos-destacados-eva .recurso-destacado-eva-visual {
+  border-radius:14px 14px 0 0;
+}
+/* El enlace deja de extenderse sobre toda la tarjeta: solo el botón es pulsable. */
+#recursos-destacados-eva .recurso-destacado-eva-enlace::before {
+  content:none;
+}
+#recursos-destacados-eva .recurso-destacado-eva:focus-within {
+  outline:0;
+}
+/* El foco del teclado permanece en el botón y no activa la animación de la imagen. */
+#recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-visual::before {
+  opacity:.72;
+}
+#recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-imagen {
+  transform:scale(1.12);
+}
+#recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-signo {
+  transform:translateX(-50%) rotate(0deg);
+}
+#recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-signo::after {
+  opacity:1;
+  transition-delay:0s;
+}
+@media (hover:hover) and (pointer:fine) {
+  /* Pasar por el cuerpo de texto no desplaza ni eleva la tarjeta. */
+  #recursos-destacados-eva .recurso-destacado-eva:hover {
+    transform:none;
+    box-shadow:none;
+  }
+  /* Si el cursor está en el botón o en el texto, la fotografía queda en reposo. */
+  #recursos-destacados-eva .recurso-destacado-eva:hover .recurso-destacado-eva-visual:not(:hover)::before {
+    opacity:.72;
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:hover .recurso-destacado-eva-visual:not(:hover) .recurso-destacado-eva-imagen {
+    transform:scale(1.12);
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:hover .recurso-destacado-eva-visual:not(:hover) .recurso-destacado-eva-signo {
+    transform:translateX(-50%) rotate(0deg);
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:hover .recurso-destacado-eva-visual:not(:hover) .recurso-destacado-eva-signo::after {
+    opacity:1;
+    transition-delay:0s;
+  }
+  /* Solo la fotografía activa su capa, escala y signo decorativo. */
+  #recursos-destacados-eva .recurso-destacado-eva-visual:hover::before {
+    opacity:.13;
+  }
+  #recursos-destacados-eva .recurso-destacado-eva-visual:hover .recurso-destacado-eva-imagen {
+    transform:scale(1);
+  }
+  #recursos-destacados-eva .recurso-destacado-eva-visual:hover .recurso-destacado-eva-signo {
+    transform:translateX(-50%) rotate(720deg);
+  }
+  #recursos-destacados-eva .recurso-destacado-eva-visual:hover .recurso-destacado-eva-signo::after {
+    opacity:0;
+    transition-delay:.62s;
+  }
+}
+@media (hover:none) and (pointer:coarse) {
+  /* En pantallas táctiles se conserva la presentación estática accesible. */
+  #recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-visual::before {
+    opacity:.20;
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-imagen {
+    transform:scale(1);
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-signo {
+    transform:translateX(-50%);
+  }
+  #recursos-destacados-eva .recurso-destacado-eva:focus-within .recurso-destacado-eva-signo::after {
+    opacity:0;
+    transition:none;
+  }
+}
+
