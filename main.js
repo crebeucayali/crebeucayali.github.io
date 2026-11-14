@@ -416,11 +416,6 @@ document.addEventListener("DOMContentLoaded", () => {
     contador.setAttribute("aria-hidden", "true");
     const segmentos = document.createElement("div");
     segmentos.className = "noticias-segmentos";
-    const rotulo = document.createElement("span");
-    rotulo.className = "noticias-rotulo";
-    rotulo.textContent = "NOTICIAS EVA";
-    rotulo.setAttribute("aria-hidden", "true");
-
     noticias.forEach((noticia, indice) => {
       pista.appendChild(crearTarjeta(noticia));
       const indicador = document.createElement("button");
@@ -434,7 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
       indicador.addEventListener("click", () => irA(indice, true));
       segmentos.appendChild(indicador);
     });
-    indicadores.append(contador, segmentos, rotulo);
+    indicadores.append(contador, segmentos);
     indicadores.classList.toggle("noticias-indicadores-unica", noticias.length === 1);
 
     const diapositivas = Array.from(pista.children);
