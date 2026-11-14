@@ -91,12 +91,15 @@
 
     const detail = document.createElement("div");
     detail.className = "ra-semana-detalle";
+    const content = document.createElement("div");
+    content.className = "ra-semana-contenido";
     const a = document.createElement("a");
     a.className = "ra-semana-boton";
     a.href = link || catalogue;
     a.textContent = link ? "Ver material" : "Explorar repositorio";
     a.setAttribute("aria-label", (link ? "Ver ficha del material: " : "Explorar el repositorio para consultar: ") + name);
-    detail.append(overlay, a);
+    content.append(overlay, a);
+    detail.append(content);
     item.append(imagebox, detail);
     return item;
   }

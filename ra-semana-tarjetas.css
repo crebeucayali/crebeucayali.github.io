@@ -120,13 +120,13 @@ body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before {
   position:static;
   display:flex;
   flex-direction:column;
-  align-items:center;
+  align-items:flex-start;
   justify-content:center;
   width:100%;
   min-width:0;
-  padding:12px 12px 0;
+  padding:12px 0 0;
   overflow-wrap:anywhere;
-  text-align:center;
+  text-align:left;
   background:transparent;
 }
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-overlay .ra-semana-indice {
@@ -144,7 +144,7 @@ body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before {
   font-size:clamp(1rem,1.55vw,1.25rem);
   font-weight:800;
   line-height:1.2;
-  text-align:center;
+  text-align:left;
 }
 /* Signo + decorativo en la fotografía: al pasar el cursor se convierte en -. */
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-signo {
@@ -188,7 +188,6 @@ body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before {
   flex-direction:column;
   align-items:center;
   justify-content:flex-start;
-  gap:10px;
   min-width:0;
   min-height:0;
   padding:12px 14px 12px;
@@ -196,6 +195,22 @@ body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before {
   border-radius:0;
   background:transparent;
   box-shadow:none;
+}
+/* Cada tarjeta centra su bloque de contenido; título y botón comparten
+   el mismo inicio de escritura, independientemente del ancho del título. */
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-contenido {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:10px;
+  width:max-content;
+  max-width:100%;
+  min-width:0;
+  margin-inline:auto;
+}
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-contenido .ra-semana-boton {
+  align-self:flex-start;
+  margin:0;
 }
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-detalle p {
   margin:0;
