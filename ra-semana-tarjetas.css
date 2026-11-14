@@ -17,11 +17,11 @@
   flex-direction:column;
   min-width:0;
   min-height:100%;
-  overflow:hidden;
-  border:1px solid #d9e2e6;
-  border-radius:15px;
+  overflow:visible;
+  border:0;
+  border-radius:0;
   background:transparent;
-  box-shadow:0 7px 20px rgba(12,48,65,.08);
+  box-shadow:none;
 }
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto {
   position:relative;
@@ -32,6 +32,7 @@
   min-height:0;
   aspect-ratio:4/5;
   overflow:hidden;
+  border-radius:15px 15px 0 0;
   background:linear-gradient(145deg,#0b3040,#19616c);
 }
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto img {
@@ -132,11 +133,19 @@ body.alto-contraste #ra-semana-eva.ra-semana-tarjetas .ra-semana-foto::before {
   line-height:1.2;
   text-shadow:0 1px 3px rgba(0,0,0,.65);
 }
-#ra-semana-eva.ra-semana-tarjetas .ra-semana-detalle {
-  display:block;
+/* El pie deja de comportarse como una segunda tarjeta:
+   fondo integrado, sin panel, altura forzada ni relleno inferior. */
+#ra-semana-eva.ra-semana-tarjetas .ra-semana-tarjeta-resumida .ra-semana-detalle {
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-start;
   min-width:0;
-  padding:16px 14px 20px;
+  min-height:0;
+  padding:12px 14px 0;
+  border:0;
+  border-radius:0;
   background:transparent;
+  box-shadow:none;
 }
 #ra-semana-eva.ra-semana-tarjetas .ra-semana-detalle p {
   margin:0;
