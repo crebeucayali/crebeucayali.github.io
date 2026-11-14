@@ -74,7 +74,15 @@
     const link=document.createElement("a");link.className="recurso-destacado-eva-enlace";
     link.href=href;link.target="_blank";link.rel="noopener noreferrer";
     link.textContent="Explorar recurso";link.setAttribute("aria-label","Explorar "+titulo.textContent+" (abre una nueva pestaña)");
-    // CSS amplía el área pulsable del enlace sin crear enlaces anidados.
+    // Sincroniza el estado visual del botón con la fotografía de esta misma tarjeta.
+    const actualizarInteraccionVisual=()=>{
+      const activo=link.matches(":hover")||link.matches(":focus-visible");
+      articulo.classList.toggle("recurso-destacado-eva-boton-activo",activo);
+    };
+    link.addEventListener("pointerenter",actualizarInteraccionVisual);
+    link.addEventListener("pointerleave",actualizarInteraccionVisual);
+    link.addEventListener("focus",actualizarInteraccionVisual);
+    link.addEventListener("blur",actualizarInteraccionVisual);
     cuerpo.append(etiqueta,titulo,descripcion,link);articulo.appendChild(cuerpo);
     return articulo;
   }
