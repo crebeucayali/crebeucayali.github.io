@@ -75,10 +75,15 @@
 }
 /* Toda la tarjeta comparte el enlace existente: un solo destino y un
    único elemento de teclado, sin enlaces anidados ni onclick artificial. */
-#recursos-destacados-eva .recurso-destacado-eva-enlace::after {
+/* ::after ya dibuja la flecha del botón en eva-botones-body.css;
+   la zona pulsable utiliza ::before para conservar ese indicador. */
+#recursos-destacados-eva .recurso-destacado-eva-enlace::before {
   content:"";
   position:absolute;
   inset:0;
+  display:block;
+  width:auto;
+  height:auto;
   z-index:3;
 }
 #recursos-destacados-eva .recurso-destacado-eva:focus-within {
